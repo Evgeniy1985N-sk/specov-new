@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import IconsCompare from '@/components/icons/Compare.vue'
-import IconsFavorite from '@/components/icons/Favorite.vue'
-import IconsCart from '@/components/icons/Cart.vue'
+import IconCompare from '@/components/header/icon/Compare.vue'
+import IconFavorite from '@/components/header/icon/Favorite.vue'
+import IconCart from '@/components/header/icon/Cart.vue'
 
 const isMenu = ref(false)
 const isCatalog = ref(false)
@@ -9,15 +9,15 @@ const isCatalog = ref(false)
 const buttons = [
   {
     src: '/compare',
-    icon: IconsCompare
+    icon: IconCompare
   },
   {
     src: '/favorite',
-    icon: IconsFavorite
+    icon: IconFavorite
   },
   {
     src: '/cart',
-    icon: IconsCart
+    icon: IconCart
   },
 ]
 

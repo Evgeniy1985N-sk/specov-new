@@ -104,7 +104,7 @@ function toggleActive(index: number) {
           class="flex sm:hidden gap-1.5 items-center text-sm leading-5 cursor-pointer text-gray-600 mt-4">
           {{ isMoreText ? 'Свернуть' : 'Показать еще' }}
           <i class="flex items-center justify-center w-5 h-5">
-            <ProductIconsAng />
+            <ProductIconAng />
           </i>
         </button>
       </div>

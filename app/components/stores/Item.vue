@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import IconDots from './IconDots.vue';
-import IconPhone from './IconPhone.vue';
-import IconPin from './IconPin.vue';
+import IconDots from './icon/Dots.vue';
+import IconPhone from './icon/Phone.vue';
+import IconPin from './icon/Pin.vue';
 
 interface Props {
   isActive: boolean

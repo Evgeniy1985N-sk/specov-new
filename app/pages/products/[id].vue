@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
-import Compare from '~/components/icons/Compare.vue'
-import Favorite from '~/components/icons/Favorite.vue'
+import Compare from '~/components/product/icon/Compare.vue'
+import Favorite from '~/components/product/icon/Favorite.vue'
 import { useScroll } from '~/composables/useScroll'
 
 const { scrollPosition, isScrolled } = useScroll()
@@ -184,7 +184,7 @@ const visiblespec = computed(() => {
                   class="flex gap-1.5 items-center text-sm leading-5 cursor-pointer text-gray-600">
                   {{ isMoreSpec ? 'Свернуть' : 'Все характеристики' }}
                   <i class="flex items-center justify-center w-5 h-5">
-                    <ProductIconsAng />
+                    <ProductIconAng />
                   </i>
                 </button>
               </div>
@@ -207,7 +207,7 @@ const visiblespec = computed(() => {
                   class="flex gap-1.5 items-center text-sm leading-5 cursor-pointer text-gray-600">
                   {{ isMoreText ? 'Свернуть' : 'Читать далее' }}
                   <i class="flex items-center justify-center w-5 h-5">
-                    <ProductIconsAng />
+                    <ProductIconAng />
                   </i>
                 </button>
               </div>
@@ -219,7 +219,7 @@ const visiblespec = computed(() => {
                   Сопутствующие товары
                 </span>
                 <i class="flex items-center justify-center w-5 h-5">
-                  <ProductIconsAng />
+                  <ProductIconAng />
                 </i>
               </button>
 
@@ -258,7 +258,7 @@ const visiblespec = computed(() => {
 
                 <div class="flex items-center gap-2 text-(--Brand-700)">
                   <span class="flex items-center justify-center w-5 h-5">
-                    <ProductIconsShop />
+                    <ProductIconShop />
                   </span>
                   <p class="text-sm leading-5 font-bold">
                     Самовывоз из магазина
@@ -288,7 +288,7 @@ const visiblespec = computed(() => {
                 <div>
                   <div class="flex items-center gap-2 text-(--Brand-700)">
                     <span class="flex items-center justify-center w-5 h-5">
-                      <ProductIconsCar />
+                      <ProductIconCar />
                     </span>
                     <p class="text-sm leading-5 font-bold">
                       Доставка курьером
@@ -300,7 +300,7 @@ const visiblespec = computed(() => {
                 <div>
                   <div class="flex items-center gap-2 text-(--Brand-700)">
                     <span class="flex items-center justify-center w-5 h-5">
-                      <ProductIconsCube />
+                      <ProductIconCube />
                     </span>
                     <p class="text-sm leading-5 font-bold">
                       Транспортная компания

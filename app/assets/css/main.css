@@ -16,6 +16,9 @@
   --swiper-pagination-color: #0c8f61;
   --color1: #053628;
   --border: #d5d7da;
+
+  --modal: rgba(0,0,0,.2);
+  --modal-content: #fff;
 }
 
 

@@ -3,13 +3,18 @@ interface Props {
   class?: string
 }
 const props = defineProps<Props>()
+
+const open = ref(false)
 </script>
 
 <template>
   <div :class="props.class">
-    <UModal>
-      <UButton
-        class="bg-gray-100 hover:bg-gray-200 active:bg-neutral-300 border-zinc-300 py-[9px] px-[15px] gap-2 flex justify-center items-center border border-solid rounded-lg cursor-pointer">
+
+    <UModal v-model="open" :ui="{ overlay: 'bg-(--modal)', content: 'bg-(--modal-content)' }">
+
+      <UButton @click="open = true"
+        class="bg-gray-100 hover:bg-gray-200 active:bg-neutral-300 border-zinc-300 py-[9px] px-[15px] gap-2 flex items-center border border-solid rounded-lg">
+        
         <template #leading>
           <span class="h-5 w-5">
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -18,18 +23,24 @@ const props = defineProps<Props>()
                 stroke="#053628" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
             </svg>
           </span>
-          <div class="text-emerald-950 font-semibold text-base"> Войти </div>
         </template>
+        
+        <span class="text-emerald-950 font-semibold text-base">Войти</span>
       </UButton>
 
-      <template #content>
-        <form action="">
-          <h2>form</h2>
-          <input type="text">
-          <input type="text">
-        </form>
-      </template>
-    </UModal>
-  </div>
+      <template #body>
 
+        <form action="" class="mt-8">
+          <div class="space-y-4">
+            <UInput type="text" placeholder="Логин" />
+            <UInput type="password" placeholder="Пароль" />
+            <UButton type="submit" class="w-full">Войти</UButton>
+          </div>
+        </form>
+
+      </template>
+
+    </UModal>
+
+  </div>
 </template>

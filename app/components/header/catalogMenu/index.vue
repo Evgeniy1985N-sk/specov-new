@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Battery from './icons/Battery.vue';
-import Bonfire from './icons/Bonfire.vue';
-import Goods from './icons/Goods.vue';
-import Instrument from './icons/Instrument.vue';
-import Pot from './icons/Pot.vue';
-import Workwear from './icons/Workwear.vue';
+import Battery from '@/components/header/catalogMenu/icon/Battery.vue';
+import Bonfire from '@/components/header/catalogMenu/icon/Bonfire.vue';
+import Goods from '@/components/header/catalogMenu/icon/Goods.vue';
+import Instrument from '@/components/header/catalogMenu/icon/Instrument.vue';
+import Pot from '@/components/header/catalogMenu/icon/Pot.vue';
+import Workwear from '@/components/header/catalogMenu/icon/Workwear.vue';
 
 interface Props {
   isShow: boolean

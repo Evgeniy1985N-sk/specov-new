@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Pyramid from './icons/Pyramid.vue';
+import Pyramid from '@/components/product/icon/Pyramid.vue';
 
 
 const isActive = ref(false)
@@ -115,7 +115,7 @@ const visibleCount = ref(3)
               <UBadge v-if="review.isPurchasedFromUs"
                 class="sm:ml-auto px-3 rounded-full text-(--Brand-800) bg-(--Brand-100)">
                 <i class="flex items-center justify-center w-4 h-4">
-                  <ProductIconsMark />
+                  <ProductIconMark />
                 </i>
                 Товар куплен у нас
               </UBadge>
@@ -123,12 +123,12 @@ const visibleCount = ref(3)
             <div v-if="review.stars" class="flex items-center text-warning-500 text-sm leading-5 font-bold">
               <i v-for="star in review.stars"
                 class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-                <ProductIconsStar />
+                <ProductIconStar />
               </i>
 
               <i v-for="star in (5 - review.stars)"
                 class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-                <ProductIconsStar />
+                <ProductIconStar />
               </i>
               {{ review.stars }}.0
             </div>
@@ -182,7 +182,7 @@ const visibleCount = ref(3)
         <div class="flex justify-between">
           <span class="flex">
             <i v-for="star in 5" class="w-6 h-6 flex items-center justify-center text-warning-500 p-0.5">
-              <ProductIconsStar />
+              <ProductIconStar />
             </i>
           </span>
           <p class="text-sm leading-5 font-medium">
@@ -199,11 +199,11 @@ const visibleCount = ref(3)
       <div class="flex items-center justify-between">
         <span class="flex">
           <i v-for="star in 5" class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-            <ProductIconsStar />
+            <ProductIconStar />
           </i>
 
           <i v-for="star in (5 - 5)" class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-            <ProductIconsStar />
+            <ProductIconStar />
           </i>
         </span>
 
@@ -215,11 +215,11 @@ const visibleCount = ref(3)
       <div class="flex items-center justify-between">
         <span class="flex">
           <i v-for="star in 3" class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-            <ProductIconsStar />
+            <ProductIconStar />
           </i>
 
           <i v-for="star in (5 - 3)" class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-            <ProductIconsStar />
+            <ProductIconStar />
           </i>
         </span>
 
@@ -231,11 +231,11 @@ const visibleCount = ref(3)
       <div class="flex items-center justify-between">
         <span class="flex">
           <i v-for="star in 4" class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-            <ProductIconsStar />
+            <ProductIconStar />
           </i>
 
           <i v-for="star in (5 - 4)" class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-            <ProductIconsStar />
+            <ProductIconStar />
           </i>
         </span>
 

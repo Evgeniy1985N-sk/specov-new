@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import IconsHome from '@/components/icons/Home.vue'
-import IconsBurger from '@/components/icons/Burger.vue'
-import IconsCart from '@/components/icons/Cart.vue'
-import IconsFavorite from '@/components/icons/Favorite.vue'
-import IconsCabinet from '@/components/icons/Cabinet.vue'
+import IconHome from '@/components/header/icon/Home.vue'
+import IconBurger from '@/components/header/icon/Burger.vue'
+import IconCart from '@/components/header/icon/Cart.vue'
+import IconFavorite from '@/components/header/icon/Favorite.vue'
+import IconCabinet from '@/components/header/icon/Cabinet.vue'
 
 const emit = defineEmits(['toggle-catalog'])
 
@@ -17,30 +17,30 @@ const buttons = ref([
   {
     name: 'Главная',
     src: '/',
-    icon: markRaw(IconsHome),
+    icon: markRaw(IconHome),
     isActive: true
   },
   {
     name: 'Каталог',
-    icon: markRaw(IconsBurger),
+    icon: markRaw(IconBurger),
     isActive: false
   },
   {
     name: 'Корзина',
     src: '/cart',
-    icon: markRaw(IconsCart),
+    icon: markRaw(IconCart),
     isActive: false
   },
   {
     name: 'Избранное',
     src: '/favorites',
-    icon: markRaw(IconsFavorite),
+    icon: markRaw(IconFavorite),
     isActive: false
   },
   {
     name: 'Кабинет',
     src: '/profile',
-    icon: markRaw(IconsCabinet),
+    icon: markRaw(IconCabinet),
     isActive: false
   },
 ]);

@@ -1,6 +1,6 @@
 <script setup lang="ts">
-import IconsCompare from '@/components/icons/Compare.vue'
-import IconsFavorite from '@/components/icons/Favorite.vue'
+import IconCompare from '@/components/header/icon/Compare.vue'
+import IconFavorite from '@/components/header/icon/Favorite.vue'
 
 interface Props {
   isShow: boolean
@@ -12,12 +12,12 @@ const buttons = [
   {
     name: 'Избранное',
     src: '/compare',
-    icon: IconsFavorite
+    icon: IconFavorite
   },
   {
     name: 'Сравнение',
     src: '/favorite',
-    icon: IconsCompare
+    icon: IconCompare
   },
 ]
 
