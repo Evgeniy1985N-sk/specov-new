@@ -1,11 +1,11 @@
 <script setup lang="ts">
   interface Props {
-    addClass?: string
+    class?: string
   }
   const props = defineProps<Props>()
 </script>
 <template>
-  <div :class="props.addClass" class="max-w-(--container) m-auto px-4">
+  <div :class="props.class" class="max-w-(--container) m-auto px-4">
     <slot />
   </div>
 </template>

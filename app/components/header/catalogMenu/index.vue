@@ -578,7 +578,7 @@ const goBack = () => {
     class="custom-scrollbar absolute h-[calc(100vh-128px)] inset-0 lg:top-32 z-100 lg:py-6 bg-white lg:border-t border-(--border) overflow-auto">
 
     <div class="lg:hidden border-b border-(--border) py-2.5 sm:py-6">
-      <SectionContainer add-class="max-w-full px-6">
+      <SectionContainer class="max-w-full px-6">
 
         <div class="flex justify-between items-center">
 
@@ -605,7 +605,7 @@ const goBack = () => {
       </SectionContainer>
     </div>
 
-    <SectionContainer add-class="max-w-full lg:max-w-(--container) relative px-6 lg:px-4">
+    <SectionContainer class="max-w-full lg:max-w-(--container) relative px-6 lg:px-4">
 
       <HeaderSearch class="mt-6 mb-6 lg:hidden" />
 
