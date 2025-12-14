@@ -42,7 +42,7 @@ const buttons = [
       </span>
     </a>
 
-    <HeaderLogin class="hidden lg:flex" />
+    <HeaderLogin />
 
     <HeaderBurger :is-active="isMenu" @click="isMenu = !isMenu" />
 

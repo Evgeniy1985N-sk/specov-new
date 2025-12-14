@@ -56,6 +56,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 </script>
 
 <template>
+
   <UForm 
     ref="form" 
     :schema="schema" 
@@ -106,4 +107,5 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       Заказать звонок
     </UButton>
   </UForm>
+  
 </template>
