@@ -20,6 +20,8 @@ const allProducts = [...popularProducts, ...buildingProducts, ...gardenProducts]
 
 const product = allProducts.find(item => item.id == productId)
 
+const counter = ref(0)
+
 const specifications = [
   { label: 'Макс. крутящий момент', value: '6 Нм' },
   { label: 'Число скоростей', value: '1' },
@@ -36,7 +38,7 @@ const specifications = [
 ];
 
 const visiblespec = computed(() => {
-  return isMoreSpec.value ? specifications : specifications.slice(0,7)
+  return isMoreSpec.value ? specifications : specifications.slice(0, 7)
 })
 
 </script>
@@ -107,19 +109,7 @@ const visiblespec = computed(() => {
               <div class="flex">
 
                 <div class="flex">
-                  <i class="flex items-center justify-center w-5 h-5">
-                    <img src="/image/star.svg" alt="Star">
-                  </i>
-                  <i class="flex items-center justify-center w-5 h-5">
-                    <img src="/image/star.svg" alt="Star">
-                  </i>
-                  <i class="flex items-center justify-center w-5 h-5">
-                    <img src="/image/star.svg" alt="Star">
-                  </i>
-                  <i class="flex items-center justify-center w-5 h-5">
-                    <img src="/image/star.svg" alt="Star">
-                  </i>
-                  <i class="flex items-center justify-center w-5 h-5">
+                  <i v-for="(__, i) in 5" class="flex items-center justify-center w-5 h-5" :key="i">
                     <img src="/image/star.svg" alt="Star">
                   </i>
                 </div>
@@ -240,7 +230,16 @@ const visiblespec = computed(() => {
                 </div>
 
                 <div class="flex flex-col gap-2">
-                  <ProductCounter class="justify-between! text-base!" />
+                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }"
+                    :increment="{
+                      color: 'neutral',
+                      variant: 'solid',
+                      size: 'xl',
+                    }" :decrement="{
+                      color: 'neutral',
+                      variant: 'solid',
+                      size: 'xl'
+                    }" />
                   <ProductBasketButton class="h-12 text-base! leading-6" />
                   <UButton
                     class="flex items-center justify-center h-12 cursor-pointer rounded-xl border border-(--border) text-(--Brand-950) text-base"
