@@ -3,6 +3,8 @@ import { popularProducts } from "~/data/products";
 import { buildingProducts } from "~/data/products";
 import { gardenProducts } from "~/data/products";
 import { relatedProducts } from "~/data/products";
+import type { ProductCard } from '~/types/product'
+
 
 export const useProductsStore = defineStore("products", () => {
   const popular = ref(popularProducts);
@@ -10,7 +12,7 @@ export const useProductsStore = defineStore("products", () => {
   const garden = ref(gardenProducts);
   const related = ref(relatedProducts);
 
-  const allProducts = [
+  const allProducts: ProductCard[] = [
     ...popularProducts,
     ...buildingProducts,
     ...gardenProducts,

@@ -4,21 +4,20 @@ import Compare from '~/components/product/icon/Compare.vue'
 import Favorite from '~/components/product/icon/Favorite.vue'
 import { useScroll } from '~/composables/useScroll'
 
-const { scrollPosition, isScrolled } = useScroll()
+const { scrollPosition } = useScroll()
 
 const isMoreText = ref(false)
 const isMoreSpec = ref(false)
 
 const showModal = ref(false)
 
-const popularProducts = useProductsStore().popular
 const buildingProducts = useProductsStore().building
 const gardenProducts = useProductsStore().garden
 
 const route = useRoute()
 const productId = route.params.id as string
 
-const allProducts = [...popularProducts, ...buildingProducts, ...gardenProducts]
+const allProducts = useProductsStore().allProducts
 
 const product = allProducts.find(item => item.id == productId)
 
