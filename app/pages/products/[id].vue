@@ -84,19 +84,14 @@ const visiblespec = computed(() => {
                     {{ product?.oldPrice.toLocaleString('ru-RU') }} ₽
                   </span>
                 </div>
-                <NuxtLink to="/cart" custom v-slot="{ navigate }">
-                  <UButton class="shrink-0 gap-1 px-4 min-h-10" @click="(e) => {
-                    e.preventDefault()
-                    navigate()
-                  }">
-                    <i class="flex items-center justify-center h-5 w-5">
-                      <ProductIconCart />
-                    </i>
-                    <span class="text-sm leading-5">
-                      В корзину
-                    </span>
-                  </UButton>
-                </NuxtLink>
+                <UButton class="shrink-0 gap-1 px-4 min-h-10">
+                  <i class="flex items-center justify-center h-5 w-5">
+                    <ProductIconCart />
+                  </i>
+                  <span class="text-sm leading-5">
+                    В корзину
+                  </span>
+                </UButton>
               </div>
 
             </div>
@@ -107,19 +102,14 @@ const visiblespec = computed(() => {
         <!-- button basket fixet -->
         <div class="sm:hidden fixed bottom-20 z-100 w-full">
           <SectionContainer>
-            <NuxtLink to="/cart" custom v-slot="{ navigate }">
-              <UButton class="w-full" @click="(e) => {
-                e.preventDefault()
-                navigate()
-              }">
-                <i class="flex items-center justify-center h-5 w-5">
-                  <ProductIconCart />
-                </i>
-                <span class="text-sm leading-5">
-                  В корзину
-                </span>
-              </UButton>
-            </NuxtLink>
+            <UButton class="w-full">
+              <i class="flex items-center justify-center h-5 w-5">
+                <ProductIconCart />
+              </i>
+              <span class="text-sm leading-5">
+                В корзину
+              </span>
+            </UButton>
           </SectionContainer>
         </div>
 
@@ -266,19 +256,15 @@ const visiblespec = computed(() => {
                     size: 'xl'
                   }" />
 
-                  <NuxtLink to="/cart" custom v-slot="{ navigate }">
-                    <UButton class="gap-1 px-4" @click="(e) => {
-                      e.preventDefault()
-                      navigate()
-                    }">
-                      <i class="flex items-center justify-center h-5 w-5">
-                        <ProductIconCart />
-                      </i>
-                      <span>
-                        В корзину
-                      </span>
-                    </UButton>
-                  </NuxtLink>
+
+                  <UButton class="gap-1 px-4">
+                    <i class="flex items-center justify-center h-5 w-5">
+                      <ProductIconCart />
+                    </i>
+                    <span>
+                      В корзину
+                    </span>
+                  </UButton>
 
                   <UModal v-model:open="showModal" :close=false
                     :ui="{ content: 'xl:translate-x-[-15%] lg:top-[260px] max-w-[720px]!' }">
@@ -342,17 +328,12 @@ const visiblespec = computed(() => {
                             <UButton @click="showModal = false" color="neutral" solid class="gap-2 px-5" size="xl">
                               Продолжить покупки
                             </UButton>
-                            <NuxtLink to="/cart" custom v-slot="{ navigate }">
-                              <UButton class="gap-2 px-5" @click="(e) => {
-                                e.preventDefault()
-                                navigate()
-                              }">
-                                В корзину
-                                <i class="flex items-center justify-center h-5 w-5">
-                                  <ProductIconArrowRight />
-                                </i>
-                              </UButton>
-                            </NuxtLink>
+                            <UButton class="gap-2 px-5">
+                              В корзину
+                              <i class="flex items-center justify-center h-5 w-5">
+                                <ProductIconArrowRight />
+                              </i>
+                            </UButton>
                           </div>
                         </div>
 

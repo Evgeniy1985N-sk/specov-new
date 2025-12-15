@@ -60,19 +60,14 @@ const counter = ref(0)
       <div :class="props.classBtns"
         class="w-full gap-4 font-semibold flex flex-wrap xl:flex-nowrap lg:justify-center pt-5 lg:items-center">
 
-        <NuxtLink to="/cart" custom v-slot="{ navigate }">
-          <UButton class="shrink-0 gap-1 px-4 min-h-10" @click="(e) => {
-            e.preventDefault()
-            navigate()
-          }">
-            <i class="flex items-center justify-center h-5 w-5">
-              <ProductIconCart />
-            </i>
-            <span class="text-sm leading-5">
-              В корзину
-            </span>
-          </UButton>
-        </NuxtLink>
+        <UButton class="shrink-0 gap-1 px-4 min-h-10">
+          <i class="flex items-center justify-center h-5 w-5">
+            <ProductIconCart />
+          </i>
+          <span class="text-sm leading-5">
+            В корзину
+          </span>
+        </UButton>
 
 
         <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'hidden! lg:flex!' }"
