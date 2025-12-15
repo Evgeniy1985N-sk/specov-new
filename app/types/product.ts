@@ -13,3 +13,8 @@ export interface ProductCard {
 	discont?: number
 	imgs: ProductImage[]
 }
+
+export interface Cart {
+	id: string
+	count: number
+}

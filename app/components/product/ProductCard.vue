@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import type { ProductCard } from '~/types/product'
+import { useCartStore } from '@/stores/cart'
 
 interface Props {
   item: ProductCard
@@ -9,6 +10,21 @@ interface Props {
 const props = defineProps<Props>()
 
 const counter = ref(0)
+
+const cart = useCartStore().cart
+
+function addToCart(itemId: string) {
+  const existingItem = cart.find(item => item.id === itemId)
+
+  if (existingItem) {
+    existingItem.count = counter.value
+  } else {
+    cart.push({
+      id: itemId,
+      count: counter.value
+    })
+  }
+}
 
 </script>
 
@@ -60,7 +76,7 @@ const counter = ref(0)
       <div :class="props.classBtns"
         class="w-full gap-4 font-semibold flex flex-wrap xl:flex-nowrap lg:justify-center pt-5 lg:items-center">
 
-        <UButton class="shrink-0 gap-1 px-4 min-h-10">
+        <UButton @click="addToCart(props.item.id)" class="shrink-0 gap-1 px-4 min-h-10">
           <i class="flex items-center justify-center h-5 w-5">
             <ProductIconCart />
           </i>

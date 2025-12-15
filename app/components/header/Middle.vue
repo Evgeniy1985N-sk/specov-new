@@ -35,12 +35,12 @@ const buttons = [
     <HeaderSearch class="w-full order-1 sm:order-0" />
 
     <!-- buttons -->
-    <a v-for="item in buttons" :href="item.src"
+    <NuxtLink v-for="item in buttons" :to="item.src"
       class="text-(--Brand-950) hidden lg:flex border-zinc-300 p-[11px] justify-spacse-between h-11 w-11 flex-col bg-white hover:bg-gray-300 transition items-center border border-solid rounded-lg">
       <span class="h-5 w-5">
         <component :is="item.icon" />
       </span>
-    </a>
+    </NuxtLink>
 
     <HeaderLogin />
 

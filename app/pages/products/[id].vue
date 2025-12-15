@@ -3,6 +3,9 @@ import { useProductsStore } from '@/stores/products'
 import Compare from '~/components/product/icon/Compare.vue'
 import Favorite from '~/components/product/icon/Favorite.vue'
 import { useScroll } from '~/composables/useScroll'
+import { useCartStore } from '@/stores/cart'
+
+const cart = useCartStore().cart
 
 const { scrollPosition } = useScroll()
 
@@ -42,6 +45,19 @@ const visiblespec = computed(() => {
   return isMoreSpec.value ? specifications : specifications.slice(0, 7)
 })
 
+function addToCart(itemId: string) {
+  const existingItem = cart.find(item => item.id === itemId)
+
+  if (existingItem) {
+    existingItem.count = counter.value
+  } else {
+    cart.push({
+      id: itemId,
+      count: counter.value
+    })
+  }
+}
+
 </script>
 
 <template>
@@ -53,7 +69,7 @@ const visiblespec = computed(() => {
 
     <main>
 
-      <Section class="mb-6!">
+      <Section v-if="product" class="mb-6!">
 
         <!-- card fixed -->
         <div :class="scrollPosition > 800 ? 'opacity-100' : 'pointer-events-none'"
@@ -83,7 +99,7 @@ const visiblespec = computed(() => {
                     {{ product?.oldPrice.toLocaleString('ru-RU') }} ₽
                   </span>
                 </div>
-                <UButton class="shrink-0 gap-1 px-4 min-h-10">
+                <UButton @click="addToCart(product.id)" class="shrink-0 gap-1 px-4 min-h-10">
                   <i class="flex items-center justify-center h-5 w-5">
                     <ProductIconCart />
                   </i>
@@ -101,7 +117,7 @@ const visiblespec = computed(() => {
         <!-- button basket fixet -->
         <div class="sm:hidden fixed bottom-20 z-100 w-full">
           <SectionContainer>
-            <UButton class="w-full">
+            <UButton @click="addToCart(product.id)" class="w-full">
               <i class="flex items-center justify-center h-5 w-5">
                 <ProductIconCart />
               </i>
@@ -256,7 +272,7 @@ const visiblespec = computed(() => {
                   }" />
 
 
-                  <UButton class="gap-1 px-4">
+                  <UButton @click="addToCart(product.id)" class="gap-1 px-4">
                     <i class="flex items-center justify-center h-5 w-5">
                       <ProductIconCart />
                     </i>
@@ -327,7 +343,7 @@ const visiblespec = computed(() => {
                             <UButton @click="showModal = false" color="neutral" solid class="gap-2 px-5" size="xl">
                               Продолжить покупки
                             </UButton>
-                            <UButton class="gap-2 px-5">
+                            <UButton @click="addToCart(product.id)" class="gap-2 px-5">
                               В корзину
                               <i class="flex items-center justify-center h-5 w-5">
                                 <ProductIconArrowRight />
