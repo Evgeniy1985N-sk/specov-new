@@ -9,6 +9,8 @@ const { scrollPosition, isScrolled } = useScroll()
 const isMoreText = ref(false)
 const isMoreSpec = ref(false)
 
+const showModal = ref(false)
+
 const popularProducts = useProductsStore().popular
 const buildingProducts = useProductsStore().building
 const gardenProducts = useProductsStore().garden
@@ -82,7 +84,19 @@ const visiblespec = computed(() => {
                     {{ product?.oldPrice.toLocaleString('ru-RU') }} ₽
                   </span>
                 </div>
-                <ProductBasketButton class="w-fit!" />
+                <NuxtLink to="/cart" custom v-slot="{ navigate }">
+                  <UButton class="shrink-0 gap-1 px-4 min-h-10" @click="(e) => {
+                    e.preventDefault()
+                    navigate()
+                  }">
+                    <i class="flex items-center justify-center h-5 w-5">
+                      <ProductIconCart />
+                    </i>
+                    <span class="text-sm leading-5">
+                      В корзину
+                    </span>
+                  </UButton>
+                </NuxtLink>
               </div>
 
             </div>
@@ -93,7 +107,19 @@ const visiblespec = computed(() => {
         <!-- button basket fixet -->
         <div class="sm:hidden fixed bottom-20 z-100 w-full">
           <SectionContainer>
-            <ProductBasketButton class="max-w-330px w-full h-12" />
+            <NuxtLink to="/cart" custom v-slot="{ navigate }">
+              <UButton class="w-full" @click="(e) => {
+                e.preventDefault()
+                navigate()
+              }">
+                <i class="flex items-center justify-center h-5 w-5">
+                  <ProductIconCart />
+                </i>
+                <span class="text-sm leading-5">
+                  В корзину
+                </span>
+              </UButton>
+            </NuxtLink>
           </SectionContainer>
         </div>
 
@@ -230,20 +256,111 @@ const visiblespec = computed(() => {
                 </div>
 
                 <div class="flex flex-col gap-2">
-                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }"
-                    :increment="{
-                      color: 'neutral',
-                      variant: 'solid',
-                      size: 'xl',
-                    }" :decrement="{
-                      color: 'neutral',
-                      variant: 'solid',
-                      size: 'xl'
-                    }" />
-                  <ProductBasketButton class="h-12 text-base! leading-6" />
-                  <UButton
-                    class="flex items-center justify-center h-12 cursor-pointer rounded-xl border border-(--border) text-(--Brand-950) text-base"
-                    color="neutral">Быстрый заказ</UButton>
+                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" :increment="{
+                    color: 'neutral',
+                    variant: 'solid',
+                    size: 'xl',
+                  }" :decrement="{
+                    color: 'neutral',
+                    variant: 'solid',
+                    size: 'xl'
+                  }" />
+
+                  <NuxtLink to="/cart" custom v-slot="{ navigate }">
+                    <UButton class="gap-1 px-4" @click="(e) => {
+                      e.preventDefault()
+                      navigate()
+                    }">
+                      <i class="flex items-center justify-center h-5 w-5">
+                        <ProductIconCart />
+                      </i>
+                      <span>
+                        В корзину
+                      </span>
+                    </UButton>
+                  </NuxtLink>
+
+                  <UModal v-model:open="showModal" :close=false
+                    :ui="{ content: 'xl:translate-x-[-15%] lg:top-[260px] max-w-[720px]!' }">
+
+                    <UButton
+                      class="flex items-center justify-center h-12 cursor-pointer rounded-lg bg-white! border border-(--border) text-(--Brand-950) text-base"
+                      color="neutral">Быстрый заказ
+                    </UButton>
+
+                    <template #body>
+
+                      <div class="grid gap-6">
+
+                        <div class="flex justify-between">
+                          <p class="font-bold text-black">
+                            Товары
+                          </p>
+                          <button class="flex gap-2 items-center text-gray-600 cursor-pointer">
+                            <span class="text-sm leading-5 font-semibold">
+                              Очистить список
+                            </span>
+                            <ProductIconTrash />
+                          </button>
+                        </div>
+
+                        <div class="flex gap-6 justify-between items-center flex-wrap pb-6 border-b border-gray-300">
+                          <div class="flex gap-5">
+                            <img class="w-12 h-12 object-contain" :src="product?.image" :alt="product?.title">
+                            <p class="max-w-[290px] font-semibold text-gray-950">
+                              {{ product?.title }}
+                            </p>
+                          </div>
+                          <UInputNumber v-model="counter" :min="0" size="lg" color="neutral"
+                            :ui="{ root: 'max-w-[116px] h-[36px]' }" :increment="{
+                              color: 'neutral',
+                              size: 'lg',
+                            }" :decrement="{
+                              color: 'neutral',
+                              size: 'lg'
+                            }" />
+                          <div class="flex gap-2 items-center">
+                            <p class="text-[20px] leading-[30px] text-gray-950 font-semibold">
+                              {{ product?.price.toLocaleString('ru-RU') }} ₽
+                            </p>
+                            <button class="flex justify-center items-center w-9 h-9 cursor-pointer">
+                              <ProductIconTrash />
+                            </button>
+                          </div>
+                        </div>
+
+                        <div class="flex justify-between gap-4 items-center flex-wrap">
+                          <div class="grid">
+                            <span class="text-sm leading-5 font-medium">
+                              Итого:
+                            </span>
+                            <p class="text-[30px] leading-[38px] text-gray-950 font-semibold">
+                              {{ product?.price.toLocaleString('ru-RU') }} ₽
+                            </p>
+                          </div>
+                          <div class="flex gap-2 flex-wrap">
+                            <UButton @click="showModal = false" color="neutral" solid class="gap-2 px-5" size="xl">
+                              Продолжить покупки
+                            </UButton>
+                            <NuxtLink to="/cart" custom v-slot="{ navigate }">
+                              <UButton class="gap-2 px-5" @click="(e) => {
+                                e.preventDefault()
+                                navigate()
+                              }">
+                                В корзину
+                                <i class="flex items-center justify-center h-5 w-5">
+                                  <ProductIconArrowRight />
+                                </i>
+                              </UButton>
+                            </NuxtLink>
+                          </div>
+                        </div>
+
+                      </div>
+
+                    </template>
+
+                  </UModal>
 
                 </div>
 

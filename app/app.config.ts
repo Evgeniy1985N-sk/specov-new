@@ -230,7 +230,7 @@ export default defineAppConfig({
       slots: {
         root: "relative inline-flex items-center",
         base: [
-          "w-full h-full rounded-xl border-0 placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
+          "w-full h-full rounded-lg border-0 placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
           "transition-colors",
         ],
         increment: "absolute flex items-center",
@@ -336,7 +336,7 @@ export default defineAppConfig({
     button: {
       slots: {
         base: [
-          "rounded-md font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75",
+          "font-medium inline-flex items-center disabled:cursor-not-allowed aria-disabled:cursor-not-allowed disabled:opacity-75 aria-disabled:opacity-75",
           "transition-colors cursor-pointer",
         ],
         label: "truncate",
@@ -386,7 +386,7 @@ export default defineAppConfig({
           color: "neutral",
           variant: "solid",
           class:
-            "text-inverted bg-inverted hover:bg-inverted/90 active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted",
+            "!bg-gray-100 hover:bg-gray-200! ring ring-gray-300 text-inverted bg-inverted hover:bg-inverted/90 active:bg-inverted/90 disabled:bg-inverted aria-disabled:bg-inverted focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-inverted",
         },
         {
           color: "neutral",
