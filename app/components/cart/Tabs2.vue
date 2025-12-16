@@ -40,10 +40,10 @@ function toggleActive(index: number) {
       <div v-if="tabs[0]?.isActive">
         <CartPayment />
       </div>
-      <div v-if="tabs[1]?.isActive" class="flex">
+      <div v-if="tabs[1]?.isActive">
         2
       </div>
-      <div v-if="tabs[2]?.isActive" class="flex">
+      <div v-if="tabs[2]?.isActive">
         3
       </div>
     </div>

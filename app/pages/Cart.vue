@@ -35,7 +35,7 @@ cart.forEach((item) => {
 
             <div class="w-full">
 
-              <div class="grid gap-6">
+              <div class="grid gap-6 border-b border-gray-300 lg:border-0 pb-6 lg:pb-0">
 
                 <div class="flex gap-2 items-baseline">
                   <h1 class="text-[36px] leading-11 text-gray-950 font-['Russo_One']">
@@ -58,14 +58,13 @@ cart.forEach((item) => {
                       <img class="w-20 h-20 sm:w-12 sm:h-12 object-contain" :src="product?.image" :alt="product?.title">
                       <div class="lg:max-w-[392px] w-full">
                         <div>
-                          <div class="flex flex-col-reverse gap-2 sm:gap-6">
+                          <div class="flex flex-col-reverse sm:flex-row gap-2 sm:gap-6">
                             <span class="text-sm leading-5">
                               Код товара: 15561175
                             </span>
                             <CartMark />
                           </div>
-                          <p
-                            class="text-gray-950 font-bold max-w-[308px] lg:max-w-full sm:line-clamp-2 sm:overflow-hidden">
+                          <p class="text-gray-950 font-bold lg:max-w-[308px] sm:line-clamp-2 sm:overflow-hidden">
                             {{ product?.title }}
                           </p>
                         </div>
@@ -141,14 +140,34 @@ cart.forEach((item) => {
 
               </div>
 
-              <div class="grid gap-6 pt-20">
+              <!-- Mobile -->
+              <div class="grid gap-4 pt-6 pb-8 sm:pb-[278px] lg:hidden">
+
+                <p class="text-black font-bold">
+                  Промокод
+                </p>
+
+                <div class="flex items-center gap-4">
+
+                  <UInput color="neutral" size="xl" placeholder="Введите промокод" />
+
+                  <UButton
+                    class="flex w-fit items-center justify-center h-10 cursor-pointer rounded-lg bg-white! text-(--Brand-950) px-4"
+                    color="neutral">Применить
+                  </UButton>
+                </div>
+
+              </div>
+              <!-- Mobile -->
+
+              <div class="hidden lg:grid gap-6 pt-20">
                 <h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">
                   Выберите способ получения
                 </h2>
                 <CartTabs />
               </div>
 
-              <div class="grid gap-6 pt-20">
+              <div class="hidden lg:grid gap-6 pt-20">
                 <h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">
                   Выберите способ оплаты
                 </h2>
@@ -254,11 +273,32 @@ cart.forEach((item) => {
           </div>
 
         </SectionContainer>
+
+        <!-- Panel Mobile -->
+        <div class="py-6 bg-gray-100 lg:hidden">
+          <SectionContainer>
+            <div class="grid gap-4">
+              <p class="flex items-baseline text-sm leading-5 text-gray-950 font-semibold">
+                <span class="max-w-[500px] whitespace-nowrap pr-2">
+                  1 товар
+                </span>
+                <span class="flex-1 border-b border-dotted border-gray-300 border-opacity-0 relative h-0 mx-2"></span>
+                <b class="font-bold text-gray-950 whitespace-nowrap">
+                  7 990 ₽
+                </b>
+              </p>
+              <UButton class="min-h-9 sm:min-h-11">
+                Оформить заказ
+              </UButton>
+            </div>
+          </SectionContainer>
+        </div>
+
       </Section>
 
-      <Feedback />
+      <Feedback class="hidden lg:block" />
 
-      <Section>
+      <Section class="hidden lg:block">
         <SectionContainer>
           <Stores />
         </SectionContainer>
