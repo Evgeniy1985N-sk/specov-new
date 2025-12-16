@@ -148,6 +148,13 @@ cart.forEach((item) => {
                 <CartTabs />
               </div>
 
+              <div class="grid gap-6 pt-20">
+                <h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">
+                  Выберите способ оплаты
+                </h2>
+                <CartTabs2 />
+              </div>
+
             </div>
 
             <aside class="hidden lg:flex items-start w-full max-w-[280px]">
