@@ -33,108 +33,119 @@ cart.forEach((item) => {
 
           <div class="flex gap-8">
 
-            <div class="grid gap-6 w-full">
+            <div class="w-full">
 
-              <div class="flex gap-2 items-baseline">
-                <h1 class="text-[36px] leading-11 text-gray-950 font-['Russo_One']">
-                  Корзина
-                </h1>
-                <span class="text-sm leading-5">
-                  1 товар
-                </span>
-              </div>
+              <div class="grid gap-6">
 
-              <CartPanel />
+                <div class="flex gap-2 items-baseline">
+                  <h1 class="text-[36px] leading-11 text-gray-950 font-['Russo_One']">
+                    Корзина
+                  </h1>
+                  <span class="text-sm leading-5">
+                    1 товар
+                  </span>
+                </div>
 
-              <!-- card -->
-              <div v-for="(product, i) in products" class="w-full sm:p-4 bg-white transition" :key="i">
+                <CartPanel />
 
-                <div class="flex justify-between items-center gap-6 flex-wrap">
+                <!-- card -->
+                <div v-for="(product, i) in products" class="w-full sm:p-4 bg-white transition" :key="i">
 
-                  <div class="flex sm:items-center gap-4 lg:max-w-[520px] w-full">
-                    <UCheckbox size="xl" v-model="check" />
-                    <img class="w-20 h-20 sm:w-12 sm:h-12 object-contain" :src="product?.image" :alt="product?.title">
-                    <div class="lg:max-w-[392px] w-full">
-                      <div>
-                        <div class="flex flex-col-reverse gap-2 sm:gap-6">
-                          <span class="text-sm leading-5">
-                            Код товара: 15561175
-                          </span>
-                          <CartMark />
-                        </div>
-                        <p
-                          class="text-gray-950 font-bold max-w-[308px] lg:max-w-full sm:line-clamp-2 sm:overflow-hidden">
-                          {{ product?.title }}
-                        </p>
-                      </div>
+                  <div class="flex justify-between items-center gap-6 flex-wrap">
 
-                      <div class="flex justify-between flex-wrap lg:hidden mt-4">
-                        <div class="max-w-[116px]">
-                          <UInputNumber v-model="counter" :min="0" size="md" color="neutral" :ui="{ root: 'h-[36px]' }"
-                            :increment="{
-                              class: 'bg-transparen',
-                              color: 'neutral',
-                              variant: 'solid',
-                              size: 'md',
-                            }" :decrement="{
-                              color: 'neutral',
-                              variant: 'solid',
-                              size: 'md'
-                            }" />
-                        </div>
-
-                        <div class="flex items-center justify-between sm:max-w-[150px] w-full">
-                          <p class="text-5 leading-[30px] font-semibold text-gray-950">
-                            {{ product?.price.toLocaleString('ru-RU') }} ₽
+                    <div class="flex sm:items-center gap-4 lg:max-w-[520px] w-full">
+                      <UCheckbox size="xl" v-model="check" />
+                      <img class="w-20 h-20 sm:w-12 sm:h-12 object-contain" :src="product?.image" :alt="product?.title">
+                      <div class="lg:max-w-[392px] w-full">
+                        <div>
+                          <div class="flex flex-col-reverse gap-2 sm:gap-6">
+                            <span class="text-sm leading-5">
+                              Код товара: 15561175
+                            </span>
+                            <CartMark />
+                          </div>
+                          <p
+                            class="text-gray-950 font-bold max-w-[308px] lg:max-w-full sm:line-clamp-2 sm:overflow-hidden">
+                            {{ product?.title }}
                           </p>
-                          <CartButton class="ml-auto sm:ml-0">
-                            <WrapIcon class="w-9 h-9">
-                              <CartIconFavorite />
-                            </WrapIcon>
-                          </CartButton>
-                          <CartButton>
-                            <WrapIcon class="w-9 h-9">
-                              <CartIconTrash />
-                            </WrapIcon>
-                          </CartButton>
+                        </div>
+
+                        <div class="flex justify-between flex-wrap lg:hidden mt-4">
+                          <div class="max-w-[116px]">
+                            <UInputNumber v-model="counter" :min="0" size="md" color="neutral"
+                              :ui="{ root: 'h-[36px]' }" :increment="{
+                                class: 'bg-transparen',
+                                color: 'neutral',
+                                variant: 'solid',
+                                size: 'md',
+                              }" :decrement="{
+                                color: 'neutral',
+                                variant: 'solid',
+                                size: 'md'
+                              }" />
+                          </div>
+
+                          <div class="flex items-center justify-between sm:max-w-[150px] w-full">
+                            <p class="text-5 leading-[30px] font-semibold text-gray-950">
+                              {{ product?.price.toLocaleString('ru-RU') }} ₽
+                            </p>
+                            <CartButton class="ml-auto sm:ml-0">
+                              <WrapIcon class="w-9 h-9">
+                                <CartIconFavorite />
+                              </WrapIcon>
+                            </CartButton>
+                            <CartButton>
+                              <WrapIcon class="w-9 h-9">
+                                <CartIconTrash />
+                              </WrapIcon>
+                            </CartButton>
+                          </div>
+
                         </div>
 
                       </div>
-
                     </div>
-                  </div>
 
-                  <div class="hidden lg:block max-w-[116px]">
-                    <UInputNumber v-model="counter" :min="0" size="md" color="neutral" :ui="{ root: 'h-[36px]' }"
-                      :increment="{
-                        color: 'neutral',
-                        variant: 'solid',
-                        size: 'md',
-                      }" :decrement="{
-                        color: 'neutral',
-                        variant: 'solid',
-                        size: 'md'
-                      }" />
-                  </div>
+                    <div class="hidden lg:block max-w-[116px]">
+                      <UInputNumber v-model="counter" :min="0" size="md" color="neutral" :ui="{ root: 'h-[36px]' }"
+                        :increment="{
+                          color: 'neutral',
+                          variant: 'solid',
+                          size: 'md',
+                        }" :decrement="{
+                          color: 'neutral',
+                          variant: 'solid',
+                          size: 'md'
+                        }" />
+                    </div>
 
-                  <div class="hidden lg:flex items-center max-w-[150px] w-full">
-                    <p class="text-5 leading-[30px] font-semibold text-gray-950">
-                      {{ product?.price.toLocaleString('ru-RU') }} ₽
-                    </p>
-                    <CartButton>
-                      <WrapIcon class="w-9 h-9">
-                        <CartIconFavorite />
-                      </WrapIcon>
-                    </CartButton>
-                    <CartButton>
-                      <WrapIcon class="w-9 h-9">
-                        <CartIconTrash />
-                      </WrapIcon>
-                    </CartButton>
+                    <div class="hidden lg:flex items-center max-w-[150px] w-full">
+                      <p class="text-5 leading-[30px] font-semibold text-gray-950">
+                        {{ product?.price.toLocaleString('ru-RU') }} ₽
+                      </p>
+                      <CartButton>
+                        <WrapIcon class="w-9 h-9">
+                          <CartIconFavorite />
+                        </WrapIcon>
+                      </CartButton>
+                      <CartButton>
+                        <WrapIcon class="w-9 h-9">
+                          <CartIconTrash />
+                        </WrapIcon>
+                      </CartButton>
+                    </div>
+
                   </div>
 
                 </div>
 
+              </div>
+
+              <div class="grid gap-6 pt-20">
+                <h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">
+                  Выберите способ получения
+                </h2>
+                <CartTabs />
               </div>
 
             </div>
@@ -234,7 +245,6 @@ cart.forEach((item) => {
             </aside>
 
           </div>
-
 
         </SectionContainer>
       </Section>

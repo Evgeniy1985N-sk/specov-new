@@ -5,7 +5,6 @@ import { useScrollTo } from '~/composables/useScrollTo'
 const { scrollPosition } = useScroll()
 const { scrollToSection } = useScrollTo()
 
-const activeTab = ref('about')
 const offsetEl = ref(800)
 
 const relatedProducts = useProductsStore().related
