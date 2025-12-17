@@ -3,6 +3,7 @@ import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
 import type { ProductCard } from '~/types/product'
 
+const isShowThanks = ref(false)
 const isShowMenu = ref(false)
 const cart = useCartStore().cart
 const allProducts = useProductsStore().allProducts
@@ -22,11 +23,10 @@ cart.forEach((item) => {
 </script>
 
 <template>
-  <div class="[background:var(--Base-White)]">
 
     <Header />
 
-    <main>
+    <main v-if="!isShowThanks">
 
       <Section class="mt-6! overflow-visible">
         <SectionContainer>
@@ -176,6 +176,7 @@ cart.forEach((item) => {
 
             </div>
 
+            <!-- ASIDE -->
             <aside class="hidden lg:flex items-start w-full max-w-[280px]">
               <div class="sticky top-0 grid gap-4 p-6 bg-gray-100 rounded-lg w-full">
 
@@ -235,10 +236,20 @@ cart.forEach((item) => {
 
                 </div>
 
-               <CartTotal />
+
+                <div class="grid gap-4">
+
+                  <CartTotal />
+
+                  <UButton @click="isShowThanks = true" size="xl" type="submit">
+                    Оформить заказ
+                  </UButton>
+
+                </div>
 
               </div>
             </aside>
+            <!-- ASIDE -->
 
           </div>
 
@@ -257,7 +268,7 @@ cart.forEach((item) => {
                   7 990 ₽
                 </b>
               </p>
-              <UButton class="min-h-9 sm:min-h-11">
+              <UButton @click="isShowThanks = true" class="min-h-9 sm:min-h-11">
                 Оформить заказ
               </UButton>
             </div>
@@ -266,7 +277,7 @@ cart.forEach((item) => {
         <!-- Panel Mobile -->
 
         <!-- Menu -->
-        <CartMenu :is-show="isShowMenu" @close="isShowMenu = false" />
+        <CartMenu :is-show="isShowMenu" @close="isShowMenu = false" @open-thanks="isShowThanks = true" />
         <!-- Menu -->
 
       </Section>
@@ -282,7 +293,10 @@ cart.forEach((item) => {
 
     </main>
 
+    <!-- Window Thanks -->
+    <CartThanks v-if="isShowThanks" @close-thanks="isShowThanks = false" />
+    <!-- Window Thanks -->
+
     <Footer class="hidden lg:block" />
 
-  </div>
 </template>

@@ -13,6 +13,7 @@ const isActiveDelivery = ref(false)
 
 const emit = defineEmits<{
   (e: 'close'): void
+  (e: 'openThanks'): void
 }>()
 
 const menu = ref([
@@ -172,7 +173,15 @@ const goBack = () => {
 
       </ul>
 
-      <CartTotal v-if="!levelMenu" class="grid gap-6" />
+      <div v-if="!levelMenu" class="grid gap-6">
+
+        <CartTotal />
+
+        <UButton @click="$emit('openThanks')" size="xl" type="submit">
+          Оформить заказ
+        </UButton>
+
+      </div>
 
     </SectionContainer>
 
