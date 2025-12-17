@@ -3,7 +3,7 @@ import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
 import type { ProductCard } from '~/types/product'
 
-
+const isShowMenu = ref(false)
 const cart = useCartStore().cart
 const allProducts = useProductsStore().allProducts
 const products = ref<ProductCard[]>([])
@@ -75,11 +75,11 @@ cart.forEach((item) => {
                               :ui="{ root: 'h-[36px]' }" :increment="{
                                 class: 'bg-transparen',
                                 color: 'neutral',
-                                variant: 'solid',
+                                variant: 'ghost',
                                 size: 'md',
                               }" :decrement="{
                                 color: 'neutral',
-                                variant: 'solid',
+                                variant: 'ghost',
                                 size: 'md'
                               }" />
                           </div>
@@ -109,11 +109,11 @@ cart.forEach((item) => {
                       <UInputNumber v-model="counter" :min="0" size="md" color="neutral" :ui="{ root: 'h-[36px]' }"
                         :increment="{
                           color: 'neutral',
-                          variant: 'solid',
+                          variant: 'ghost',
                           size: 'md',
                         }" :decrement="{
                           color: 'neutral',
-                          variant: 'solid',
+                          variant: 'ghost',
                           size: 'md'
                         }" />
                     </div>
@@ -151,7 +151,7 @@ cart.forEach((item) => {
 
                   <UInput color="neutral" size="xl" placeholder="Введите промокод" />
 
-                  <UButton
+                  <UButton @click="isShowMenu = true"
                     class="flex w-fit items-center justify-center h-10 cursor-pointer rounded-lg bg-white! text-(--Brand-950) px-4"
                     color="neutral">Применить
                   </UButton>
@@ -275,7 +275,7 @@ cart.forEach((item) => {
         </SectionContainer>
 
         <!-- Panel Mobile -->
-        <div class="py-6 bg-gray-100 lg:hidden">
+        <div class="fixed bottom-[71px] sm:bottom-20 left-0 w-full py-6 bg-gray-100 lg:hidden">
           <SectionContainer>
             <div class="grid gap-4">
               <p class="flex items-baseline text-sm leading-5 text-gray-950 font-semibold">
@@ -293,8 +293,14 @@ cart.forEach((item) => {
             </div>
           </SectionContainer>
         </div>
+        <!-- Panel Mobile -->
+
+        <!-- Menu -->
+        <CartMenu :is-show="isShowMenu" />
+        <!-- Menu -->
 
       </Section>
+
 
       <Feedback class="hidden lg:block" />
 
@@ -306,7 +312,7 @@ cart.forEach((item) => {
 
     </main>
 
-    <Footer />
+    <Footer class="hidden lg:block" />
 
   </div>
 </template>

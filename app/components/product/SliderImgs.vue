@@ -43,4 +43,16 @@ const props = defineProps<Props>()
 	justify-content: center;
 	align-items: center;
 }
+@media (min-width: 1280px) {
+	.swiper {
+		position: absolute;
+		inset: 0;
+		height: calc(100% + 26px);
+	}
+
+	.swiper :deep(.swiper-pagination) {
+		bottom: 0;
+		display: block;
+	}
+}
 </style>

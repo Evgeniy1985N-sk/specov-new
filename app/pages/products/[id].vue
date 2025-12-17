@@ -263,11 +263,11 @@ function addToCart(itemId: string) {
                 <div class="flex flex-col gap-2">
                   <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" :increment="{
                     color: 'neutral',
-                    variant: 'solid',
+                    variant: 'ghost',
                     size: 'xl',
                   }" :decrement="{
                     color: 'neutral',
-                    variant: 'solid',
+                    variant: 'ghost',
                     size: 'xl'
                   }" />
 
@@ -316,9 +316,11 @@ function addToCart(itemId: string) {
                             :ui="{ root: 'max-w-[116px] h-[36px]' }" :increment="{
                               color: 'neutral',
                               size: 'lg',
+                              variant: 'ghost',
                             }" :decrement="{
                               color: 'neutral',
-                              size: 'lg'
+                              size: 'lg',
+                              variant: 'ghost',
                             }" />
                           <div class="flex gap-2 items-center">
                             <p class="text-[20px] leading-[30px] text-gray-950 font-semibold">

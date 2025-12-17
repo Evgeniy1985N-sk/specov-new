@@ -30,9 +30,11 @@ function addToCart(itemId: string) {
 
 
 <template>
-  <div class="grid gap-4">
+  <div class="grid gap-8">
+
+    <!-- top -->
     <div
-      class="relative flex items-center justify-center h-[155px] sm:h-[280px] rounded-2xl overflow-hidden border border-(--border)">
+      class="relative flex items-center justify-center h-[155px] sm:h-[280px] rounded-2xl border border-(--border) overflow-hidden xl:overflow-visible">
 
       <div class="absolute top-1 right-1 z-10 sm:top-3 sm:right-3 flex flex-row gap-1 sm:gap-2">
 
@@ -49,6 +51,9 @@ function addToCart(itemId: string) {
       <ProductSliderImgs :imgs="props.item.imgs" />
 
     </div>
+    <!-- top -->
+
+
     <div class="flex flex-col justify-between items-start self-stretch">
       <div class="sm:gap-2 flex flex-wrap sm:items-center flex-col sm:flex-row">
 
@@ -74,7 +79,7 @@ function addToCart(itemId: string) {
       </div>
 
       <div :class="props.classBtns"
-        class="w-full gap-4 font-semibold flex flex-wrap xl:flex-nowrap lg:justify-center pt-5 lg:items-center">
+        class="w-full gap-4 font-semibold flex flex-wrap lg:flex-nowrap lg:justify-center pt-5 lg:items-center">
 
         <UButton @click="addToCart(props.item.id)" class="shrink-0 gap-1 px-4 min-h-10">
           <i class="flex items-center justify-center h-5 w-5">
@@ -86,19 +91,20 @@ function addToCart(itemId: string) {
         </UButton>
 
 
-        <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'hidden! lg:flex!' }"
+        <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'hidden! lg:flex! max-w-[126px]' }"
           :increment="{
             color: 'neutral',
-            variant: 'solid',
+            variant: 'ghost',
             size: 'lg',
           }" :decrement="{
             color: 'neutral',
-            variant: 'solid',
+            variant: 'ghost',
             size: 'lg'
           }" />
 
       </div>
     </div>
+
   </div>
 </template>
 

@@ -233,8 +233,8 @@ export default defineAppConfig({
           "w-full h-full bg-transparent rounded-lg border-0 placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
           "transition-colors",
         ],
-        increment: "absolute flex items-center",
-        decrement: "absolute flex items-center",
+        increment: "absolute flex items-center p-0! pr-[1px]!",
+        decrement: "absolute flex items-center p-0! pl-[1px]!",
       },
       variants: {
         fieldGroup: {
@@ -583,7 +583,7 @@ export default defineAppConfig({
           color: "neutral",
           variant: "ghost",
           class:
-            "text-default hover:bg-elevated active:bg-elevated focus:outline-none focus-visible:bg-elevated hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent",
+            "text-gray-950! text-default hover:bg-gray-100 active:bg-elevated focus:outline-none focus-visible:bg-elevated hover:disabled:bg-transparent dark:hover:disabled:bg-transparent hover:aria-disabled:bg-transparent dark:hover:aria-disabled:bg-transparent",
         },
         {
           color: "neutral",
