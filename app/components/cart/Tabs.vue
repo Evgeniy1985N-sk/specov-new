@@ -7,19 +7,19 @@ const tabs = ref([
   {
     label: 'Самовывоз',
     dsc: '2 магазина',
-    icon: Pin,
+    icon: markRaw(Pin),
     isActive: true,
   },
   {
     label: 'Доставка курьером',
     dsc: 'от 290 рублей',
-    icon: Car,
+    icon: markRaw(Car),
     isActive: false,
   },
   {
     label: 'Транспортная компания',
     dsc: 'Рассчитать доставку',
-    icon: Box,
+    icon: markRaw(Box),
     isActive: false,
   }
 ])
