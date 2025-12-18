@@ -105,10 +105,6 @@ const handleMaxChange = (e: Event) => {
         @input="handleMaxChange"
       >
     </div>
-    <div class="display">
-      <span>{{ min }}</span>
-      <span>{{ max }}</span>
-    </div>
   </div>
 </template>
 
@@ -183,15 +179,5 @@ input::-moz-range-thumb {
   cursor: pointer;
   width: 18px;
   height: 18px;
-}
-
-.display {
-  margin: 40px 0;
-  width: 100%;
-  display: flex;
-  justify-content: space-between;
-  font-size: 18px;
-  font-weight: bold;
-  color: #333;
 }
 </style>
