@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
+import type TitleGoodsVue from '~/components/TitleGoods.vue'
 import type { ProductCard } from '~/types/product'
 
 const isShowThanks = ref(false)
@@ -37,14 +38,7 @@ cart.forEach((item) => {
 
               <div class="grid gap-6 border-b border-gray-300 lg:border-0 pb-6 lg:pb-0">
 
-                <div class="flex gap-2 items-baseline">
-                  <h1 class="text-[36px] leading-11 text-gray-950 font-['Russo_One']">
-                    Корзина
-                  </h1>
-                  <span class="text-sm leading-5">
-                    1 товар
-                  </span>
-                </div>
+                <TitleGoods title="Корзина" :goods="1" />
 
                 <CartPanel />
 
@@ -54,7 +48,9 @@ cart.forEach((item) => {
                   <div class="flex justify-between items-center gap-6 flex-wrap">
 
                     <div class="flex sm:items-center gap-4 lg:max-w-[520px] w-full">
+
                       <UCheckbox size="xl" v-model="check" />
+                      
                       <img class="w-20 h-20 sm:w-12 sm:h-12 object-contain" :src="product?.image" :alt="product?.title">
                       <div class="lg:max-w-[392px] w-full">
                         <div>
