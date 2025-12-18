@@ -620,7 +620,7 @@ const goBack = () => {
         <li v-for="(item, index) in menu" :key="index" @click="toggleActive(index)"
           :class="[item.isActive ? 'lg:bg-gray-100' : 'lg:relative z-1']" class="py-2.5 px-3.5 rounded-lg">
 
-          <div :class="[item.isActive ? 'lg:text-(--Brand-700)' : 'text-gray-600']"
+          <div :class="[item.isActive ? 'lg:text-(--Brand-700)' : 'text-gray-600']" href=""
             class="flex gap-1.5 items-center cursor-pointer text-sm leading-5 font-bold">
             <span class="flex items-center justify-center h-6 w-6">
               <component :is="item.icon" />
@@ -639,7 +639,7 @@ const goBack = () => {
                 <ul class="columns-3 gap-x-8 gap-y-3">
 
                   <li v-for="category in group.items" class="mb-3">
-                    <a class="flex items-center justify-between gap-2" href="/">
+                    <a class="flex items-center justify-between gap-2" :href="category?.src">
                       <p class="w-full max-w-[190px] text-gray-950 text-sm leading-5 font-medium">
                         {{ category.name }}
                       </p>

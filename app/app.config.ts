@@ -337,7 +337,7 @@ export default defineAppConfig({
       slots: {
         root: "relative flex items-start",
         container: "flex items-center",
-        base: "rounded-sm ring ring-inset ring-accented overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2",
+        base: "bg-white rounded-sm ring ring-inset ring-accented ring-gray-300 overflow-hidden focus-visible:outline-2 focus-visible:outline-offset-2",
         indicator: "flex items-center justify-center size-full text-inverted",
         icon: "shrink-0 size-full",
         wrapper: "w-full",
@@ -636,6 +636,29 @@ export default defineAppConfig({
         color: "primary",
         variant: "solid",
         size: "md",
+      },
+    },
+    accordion: {
+      slots: {
+        root: "w-full",
+        item: "border-0 border-default last:border-b-0",
+        header: "flex",
+        trigger:
+          "group flex-1 flex-row-reverse justify-end items-center gap-1.5 font-medium text-sm py-2 focus-visible:outline-primary min-w-0",
+        content:
+          "data-[state=open]:animate-[accordion-down_200ms_ease-out] data-[state=closed]:animate-[accordion-up_200ms_ease-out] overflow-hidden focus:outline-none",
+        body: "text-sm pb-3.5",
+        leadingIcon: "shrink-0 size-5",
+        trailingIcon:
+          "m-0! shrink-0 size-5 ms-auto group-data-[state=open]:rotate-180 transition-transform duration-200",
+        label: "text-base leading-6 font-bold text-black text-start break-words",
+      },
+      variants: {
+        disabled: {
+          true: {
+            trigger: "cursor-not-allowed opacity-75",
+          },
+        },
       },
     },
   },
