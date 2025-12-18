@@ -26,7 +26,7 @@ cart.forEach((item) => {
 
     <Header />
 
-    <main v-if="!isShowThanks">
+    <main>
 
       <Section class="mt-6! overflow-visible">
         <SectionContainer>
@@ -37,7 +37,7 @@ cart.forEach((item) => {
 
               <div class="grid gap-6 border-b border-gray-300 lg:border-0 pb-6 lg:pb-0">
 
-                <TitleGoods title="Корзина" :goods="1" />
+                <TitleGoods title="Фены строительные" :goods="106" />
 
                 <CartPanel />
 
@@ -287,10 +287,6 @@ cart.forEach((item) => {
       </Section>
 
     </main>
-
-    <!-- Window Thanks -->
-    <CartThanks v-if="isShowThanks" @close-thanks="isShowThanks = false" />
-    <!-- Window Thanks -->
 
     <Footer class="hidden lg:block" />
 

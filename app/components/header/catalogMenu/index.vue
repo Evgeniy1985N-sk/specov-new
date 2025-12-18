@@ -28,7 +28,8 @@ const menu = ref([
 
           {
             name: 'Автомобильные аксессуары',
-            quntity: '34 054'
+            quntity: '34 054',
+            src: '/catalog'
           },
           {
             name: 'Автомобильные масла и смазки',
@@ -567,9 +568,17 @@ function toggleSubMenu(id: number, idSub: number) {
 
 const goBack = () => {
   if (levelMenu.value > 0) {
+
     levelMenu.value--;
+    if (levelMenu.value == 0) {
+      navigateTo('/catalog');
+    }
+  } else {
+    navigateTo('/catalog');
   }
 };
+
+
 
 </script>
 
@@ -583,21 +592,17 @@ const goBack = () => {
         <div class="flex justify-between items-center">
 
           <button @click="goBack" class="flex items-center gap-2">
-            <span class="flex items-center justify-center w-9 h-9">
-              <svg width="15" height="12" viewBox="0 0 15 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M14.1668 5.83331H0.833496M0.833496 5.83331L5.8335 10.8333M0.833496 5.83331L5.8335 0.833313"
-                  stroke="#535862" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </span>
+            <WrapIcon>
+              <HeaderCatalogMenuIconBack />
+            </WrapIcon>
             <p class="text-[24px] leading-8 font-['Russo_One'] text-black">
               Каталог
             </p>
           </button>
-          <button @click="$emit('hideCatalog')" class="flex items-center justify-center w-9 h-9">
-            <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M10.8335 0.833313L0.833496 10.8333M0.833496 0.833313L10.8335 10.8333" stroke="#535862"
-                stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
+          <button @click="$emit('hideCatalog')">
+            <WrapIcon class="w-9 h-9">
+              <HeaderCatalogMenuIconCross />
+            </WrapIcon>
           </button>
 
         </div>
@@ -641,12 +646,9 @@ const goBack = () => {
                       <span class="shrink-0 text-sm leading-5 font-medium text-gray-600">
                         {{ category.quntity }}
                       </span>
-                      <i class="flex items-center justify-center w-5 h-5">
-                        <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M0.833496 10.8333L5.8335 5.83333L0.833496 0.833328" stroke="#535862"
-                            stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                      </i>
+                      <WrapIcon class="w-9 h-9">
+                        <HeaderCatalogMenuIconAng />
+                      </WrapIcon>
                     </a>
                   </li>
 
@@ -672,12 +674,9 @@ const goBack = () => {
               <component :is="item.icon" />
             </span>
             {{ item.name }}
-            <i class="ml-auto flex items-center justify-center w-5 h-5">
-              <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M0.833496 10.8333L5.8335 5.83331L0.833496 0.833313" stroke="currentColor"
-                  stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-              </svg>
-            </i>
+            <WrapIcon class="ml-auto">
+              <HeaderCatalogMenuIconAng />
+            </WrapIcon>
           </div>
 
           <ul v-if="item.isActive" class="grid gap-1">
@@ -688,12 +687,9 @@ const goBack = () => {
               <div v-if="levelMenu == 1" @click="toggleSubMenu(index, groupIndex)"
                 class="flex gap-1.5 items-center py-2.5 px-3.5 border-b border-(--border)">
                 {{ group.title }}
-                <i class="ml-auto flex items-center justify-center w-5 h-5">
-                  <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M0.833496 10.8333L5.8335 5.83331L0.833496 0.833313" stroke="currentColor"
-                      stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                  </svg>
-                </i>
+                <WrapIcon class="ml-auto">
+                  <HeaderCatalogMenuIconAng />
+                </WrapIcon>
               </div>
 
               <ul v-if="levelMenu == 2 && group.isActive" class="grid gap-1">
@@ -705,12 +701,9 @@ const goBack = () => {
                     href="/">
                     {{ category.name }}
 
-                    <i class="ml-auto flex items-center justify-center w-5 h-5">
-                      <svg width="7" height="12" viewBox="0 0 7 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M0.833496 10.8333L5.8335 5.83331L0.833496 0.833313" stroke="currentColor"
-                          stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round" />
-                      </svg>
-                    </i>
+                    <WrapIcon class="ml-auto">
+                      <HeaderCatalogMenuIconAng />
+                    </WrapIcon>
                   </a>
 
                 </li>
