@@ -59,17 +59,20 @@ cart.forEach((item) => {
           <!-- ASIDE -->
 
 
-          <div class="grid gap-6 w-full">
+          <div class="w-full">
 
-            <div class="flex justify-between items-center">
+            <!-- Top -->
+            <div class="flex justify-between items-center pb-6">
               <CatalogSort @handle-click="(value) => sort = value" />
-
               <CatalogSwitch @handle-click="isList = !isList" />
             </div>
+            <!-- Top -->
 
-            <div class="grid gap-8 grid-cols-3">
-              <ProductCard v-for="item in items" :item="item" :key="item.id" />
+            <!-- Cards -->
+            <div :class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6' " class="grid lg:gap-8">
+              <ProductCard :is-row="isList" :is-list="!isList" v-for="item in items" :item="item" :key="item.id" />
             </div>
+            <!-- Cards -->
 
           </div>
 

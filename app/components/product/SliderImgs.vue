@@ -20,12 +20,12 @@ const props = defineProps<Props>()
 <template>
 	<ClientOnly>
 
-		<swiper :slides-per-view="1" :loop="false" :space-between="0" :pagination="{ clickable: true }"
-		:navigation="false" :modules="[Pagination]">
+		<swiper :slides-per-view="1" :loop="false" :space-between="0" :pagination="{ clickable: true }" :navigation="false"
+			:modules="[Pagination]">
 
 			<swiper-slide v-for="(item, i) in props.imgs" :key="i">
 
-        <img :src="item.src" :alt="item.alt" class="max-w-[115px] sm:max-w-full">
+				<img :src="item.src" :alt="item.alt" class="img-sl max-w-[115px] sm:max-w-full">
 
 			</swiper-slide>
 
@@ -38,11 +38,13 @@ const props = defineProps<Props>()
 .swiper :deep(.swiper-pagination) {
 	display: none;
 }
+
 .swiper-slide {
 	display: flex;
 	justify-content: center;
 	align-items: center;
 }
+
 @media (min-width: 1280px) {
 	.swiper {
 		position: absolute;

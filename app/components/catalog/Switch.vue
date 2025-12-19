@@ -6,8 +6,8 @@ const emit = defineEmits(['handleClick'])
 
 
 const items = ref([
-  { label: 'list', icon: markRaw(List), isActive: true },
-  { label: 'masonry', icon: markRaw(Masonry), isActive: false },
+  { label: 'list', icon: markRaw(List), isActive: false },
+  { label: 'masonry', icon: markRaw(Masonry), isActive: true },
 ]);
 
 function toggleActive(index: number) {
