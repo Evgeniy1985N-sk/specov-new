@@ -3,6 +3,8 @@ import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
 import type { ProductCard } from '~/types/product'
 
+const isList = ref(false)
+
 const items = useProductsStore().allProducts
 
 const cart = useCartStore().cart
@@ -59,8 +61,10 @@ cart.forEach((item) => {
 
           <div class="grid gap-6 w-full">
 
-            <div class="flex justify-between">
+            <div class="flex justify-between items-center">
               <CatalogSort @handle-click="(value) => sort = value" />
+
+              <CatalogSwitch @handle-click="isList = !isList" />
             </div>
 
             <div class="grid gap-8 grid-cols-3">
