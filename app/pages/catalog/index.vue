@@ -60,7 +60,7 @@ cart.forEach((item) => {
 
           <!-- ASIDE -->
           <aside ref="aside" :class="isShoWFilter ? 'left-0' : ''"
-            class="fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible overscroll-[contain] transition z-100 lg:relative flex items-start w-full max-w-[280px]">
+            class="fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible overscroll-[contain] transition z-100 lg:z-0 lg:relative flex items-start w-full max-w-[280px]">
             <div @click="isShowPopover = !isShowPopover" class="grid gap-6 p-4 bg-gray-100 rounded-lg w-full">
 
               <CatalogFilter />
