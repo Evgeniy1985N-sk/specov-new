@@ -6,14 +6,12 @@ import type { ProductCard } from '~/types/product'
 const isShowPopover = ref(false)
 const isShoWFilter = ref(false)
 const isList = ref(false)
-
 const items = useProductsStore().allProducts
-
 const cart = useCartStore().cart
 const allProducts = useProductsStore().allProducts
 const products = ref<ProductCard[]>([])
-
 const sort = ref('Сначала популярные')
+const gardenProducts = useProductsStore().garden
 
 cart.forEach((item) => {
   const product = allProducts.find(p => p.id === item.id)
@@ -109,6 +107,13 @@ cart.forEach((item) => {
             </div>
             <!-- Cards -->
 
+            <!-- More Cards -->
+            <UButton
+              class="w-full min-h-10 mt-6 bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5">
+              Показать еще
+            </UButton>
+            <!-- More Cards -->
+
           </div>
 
         </div>
@@ -116,10 +121,21 @@ cart.forEach((item) => {
       </SectionContainer>
     </Section>
 
+    <Section>
+      <SectionContainer>
+        <SectionHeader>
+          <SectionTitle text="Вы недавно смотрели" />
+          <SectionButton text="Смотреть всё" path="/" />
+        </SectionHeader>
 
-    <Feedback class="hidden lg:block" />
+        <ProductSlider :items="gardenProducts" />
 
-    <Section class="hidden lg:block">
+      </SectionContainer>
+    </Section>
+
+    <Feedback />
+
+    <Section>
       <SectionContainer>
         <Stores />
       </SectionContainer>
@@ -127,6 +143,6 @@ cart.forEach((item) => {
 
   </main>
 
-  <Footer class="hidden lg:block" />
+  <Footer />
 
 </template>

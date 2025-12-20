@@ -100,7 +100,7 @@ const spec = [
 
       <!-- Prices -->
       <div :class="isRow ? 'w-full flex-row sm:flex-col gap-x-2' : ''"
-        class="sm:gap-2 flex flex-wrap sm:items-center flex-col sm:flex-row">
+        class="sm:gap-2 flex flex-wrap sm:items-center flex-col sm:flex-row sm:flex-nowrap">
 
         <div v-if="isRow && props.item.oldPrice" class="lg:w-full order-1 lg:-order-1">
           <div class="bg-[seagreen] w-fit leading-[22px] text-center text-white text-xs px-1.5 rounded-md">
@@ -131,7 +131,7 @@ const spec = [
         <!-- Price + btns -->
 
         <div v-if="props.item.oldPrice" class="gap-2 flex justify-center items-center">
-          <div class="text-zinc-400 line-through">
+          <div class="text-zinc-400 line-through shrink-0">
             {{ props.item.oldPrice.toLocaleString('ru-RU') }} ₽
           </div>
           <div v-if="!isRow" class="bg-[seagreen] leading-[22px] text-center text-white text-xs px-1.5 rounded-md">
