@@ -3,6 +3,9 @@ import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
 import type { ProductCard } from '~/types/product'
 
+const aside = ref<HTMLElement | null>(null)
+
+const isShoWFilter = ref(false)
 const isList = ref(false)
 
 const items = useProductsStore().allProducts
@@ -20,6 +23,25 @@ cart.forEach((item) => {
   }
 })
 
+// Click не по элементу
+// const handleClickOutside = (event: Event) => {
+//   if (aside.value && !aside.value.contains(event.target as Node)) {
+//     isShoWFilter.value = false
+//   }
+// }
+
+// onMounted(() => {
+//   document.addEventListener('click', handleClickOutside)
+// })
+
+// onBeforeUnmount(() => {
+//   document.removeEventListener('click', handleClickOutside)
+// })
+
+// const emit = defineEmits<{
+//   (e: 'handleClick', value: string): void
+// }>()
+// Click не по элементу
 
 </script>
 
@@ -38,7 +60,7 @@ cart.forEach((item) => {
         <div class="flex gap-8">
 
           <!-- ASIDE -->
-          <aside class="hidden lg:flex items-start w-full max-w-[280px]">
+          <aside ref="aside" :class="isShoWFilter ? 'left-0' :  '' " class="fixed top-0 -left-full h-screen overflow-auto lg:overflow-visible overscroll-[contain] transition z-100 lg:static flex items-start w-full max-w-[280px]">
             <div class="grid gap-6 p-4 bg-gray-100 rounded-lg w-full">
 
               <CatalogFilter />
@@ -62,9 +84,16 @@ cart.forEach((item) => {
           <div class="w-full">
 
             <!-- Top -->
-            <div class="flex justify-between items-center pb-6">
+            <div class="flex justify-between items-center flex-wrap gap-x-2 gap-y-4 pb-6">
               <CatalogSort @handle-click="(value) => sort = value" />
+
+                <button @click="isShoWFilter = !isShoWFilter" class="flex lg:hidden gap-1.5 items-center sm:mr-auto text-sm">
+                  Фильтры
+                  <CatalogIconFilter />
+                </button>
+
               <CatalogSwitch @handle-click="isList = !isList" />
+
             </div>
             <!-- Top -->
 

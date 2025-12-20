@@ -51,10 +51,10 @@ function toggleActive(index: number) {
 
 <template>
 
-  <div ref="dropdown" class="relative min-w-[270px]">
+  <div ref="dropdown" class="relative min-w-[174px] sm:min-w-[270px]">
 
     <div class="flex gap-1 items-center">
-      <span class="text-sm leading-5 font-semibold">
+      <span class="hidden sm-block text-sm leading-5 font-semibold">
         Сортировка:
       </span>
       <button @click="isShow = !isShow" class="flex items-baseline gap-1 text-(--Brand-700) cursor-pointer">

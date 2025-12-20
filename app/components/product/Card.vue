@@ -45,13 +45,13 @@ const spec = [
 
   <!-- Wapper -->
   <div
-    :class="isRow ? 'custom-class relative pl-[100px] sm:pl-0 sm:flex flex-wrap sm:flex-nowrap gap-4 pb-8 sm:pb-12 border-b border-gray-300' : 'grid'"
+    :class="isRow ? 'custom-class relative pl-[100px] sm:pl-0 sm:flex flex-wrap sm:flex-nowrap gap-4 justify-between pb-8 sm:pb-12 border-b border-gray-300' : 'grid'"
     class="gap-4 md:gap-8">
 
     <!-- Media -->
     <div
-      :class="isRow ? 'absolute top-0 left-0 flex items-baseline sm:items-center sm:relative w-20 h-20 border-0 sm:border sm:w-56 sm:h-56! lg:w-[280px] lg:h-[280px] shrink-0' : 'relative items-center'"
-      class="flex justify-center h-[155px] sm:h-[280px] rounded-2xl border border-(--border) overflow-hidden xl:overflow-visible">
+      :class="isRow ? 'absolute top-0 left-0 flex items-baseline sm:items-center sm:relative w-20 h-20 border-0 sm:border sm:w-56 sm:h-56! lg:w-[280px] lg:h-[280px]! shrink-0' : 'relative items-center'"
+      class="flex justify-center h-[155px] sm:h-[230px] xl:h-[280px] rounded-2xl border border-(--border) overflow-hidden xl:overflow-visible">
 
       <div :class="isRow ? 'hidden sm:flex' : 'flex'"
         class="absolute top-1 right-1 z-10 sm:top-3 sm:right-3 flex-row gap-1 sm:gap-2">
@@ -74,7 +74,7 @@ const spec = [
     <!-- Media -->
 
     <!-- isRow -->
-    <div v-if="isRow" class="max-w-280px">
+    <div v-if="isRow" class="max-w-[280px]">
       <span class="text-sm leading-5">
         Код товара: 15561175
       </span>
@@ -188,6 +188,11 @@ const spec = [
 </template>
 
 <style scoped>
+@media (min-width: 1200px) {
+  .custom-class:deep(.img-sl) {
+    max-width: 220px;
+  }
+}
 @media (max-width: 639px) {
   .custom-class:deep(.img-sl) {
     width: 100%;
