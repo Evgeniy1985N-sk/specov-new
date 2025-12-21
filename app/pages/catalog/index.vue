@@ -54,6 +54,7 @@ cart.forEach((item) => {
 
     <Section class="mt-6! overflow-visible">
       <SectionContainer>
+        <TitleGoods class="mb-6" :goods="116" title="Фены строительные" />
 
         <div class="flex gap-8">
 
