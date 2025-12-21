@@ -47,8 +47,8 @@ cart.forEach((item) => {
 
   <Header />
 
-  <Breadcrumbs />
 
+  <Breadcrumbs />
 
   <main>
 

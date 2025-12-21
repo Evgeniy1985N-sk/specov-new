@@ -53,7 +53,7 @@ watch(activeTab, (newVal) => {
 
   <main>
 
-    <Section class="mt-6! overflow-visible">
+    <Section class="mt-6!">
       <SectionContainer>
 
         <FavoritePopup v-if="isShowPopup" @close-popup="isShowPopup = false" class="mb-6" date="12.01.2026" />

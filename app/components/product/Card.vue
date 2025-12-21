@@ -7,9 +7,8 @@ interface Props {
   classBtns?: string
   isRow?: boolean
   isList?: boolean
-
 }
-
+const date = ref('12.01.2026 в 17.00')
 const props = defineProps<Props>()
 
 const counter = ref(0)
@@ -56,13 +55,11 @@ const spec = [
       <div :class="isRow ? 'hidden sm:flex' : 'flex'"
         class="absolute top-1 right-1 z-10 sm:top-3 sm:right-3 flex-row gap-1 sm:gap-2">
 
-        <ProductIconButton>
-          <ProductIconFavorite />
-        </ProductIconButton>
+        <ProductButtonFavorite :date="date" />
 
-        <ProductIconButton hover-color="hover:text-(--Brand-600)">
+        <ProductButtonCompare>
           <ProductIconCompare />
-        </ProductIconButton>
+        </ProductButtonCompare>
 
       </div>
 
@@ -117,13 +114,11 @@ const spec = [
 
           <div v-if="isRow" class="sm:hidden flex">
 
-            <ProductIconButton class="shadow-none text-gray-600">
-              <ProductIconFavorite />
-            </ProductIconButton>
+            <ProductButtonFavorite class="shadow-none text-gray-600" :date="date" />
 
-            <ProductIconButton class="shadow-none text-gray-600" hover-color="hover:text-(--Brand-600)">
+            <ProductButtonCompare class="shadow-none text-gray-600">
               <ProductIconCompare />
-            </ProductIconButton>
+            </ProductButtonCompare>
 
           </div>
 
