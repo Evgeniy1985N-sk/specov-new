@@ -11,7 +11,7 @@ defineProps({
 </script>
 
 <template>
-  <component :is="tag" :class="class" class="font-['Russo_One'] text-[24px] leading-8 sm:text-[36px] sm:leading-11 text-gray-950">
+  <component :is="tag" :class="class" class="font-['Russo_One'] text-[30px] leading-[38px] sm:text-[48px] sm:leading-[60px] text-gray-950">
     <slot />
   </component>
 </template>

@@ -5,13 +5,13 @@ defineProps({
   },
   tag: {
     type: String,
-    default: 'h2'
+    default: 'p'
   }
 })
 </script>
 
 <template>
-  <component :is="tag" :class="class" class="font-['Russo_One'] text-[24px] leading-8 sm:text-[36px] sm:leading-11 text-gray-950">
+  <component :is="tag" :class="class" class="grid gap-4 text-[18px] leading-7 font-medium">
     <slot />
   </component>
 </template>
