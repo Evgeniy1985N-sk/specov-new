@@ -89,8 +89,6 @@ leading-4 (16px)
 leading-5 (20px)
 leading-6 (24px) */
 
-
-
 /*
 sm 640px
 md 768px
@@ -98,8 +96,6 @@ lg 1024px
 xl 1280px
 2xl 1536px 
 */
-
-
 
 /* rounded-sm    → 0.125rem (2px)
 rounded-md    → 0.25rem  (4px)
@@ -109,3 +105,6 @@ rounded-xl    → 0.5rem   (8px)
 rounded-2xl   → 0.75rem  (12px)
 rounded-3xl   → 1rem     (16px)
 rounded-full  → 9999px   (круг/овал) */
+
+
+/* font-['Russo_One'] */
