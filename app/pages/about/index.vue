@@ -36,6 +36,28 @@
 
     <AboutSlider />
 
+    <Section>
+      <SectionContainer>
+
+        <div class="relative flex justify-between flex-col lg:flex-row gap-6">
+          <p class="grid gap-4 text-[18px] leading-7 font-medium">
+            Работаем по всей России
+          </p>
+          <h2
+            class="max-w-[800px] font-['Russo_One'] text-[24px] leading-8 sm:text-[30px] sm:leading-[38px] text-gray-950">
+            География наших поставок охватывает не только Тюменскую область, но и включает в себя всю Россию – от
+            Калининграда и Мурманска до Владивостока и Сахалина.
+          </h2>
+        </div>
+
+        <div class="-mt-[26px] sm:-mt-[60px] -mx-4 sm:-mx-[90px] lg:mx-0">
+          <img class="hidden sm:block" src="/image/about/Map.svg" alt="Map">
+          <img class="sm:hidden w-full" src="/image/about/Map-mob.svg" alt="Map">
+        </div>
+
+      </SectionContainer>
+    </Section>
+
 
     <Feedback />
 
