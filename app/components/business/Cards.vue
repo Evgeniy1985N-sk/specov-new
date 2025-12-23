@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import Icon4 from '@/components/about/icon/Icon-4.vue';
-import Icon5 from '@/components/about/icon/Icon-5.vue';
-import Icon6 from '@/components/about/icon/Icon-6.vue';
-import Icon7 from '@/components/about/icon/Icon-7.vue';
+import Icon4 from '@/components/business/icon/Icon-4.vue';
+import Icon5 from '@/components/business/icon/Icon-5.vue';
+import Icon6 from '@/components/business/icon/Icon-6.vue';
+import Icon7 from '@/components/business/icon/Icon-7.vue';
 
 const items = ref([
   {

@@ -40,7 +40,7 @@ const goNext = () => {
 
 <template>
 	<Section>
-		<SectionContiner>
+		<SectionContainer>
 			<ClientOnly>
 				<div class="relative max-w-(--container) px-4 m-auto pt-6 pb-5">
 
@@ -74,7 +74,7 @@ const goNext = () => {
 
 				</div>
 			</ClientOnly>
-		</SectionContiner>
+		</SectionContainer>
 	</Section>
 </template>
 

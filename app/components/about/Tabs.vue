@@ -32,7 +32,7 @@ function toggleActive(index: number) {
 
     </div>
 
-    <AboutCards2 v-if="tabs[0]?.isActive" />
+    <Cards v-if="tabs[0]?.isActive" />
 
     <AboutCards3 v-if="tabs[1]?.isActive" />
 

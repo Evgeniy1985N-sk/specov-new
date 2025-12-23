@@ -23,7 +23,7 @@
             <div class="text-green-800"> Магазины </div>
           </a>
 
-          <a href="/enterprize-customers"
+          <a href="/for-business"
             class="gap-1 flex justify-center bg-yellow-50 hover:bg-[#EAE0BE] transition items-center py-1 px-2.5 rounded-2xl">
             <div class="h-4 w-4"><svg width="100%" height="100%" style="overflow: visible;" preserveAspectRatio="none"
                 viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
