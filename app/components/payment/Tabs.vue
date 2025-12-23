@@ -40,7 +40,7 @@ function toggleActive(index: number) {
 
     </div>
 
-    <PaymentCards v-if="tabs[0]?.isActive" />
+    <Cards2 v-if="tabs[0]?.isActive" />
 
     <PaymentCards2 v-if="tabs[1]?.isActive" />
 

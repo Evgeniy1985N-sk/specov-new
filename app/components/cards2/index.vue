@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import Icon1 from '~/components/payment/icon/Icon-1.vue';
-import Icon2 from '@/components/payment/icon/Icon-2.vue';
-import Icon3 from '@/components/payment/icon/Icon-3.vue';
+import Icon1 from '~/components/cards2/icon/Icon-1.vue';
+import Icon2 from '@/components/cards2/icon/Icon-2.vue';
+import Icon3 from '@/components/cards2/icon/Icon-3.vue';
 
 const items = ref([
   {
@@ -22,7 +22,7 @@ const items = ref([
 
 <template>
 
-  <div class="grid gap-6 grid-cols-[1fr 1fr] lg:grid-cols-[286px_286px_1fr]">
+  <div class="grid gap-2 sm:gap-6 grid-cols-[1fr 1fr] lg:grid-cols-[286px_286px_1fr]">
 
     <div v-for="(item, i) in items" :class="{ 'col-span-2 lg:col-auto': i === items.length - 1 }"
       class="item flex flex-col gap-6 w-full p-6 border border-gray-200 rounded-xl bg-white">
