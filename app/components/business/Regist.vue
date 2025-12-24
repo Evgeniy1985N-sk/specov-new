@@ -1,5 +1,10 @@
+<script setup lang="ts">
+const showModal = ref(true)
+</script>
+
+
 <template>
-  <UModal title="Вход или регистрация">
+  <UModal v-model:open="showModal" :close=false>
 
     <UButton class="px-5">
       Зарегистрироваться как юрлицо
@@ -7,14 +12,13 @@
 
     <template #body>
 
-      <UForm ref="form">
-        <UFormField label="Email или телефон" name="emailphone">
-          <UInput color="neutral" size="xl" />
-        </UFormField>
-        <UButton class="px-5">
-          Зарегистрироваться
-        </UButton>
-      </UForm>
+      <ModalClose />
+
+      <ModalBack class-wrap="mb-6" text="Регистрация" />
+
+      <UButton @click="showModal = false" class="px-5">
+        Зарегистрироваться
+      </UButton>
 
     </template>
 
