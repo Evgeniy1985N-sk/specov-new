@@ -72,7 +72,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
       <UInput 
         v-model="state.name" 
         :ui="{
-          base: 'shadow-none w-full h-11 !bg-white text-gray-500 placeholder-gray-400 border-transparent rounded-lg py-2.5 px-3.5 focus:outline-none ring-0 appearance-none',
+          base: 'text-base shadow-none w-full h-11 !bg-white text-gray-500 placeholder-gray-400 border-transparent rounded-lg py-2.5 px-3.5 focus:outline-none ring-0 appearance-none',
           root: 'w-full'
         }" 
         placeholder="Ваше имя"  
@@ -86,10 +86,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     >
       <FeedbackPhoneInput 
         v-model="state.phone"
-        :ui="{
-          base: 'shadow-none w-full h-11 !bg-white text-gray-500 placeholder-gray-400 border-transparent rounded-lg py-2.5 px-3.5 focus:outline-none ring-0 appearance-none',
-          root: 'w-full'
-        }"
       />
     </UFormField>
 

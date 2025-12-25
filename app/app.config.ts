@@ -147,7 +147,7 @@ export default defineAppConfig({
           color: "neutral",
           variant: ["outline", "subtle"],
           class:
-            "w-full !bg-white ring-gray-300! text-gray-600 rounded-lg focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-inverted",
+            "w-full bg-white ring-gray-300! text-sm min-h-10 text-gray-600 rounded-lg focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-inverted",
         },
         {
           color: "neutral",

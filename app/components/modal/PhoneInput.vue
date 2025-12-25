@@ -4,6 +4,7 @@ import IMask from 'imask'
 
 const props = defineProps<{
   modelValue: string
+   hasError?: boolean 
 }>()
 
 const emit = defineEmits<{
@@ -19,7 +20,7 @@ onMounted(() => {
 
   mask = IMask(inputRef.value, {
     mask: '+{7} (000) 000-00-00',
-    lazy: false
+    lazy: true
   })
 
   // Сразу устанавливаем значение из modelValue
@@ -53,11 +54,16 @@ onBeforeUnmount(() => {
 </script>
 
 <template>
-  <input
-    ref="inputRef"
-    type="tel"
-    class="text-base shadow-none w-full h-11 bg-white! text-gray-500 placeholder-gray-400 border-transparent rounded-lg py-2.5 px-3.5 focus:outline-none ring-0 appearance-none"
-    placeholder="+7 (999) 999-99-99"
-    @blur="handleBlur"
-  />
+  <input ref="inputRef" type="tel"
+  :class="props.hasError ? 'ring-red-500! ' : '' "
+    class="border-0 appearance-none placeholder:text-dimmed min-h-10 focus:outline-none disabled:cursor-not-allowed disabled:opacity-75 transition-colors bg-default ring ring-inset ring-accented px-3 py-2 gap-2 w-full ring-gray-300! text-gray-900 font-semibold rounded-lg focus-visible:ring-2 text-sm focus-visible:ring-inset focus-visible:ring-inverted"
+    placeholder="" 
+    @blur="handleBlur" />
+
 </template>
+
+<style scoped>
+  input {
+    --ui-bg: white;
+  }
+</style>
