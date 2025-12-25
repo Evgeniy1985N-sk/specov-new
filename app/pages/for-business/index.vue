@@ -14,12 +14,23 @@
     <Section>
       <SectionContainer>
 
-        <div class="flex justify-between mb-10">
+        <div class="flex justify-between flex-wrap md:flex-nowrap gap-6 mb-10 items-start">
           <Title2 tag="h1">
             Покупайте как юрлицо
           </Title2>
-          <BusinessRegist />
+          <BusinessRegist class="shrink-0" />
         </div>
+
+
+
+        <!-- !!!!! REMOVE FOR EXAMPLE !!!!! -->
+        <!-- <div class="flex flex-col items-end gap-6">
+          <BusinessRegist2 />
+          <BusinessRegist3 />
+        </div> -->
+        <!-- !!!!! REMOVE FOR EXAMPLE !!!!! -->
+
+        
 
         <Cards />
 
