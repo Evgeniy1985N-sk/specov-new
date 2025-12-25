@@ -24,10 +24,10 @@
 
 
         <!-- !!!!! REMOVE FOR EXAMPLE !!!!! -->
-        <!-- <div class="flex flex-col items-end gap-6">
+        <div class="flex flex-col items-end gap-6">
           <BusinessRegist2 />
           <BusinessRegist3 />
-        </div> -->
+        </div>
         <!-- !!!!! REMOVE FOR EXAMPLE !!!!! -->
 
         

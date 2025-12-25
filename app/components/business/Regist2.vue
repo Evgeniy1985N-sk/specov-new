@@ -48,7 +48,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 
 <template>
-  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]!' }">
+  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]!-mx-4 w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto overflow-visible', body: 'overflow-visible', }">
 
     <UButton class="px-5">
       Регистрация юрлица
@@ -56,7 +56,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     <template #body>
 
-      <ModalClose @click="showModal = false" />
+      <ModalClose @click="showModal = false" class="hidden sm:flex" />
 
       <div class="grid gap-6">
         <ModalHead @handle-click="showModal = false" text="Регистрация юрлица" class-wrap-icon="lg:hidden" />
@@ -67,10 +67,36 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
         <UForm ref="form" :schema="schema" :state="state" @submit="onSubmit">
 
-          <UFormField label="ИНН" name="inn" :ui="{ label: 'text-gray-700' }">
-            <UInput v-model="state.inn" color="neutral" size="xl" :ui="{ base: 'text-gray-900' }"
-              :class="{ 'filled bg-gray-100': state.inn?.trim() }" />
-          </UFormField>
+          <div class="relative">
+            <UFormField label="ИНН" name="inn" :ui="{ label: 'text-gray-700' }">
+              <UInput v-model="state.inn" color="neutral" size="xl" :ui="{ base: 'text-gray-900 font-bold' }"
+                :class="{ 'filled bg-gray-100': state.inn?.trim() }" />
+            </UFormField>
+
+            <div class="absolute top-fill py-2.5 px-3.5 bg-white rounded-xl shadow-md">
+              <div class="grid gap-4">
+                <div class="grid gap-1 cursor-pointer">
+                  <p class="text-sm leading-5 text-gray-900 font-bold">
+                    ООО «ВАН»
+                  </p>
+                  <span class="text-[12px] leading-[18px]">
+                    ИНН: 9729198725, КПП: 772801001
+                  </span>
+                  <span class="text-[12px] leading-[18px]">
+                    г. Москва, Ленинский проспект, д.105к2, помещ. 6/1А
+                  </span>
+                </div>
+                <div class="grid gap-1 cursor-pointer">
+                  <p class="text-sm leading-5 text-gray-900 font-bold">
+                    Другой филиал
+                  </p>
+                  <span class="text-[12px] leading-[18px]">
+                    Выберите, если ИНН введен правильно, но вашего филиала нет в списке
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
 
         </UForm>
       </div>

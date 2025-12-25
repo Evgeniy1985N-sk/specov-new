@@ -3,22 +3,19 @@ import * as v from 'valibot'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
 const showModal = ref(false)
-
-const items = ref(['Backlog', 'Todo', 'In Progress', 'Done'])
-const value = ref('Backlog')
+const value = ref(true)
 
 const schema = v.object({
-  inn: v.pipe(
+  address: v.pipe(
     v.string(),
-    v.regex(/^\d+$/, 'ИНН должен содержать только цифры'),
-    v.minLength(10, 'ИНН должен содержать минимум 10 цифр'),
-  )
+    v.minLength(20, 'Адрес обязателен')
+  ),
 })
 
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
-  inn: '',
+  address: 'г. Москва, Ленинский проспект, д.105к2, помещ. 6/1А',
 })
 
 const toast = useToast()
@@ -51,28 +48,68 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 
 <template>
-  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]!' }">
+  <UModal v-model:open="showModal" :close=false
+    :ui="{ content: 'max-w-[480px]!-mx-4 w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto overflow-visible', body: 'overflow-visible', }">
 
     <UButton class="px-5">
-      Регистрация выпадашка
+      Заполнено
     </UButton>
 
     <template #body>
 
-      <ModalClose @click="showModal = false" />
+      <ModalClose @click="showModal = false" class="hidden sm:flex" />
 
       <div class="grid gap-6">
+
         <ModalHead @handle-click="showModal = false" text="Регистрация юрлица" class-wrap-icon="lg:hidden" />
 
-        <p class="text-medium">
-          Укажите ИНН организации или ИП, остальные данные заполняются автоматически
-        </p>
+        <div class="grid gap-1">
+          <span class="text-sm leading-5">
+            Название организации
+          </span>
+          <p class="font-bold text-gray-900">
+            ООО «ВАН»
+          </p>
+        </div>
+        <div class="grid gap-1">
+          <span class="text-sm leading-5">
+            ИНН
+          </span>
+          <p class="font-bold text-gray-900">
+            9729198725
+          </p>
+        </div>
+        <div class="grid gap-1">
+          <span class="text-sm leading-5">
+            КПП
+          </span>
+          <p class="font-bold text-gray-900">
+            772801001
+          </p>
+        </div>
 
         <UForm ref="form" :schema="schema" :state="state" @submit="onSubmit">
 
-          <UFormField label="ИНН" name="inn" :ui="{ label: 'text-gray-700' }">
-            <UInputMenu v-model="value" :items="items" />
+          <UFormField name="address" :ui="{ label: 'text-gray-700 font-mediium' }">
+            <template #label>
+              Юридический адрес<span class="text-(--Brand-600)">*</span>
+            </template>
+
+            <UInput v-model="state.address" color="neutral" size="xl" :ui="{ base: 'text-gray-900 font-bold' }" />
           </UFormField>
+
+          <label class="flex gap-2 cursor-pointer">
+            <UCheckbox size="xl" v-model="value" />
+            <div>
+              <p class="text-sm leading-5 text-gray-950 font-medium">
+                Совпадает с фактическим
+              </p>
+            </div>
+          </label>
+
+          <UButton class="px-5" type="submit">
+            Завершить регистрацию
+          </UButton>
 
         </UForm>
       </div>
