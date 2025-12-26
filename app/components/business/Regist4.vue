@@ -4,6 +4,7 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 
 const showModal = ref(false)
 const value = ref(true)
+const isButtonLoading = ref(false)
 
 const schema = v.object({
   kpp: v.pipe(
@@ -76,14 +77,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     color: 'success'
   })
   console.log(event.data)
+  isButtonLoading.value = true
 }
 
 </script>
 
 
 <template>
-  <UModal v-model:open="showModal" :close=false
-    :ui="{ content: 'max-w-[480px]', }">
+  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]', }">
 
     <UButton class="px-5">
       Регистрация полная
@@ -166,9 +167,10 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
               :ui="{ base: 'text-gray-900 font-bold' }" />
           </UFormField>
 
-          <UButton class="px-5" type="submit">
+          <UButton v-if="!isButtonLoading" class="px-5" type="submit">
             Завершить регистрацию
           </UButton>
+          <UButton v-else loading loading-icon="i-lucide-loader">Продолжить</UButton>
 
         </UForm>
       </div>

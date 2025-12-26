@@ -10,6 +10,8 @@ const isCode = ref(false)
 const code = ref('')
 const seconds = ref(60)
 const success = ref(false)
+const isButtonLoading = ref(false)
+
 const schema = v.object({
   name: v.pipe(
     v.string(),
@@ -65,6 +67,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     color: 'success'
   })
   console.log(event.data)
+  isButtonLoading.value = true
 }
 
 const phoneError = computed(() => {
@@ -76,7 +79,7 @@ const phoneError = computed(() => {
 
 function startCountDown() {
   let intervalId = setInterval(() => {
-    if(seconds.value > 0) seconds.value--
+    if (seconds.value > 0) seconds.value--
     else {
       if (intervalId) clearInterval(intervalId)
     }
@@ -100,15 +103,16 @@ function startCountDown() {
 
       <UForm ref="form" :schema="schema" :state="state" @submit="onSubmit">
 
-        <UFormField label="Имя" name="name" :ui="{label: 'text-gray-700'}">
+        <UFormField label="Имя" name="name" :ui="{ label: 'text-gray-700' }">
           <UInput v-model="state.name" color="neutral" size="xl" :ui="{ base: 'text-gray-900' }"
             :class="{ 'filled bg-gray-100': state.name?.trim() }" />
         </UFormField>
 
         <div :class="Boolean(phoneError) ? 'items-center' : 'items-end'" class="flex flex-wrap sm:flex-nowrap gap-2">
 
-          <UFormField class="w-full" :ui="{label: 'text-gray-700'}" label="Телефон" name="phone" :error="phoneError">
-            <ModalPhoneInput v-model="state.phone" :has-error="Boolean(phoneError)" :class="{ 'filled bg-gray-100': state.phone?.trim() }" />
+          <UFormField class="w-full" :ui="{ label: 'text-gray-700' }" label="Телефон" name="phone" :error="phoneError">
+            <ModalPhoneInput v-model="state.phone" :has-error="Boolean(phoneError)"
+              :class="{ 'filled bg-gray-100': state.phone?.trim() }" />
           </UFormField>
 
           <UButton v-if="!isCode" @click="isCode = true, startCountDown()" color="neutral" solid
@@ -116,11 +120,13 @@ function startCountDown() {
             Получить код
           </UButton>
 
-          <UFormField v-if="!success && isCode" :ui="{label: 'text-gray-700'}" class="w-full max-w-[136px]" label="Код из SMS" name="code">
+          <UFormField v-if="!success && isCode" :ui="{ label: 'text-gray-700' }" class="w-full max-w-[136px]"
+            label="Код из SMS" name="code">
             <UInput @focus="success = true" v-model="code" color="neutral" size="xl" />
           </UFormField>
 
-          <div v-if="success" class="flex items-center gap-1.5 w-full min-h-11 max-w-[136px] text-sm leading-5 text-(--Brand-700)">
+          <div v-if="success"
+            class="flex items-center gap-1.5 w-full min-h-11 max-w-[136px] text-sm leading-5 text-(--Brand-700)">
             <WrapIcon>
               <ModalIconCheck />
             </WrapIcon>
@@ -143,12 +149,12 @@ function startCountDown() {
           </div>
         </label>
 
-        <UFormField class="w-full" label="Email" name="email" :ui="{label: 'text-gray-700'}">
+        <UFormField class="w-full" label="Email" name="email" :ui="{ label: 'text-gray-700' }">
           <UInput v-model="state.email" placeholder="mail@mail.ru" color="neutral" size="xl"
             :ui="{ base: 'text-gray-900' }" :class="{ 'bg-gray-50': state.email?.trim() }" />
         </UFormField>
 
-        <UFormField class="w-full" label="Пароль" name="password" :ui="{label: 'text-gray-700'}">
+        <UFormField class="w-full" label="Пароль" name="password" :ui="{ label: 'text-gray-700' }">
           <UInput v-model="state.password" color="neutral" size="xl" :type="show ? 'text' : 'password'"
             :ui="{ trailing: 'pe-1', base: 'text-gray-900' }" :class="{ 'filled bg-gray-100': state.password?.trim() }">
 
@@ -184,9 +190,10 @@ function startCountDown() {
         </label>
 
         <div class="grid gap-3">
-          <UButton class="px-5" type="submit">
+          <UButton v-if="!isButtonLoading" class="px-5" type="submit">
             Зарегистрироваться
           </UButton>
+          <UButton v-else loading loading-icon="i-lucide-loader">Продолжить</UButton>
           <p class="text-[12px] leading-[18px]">
             При регистрации вы предоставляете <NuxtLink class="text-(--Brand-700)" to="/agreement">Согласие на обработку
               персональных данных</NuxtLink> в соответствии с <NuxtLink class="text-(--Brand-700)" to="/policy">
@@ -208,6 +215,7 @@ function startCountDown() {
 :deep(.ring-error) {
   background: transparent;
 }
+
 .filled.bg-gray-100:deep(input) {
   background-color: #F5F5F5;
 }

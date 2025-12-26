@@ -4,6 +4,7 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 
 
 const isButtonLoading = ref(false)
+
 const emailOrPhone = v.pipe(
   v.string(),
   v.nonEmpty('Email или телефон обязателен'),
