@@ -4,7 +4,7 @@ export default defineAppConfig({
       slots: {
         overlay: "fixed inset-0",
         content:
-          "!max-w-100 p-6 bg-white flex flex-col gap-6 focus:outline-none !ring-0 !shadow-none !rounded-xl",
+          "w-screen! h-screen sm:h-auto p-6 bg-white flex flex-col gap-6 focus:outline-none !ring-0 !shadow-none !rounded-xl",
         header: "relative p-0! border-0 min-h-0",
         wrapper: "",
         body: "flex-1 !p-0",
@@ -30,7 +30,7 @@ export default defineAppConfig({
           },
           false: {
             content:
-              "w-[calc(100vw-2rem)] max-w-lg rounded-lg shadow-lg ring ring-default",
+              "w-[calc(100vw-2rem)] max-w-[400px] rounded-lg shadow-lg ring ring-default",
           },
         },
         overlay: {

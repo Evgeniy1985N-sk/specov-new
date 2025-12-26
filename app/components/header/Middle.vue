@@ -5,6 +5,7 @@ import IconCart from '@/components/header/icon/Cart.vue'
 
 const isMenu = ref(false)
 const isCatalog = ref(false)
+const isProfile = ref(false)
 
 const buttons = [
   {
@@ -50,7 +51,9 @@ const buttons = [
 
     <HeaderCatalogMenu :is-show="isCatalog" @hide-catalog="isCatalog = !isCatalog" />
 
-    <HeaderMobileMenuBottom @toggle-catalog="isCatalog = !isCatalog" />
+    <HeaderProfile :is-show="isProfile"  />
+
+    <HeaderMobileMenuBottom @toggle-catalog="isCatalog = !isCatalog" @toggle-profile="isProfile = !isProfile" />
 
   </div>
 </template>

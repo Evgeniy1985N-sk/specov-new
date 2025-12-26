@@ -83,7 +83,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UModal v-model:open="showModal" :close=false
-    :ui="{ content: 'max-w-[480px]! w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto', }">
+    :ui="{ content: 'max-w-[480px]', }">
 
     <UButton class="px-5">
       Регистрация полная

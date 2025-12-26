@@ -49,7 +49,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UModal v-model:open="showModal" :close=false
-    :ui="{ content: 'max-w-[480px]! w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto overflow-visible', body: 'overflow-visible', }">
+    :ui="{ content: 'max-w-[480px] overflow-visible', body: 'overflow-visible', }">
 
     <UButton class="px-5">
       Заполнено
