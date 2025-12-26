@@ -4,6 +4,10 @@ import type { FormSubmitEvent } from '@nuxt/ui'
 
 
 const isButtonLoading = ref(false)
+const isEmail = ref(false)
+const isPhone = ref(false)
+const isShowModalEmail = ref(false)
+const isShowModalPhone = ref(false)
 
 const emailOrPhone = v.pipe(
   v.string(),
@@ -14,6 +18,7 @@ const emailOrPhone = v.pipe(
 
     // Email
     if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
+      isEmail.value = true
       return true
     }
 
@@ -24,7 +29,10 @@ const emailOrPhone = v.pipe(
     // - 10 цифр: 9261234567
     // - 11 цифр, начинающихся с 7 или 8: 7926..., 8926...
     if (digits.length === 10) return true
-    if (digits.length === 11 && (digits.startsWith('7') || digits.startsWith('8'))) return true
+    if (digits.length === 11 && (digits.startsWith('7') || digits.startsWith('8'))) {
+      isPhone.value = true
+      return true
+    }
 
     return false
   }, 'Неверный формат: укажите email или телефон (например, +79261234567)')
@@ -64,7 +72,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     color: 'success',
   })
   console.log('Данные:', event.data)
+
   isButtonLoading.value = true
+  setInterval(() => {
+    if (isEmail.value) {
+      isShowModalEmail.value = true
+    }
+    if (isPhone.value) {
+      isShowModalPhone.value = true
+    }
+  }, 1000)
 }
 
 
@@ -91,9 +108,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
           Заказать звонок
         </UButton>
         <UButton v-else loading loading-icon="i-lucide-loader">Продолжить</UButton>
+
       </UForm>
     </template>
   </UModal>
+
+  <!-- MODAL -->
+  <HeaderModalEmail :is-show="isShowModalEmail" />
+  <!-- MODAL -->
+
 </template>
 
 <style scoped>

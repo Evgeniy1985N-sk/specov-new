@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 <template>
   <div @click="$emit('handleClick')" :class="props.classWrap" class="flex items-center gap-2 w-fit cursor-pointer">
+    <slot />
     <WrapIcon v-if="props.isIcon" class="w-9 h-9" :class="props.classWrapIcon">
       <ModalIconArrowLeft />
     </WrapIcon>
