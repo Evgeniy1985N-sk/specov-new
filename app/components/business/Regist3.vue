@@ -49,7 +49,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UModal v-model:open="showModal" :close=false
-    :ui="{ content: 'max-w-[480px]!-mx-4 w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto overflow-visible', body: 'overflow-visible', }">
+    :ui="{ content: 'max-w-[480px]! w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto overflow-visible', body: 'overflow-visible', }">
 
     <UButton class="px-5">
       Заполнено
@@ -90,7 +90,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
         <UForm ref="form" :schema="schema" :state="state" @submit="onSubmit">
 
-          <UFormField name="address" :ui="{ label: 'text-gray-700 font-mediium' }">
+          <UFormField name="address" :ui="{ label: 'text-gray-700 font-medium' }">
             <template #label>
               Юридический адрес<span class="text-(--Brand-600)">*</span>
             </template>

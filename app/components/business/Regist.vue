@@ -86,7 +86,7 @@ function startCountDown() {
 
 
 <template>
-  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]!' }">
+  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]! w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto' }">
 
     <UButton class="px-5">
       Зарегистрироваться как юрлицо
@@ -94,7 +94,7 @@ function startCountDown() {
 
     <template #body>
 
-      <ModalClose @click="showModal = false" />
+      <ModalClose @click="showModal = false" class="hidden sm:flex" />
 
       <ModalHead @handle-click="showModal = false" class-wrap="mb-6" text="Регистрация" />
 

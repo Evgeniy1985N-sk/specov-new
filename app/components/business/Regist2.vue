@@ -15,7 +15,7 @@ const schema = v.object({
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
-  inn: '',
+  inn: '9729198725',
 })
 
 const toast = useToast()
@@ -48,7 +48,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 
 <template>
-  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]!-mx-4 w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto overflow-visible', body: 'overflow-visible', }">
+  <UModal v-model:open="showModal" :close=false
+    :ui="{ content: 'max-w-[480px]! w-[calc(100%+2rem)] sm:w-full h-screen sm:h-auto overflow-visible', body: 'overflow-visible', }">
 
     <UButton class="px-5">
       Регистрация юрлица
@@ -68,13 +69,15 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         <UForm ref="form" :schema="schema" :state="state" @submit="onSubmit">
 
           <div class="relative">
+
             <UFormField label="ИНН" name="inn" :ui="{ label: 'text-gray-700' }">
               <UInput v-model="state.inn" color="neutral" size="xl" :ui="{ base: 'text-gray-900 font-bold' }"
                 :class="{ 'filled bg-gray-100': state.inn?.trim() }" />
             </UFormField>
 
-            <div class="absolute top-fill py-2.5 px-3.5 bg-white rounded-xl shadow-md">
-              <div class="grid gap-4">
+            <ModalPopup>
+
+              <div v-if="state.inn == '9729198725' " class="grid gap-4">
                 <div class="grid gap-1 cursor-pointer">
                   <p class="text-sm leading-5 text-gray-900 font-bold">
                     ООО «ВАН»
@@ -95,7 +98,18 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
                   </span>
                 </div>
               </div>
-            </div>
+
+              <div v-if="state.inn !== '9729198725' && isFormValid" class="grid gap-2">
+                <p class="text-sm leading-5 font-medium text-gray-900">
+                  Не удалось найти организацию
+                </p>
+                <button class="text-sm leading-5 font-medium text-(--Brand-700) cursor-pointer text-left">
+                  Добавить вручную
+                </button>
+              </div>
+
+            </ModalPopup>
+
           </div>
 
         </UForm>
