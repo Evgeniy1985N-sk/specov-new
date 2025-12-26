@@ -620,6 +620,7 @@ export default defineAppConfig({
           loading: true,
           leading: true,
           class: {
+            base: 'bg-(--Brand-950)! opacity-100! text-base',
             leadingIcon: "animate-spin",
           },
         },

@@ -2,6 +2,8 @@
 import * as v from 'valibot'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
+
+const isButtonLoading = ref(false)
 const emailOrPhone = v.pipe(
   v.string(),
   v.nonEmpty('Email или телефон обязателен'),
@@ -61,14 +63,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     color: 'success',
   })
   console.log('Данные:', event.data)
+  isButtonLoading.value = true
 }
+
+
 </script>
 
 <template>
   <UModal title="Вход или регистрация">
     <UButton
-      class="bg-gray-100 hover:bg-gray-200 active:bg-neutral-300 border-zinc-300 py-[9px] px-[15px] gap-2 hidden lg:flex items-center cursor-pointer border border-solid rounded-lg"
-    >
+      class="bg-gray-100 hover:bg-gray-200 active:bg-neutral-300 border-zinc-300 py-[9px] px-[15px] gap-2 hidden lg:flex items-center cursor-pointer border border-solid rounded-lg">
       <WrapIcon class="h-5 w-5">
         <HeaderIconEnter />
       </WrapIcon>
@@ -78,18 +82,14 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     <template #body>
       <UForm ref="form" :schema="schema" :state="state" @submit="onSubmit">
         <UFormField label="Email или телефон" name="emailphone">
-          <UInput
-            v-model="state.emailphone"
-            color="neutral"
-            size="xl"
-            :ui="{ base: 'text-gray-900' }"
-            :class="{ 'bg-gray-100': state.emailphone?.trim() }"
-          />
+          <UInput v-model="state.emailphone" color="neutral" size="xl" :ui="{ base: 'text-gray-900' }"
+            :class="{ 'filled bg-gray-100': state.emailphone?.trim() }" />
         </UFormField>
 
-        <UButton size="xl" type="submit" class="w-full mt-4">
+        <UButton v-if="!isButtonLoading" size="xl" type="submit" class="w-full mt-4">
           Заказать звонок
         </UButton>
+        <UButton v-else loading loading-icon="i-lucide-loader">Продолжить</UButton>
       </UForm>
     </template>
   </UModal>
@@ -99,6 +99,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 :deep(.ring-error) {
   background: transparent;
 }
+
 .filled.bg-gray-100:deep(input) {
   background-color: #f5f5f5;
 }
