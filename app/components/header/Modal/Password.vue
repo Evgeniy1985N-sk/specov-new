@@ -23,7 +23,7 @@ const schema = v.object({
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
-  password: '',
+  password: '111111',
 })
 
 const toast = useToast()
@@ -51,19 +51,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   })
   console.log(event.data)
   isButtonLoading.value = true
-}
 
-const phoneError = computed(() => {
-  const errors = form.value?.errors
-  if (!Array.isArray(errors)) return ''
-  const err = errors.find(e => e.name === 'phone')
-  return err?.message || ''
-})
+  setTimeout(() => {
+    navigateTo('/profile')
+  }, 500)
+}
 
 </script>
 
 <template>
-  <UModal v-model:open="showModal" :close=false>
+  <UModal v-if="props.isShow" v-model:open="showModal" :close=false>
 
     <template #body>
 
@@ -109,7 +106,6 @@ const phoneError = computed(() => {
           <span @click="isModalRecovery = true" class="flex justify-center text-sm leading-5 cursor-pointer">
             Не помню пароль
           </span>
-          <HeaderModalRecoveryPassword :is-show="isModalRecovery" />
         </div>
 
       </UForm>
@@ -117,6 +113,9 @@ const phoneError = computed(() => {
     </template>
 
   </UModal>
+
+  <HeaderModalRecoveryPassword :is-show="isModalRecovery" />
+
 </template>
 
 <style scoped>

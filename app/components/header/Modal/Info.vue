@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import * as v from 'valibot'
-import type { FormSubmitEvent } from '@nuxt/ui'
 
 const showModal = ref(true)
 
@@ -12,7 +10,7 @@ const props = defineProps<Props>()
 </script>
 
 <template>
-  <UModal v-model:open="showModal" :close=false :ui="{content: 'h-auto! max-w-[330px]'}">
+  <UModal v-if="isShow" v-model:open="showModal" :close=false :ui="{content: 'h-auto! max-w-[330px]'}">
 
     <template #body>
 

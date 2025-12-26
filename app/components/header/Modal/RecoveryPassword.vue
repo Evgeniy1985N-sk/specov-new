@@ -46,12 +46,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   })
   console.log(event.data)
   isButtonLoading.value = true
+
+  setTimeout(() => {
+    isShowModalInfo.value = true
+  }, 500)
 }
 
 </script>
 
 <template>
-  <UModal v-model:open="showModal" :close=false>
+  <UModal v-if="props.isShow" v-model:open="showModal" :close=false>
 
     <template #body>
 
@@ -63,7 +67,8 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
         <div class="grid">
           <p class="text-sm leading-5 font-medium">
-           На ваш почтовый адрес <b class="font-bold text-gray-950">mail@mail.ru</b> будет отправлено письмо со ссылкой на восстановление пароля.
+            На ваш почтовый адрес <b class="font-bold text-gray-950">mail@mail.ru</b> будет отправлено письмо со ссылкой
+            на восстановление пароля.
           </p>
         </div>
 
@@ -72,7 +77,6 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
             Отправить ссылку
           </UButton>
           <UButton v-else loading loading-icon="i-lucide-loader">Продолжить</UButton>
-          <HeaderModalInfo :is-show="isShowModalInfo" />
         </div>
 
       </UForm>
@@ -80,6 +84,11 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     </template>
 
   </UModal>
+
+  <!-- MODAL -->
+  <HeaderModalInfo :is-show="isShowModalInfo" />
+  <!-- MODAL -->
+
 </template>
 
 <style scoped>

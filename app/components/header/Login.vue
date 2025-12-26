@@ -44,7 +44,7 @@ const schema = v.object({
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
-  emailphone: '',
+  emailphone: 'th.hgf@hj.rt',
 })
 
 const toast = useToast()
@@ -74,14 +74,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   console.log('Данные:', event.data)
 
   isButtonLoading.value = true
-  setInterval(() => {
+
+  setTimeout(() => {
     if (isEmail.value) {
       isShowModalEmail.value = true
     }
     if (isPhone.value) {
       isShowModalPhone.value = true
     }
-  }, 1000)
+  }, 500)
+
 }
 
 
@@ -114,7 +116,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
   </UModal>
 
   <!-- MODAL -->
-  <HeaderModalEmail :is-show="isShowModalEmail" />
+  <HeaderModalPassword :is-show="isShowModalEmail" />
   <!-- MODAL -->
 
 </template>
