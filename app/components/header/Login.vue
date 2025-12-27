@@ -44,7 +44,7 @@ const schema = v.object({
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
-  emailphone: 'th.hgf@hj.rt',
+  emailphone: '89005001234',
 })
 
 const toast = useToast()
@@ -117,6 +117,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
   <!-- MODAL -->
   <HeaderModalPassword :is-show="isShowModalEmail" />
+  <HeaderModalCode :is-show="isShowModalPhone" />
   <!-- MODAL -->
 
 </template>

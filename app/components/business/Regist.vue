@@ -122,9 +122,11 @@ function startCountDown() {
 
           <UFormField v-if="!success && isCode" :ui="{ label: 'text-gray-700' }" class="w-full max-w-[136px]"
             label="Код из SMS" name="code">
-            <UInput @focus="success = true" v-model="code" color="neutral" size="xl" />
+            <UInput v-model="code" color="neutral" size="xl" :class="{ 'filled bg-gray-100': code?.trim() }" :ui="{ base: 'px-3!', leading: 'right-3 left-auto' }" leading :loading="code.length == 4"
+              loading-icon="i-lucide-loader" />
           </UFormField>
 
+          <!-- IF CUCCESS -->
           <div v-if="success"
             class="flex items-center gap-1.5 w-full min-h-11 max-w-[136px] text-sm leading-5 text-(--Brand-700)">
             <WrapIcon>
@@ -132,6 +134,7 @@ function startCountDown() {
             </WrapIcon>
             <p>Подтвержден</p>
           </div>
+          <!-- IF CUCCESS -->
 
         </div>
 
