@@ -12,6 +12,8 @@ export interface ProductCard {
 	oldPrice?: number
 	discont?: number
 	imgs: ProductImage[]
+	dsc?: string
+	link?: string
 }
 
 export interface Cart {
