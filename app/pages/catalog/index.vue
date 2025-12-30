@@ -8,13 +8,69 @@ const isShoWFilter = ref(false)
 const isList = ref(false)
 const items = useProductsStore().allProducts
 const cart = useCartStore().cart
-const allProducts = useProductsStore().allProducts
 const products = ref<ProductCard[]>([])
 const sort = ref('Сначала популярные')
 const gardenProducts = useProductsStore().garden
 
+
+const cards = ref([
+  {
+    name: 'Столярные',
+    quantity: 698,
+    image: '/image/example/img-1.jpg'
+  },
+  {
+    name: 'Специальные',
+    quantity: 418,
+    image: '/image/example/img-2.jpg'
+  },
+  {
+    name: 'Искробезопасные',
+    quantity: 698,
+    image: '/image/example/img-3.jpg'
+  },
+  {
+    name: 'Безынерционные',
+    quantity: 698,
+    image: '/image/example/img-4.jpg'
+  },
+  {
+    name: 'С медным бойком',
+    quantity: 35,
+    image: '/image/example/img-5.jpg'
+  },
+  {
+    name: 'Молотки плиточника',
+    quantity: 8,
+    image: '/image/example/img-6.jpg'
+  },
+  {
+    name: 'Кровельщика',
+    quantity: 110,
+    image: '/image/example/img-7.jpg'
+  },
+  {
+    name: 'Молотки-топоры',
+    quantity: 12,
+    image: '/image/example/img-8.jpg'
+  },
+  {
+    name: 'Рихтовочные',
+    quantity: 261,
+    image: '/image/example/img-9.jpg'
+  },
+  {
+    name: 'Каменщика',
+    quantity: 35,
+    isActive: false,
+    image: '/image/example/img-10.jpg'
+  },
+])
+
+
+
 cart.forEach((item) => {
-  const product = allProducts.find(p => p.id === item.id)
+  const product = items.find(p => p.id === item.id)
   if (product) {
     products.value.push(product)
   }
@@ -52,9 +108,11 @@ cart.forEach((item) => {
 
   <main>
 
-    <Section class="mt-6! overflow-visible">
+    <Section class="mt-6!">
       <SectionContainer>
         <TitleGoods class="mb-6" :goods="116" title="Фены строительные" />
+
+        <CatalogCardSlider :items="cards" class="mb-8 hidden! md:block!" />
 
         <div class="flex gap-8">
 
@@ -99,6 +157,10 @@ cart.forEach((item) => {
 
             </div>
             <!-- Top -->
+
+
+            <CatalogCardSlider :items="cards" class="mb-6! md:hidden!" />
+
 
             <!-- Cards -->
             <div
