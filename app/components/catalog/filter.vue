@@ -1,13 +1,11 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui'
+import { boolean } from 'valibot'
 
 const check = ref(false)
-
 const isHidden = ref(true)
-
 const minPrice = ref(5799)
 const maxPrice = ref(40000)
-
 const items = [
   {
     label: 'Наличие в магазинах',
@@ -42,14 +40,20 @@ const items = [
     slot: 'power' as const,
   },
 ] satisfies AccordionItem[]
+interface Props {
+  class?: string
+}
+const props = defineProps<Props>()
+const emit = defineEmits(['handleClick'])
+
 </script>
 
 <template>
-  <UAccordion :items="items" type="multiple" :default-value="['0', '1', '2']">
+  <UAccordion :class="props.class" :items="items" type="multiple" :default-value="['0', '1', '2']">
 
     <template #availability="{ item }">
 
-      <div class="grid gap-4">
+      <div @click="$emit('handleClick')" class="grid grid-cols-2 lg:grid-cols-1 gap-4">
         <label class="flex gap-2 items-center cursor-pointer">
           <UCheckbox size="xl" v-model="check" />
           <span class="text-sm leading-5 text-gray-950 font-medium">

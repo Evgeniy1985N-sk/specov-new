@@ -67,8 +67,6 @@ const cards = ref([
   },
 ])
 
-
-
 cart.forEach((item) => {
   const product = items.find(p => p.id === item.id)
   if (product) {
@@ -76,26 +74,7 @@ cart.forEach((item) => {
   }
 })
 
-// Click не по элементу
-// const aside = ref<HTMLElement | null>(null)
-// const handleClickOutside = (event: Event) => {
-//   if (aside.value && !aside.value.contains(event.target as Node)) {
-//     isShoWFilter.value = false
-//   }
-// }
 
-// onMounted(() => {
-//   document.addEventListener('click', handleClickOutside)
-// })
-
-// onBeforeUnmount(() => {
-//   document.removeEventListener('click', handleClickOutside)
-// })
-
-// const emit = defineEmits<{
-//   (e: 'handleClick', value: string): void
-// }>()
-// Click не по элементу
 
 </script>
 
@@ -119,12 +98,37 @@ cart.forEach((item) => {
 
           <!-- ASIDE -->
           <aside ref="aside" :class="isShoWFilter ? 'left-0' : ''"
-            class="fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible overscroll-[contain] transition z-100 lg:z-0 lg:relative flex items-start w-full max-w-[280px]">
-            <div @click="isShowPopover = !isShowPopover" class="grid gap-6 p-4 bg-gray-100 rounded-lg w-full">
+            class="fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible overscroll-[contain] transition z-100 lg:relative flex items-start w-full lg:max-w-[280px]">
 
-              <CatalogFilter />
+            <div class="grid gap-6 pb-36 sm:pb-40 lg:p-4 bg-white lg:bg-gray-100 rounded-lg w-full h-auto">
 
-              <div class="grid gap-2">
+              <!-- HEADER -->
+              <div class="flex lg:hidden justify-between items-center p-4 sm:p-6 border-b border-gray-200">
+
+                <button @click="isShoWFilter = false" class="flex items-center gap-2">
+                  <WrapIcon>
+                    <CatalogIconBack />
+                  </WrapIcon>
+                  <p class="text-[24px] leading-8 font-['Russo_One'] text-black">
+                    Фильтры
+                  </p>
+                </button>
+                <button @click="isShoWFilter = false">
+                  <WrapIcon class="w-9 h-9">
+                    <CatalogIconCross />
+                  </WrapIcon>
+                </button>
+
+              </div>
+              <!-- HEADER -->
+
+              <!-- FILTER -->
+              <CatalogFilter class="px-4 sm:px-6 lg:px-0" @handle-click="isShowPopover = true" />
+              <!-- FILTER -->
+
+              <!-- BUTTONS -->
+              <div
+                class="fixed bottom-0 w-full bg-white lg:static grid gap-2 p-4 sm:p-6 lg:p-0 border-t border-gray-200">
                 <UButton class="min-h-10" size="lg" type="submit">
                   Применить
                 </UButton>
@@ -134,9 +138,15 @@ cart.forEach((item) => {
                   color="neutral">Сбросить
                 </UButton>
               </div>
+              <!-- BUTTONS -->
 
             </div>
-            <CatalogPopover v-if="isShowPopover" :goods="10" />
+
+            <!-- POPOVER -->
+            <CatalogPopover v-if="isShowPopover" :goods="10" class="hidden! lg:inline-block!" />
+            <!-- POPOVER -->
+
+
           </aside>
           <!-- ASIDE -->
 

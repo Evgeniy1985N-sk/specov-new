@@ -1,6 +1,7 @@
 <script setup lang="ts">
 interface Props {
   goods: number
+  class?: string
 }
 const props = defineProps<Props>()
 
@@ -9,7 +10,7 @@ const props = defineProps<Props>()
 
 
 <template>
-  <div class="absolute top-[30%] left-4 sm:left-full inline-block min-w-[196px]">
+  <div :class="props.class" class="absolute top-[30%] left-4 sm:left-full z-10 inline-block min-w-[196px]">
 
     <div class="grid gap-4 popup-with-arrow bg-white border border-gray-200 rounded-xl shadow-xl p-4 max-w-xs">
       <p class="text-sm font-semibold text-center text-gray-950">Подобрано товаров: {{ props.goods }}</p>
