@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
+import { check, value } from 'valibot'
 import type { ProductCard } from '~/types/product'
 
 const isShowPopover = ref(false)
@@ -74,8 +75,6 @@ cart.forEach((item) => {
   }
 })
 
-
-
 </script>
 
 <template>
@@ -123,18 +122,18 @@ cart.forEach((item) => {
               <!-- HEADER -->
 
               <!-- FILTER -->
-              <CatalogFilter class="px-4 sm:px-6 lg:px-0" @handle-click="isShowPopover = true" />
+              <CatalogFilter class="px-4 sm:px-6 lg:px-0" @handle-click="(value) => isShowPopover = value" />
               <!-- FILTER -->
 
               <!-- BUTTONS -->
               <div
-                class="fixed bottom-0 w-full bg-white lg:static grid gap-2 p-4 sm:p-6 lg:p-0 border-t border-gray-200">
+                class="fixed bottom-0 w-full bg-white lg:bg-transparent lg:static grid gap-2 p-4 sm:p-6 lg:p-0 border-t border-gray-200">
                 <UButton class="min-h-10" size="lg" type="submit">
                   Применить
                 </UButton>
 
                 <UButton
-                  class="flex items-center justify-center h-10 cursor-pointer rounded-lg bg-white! border border-(--border) text-(--Brand-950) text-sm"
+                  class="flex items-center justify-center h-10 cursor-pointer rounded-lg bg-white! text-(--Brand-950) text-sm"
                   color="neutral">Сбросить
                 </UButton>
               </div>

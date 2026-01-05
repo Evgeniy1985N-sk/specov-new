@@ -29,7 +29,7 @@ const items = [
   <div class="overflow-hidden">
     <SectionContainer>
       <UBreadcrumb :items="items" class="breadcrumb py-8 pb-4 sm:pb-8"
-        :ui="{ item: 'min-w-max text-(--Brand-950)', link: 'text-gray-600 hover:text-gray-500 font-bold', separatorIcon: 'text-300' }">
+        :ui="{ item: 'min-w-max text-(--Brand-950)', link: 'text-gray-600 hover:text-(--Brand-700) font-bold', separatorIcon: 'text-300' }">
         <template #home>
           <div class="flex items center justify-center w-5 h-5">
             <BreadcrumbsIconHome />

@@ -22,7 +22,7 @@ function toggleActive(index: number) {
 <template>
 
   <div class="flex gap-1 bg-gray-100 p-1 rounded-lg">
-    <button v-for="(item, i) in items" :key="i" @click="toggleActive(i), $emit('handleClick')" :class="item.isActive ? 'bg-white text-gray-950 pointer-events-none' : ''"
+    <button v-for="(item, i) in items" :key="i" @click="toggleActive(i), $emit('handleClick')" :class="item.isActive ? 'bg-white text-gray-950 pointer-events-none' : 'hover:text-(--Brand-700)'"
       class="flex items-center justify-center grow w-9 h-9 cursor-pointer transition rounded-lg">
         <component :is="item.icon" />
     </button>

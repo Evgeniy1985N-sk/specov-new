@@ -58,7 +58,7 @@ function toggleActive(index: number) {
         Сортировка:
       </span>
       <button @click="isShow = !isShow" class="flex items-baseline gap-1 text-(--Brand-700) cursor-pointer">
-        <p class="text-sm leading-5">
+        <p class="text-sm leading-5 font-semibold">
           {{ value }}
         </p>
         <WrapIcon>

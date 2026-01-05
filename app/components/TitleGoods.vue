@@ -29,7 +29,7 @@ const declensionGoods = computed(() => {
     <h1 class="text-[24px] leading-8 sm:text-[36px] sm:leading-11 text-gray-950 font-['Russo_One']">
       {{ props.title }}
     </h1>
-    <span v-if="props.goods" class="text-sm leading-5">
+    <span v-if="props.goods" class="text-sm leading-5 font-medium">
       {{ props.goods }}
       {{ declensionGoods }}
     </span>

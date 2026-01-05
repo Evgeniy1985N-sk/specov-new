@@ -160,12 +160,14 @@ const spec = [
         </UButton>
 
         <UInputNumber v-model="counter" :min="0" size="xl" color="neutral"
-          :class="isRow ? 'max-w-full hidden sm:flex!' : ''" :ui="{ root: 'hidden! lg:flex! max-w-[126px]' }"
+          :class="isRow ? 'max-w-full hidden sm:flex!' : ''" :ui="{ root: 'hidden! lg:flex! max-w-[126px]', base: 'min-h-10 focus:ring-1!' }"
           :increment="{
+            class: 'active:bg-gray-100!',
             color: 'neutral',
             variant: 'ghost',
             size: 'lg',
           }" :decrement="{
+            class: 'active:bg-gray-100!',
             color: 'neutral',
             variant: 'ghost',
             size: 'lg'

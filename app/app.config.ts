@@ -147,7 +147,7 @@ export default defineAppConfig({
           color: "neutral",
           variant: ["outline", "subtle"],
           class:
-            "w-full bg-white ring-gray-300! text-sm min-h-10 text-gray-600 rounded-lg focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-inverted",
+            "w-full bg-white ring-gray-300! focus:ring-gray-400! text-sm min-h-10 text-gray-600 rounded-lg focus-visible:ring-1 focus-visible:ring-inset focus-visible:ring-inverted",
         },
         {
           color: "neutral",
@@ -547,7 +547,7 @@ export default defineAppConfig({
           color: "primary",
           variant: "ghost",
           class:
-            "text-primary hover:bg-primary/10 active:bg-primary/10 focus:outline-none focus-visible:bg-primary/10 disabled:bg-transparent aria-disabled:bg-transparent dark:disabled:bg-transparent dark:aria-disabled:bg-transparent",
+            "text-primary hover:bg-primary/10 active:bg-gray-400! focus:outline-none focus-visible:bg-transparent disabled:bg-transparent aria-disabled:bg-transparent dark:disabled:bg-transparent dark:aria-disabled:bg-transparent",
         },
         {
           color: "primary",
