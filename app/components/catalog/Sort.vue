@@ -54,7 +54,7 @@ function toggleActive(index: number) {
   <div ref="dropdown" class="relative min-w-[174px] sm:min-w-[270px]">
 
     <div class="flex gap-1 items-center">
-      <span class="hidden sm-block text-sm leading-5 font-semibold">
+      <span class="hidden sm:block text-sm leading-5 font-semibold">
         Сортировка:
       </span>
       <button @click="isShow = !isShow" class="flex items-baseline gap-1 text-(--Brand-700) cursor-pointer">
@@ -67,7 +67,7 @@ function toggleActive(index: number) {
       </button>
     </div>
 
-    <div v-if="isShow" class="absolute top-full left-0 mt-3 w-full rounded-xl bg-white isolate z-100 border border-gray-200">
+    <div v-if="isShow" class="absolute top-full left-0 mt-3 w-full min-w-[290px] rounded-xl bg-white isolate z-100 border border-gray-200">
       <ul class="grid gap-4 p-4">
         <li v-for="(item, i) in items" :key="i" @click="toggleActive(i)" :class="item.isActive ? 'active' : ''"
           class="cursor-pointer item-custom">

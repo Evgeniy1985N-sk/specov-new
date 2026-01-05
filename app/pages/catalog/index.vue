@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { useCartStore } from '@/stores/cart'
 import { useProductsStore } from '@/stores/products'
-import { check, value } from 'valibot'
 import type { ProductCard } from '~/types/product'
 
 const isShowPopover = ref(false)
@@ -86,7 +85,7 @@ cart.forEach((item) => {
 
   <main>
 
-    <Section class="mt-6!">
+    <Section class="mt-0!">
       <SectionContainer>
         <TitleGoods class="mb-6" :goods="116" title="Фены строительные" />
 
@@ -153,7 +152,7 @@ cart.forEach((item) => {
           <div class="w-full">
 
             <!-- Top -->
-            <div class="flex justify-between items-center flex-wrap gap-x-2 gap-y-4 pb-6">
+            <div class="grid grid-cols-[auto_auto] sm:flex justify-between items-center flex-wrap gap-x-2 gap-y-4 pb-6">
               <CatalogSort @handle-click="(value) => sort = value" />
 
               <button @click="isShoWFilter = !isShoWFilter"

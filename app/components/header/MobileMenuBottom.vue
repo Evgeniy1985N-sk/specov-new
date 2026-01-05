@@ -6,6 +6,7 @@ import IconFavorite from '@/components/header/icon/Favorite.vue'
 import IconCabinet from '@/components/header/icon/Cabinet.vue'
 
 const emit = defineEmits(['toggle-catalog', 'toggle-profile'])
+const route = useRoute()
 
 interface MenuItemButton {
   name: string;
@@ -33,7 +34,7 @@ const buttons = ref([
   },
   {
     name: 'Избранное',
-    src: '/favorites',
+    src: '/favorite',
     icon: markRaw(IconFavorite),
     isActive: false
   },
@@ -44,10 +45,14 @@ const buttons = ref([
   },
 ]);
 
-function handleClick(item: MenuItemButton, index: number) {
+function toggleActive(index: number) {
   buttons.value.forEach((btn, i) => {
-    btn.isActive = i === index;
+    btn.isActive = i === index
   });
+}
+
+function handleClick(item: MenuItemButton, index: number) {
+  toggleActive(index)
 
   if (item.name === 'Каталог') {
     emit('toggle-catalog');
@@ -61,6 +66,24 @@ function handleClick(item: MenuItemButton, index: number) {
     navigateTo(item.src);
   }
 }
+
+updateActive()
+function updateActive() {
+  if (route.path === '/') {
+    toggleActive(0)
+  }
+  if (route.path === '/catalog') {
+    toggleActive(1)
+  }
+  if (route.path === '/cart') {
+    toggleActive(2)
+  }
+  if (route.path === '/favorite') {
+    toggleActive(3)
+  }
+}
+
+
 </script>
 
 <template>

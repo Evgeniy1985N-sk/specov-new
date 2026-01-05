@@ -7,12 +7,14 @@ interface Props {
   classBtns?: string
   isRow?: boolean
   isList?: boolean
+  isCol?: boolean
 }
+
 const date = ref('12.01.2026 в 17.00')
 const props = defineProps<Props>()
-
+const route = useRoute()
+const isCatalogPage = computed(() => route.path === '/catalog')
 const counter = ref(0)
-
 const cart = useCartStore().cart
 
 function addToCart(itemId: string) {
@@ -37,6 +39,10 @@ const spec = [
   { label: 'Вид упаковки', value: 'чемодан/кейс' },
 ];
 
+const classContent = computed(() => ({
+  'sm:max-w-[130px] lg:max-w-[232px] w-full': props.isRow,
+  'min-h-[174px] sm:min-h-auto': isCatalogPage.value && !props.isRow
+}))
 </script>
 
 
@@ -92,7 +98,7 @@ const spec = [
     <!-- isRow -->
 
     <!-- Content -->
-    <div :class="isRow ? 'sm:max-w-[130px] lg:max-w-[232px] w-full' : 'justify-between'"
+    <div :class="classContent"
       class="flex flex-col items-start self-stretch">
 
       <!-- Prices -->
@@ -112,15 +118,17 @@ const spec = [
             {{ props.item.price.toLocaleString('ru-RU') }} ₽
           </div>
 
+          <!-- IF ROW -->
           <div v-if="isRow" class="sm:hidden flex">
 
-            <ProductButtonFavorite class="shadow-none text-gray-600" :date="date" />
+            <ProductButtonFavorite class="py-0! shadow-none text-gray-600" :date="date" />
 
-            <ProductButtonCompare class="shadow-none text-gray-600">
+            <ProductButtonCompare class="py-0! shadow-none text-gray-600">
               <ProductIconCompare />
             </ProductButtonCompare>
 
           </div>
+          <!-- IF ROW -->
 
         </div>
         <!-- Price + btns -->
@@ -147,7 +155,8 @@ const spec = [
       <!-- Title -->
 
       <!-- Buttons -->
-      <div :class="props.classBtns, isRow ? 'max-w-[130px] sm:max-w-full flex-col-reverse gap-2 lg:gap-4' : 'gap-4'"
+      <div
+        :class="props.classBtns, isRow ? 'max-w-[130px] sm:max-w-full flex-col-reverse gap-2 lg:gap-4' : 'gap-4 mt-auto'"
         class="w-full font-semibold flex flex-wrap xl:flex-nowrap lg:justify-center pt-5 lg:items-center">
 
         <UButton @click="addToCart(props.item.id)" :class="isRow ? 'w-full' : ''" class="shrink-0 gap-1 px-4 min-h-10">
@@ -160,8 +169,8 @@ const spec = [
         </UButton>
 
         <UInputNumber v-model="counter" :min="0" size="xl" color="neutral"
-          :class="isRow ? 'max-w-full hidden sm:flex!' : ''" :ui="{ root: 'hidden! lg:flex! max-w-[126px]', base: 'min-h-10 focus:ring-1!' }"
-          :increment="{
+          :class="isRow ? 'max-w-full hidden sm:flex!' : ''"
+          :ui="{ root: 'hidden! lg:flex! max-w-[126px]', base: 'min-h-10 focus:ring-1!' }" :increment="{
             class: 'active:bg-gray-100!',
             color: 'neutral',
             variant: 'ghost',
@@ -190,6 +199,7 @@ const spec = [
     max-width: 220px;
   }
 }
+
 @media (max-width: 639px) {
   .custom-class:deep(.img-sl) {
     width: 100%;

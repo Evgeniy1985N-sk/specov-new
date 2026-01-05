@@ -639,7 +639,7 @@ const goBack = () => {
                 <ul class="columns-3 gap-x-8 gap-y-3">
 
                   <li v-for="category in group.items" class="mb-3">
-                    <a class="flex items-center justify-between gap-2" :href="category?.src">
+                    <NuxtLink class="flex items-center justify-between gap-2" :to="category?.src">
                       <p class="w-full max-w-[190px] text-gray-950 text-sm leading-5 font-medium">
                         {{ category.name }}
                       </p>
@@ -649,7 +649,7 @@ const goBack = () => {
                       <WrapIcon class="w-9 h-9">
                         <HeaderCatalogMenuIconAng />
                       </WrapIcon>
-                    </a>
+                    </NuxtLink>
                   </li>
 
                 </ul>
@@ -697,14 +697,14 @@ const goBack = () => {
                 <li v-for="category in group.items">
 
                   <!-- menu 3 -->
-                  <a v-if="group.isActive" class="flex gap-1.5 items-center py-2.5 px-3.5 border-b border-(--border)"
-                    href="/">
+                  <NuxtLink v-if="group.isActive" class="flex gap-1.5 items-center py-2.5 px-3.5 border-b border-(--border)"
+                    to="/catalog">
                     {{ category.name }}
 
                     <WrapIcon class="ml-auto">
                       <HeaderCatalogMenuIconAng />
                     </WrapIcon>
-                  </a>
+                  </NuxtLink>
 
                 </li>
 
