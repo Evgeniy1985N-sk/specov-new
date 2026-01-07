@@ -1,16 +1,11 @@
 <script setup lang="ts">
 import { useProductsStore } from '@/stores/products'
-import Compare from '~/components/product/icon/Compare.vue'
-import Favorite from '~/components/product/icon/Favorite.vue'
 import { useScroll } from '~/composables/useScroll'
 import { useCartStore } from '@/stores/cart'
 
 const cart = useCartStore().cart
 
 const { scrollPosition } = useScroll()
-
-const isMoreText = ref(false)
-const isMoreSpec = ref(false)
 
 const showModal = ref(false)
 
@@ -34,16 +29,7 @@ const specifications = [
   { label: 'Устройство аккумулятора', value: 'встроенный' },
   { label: 'Вид упаковки', value: 'чемодан/кейс' },
   { label: 'Тип двигателя', value: 'щеточный' },
-  { label: 'Масса', value: '0.9 кг' },
-  { label: 'Режимы работы', value: 'сверление / завинчивание' },
-  { label: 'Макс. диаметр сверления (металл)', value: '10 мм' },
-  { label: 'Макс. диаметр сверления (древесина)', value: '20 мм' },
-  { label: 'Время зарядки аккумулятора', value: '3–5 ч' }
 ];
-
-const visiblespec = computed(() => {
-  return isMoreSpec.value ? specifications : specifications.slice(0, 7)
-})
 
 function addToCart(itemId: string) {
   const existingItem = cart.find(item => item.id === itemId)
@@ -81,7 +67,7 @@ function addToCart(itemId: string) {
               <div class="flex gap-4">
                 <img class="w-12 h-12 object-contain" :src="product?.image" :alt="product?.title">
                 <div>
-                  <span class="text-sm leading-5">
+                  <span class="text-sm leading-5 font-medium">
                     Код товара: 15561175
                   </span>
                   <p class="text-gray-950 font-bold max-w-[308px] lg:max-w-full line-clamp-1 overflow-hidden">
@@ -92,7 +78,7 @@ function addToCart(itemId: string) {
 
               <div class="flex items-center gap-6 shrink-0">
                 <div class="flex items-center gap-2">
-                  <p class="text-5 leading-[30px] font-semibold ">
+                  <p class="text-[20px] leading-[30px] font-semibold text-gray-950">
                     {{ product?.price.toLocaleString('ru-RU') }} ₽
                   </p>
                   <span v-if="product?.oldPrice" class="text-sm leading-5 text-gray-400 font-medium line-through">
@@ -145,30 +131,20 @@ function addToCart(itemId: string) {
                   </i>
                 </div>
 
-                <p class="text-sm leading-5 text-(--Brand-700) font-medium">
+                <a href="#reviews" class="text-sm leading-5 text-(--Brand-700) font-medium">
                   15 отзывов
-                </p>
+                </a>
 
               </div>
             </div>
 
             <div class="flex gap-6">
-              <button class="flex items-center gap-1.5 text-gray-600 text-base leading-6 cursor-pointer">
-                <i class="w-5 h-5 flex items-center justify-center">
-                  <Compare />
-                </i>
-                <span class="hidden sm:block">
-                  Сравнить
-                </span>
-              </button>
-              <button class="flex items-center gap-1.5 text-gray-600 text-base leading-6 cursor-pointer">
-                <i class="w-5 h-5 flex items-center justify-center">
-                  <Favorite />
-                </i>
-                <span class="hidden sm:block">
-                  В избранное
-                </span>
-              </button>
+              <ProductButtonIcon text="Сравнить">
+                <ProductIconCompare />
+              </ProductButtonIcon>
+              <ProductButtonIcon text="В избранное">
+                <ProductIconFavorite />
+              </ProductButtonIcon>
             </div>
 
           </div>
@@ -192,7 +168,7 @@ function addToCart(itemId: string) {
                   Характеристики
                 </div>
                 <div class="grid gap-4">
-                  <p v-for="(item, i) in visiblespec" :key="i" class="flex gap-1 text-sm leading-5">
+                  <p v-for="(item, i) in specifications" :key="i" class="flex gap-1 text-sm leading-5">
                     <span class="font-medium text-gray-600">
                       {{ item.label }}
                     </span>
@@ -201,40 +177,23 @@ function addToCart(itemId: string) {
                     </b>
                   </p>
                 </div>
-                <button @click="isMoreSpec = !isMoreSpec"
-                  class="flex gap-1.5 items-center text-sm leading-5 cursor-pointer text-gray-600">
-                  {{ isMoreSpec ? 'Свернуть' : 'Все характеристики' }}
-                  <i class="flex items-center justify-center w-5 h-5">
-                    <ProductIconAng />
-                  </i>
-                </button>
+                <ProductButtonLink text="Все характеристики" link="#characteristics" />
               </div>
 
               <div class="flex flex-col gap-4">
                 <div class="font-sans font-bold text-base leading-6 text-black">
                   О товаре
                 </div>
-                <p :class="[!isMoreText ? 'line-clamp-4 overflow-hidden' : '']"
-                  class="text-sm leading-5 font-medium text-gray-600">
+                <p class="text-sm leading-5 font-medium text-gray-600">
                   Предназначен для сверления, сверления с ударом и долбления (три режима) в таких материалах как бетон,
-                  природный камень, дерево, металл. У перфоратора отсутствует удар на холостом ходу, он имеет
-                  электронную регулировку числа оборотов двигателя, предохранительную (расцепную) муфту, обрезиненный
-                  корпус редуктора и антивибрационную боковую рукоятку. Тип крепления хвостика – SDS-plus.
-                  Многофункциональный перфоратор Makita HR 2470 дополнен реверсом. Для данной модели характерен
-                  одинаковый вращающий момент, как при прямом, так и при обратном вращении. Переключение осуществляется
-                  путем поворота щеток.
+                  природный камень, дерево, металл...
                 </p>
-                <button @click="isMoreText = !isMoreText"
-                  class="flex gap-1.5 items-center text-sm leading-5 cursor-pointer text-gray-600">
-                  {{ isMoreText ? 'Свернуть' : 'Читать далее' }}
-                  <i class="flex items-center justify-center w-5 h-5">
-                    <ProductIconAng />
-                  </i>
-                </button>
+                <ProductButtonLink text="Читать далее" link="#about" />
+
               </div>
 
-              <button
-                class="flex gap-2 items-center bg-gray-100 rounded-2xl p-2 text-base leading-6 text-black cursor-pointer">
+              <a href="#goods"
+                class="flex gap-2 items-center bg-gray-100 rounded-2xl p-2 text-base leading-6 text-black cursor-pointer hover:text-(--Brand-700) transition">
                 <img class="w-10 h-9" src="/image/example.png" alt="Example">
                 <span class="text-left font-bold">
                   Сопутствующие товары
@@ -242,12 +201,12 @@ function addToCart(itemId: string) {
                 <i class="flex items-center justify-center w-5 h-5">
                   <ProductIconAng />
                 </i>
-              </button>
+              </a>
 
             </div>
 
             <!--col-3-->
-            <div class="flex flex-col gap-2 sm:gap-6 sm:max-w-[280px] shrink-0 w-full">
+            <aside class="flex flex-col gap-2 sm:gap-6 sm:max-w-[280px] shrink-0 w-full">
 
               <div class="flex flex-col gap-6 bg-gray-100 rounded-lg p-6">
 
@@ -261,11 +220,12 @@ function addToCart(itemId: string) {
                 </div>
 
                 <div class="flex flex-col gap-2">
-                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" :increment="{
-                    color: 'neutral',
-                    variant: 'ghost',
-                    size: 'xl',
-                  }" :decrement="{
+                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral"
+                    :ui="{ root: 'h-11', base: 'focus:ring-1!' }" :increment="{
+                      color: 'neutral',
+                      variant: 'ghost',
+                      size: 'xl',
+                    }" :decrement="{
                     color: 'neutral',
                     variant: 'ghost',
                     size: 'xl'
@@ -285,7 +245,7 @@ function addToCart(itemId: string) {
                     :ui="{ content: 'xl:translate-x-[-15%] lg:top-[260px] max-w-[720px]!' }">
 
                     <UButton
-                      class="flex items-center justify-center h-12 cursor-pointer rounded-lg bg-white! border border-(--border) text-(--Brand-950) text-base"
+                      class="flex items-center justify-center h-12 cursor-pointer rounded-lg bg-white! text-(--Brand-950) text-base"
                       color="neutral">Быстрый заказ
                     </UButton>
 
@@ -379,25 +339,28 @@ function addToCart(itemId: string) {
                   </p>
                 </div>
 
-                <div class="text-sm leading-5 font-medium">
-                  <p>
-                    ул. 50 лет Октября, 118А
-                  </p>
-                  <span
-                    class="text-(--Brand-700) font-bold relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-current before:rounded-full">
-                    Много
-                  </span>
+                <div class="grid gap-3">
+                  <div class="text-sm leading-5 font-medium">
+                    <p>
+                      ул. 50 лет Октября, 118А
+                    </p>
+                    <span
+                      class="text-(--Brand-700) font-bold relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-current before:rounded-full">
+                      Много
+                    </span>
+                  </div>
+
+                  <div class="text-sm leading-5 font-medium">
+                    <p>
+                      ул. Горпищекомбинатовская, 1с1
+                    </p>
+                    <span
+                      class="text-red-700 font-bold relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-current before:rounded-full">
+                      Мало
+                    </span>
+                  </div>
                 </div>
 
-                <div class="text-sm leading-5 font-medium">
-                  <p>
-                    ул. Горпищекомбинатовская, 1с1
-                  </p>
-                  <span
-                    class="text-red-700 font-bold relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-current before:rounded-full">
-                    Мало
-                  </span>
-                </div>
 
                 <div>
                   <div class="flex items-center gap-2 text-(--Brand-700)">
@@ -426,7 +389,7 @@ function addToCart(itemId: string) {
 
               </div>
 
-            </div>
+            </aside>
 
           </div>
 

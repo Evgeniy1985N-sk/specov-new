@@ -75,11 +75,13 @@ function toggleActive(index: number) {
   <div :class="scrollPosition > offsetEl ? 'fixed top-20 left-0 w-full z-100' : ''" class="hidden sm:block">
     <SectionContainer :class="scrollPosition > offsetEl ? 'md:px-4! lg:px-0!' : ''" class="p-0!">
       <div class="flex lg:grid grid-cols-5 gap-1 bg-gray-100 p-1 rounded-lg">
+
         <button v-for="(tab, i) in tabs" :key="i" @click="scrollToSection(tab.to), toggleActive(i)"
-          :class="tab.isActive ? 'bg-white' : ''"
-          class="flex items-center justify-center grow text-sm leading-5 h-10 cursor-pointer transition rounded-lg">
+          :class="tab.isActive ? 'bg-white text-gray-950' : 'text-gray-600'"
+          class="flex items-center justify-center grow text-sm leading-5 font-semibold h-10 cursor-pointer transition rounded-lg">
           {{ tab.label }}
         </button>
+
       </div>
     </SectionContainer>
   </div>

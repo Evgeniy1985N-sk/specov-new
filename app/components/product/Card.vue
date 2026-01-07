@@ -4,6 +4,7 @@ import { useCartStore } from '@/stores/cart'
 
 interface Props {
   item: ProductCard
+  classMedia?: string
   classBtns?: string
   isRow?: boolean
   isList?: boolean
@@ -43,21 +44,41 @@ const classContent = computed(() => ({
   'sm:max-w-[130px] lg:max-w-[232px] w-full': props.isRow,
   'min-h-[174px] sm:min-h-auto': isCatalogPage.value && !props.isRow
 }))
+
+const classCounter = computed(() => ({
+  'max-w-full hidden sm:flex!': props.isRow,
+}))
+
+const classButtonCart = computed(() => ({
+  'w-full': props.isRow
+}))
+
+const classCard = computed(() => ({
+  'custom-class relative pl-[100px] sm:pl-0 sm:flex flex-wrap sm:flex-nowrap gap-4 justify-between pb-8 sm:pb-12 border-b border-gray-300': props.isRow,
+  'grid': !props.isRow,
+}))
+
+const classMedia = computed(() => ({
+  'absolute top-0 left-0 flex items-baseline sm:items-center sm:relative w-20 h-20 border-0 sm:border sm:w-56 sm:h-56! lg:w-[280px] lg:h-[280px]! shrink-0': props.isRow,
+  'relative items-center': !props.isRow
+}))
+
 </script>
 
 
 <template>
 
-  <!-- Wapper -->
+  <!-- CARD -->
   <div
-    :class="isRow ? 'custom-class relative pl-[100px] sm:pl-0 sm:flex flex-wrap sm:flex-nowrap gap-4 justify-between pb-8 sm:pb-12 border-b border-gray-300' : 'grid'"
+    :class="classCard"
     class="gap-4 md:gap-8">
 
     <!-- Media -->
     <div
-      :class="isRow ? 'absolute top-0 left-0 flex items-baseline sm:items-center sm:relative w-20 h-20 border-0 sm:border sm:w-56 sm:h-56! lg:w-[280px] lg:h-[280px]! shrink-0' : 'relative items-center'"
+      :class="classMedia, props.classMedia"
       class="flex justify-center h-[155px] sm:h-[230px] xl:h-[280px] rounded-2xl border border-(--border) overflow-hidden xl:overflow-visible">
 
+      <!-- BUTTONS -->
       <div :class="isRow ? 'hidden sm:flex' : 'flex'"
         class="absolute top-1 right-1 z-10 sm:top-3 sm:right-3 flex-row gap-1 sm:gap-2">
 
@@ -68,10 +89,13 @@ const classContent = computed(() => ({
         </ProductButtonCompare>
 
       </div>
+      <!-- BUTTONS -->
 
+      <!-- SLIDER -->
       <div class="flex items-center justify-center w-full h-fit">
         <ProductSliderImgs :imgs="props.item.imgs" />
       </div>
+      <!-- SLIDER -->
 
     </div>
     <!-- Media -->
@@ -102,7 +126,7 @@ const classContent = computed(() => ({
       class="flex flex-col items-start self-stretch">
 
       <!-- Prices -->
-      <div :class="isRow ? 'w-full flex-row sm:flex-col gap-x-2' : ''"
+      <div :class="isRow ? 'w-full flex-row sm:flex-wrap gap-x-2' : ''"
         class="sm:gap-2 flex flex-wrap sm:items-center flex-col sm:flex-row sm:flex-nowrap">
 
         <div v-if="isRow && props.item.oldPrice" class="lg:w-full order-1 lg:-order-1">
@@ -112,7 +136,7 @@ const classContent = computed(() => ({
         </div>
 
         <!-- Price + btns -->
-        <div class="flex justify-between w-full">
+        <div :class="isRow ? 'w-full sm:w-auto' : 'w-full' " class="flex justify-between">
 
           <div class="leading-[30px] text-zinc-950 font-semibold text-lg sm:text-xl">
             {{ props.item.price.toLocaleString('ru-RU') }} ₽
@@ -159,7 +183,7 @@ const classContent = computed(() => ({
         :class="props.classBtns, isRow ? 'max-w-[130px] sm:max-w-full flex-col-reverse gap-2 lg:gap-4' : 'gap-4 mt-auto'"
         class="w-full font-semibold flex flex-wrap xl:flex-nowrap lg:justify-center pt-5 lg:items-center">
 
-        <UButton @click="addToCart(props.item.id)" :class="isRow ? 'w-full' : ''" class="shrink-0 gap-1 px-4 min-h-10">
+        <UButton @click="addToCart(props.item.id)" :class="classButtonCart" class="shrink-0 gap-1 px-4 min-h-10">
           <i class="flex items-center justify-center h-5 w-5">
             <ProductIconCart />
           </i>
@@ -169,8 +193,8 @@ const classContent = computed(() => ({
         </UButton>
 
         <UInputNumber v-model="counter" :min="0" size="xl" color="neutral"
-          :class="isRow ? 'max-w-full hidden sm:flex!' : ''"
-          :ui="{ root: 'hidden! lg:flex! max-w-[126px]', base: 'min-h-10 focus:ring-1!' }" :increment="{
+          :class="classCounter"
+          :ui="{ root: 'hidden! lg:flex!', base: 'min-h-10 focus:ring-1!' }" :increment="{
             class: 'active:bg-gray-100!',
             color: 'neutral',
             variant: 'ghost',
@@ -189,7 +213,7 @@ const classContent = computed(() => ({
     <!-- Content -->
 
   </div>
-  <!-- Wrapper -->
+  <!-- CARD -->
 
 </template>
 

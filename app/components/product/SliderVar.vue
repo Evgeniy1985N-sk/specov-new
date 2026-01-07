@@ -45,7 +45,7 @@ const goNext = () => {
 
 				<swiper-slide v-for="(item, i) in props.items" :key="item.id">
 
-					<ProductCard :item="item" class-btns="grid grid-cols-1 gap-2!" />
+					<ProductCard :item="item" class-btns="grid grid-cols-1 gap-2!" class-media="h-[155px]! sm:h-[220px]!" />
 
 				</swiper-slide>
 

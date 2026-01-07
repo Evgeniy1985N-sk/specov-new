@@ -1,9 +1,4 @@
 <script setup lang="ts">
-import Pyramid from '@/components/product/icon/Pyramid.vue';
-
-
-const isActive = ref(false)
-
 interface Review {
   name: string
   date: string
@@ -14,6 +9,11 @@ interface Review {
   isPurchasedFromUs: boolean
 }
 
+const isSortByGrade = ref(true)
+const isSortByDate = ref(false)
+const isSortByGradeMax = ref(true)
+const isSortByDateMax = ref(true)
+const visibleCount = ref(3)
 const reviews = ref<Review[]>([
   {
     name: 'Александр',
@@ -69,7 +69,20 @@ const reviews = ref<Review[]>([
   }
 ])
 
-const visibleCount = ref(3)
+
+function changeSortGrade() {
+  if (isSortByGrade.value) {
+    isSortByGradeMax.value = !isSortByGradeMax.value
+  }
+  isSortByDate.value = false
+  isSortByGrade.value = true
+}
+
+function changeSortDate() {
+  if (isSortByDate.value) isSortByDateMax.value = !isSortByDateMax.value
+  isSortByDate.value = true
+  isSortByGrade.value = false
+}
 
 </script>
 
@@ -86,16 +99,10 @@ const visibleCount = ref(3)
           Сортировать по:
         </span>
         <p class="flex gap-4">
-          <button @click="isActive = !isActive" :class="[isActive ? ' text-gray-950' : '']"
-            class="min-w-[83px] cursor-pointer flex gap-1.5">
-            Оценке
-            <Pyramid v-if="isActive" />
-          </button>
-          <button @click="isActive = !isActive" :class="[!isActive ? ' text-gray-950' : '']"
-            class="cursor-pointer flex gap-1.5">
-            Дате
-            <Pyramid v-if="!isActive" />
-          </button>
+          <ProductButtonSort @handle-click="changeSortGrade()" :is-sort-by-max="isSortByGradeMax" text="Оценке"
+            :is-active="isSortByGrade" />
+          <ProductButtonSort @handle-click="changeSortDate()" :is-sort-by-max="isSortByDateMax" text="Дате"
+            :is-active="isSortByDate" />
         </p>
       </div>
 
