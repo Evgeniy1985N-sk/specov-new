@@ -221,7 +221,7 @@ function addToCart(itemId: string) {
 
                 <div class="flex flex-col gap-2">
                   <UInputNumber v-model="counter" :min="0" size="xl" color="neutral"
-                    :ui="{ root: 'h-11', base: 'focus:ring-1!' }" :increment="{
+                    :ui="{ root: 'h-11' }" :increment="{
                       color: 'neutral',
                       variant: 'ghost',
                       size: 'xl',

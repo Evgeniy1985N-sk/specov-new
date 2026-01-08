@@ -194,7 +194,7 @@ const classMedia = computed(() => ({
 
         <UInputNumber v-model="counter" :min="0" size="xl" color="neutral"
           :class="classCounter"
-          :ui="{ root: 'hidden! lg:flex!', base: 'min-h-10 focus:ring-1!' }" :increment="{
+          :ui="{ root: 'hidden! lg:flex! min-h-10' }" :increment="{
             class: 'active:bg-gray-100!',
             color: 'neutral',
             variant: 'ghost',

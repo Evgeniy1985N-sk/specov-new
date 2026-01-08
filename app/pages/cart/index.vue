@@ -33,11 +33,32 @@ cart.forEach((item) => {
 
         <div class="flex gap-8">
 
-          <div class="w-full">
+          <div class="w-full pb-50 lg:pb-0">
 
-            <div class="grid gap-6 border-b border-gray-300 lg:border-0 pb-6 lg:pb-0">
+            <div class="grid gap-6 border-b border-gray-300 lg:border-0 pb-10 lg:pb-0">
 
-              <TitleGoods title="Корзина" :goods="1" />
+              <div class="flex items-center justify-between">
+                <TitleGoods title="Корзина" :goods="1" />
+
+                <div class="flex gap-4 md:hidden">
+                  <CartButton>
+                    <WrapIcon>
+                      <CartIconShare />
+                    </WrapIcon>
+                  </CartButton>
+                  <CartButton>
+                    <WrapIcon>
+                      <CartIconDownload />
+                    </WrapIcon>
+                  </CartButton>
+                  <CartButton>
+                    <WrapIcon>
+                      <CartIconFax />
+                    </WrapIcon>
+                  </CartButton>
+                </div>
+              </div>
+
 
               <CartPanel />
 
@@ -53,22 +74,22 @@ cart.forEach((item) => {
                     <img class="w-20 h-20 object-contain" :src="product?.image" :alt="product?.title">
 
                     <div class="lg:max-w-[392px] w-full">
-                      <div>
+                      <div class="grid gap-1 sm:gap-0">
                         <div class="flex flex-col-reverse sm:flex-row gap-2 sm:gap-6">
-                          <span class="text-sm leading-5 font-medium">
+                          <span class="text-[12px] leading-[18px] sm:text-sm sm:leading-5 font-medium">
                             Код товара: 15561175
                           </span>
                           <CartMark />
                         </div>
                         <NuxtLink :to="{ name: 'products-id', params: { id: product.id } }"
-                          class="text-gray-950 font-semibold transition-colors hover:text-(--Brand-700) lg:max-w-[308px] sm:line-clamp-2 sm:overflow-hidden">
+                          class="text-[12px] leading-[18px] sm:text-base sm:leading-6 text-gray-950 font-semibold transition-colors hover:text-(--Brand-700) lg:max-w-[308px] sm:line-clamp-2 sm:overflow-hidden">
                           {{ product?.title }}
                         </NuxtLink>
                       </div>
 
-                      <div class="flex justify-between flex-wrap lg:hidden mt-4">
-                        <div class="max-w-[116px]">
-                          <UInputNumber v-model="counter" :min="0" size="md" color="neutral" :ui="{ root: 'h-[36px]' }"
+                      <div class="flex justify-between flex-wrap gap-2 lg:hidden mt-4">
+                        <div class="max-w-[92px] sm:max-w-[116px]">
+                          <UInputNumber v-model="counter" :min="0" size="md" color="neutral" :ui="{ root: 'h-[28px] sm:h-[36px]', base: 'text-[12px] leading-[18px] sm:text-sm leading-5' }"
                             :increment="{
                               class: 'bg-transparen',
                               color: 'neutral',
@@ -82,7 +103,7 @@ cart.forEach((item) => {
                         </div>
 
                         <div class="flex items-center justify-between sm:max-w-[150px] w-full">
-                          <p class="text-5 leading-[30px] font-semibold text-gray-950">
+                          <p class="text-[18px] leading-7 font-semibold text-gray-950">
                             {{ product?.price.toLocaleString('ru-RU') }} ₽
                           </p>
                           <CartButton class="ml-auto sm:ml-0">
@@ -103,8 +124,8 @@ cart.forEach((item) => {
                   </div>
 
                   <div class="hidden lg:block max-w-[116px]">
-                    <UInputNumber v-model="counter" :min="0" size="md" color="neutral"
-                      :ui="{ root: 'h-[36px]', base: 'focus:ring-1!' }" :increment="{
+                    <UInputNumber v-model="counter" :min="0" size="md" color="neutral" :ui="{ root: 'h-[36px]' }"
+                      :increment="{
                         color: 'neutral',
                         variant: 'ghost',
                         size: 'md',
@@ -138,7 +159,7 @@ cart.forEach((item) => {
             </div>
 
             <!-- Mobile -->
-            <div class="grid gap-4 pt-6 pb-8 sm:pb-[278px] lg:hidden">
+            <div class="grid gap-4 pt-6 pb-9 lg:hidden">
 
               <p class="text-black font-bold">
                 Промокод
@@ -148,7 +169,7 @@ cart.forEach((item) => {
 
                 <UInput color="neutral" size="xl" placeholder="Введите промокод" />
 
-                <UButton @click="isShowMenu = true"
+                <UButton
                   class="flex w-fit items-center justify-center h-10 cursor-pointer rounded-lg bg-white! text-(--Brand-950) px-4"
                   color="neutral">Применить
                 </UButton>
@@ -263,11 +284,11 @@ cart.forEach((item) => {
                 1 товар
               </span>
               <span class="flex-1 border-b border-dotted border-gray-300 border-opacity-0 relative h-0 mx-2"></span>
-              <b class="font-bold text-gray-950 whitespace-nowrap">
+              <b class="font-semibold text-gray-950 whitespace-nowrap">
                 7 990 ₽
               </b>
             </p>
-            <UButton @click="isShowThanks = true" class="min-h-9 sm:min-h-11">
+            <UButton @click="isShowMenu = true" class="min-h-9 sm:min-h-11">
               Оформить заказ
             </UButton>
           </div>

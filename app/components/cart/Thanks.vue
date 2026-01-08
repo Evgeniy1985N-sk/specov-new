@@ -8,7 +8,7 @@ function goBack() {
 
 
 <template>
-  <div class="fixed inset-0 sm:top-[73px] lg:top-[178px] z-101 lg:flex items-center justify-center bg-white">
+  <div class="fixed inset-0 sm:top-[73px] lg:top-[178px] z-101 lg:flex items-center justify-center pb-6 bg-white overflow-y-auto">
     <SectionContainer>
       <div class="grid gap-6">
 

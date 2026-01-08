@@ -230,7 +230,7 @@ export default defineAppConfig({
       slots: {
         root: "relative inline-flex items-center",
         base: [
-          "w-full h-full bg-transparent rounded-lg border-0 placeholder:text-dimmed focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
+          "w-full h-full bg-transparent rounded-lg border-0 placeholder:text-dimmed focus:ring-1! focus:outline-none disabled:cursor-not-allowed disabled:opacity-75",
           "transition-colors",
         ],
         increment: "absolute flex items-center p-0! pr-[2px]!",
