@@ -1,8 +1,20 @@
 <script setup lang="ts">
 
+interface Item {
+  id: string
+  image: string
+  title: string
+  dsc: string
+  link: string
+  price?: number,
+  oldPrice?: number,
+  discont?: number,
+}
 
 interface Props {
   class?: string
+  itemsPart?: Item[]
+  itemsPart2?: Item[]
 }
 
 const props = defineProps<Props>()
@@ -28,79 +40,6 @@ const emit = defineEmits<{
   (e: 'handleClick', value: string): void
 }>()
 
-const items = ref([
-  {
-    id: '1',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки',
-    dsc: 'Ручной инструмент',
-    link: '/catalog',
-  },
-  {
-    id: '2',
-    image: '/image/example/img-2.jpg',
-    title: 'Молотки слесарные',
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '3',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки Gigant',
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '4',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки Matrix',
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '5',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки Волат',
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '6',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки Sparta',
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '7',
-    image: '/image/example/img-3.jpg',
-    title: 'Молоток Atlantis D1033',
-    price: 17100,
-    oldPrice: 13400,
-    discont: 20,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '8',
-    image: '/image/example/img-4.jpg',
-    title: 'Молоток Rexant ',
-    price: 17100,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '9',
-    image: '/image/example/img-5.jpg',
-    title: 'Молоток Atlantis Touch',
-    price: 17100,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-])
-
-const itemsPart = computed(() => items.value.slice(0, 6))
-const itemsPart2 = computed(() => items.value.slice(6, 9))
 
 </script>
 
@@ -168,7 +107,7 @@ const itemsPart2 = computed(() => items.value.slice(6, 9))
                 {{ item.title }}
               </p>
               <div class="flex gap-2 items-center">
-                <div class="text-sm leading-5 text-gray-950 font-bold">
+                <div v-if="item.price" class="text-sm leading-5 text-gray-950 font-bold">
                   {{ item.price?.toLocaleString('ru-RU') }} ₽
                 </div>
                 <div v-if="item.oldPrice" class="text-zinc-400 line-through shrink-0">
@@ -183,7 +122,9 @@ const itemsPart2 = computed(() => items.value.slice(6, 9))
           </NuxtLink>
         </div>
 
-        <NuxtLink class="sm:hidden flex items-center justify-center mt-4 p-2.5 text-sm leading-5 text-(--Brand-950) border border-gray-200 rounded-lg cursor-pointer" to="/catalog">
+        <NuxtLink
+          class="sm:hidden flex items-center justify-center mt-4 p-2.5 text-sm leading-5 text-(--Brand-950) border border-gray-200 rounded-lg cursor-pointer"
+          to="/catalog">
           Показать все товары
         </NuxtLink>
 
