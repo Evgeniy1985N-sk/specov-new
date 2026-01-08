@@ -37,7 +37,7 @@ const items = ref([
       <WrapIcon :class="item.isTheme ? 'bg-(--Brand-700)' : 'bg-gray-100' " class="mb-6 w-11 h-11 rounded-xl">
         <component :is="item.icon" />
       </WrapIcon>
-      <div class="cnt grid gap-2 mt-auto">
+      <div class="cnt grid sm:gap-2 mt-auto">
         <div :class="item.isTheme ? 'text-white' : 'text-gray-950' " class="mb-2 font-['Russo_One'] text-[24px] leading-8">
           {{ item.title }}
         </div>

@@ -10,7 +10,7 @@ const check = ref(true)
     <div class="flex flex-wrap gap-2.5 sm:gap-4 lg:gap-6">
       <label class="flex gap-2 items-center cursor-pointer">
         <UCheckbox size="xl" v-model="check" />
-        <span class="text-sm leading-5">
+        <span class="text-sm leading-5 font-semibold">
           Выбрать все
         </span>
       </label>
@@ -34,7 +34,7 @@ const check = ref(true)
       </CartButton>
       <CartButton text="Распечатать">
         <WrapIcon>
-          <CartIconTrash />
+          <CartIconFax />
         </WrapIcon>
       </CartButton>
     </div>

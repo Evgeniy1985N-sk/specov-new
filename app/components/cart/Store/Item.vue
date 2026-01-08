@@ -22,19 +22,19 @@ const props = defineProps<Props>()
 
     <div class="grid gap-3">
 
-      <div class="font-semibold">
+      <div class="font-semibold text-gray-950">
         {{ props.address }}
       </div>
 
       <div class="gap-3 flex flex-col items-start">
-        <span class="text-sm leading-5 text-gray-950">{{ props.text1 }}</span>
+        <span class="text-sm leading-5 text-gray-950 text-medium">{{ props.text1 }}</span>
       </div>
 
       <div class="flex gap-2 items-center">
         <WrapIcon class="h-5 w-5">
           <CartIconPhone />
         </WrapIcon>
-        <a :href="'tel:' + props.phone" class="text-zinc-950 leading-5 text-sm">
+        <a :href="'tel:' + props.phone" class="text-gray-950 leading-5 text-sm font-semibold">
           {{ props.phone }}
         </a>
         <div
@@ -56,7 +56,7 @@ const props = defineProps<Props>()
     </div>
 
     <UButton
-      class="flex w-fit items-center justify-center h-10 cursor-pointer rounded-lg bg-white! border border-(--border) text-(--Brand-950) px-4"
+      class="flex w-fit items-center justify-center h-10 cursor-pointer rounded-lg bg-white! text-(--Brand-950) px-4"
       color="neutral">Изменить магазин
     </UButton>
 

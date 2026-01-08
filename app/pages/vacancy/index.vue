@@ -51,12 +51,8 @@ const vacancies: Vacancy[] = [
       </SectionContainer>
     </Section>
 
-    <Section>
+    <Section class="mt-10">
       <SectionContainer>
-
-        <Title2 class="mb-8">
-          Как сдать оборудование или инструмент по гарантии
-        </Title2>
 
         <VacancyCards />
 

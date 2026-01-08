@@ -96,7 +96,7 @@ watch(() => stores.value.find(store => store.isActive), (newActiveStore) => {
 				:address="item.address" :text1="item.text1" :phone="item.phone" :key="item.id" />
 		</div>
 
-		<div class="w-full lg:max-w-[482px] h-80 sm:h-96 overflow-clip flex flex-col items-center">
+		<div class="w-full lg:max-w-[482px] h-80 overflow-clip flex flex-col items-center">
 
 			<div ref="mapContainer" class="w-full h-full map-container" />
 

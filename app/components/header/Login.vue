@@ -44,7 +44,7 @@ const schema = v.object({
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
-  emailphone: '89005001234',
+  emailphone: '',
 })
 
 const toast = useToast()
@@ -91,13 +91,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
 <template>
   <UModal title="Вход или регистрация">
-    <UButton
-      class="bg-gray-100 hover:bg-gray-200 active:bg-neutral-300 border-zinc-300 py-[9px] px-[15px] gap-2 hidden lg:flex items-center cursor-pointer border border-solid rounded-lg">
-      <WrapIcon class="h-5 w-5">
-        <HeaderIconEnter />
-      </WrapIcon>
-      <span class="text-emerald-950 font-semibold">Войти</span>
-    </UButton>
+
+    <slot>
+      <UButton
+        class="bg-gray-100 hover:bg-gray-200 active:bg-neutral-300 border-zinc-300 py-[9px] px-[15px] gap-2 hidden lg:flex items-center cursor-pointer border border-solid rounded-lg">
+        <WrapIcon class="h-5 w-5">
+          <HeaderIconEnter />
+        </WrapIcon>
+        <span class="text-emerald-950 font-semibold">Войти</span>
+      </UButton>
+    </slot>
 
     <template #body>
       <UForm ref="form" :schema="schema" :state="state" @submit="onSubmit">
