@@ -74,6 +74,11 @@ cart.forEach((item) => {
   }
 })
 
+const classAside = computed(() => ({
+  'fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible overscroll-[contain] transition z-100 sm:z-99 lg:relative flex items-start w-full lg:max-w-[280px] bg-white': true,
+  'left-0': isShoWFilter.value
+}))
+
 </script>
 
 <template>
@@ -95,8 +100,7 @@ cart.forEach((item) => {
 
 
           <!-- ASIDE -->
-          <aside ref="aside" :class="isShoWFilter ? 'left-0' : ''"
-            class="fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible overscroll-[contain] transition z-100 lg:relative flex items-start w-full lg:max-w-[280px]">
+          <aside ref="aside" :class="classAside">
 
             <div class="grid gap-6 pb-36 sm:pb-40 lg:p-4 bg-white lg:bg-gray-100 rounded-lg w-full h-auto">
 
