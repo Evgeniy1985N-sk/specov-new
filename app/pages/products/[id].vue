@@ -2,10 +2,14 @@
 import { useProductsStore } from '@/stores/products'
 import { useScroll } from '~/composables/useScroll'
 import { useCartStore } from '@/stores/cart'
+import { useScrollTo } from '~/composables/useScrollTo'
+import Button from '~/components/cart/Button.vue'
+
 
 const cart = useCartStore().cart
 
 const { scrollPosition } = useScroll()
+const { scrollToSection } = useScrollTo()
 
 const showModal = ref(false)
 
@@ -177,7 +181,7 @@ function addToCart(itemId: string) {
                     </b>
                   </p>
                 </div>
-                <ProductButtonLink text="Все характеристики" link="#characteristics" />
+                <ProductButtonLink text="Все характеристики" @handle-click="scrollToSection('characteristics')" />
               </div>
 
               <div class="flex flex-col gap-4">
@@ -188,11 +192,10 @@ function addToCart(itemId: string) {
                   Предназначен для сверления, сверления с ударом и долбления (три режима) в таких материалах как бетон,
                   природный камень, дерево, металл...
                 </p>
-                <ProductButtonLink text="Читать далее" link="#about" />
-
+                <ProductButtonLink text="Читать далее" @handle-click="scrollToSection('about')" />
               </div>
 
-              <a href="#goods"
+              <button @click="scrollToSection('goods')"
                 class="flex gap-2 items-center bg-gray-100 rounded-2xl p-2 text-base leading-6 text-black cursor-pointer hover:text-(--Brand-700) transition">
                 <img class="w-10 h-9" src="/image/example.png" alt="Example">
                 <span class="text-left font-bold">
@@ -201,7 +204,7 @@ function addToCart(itemId: string) {
                 <i class="flex items-center justify-center w-5 h-5">
                   <ProductIconAng />
                 </i>
-              </a>
+              </button>
 
             </div>
 
@@ -220,16 +223,15 @@ function addToCart(itemId: string) {
                 </div>
 
                 <div class="flex flex-col gap-2">
-                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral"
-                    :ui="{ root: 'h-11' }" :increment="{
-                      color: 'neutral',
-                      variant: 'ghost',
-                      size: 'xl',
-                    }" :decrement="{
+                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" :increment="{
                     color: 'neutral',
                     variant: 'ghost',
-                    size: 'xl'
-                  }" />
+                    size: 'xl',
+                  }" :decrement="{
+                      color: 'neutral',
+                      variant: 'ghost',
+                      size: 'xl'
+                    }" />
 
 
                   <UButton @click="addToCart(product.id)" class="gap-1 px-4">
