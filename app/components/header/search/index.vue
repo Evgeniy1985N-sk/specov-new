@@ -40,12 +40,20 @@ const emit = defineEmits<{
   (e: 'handleClick', value: string): void
 }>()
 
+interface Search {
+  showSearch: () => void
+}
+
+const { showSearch } = inject<Search>('search')!
+
+watch(isShow, showSearch)
+
 
 </script>
 
 <template>
 
-  <div :class="props.class" @click="isShow = true" class="relative w-full flex items-center gap-2">
+  <div :class="props.class, {'z-100': isShow}" @click="isShow = true" class="relative w-full flex items-center gap-2">
 
     <button v-if="isShow" @click="input = ''" class="sm:hidden">
       <WrapIcon>
@@ -56,9 +64,11 @@ const emit = defineEmits<{
     <div ref="dropdown" class="w-full border-zinc-300 border border-solid rounded-lg bg-white">
 
       <form class="relative w-full py-[7px] sm:py-[9px] px-[11px] gap-2 flex justify-center items-center">
+
         <input v-model="input"
           class="line-clamp-1 w-full font-medium text-gray-500 overflow-ellipsis focus:outline-none"
           placeholder="Найти спецодежду или инструменты">
+
           <div class="flex items-center gap-2">
             <WrapIcon v-if="input" @click="input = ''" class="cursor-pointer">
               <HeaderIconCross />
@@ -68,9 +78,10 @@ const emit = defineEmits<{
               <HeaderIconSearch />
             </button>
           </div>
+
       </form>
 
-      <div v-if="isShow" class="absolute top-full left-0 mt-1.5 w-full p-4 rounded-xl bg-white isolate z-100 shadow">
+      <div v-if="isShow" class="absolute top-full left-0 mt-1.5 w-full p-4 rounded-xl bg-white z-100 sm:shadow">
 
         <NuxtLink v-for="item in itemsPart" :to="item.link"
           class="flex items-center gap-3 p-2 transition bg-white hover:bg-gray-100 rounded-lg cursor-pointer">

@@ -4,10 +4,14 @@ interface Props {
   class?: string
 }
 const props = defineProps<Props>()
+interface Search {
+  isShowSearch: boolean
+}
+const { isShowSearch } = inject<Search>('search')!
 </script>
 
 <template>
-  <button :class="props.class"
+  <button :class="props.class, {'hidden sm:flex': isShowSearch} "
     class="flex lg:hidden items-center shrink-0 border-zinc-300 p-[11px] justify-center w-9 h-9 sm:h-11 sm:w-11 flex-col bg-white border border-solid rounded-lg">
 
       <svg v-if="!props.isActive" width="17" height="12" viewBox="0 0 17 12" fill="none" xmlns="http://www.w3.org/2000/svg">

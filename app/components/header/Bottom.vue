@@ -1,11 +1,14 @@
 <script setup lang="ts">
-
+interface Props {
+  class?: string
+}
+const props = defineProps<Props>()
 </script>
 
 
 <template>
 
-  <div class="hidden lg:flex max-w-(--container) w-full m-auto px-4 overflow-clip justify-center items-center">
+  <div :class="props.class" class="hidden lg:flex max-w-(--container) w-full m-auto px-4 overflow-clip justify-center items-center">
     <div
       class="w-full font-semibold leading-6 text-gray-600 flex flex-wrap justify-center self-stretch gap-x-5 gap-y-3 items-center">
 
@@ -13,7 +16,7 @@
         <div class="gap-2 leading-5 text-sm flex justify-center">
 
           <!-- stores -->
-          <a href="/stores" class="gap-1 flex justify-center bg-green-100 hover:bg-[#AAF0CD] transition items-center py-1 px-2.5 rounded-2xl">
+          <NuxtLink to="/stores" class="gap-1 flex justify-center bg-green-100 hover:bg-[#AAF0CD] transition items-center py-1 px-2.5 rounded-2xl">
             <div class="h-4 w-4"><svg width="100%" height="100%" style="overflow: visible;" preserveAspectRatio="none"
                 viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
@@ -21,9 +24,9 @@
                   stroke="#0A5B40" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg></div>
             <div class="text-green-800"> Магазины </div>
-          </a>
+          </NuxtLink>
 
-          <a href="/for-business"
+          <NuxtLink to="/for-business"
             class="gap-1 flex justify-center bg-yellow-50 hover:bg-[#EAE0BE] transition items-center py-1 px-2.5 rounded-2xl">
             <div class="h-4 w-4"><svg width="100%" height="100%" style="overflow: visible;" preserveAspectRatio="none"
                 viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -32,7 +35,7 @@
                   stroke="#7A5432" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
               </svg></div>
             <div class="text-yellow-800"> Юрлицам </div>
-          </a>
+          </NuxtLink>
         </div>
       </div>
 

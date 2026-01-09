@@ -82,14 +82,18 @@ function updateActive() {
     toggleActive(3)
   }
 }
-
+interface Search {
+  isShowSearch: boolean
+}
+const { isShowSearch } = inject<Search>('search')!
 
 </script>
 
 <template>
 
   <div
-    class="lg:hidden fixed bg-white z-100 bottom-0 left-0 py-3 sm:py-[18px] w-full border-t border-(--border) border-solid">
+    :class="{'hidden sm:block lg:hidden': isShowSearch}"
+    class="fixed lg:hidden bg-white z-100 bottom-0 left-0 py-3 sm:py-[18px] w-full border-t border-(--border) border-solid">
     <div class="max-w-(--container) m-auto px-2.5 sm:px-4">
       <div class="flex justify-between">
 

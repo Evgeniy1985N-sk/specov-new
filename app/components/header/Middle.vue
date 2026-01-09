@@ -144,7 +144,10 @@ const itemsPart2 = computed(() => items.value.slice(6, 9))
 
     <HeaderProfile :is-show="isProfile" />
 
+    <!-- MOBILE MENU BOTTOM -->
     <HeaderMobileMenuBottom @toggle-catalog="isCatalog = !isCatalog" @toggle-profile="isProfile = !isProfile" />
+    <!-- MOBILE MENU BOTTOM -->
+
 
   </div>
 </template>
