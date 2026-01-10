@@ -578,7 +578,10 @@ const goBack = () => {
   }
 };
 
-
+// interface Search {
+//   showSearch: () => void
+// }
+// const { showSearch } = inject<Search>('search')!
 
 </script>
 
@@ -586,6 +589,7 @@ const goBack = () => {
   <div v-if="props.isShow"
     class="custom-scrollbar absolute h-[calc(100vh-128px)] inset-0 lg:top-32 z-100 lg:py-6 bg-white lg:border-t border-(--border) overflow-auto">
 
+    <!-- BUTTON BACK -->
     <div class="lg:hidden border-b border-(--border) py-2.5 sm:py-6">
       <SectionContainer class="max-w-full px-6">
 
@@ -609,6 +613,7 @@ const goBack = () => {
 
       </SectionContainer>
     </div>
+    <!-- BUTTON BACK -->
 
     <SectionContainer class="max-w-full lg:max-w-(--container) relative px-6 lg:px-4">
 
@@ -621,7 +626,7 @@ const goBack = () => {
           :class="[item.isActive ? 'lg:bg-gray-100' : 'lg:relative z-1']" class="py-2.5 px-3.5 rounded-lg">
 
           <div :class="[item.isActive ? 'lg:text-(--Brand-700)' : 'text-gray-600']" href=""
-            class="flex gap-1.5 items-center cursor-pointer text-sm leading-5 font-bold">
+            class="flex gap-1.5 items-center cursor-pointer text-sm leading-5 font-bold hover:text-(--Brand-700)">
             <span class="flex items-center justify-center h-6 w-6">
               <component :is="item.icon" />
             </span>
@@ -697,8 +702,8 @@ const goBack = () => {
                 <li v-for="category in group.items">
 
                   <!-- menu 3 -->
-                  <NuxtLink v-if="group.isActive" class="flex gap-1.5 items-center py-2.5 px-3.5 border-b border-(--border)"
-                    to="/catalog">
+                  <NuxtLink v-if="group.isActive"
+                    class="flex gap-1.5 items-center py-2.5 px-3.5 border-b border-(--border)" to="/catalog">
                     {{ category.name }}
 
                     <WrapIcon class="ml-auto">

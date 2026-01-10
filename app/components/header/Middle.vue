@@ -6,7 +6,6 @@ import IconCart from '@/components/header/icon/Cart.vue'
 const isMenu = ref(false)
 const isCatalog = ref(false)
 const isProfile = ref(false)
-
 const buttons = [
   {
     src: '/compare',
@@ -21,7 +20,6 @@ const buttons = [
     icon: IconCart
   },
 ]
-
 const items = ref([
   {
     id: '1',
@@ -110,9 +108,16 @@ const items = ref([
     link: '/catalog',
   },
 ])
-
 const itemsPart = computed(() => items.value.slice(0, 6))
 const itemsPart2 = computed(() => items.value.slice(6, 9))
+
+interface Search {
+  isShowSearch: boolean
+}
+const { isShowSearch } = inject<Search>('search')!
+watch(() => isShowSearch, () => {
+  if(isCatalog.value) isCatalog.value = false
+}, {deep: true})
 
 </script>
 
@@ -133,6 +138,7 @@ const itemsPart2 = computed(() => items.value.slice(6, 9))
         <component :is="item.icon" />
       </span>
     </NuxtLink>
+    <!-- buttons -->
 
     <HeaderLogin />
 
@@ -140,7 +146,9 @@ const itemsPart2 = computed(() => items.value.slice(6, 9))
 
     <HeaderMobileMenu :is-show="isMenu" />
 
+    <!-- CATALOG MENU -->
     <HeaderCatalogMenu :is-show="isCatalog" @hide-catalog="isCatalog = !isCatalog" />
+    <!-- CATALOG MENU -->
 
     <HeaderProfile :is-show="isProfile" />
 

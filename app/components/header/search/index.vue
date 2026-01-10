@@ -37,7 +37,7 @@ onBeforeUnmount(() => {
 })
 
 const emit = defineEmits<{
-  (e: 'handleClick', value: string): void
+  (e: 'handleClick', value?: string): void
 }>()
 
 interface Search {
@@ -47,7 +47,6 @@ interface Search {
 const { showSearch } = inject<Search>('search')!
 
 watch(isShow, showSearch)
-
 
 </script>
 

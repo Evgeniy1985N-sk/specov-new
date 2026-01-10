@@ -110,7 +110,7 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
         </UFormField>
 
         <UButton v-if="!isButtonLoading" size="xl" type="submit" class="w-full mt-4">
-          Заказать звонок
+          Продолжить
         </UButton>
         <UButton v-else loading loading-icon="i-lucide-loader">Продолжить</UButton>
 

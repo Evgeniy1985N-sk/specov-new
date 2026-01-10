@@ -89,7 +89,7 @@ function startCountDown() {
 
 
 <template>
-  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]' }">
+  <UModal v-model:open="showModal" :close=false :ui="{ content: 'max-w-[480px]', body: 'px-1!' }">
 
     <UButton class="px-5">
       Зарегистрироваться как юрлицо
