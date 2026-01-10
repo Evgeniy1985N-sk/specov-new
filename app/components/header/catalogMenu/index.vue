@@ -644,8 +644,8 @@ const goBack = () => {
                 <ul class="columns-3 gap-x-8 gap-y-3">
 
                   <li v-for="category in group.items" class="mb-3">
-                    <NuxtLink class="flex items-center justify-between gap-2" :to="category?.src">
-                      <p class="w-full max-w-[190px] text-gray-950 text-sm leading-5 font-medium">
+                    <NuxtLink class="custom-item flex items-center justify-between gap-2 hover:text-(--Brand-700) text-gray-950 transition" :to="category?.src">
+                      <p class="w-full max-w-[190px] text-sm leading-5 font-medium">
                         {{ category.name }}
                       </p>
                       <span class="shrink-0 text-sm leading-5 font-medium text-gray-600">
@@ -751,5 +751,9 @@ const goBack = () => {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
+}
+.custom-item:hover span {
+  color: var(--Brand-700);
+  transition: .1s;
 }
 </style>

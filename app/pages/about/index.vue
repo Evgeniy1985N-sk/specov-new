@@ -7,9 +7,7 @@
 
   <Header />
 
-  <Breadcrumbs />
-
-  <main>
+  <main class="pt-8">
 
     <Section>
       <SectionContainer>

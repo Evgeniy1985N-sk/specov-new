@@ -8,9 +8,7 @@ const openStates = ref([true])
 
   <Header />
 
-  <Breadcrumbs />
-
-  <main>
+  <main class="pt-8">
 
     <Section>
       <SectionContainer>
