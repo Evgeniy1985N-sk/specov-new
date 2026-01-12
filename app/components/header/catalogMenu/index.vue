@@ -578,16 +578,22 @@ const goBack = () => {
   }
 };
 
+onMounted(() => {
+  const html = document.querySelector('html')
+  if (html) {
+    html.classList.remove('xl:overflow-hidden', 'xl:mr-[17px]')
+  }
+})
+
 watch(() => props.isShow, (newVal) => {
   const html = document.querySelector('html')
-
   if (newVal) {
     if (html) {
       html.classList = 'xl:overflow-hidden xl:mr-[17px]'
     }
   } else {
     if (html) {
-      html.classList.remove ('xl:overflow-hidden', 'xl:mr-[17px]')
+      html.classList.remove('xl:overflow-hidden', 'xl:mr-[17px]')
     }
   }
 
