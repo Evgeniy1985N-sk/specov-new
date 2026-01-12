@@ -9,7 +9,7 @@ const gardenProducts = useProductsStore().garden
 
 
 <template>
-  <div class="overflow-hidden [background:var(--Base-White)]">
+  <div class="overflow-hidden bg-white">
 
     <Header />
 

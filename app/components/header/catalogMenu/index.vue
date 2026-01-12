@@ -578,6 +578,21 @@ const goBack = () => {
   }
 };
 
+watch(() => props.isShow, (newVal) => {
+  const html = document.querySelector('html')
+
+  if (newVal) {
+    if (html) {
+      html.classList = 'xl:overflow-hidden xl:mr-[17px]'
+    }
+  } else {
+    if (html) {
+      html.classList.remove ('xl:overflow-hidden', 'xl:mr-[17px]')
+    }
+  }
+
+})
+
 // interface Search {
 //   showSearch: () => void
 // }
@@ -622,11 +637,12 @@ const goBack = () => {
       <!-- desk menu -->
       <ul class="hidden lg:grid gap-1 lg:max-w-[280px]">
 
-        <li v-for="(item, index) in menu" :key="index" @click="toggleActive(index)"
-          :class="[item.isActive ? 'lg:bg-gray-100' : 'lg:relative z-1']" class="py-2.5 px-3.5 rounded-lg">
+        <li v-for="(item, index) in menu" :key="index" @mouseenter="toggleActive(index)"
+          :class="[item.isActive ? 'lg:bg-gray-100' : 'lg:relative z-1']"
+          class="py-2.5 px-3.5 rounded-lg cursor-pointer">
 
-          <div :class="[item.isActive ? 'lg:text-(--Brand-700)' : 'text-gray-600']" href=""
-            class="flex gap-1.5 items-center cursor-pointer text-sm leading-5 font-bold hover:text-(--Brand-700)">
+          <div :class="[item.isActive ? 'lg:text-(--Brand-700)' : 'text-gray-600']"
+            class="flex gap-1.5 items-center text-sm leading-5 font-bold hover:text-(--Brand-700)">
             <span class="flex items-center justify-center h-6 w-6">
               <component :is="item.icon" />
             </span>
@@ -644,7 +660,9 @@ const goBack = () => {
                 <ul class="columns-3 gap-x-8 gap-y-3">
 
                   <li v-for="category in group.items" class="mb-3">
-                    <NuxtLink class="custom-item flex items-center justify-between gap-2 hover:text-(--Brand-700) text-gray-950 transition" :to="category?.src">
+                    <NuxtLink
+                      class="custom-item flex items-center justify-between gap-2 hover:text-(--Brand-700) text-gray-950 transition"
+                      :to="category?.src">
                       <p class="w-full max-w-[190px] text-sm leading-5 font-medium">
                         {{ category.name }}
                       </p>
@@ -752,6 +770,7 @@ const goBack = () => {
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #a8a8a8;
 }
+
 .custom-item:hover span {
   color: var(--Brand-700);
   transition: .1s;
