@@ -18,7 +18,7 @@ const menu = ref([
   {
     name: 'Автотовары',
     icon: markRaw(Battery),
-    isActive: false,
+    isActive: true,
     sub: [
 
       {
@@ -637,7 +637,7 @@ watch(() => props.isShow, (newVal) => {
       <!-- desk menu -->
       <ul class="hidden lg:grid gap-1 lg:max-w-[280px]">
 
-        <li v-for="(item, index) in menu" :key="index" @mouseenter="toggleActive(index)"
+        <li v-for="(item, index) in menu" :key="index" @click="toggleActive(index)"
           :class="[item.isActive ? 'lg:bg-gray-100' : 'lg:relative z-1']"
           class="py-2.5 px-3.5 rounded-lg cursor-pointer">
 
