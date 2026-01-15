@@ -40,8 +40,10 @@ const visibleTime = computed(() => {
 
     </div>
 
-    <div v-if="visibleTime" class="grid gap-4">
+    <div v-if="visibleTime" class="grid">
       <span class="font-bold text-gray-950">Выберите транспортную компанию</span>
+
+      <CartTransportCompany />
     </div>
 
   </div>
