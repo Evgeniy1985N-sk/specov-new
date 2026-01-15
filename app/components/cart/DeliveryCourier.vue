@@ -2,6 +2,8 @@
 import Dropdown from './Dropdown.vue';
 import DropdownWithIcon from './DropdownWithIcon.vue';
 
+const deliveryStore = useDeliveryStore()
+const toggleActiveAddress = useDeliveryStore().toggleActiveAddress
 const sumDelivery = ref(290)
 const state = reactive({
   address: '',
@@ -16,14 +18,16 @@ interface Item {
   label: string
   isActive: boolean
 }
-
-const address = ref<Item[]>([
-  { label: 'Московская область, Пушкино, Ярославское шоссе, 218', isActive: true },
-  { label: 'Московская область, Пушкино, Ярославское шоссе, 216', isActive: false },
-  { label: 'Москва, 2-я Мелитопольская улица, 12Ас1', isActive: false },
-  { label: 'Московская область, Жуковский, район Замоскворечье, 92', isActive: false },
-  { label: 'Москва, проспект Мира, 119с23', isActive: false },
-])
+const address = computed(() => {
+  return deliveryStore.address
+})
+watch(address, (newVal) => {
+  newVal.filter((item) => {
+    if (item.isActive) {
+      state.address = item.label
+    }
+  })
+})
 const time = ref<Item[]>([
   { label: 'Понедельник, 29 декабря', isActive: true },
   { label: 'Понедельник, 30 декабря', isActive: false },
@@ -34,17 +38,6 @@ const hours = ref<Item[]>([
   { label: '09:00 - 17:00', isActive: false },
   { label: '09:00 - 16:00', isActive: false },
 ])
-function toggleActiveAddress(items: Item[], index: number) {
-  const selectedItem = items[index]?.label
-  if (selectedItem) {
-    state.address = selectedItem
-  }
-  items = items.map((item, i) => ({
-    ...item,
-    isActive: i === index
-  }))
-  address.value = items
-}
 function toggleActiveTime(items: Item[], index: number) {
   const selectedItem = items[index]?.label
   if (selectedItem) {

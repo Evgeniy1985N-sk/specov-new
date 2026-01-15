@@ -3,7 +3,6 @@ import { useProductsStore } from '@/stores/products'
 import { useScroll } from '~/composables/useScroll'
 import { useCartStore } from '@/stores/cart'
 import { useScrollTo } from '~/composables/useScrollTo'
-import Button from '~/components/cart/Button.vue'
 
 
 const cart = useCartStore().cart

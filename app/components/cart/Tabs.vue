@@ -3,6 +3,7 @@ import Pin from './icon/Pin.vue';
 import Box from './icon/Box.vue';
 import Car from './icon/Car.vue';
 import DeliveryCompany from './DeliveryCompany.vue';
+import DeliveryCourier from './DeliveryCourier.vue';
 
 const tabs = ref([
   {
@@ -57,7 +58,7 @@ function toggleActive(index: number) {
         <CartStore />
       </div>
       <div v-if="tabs[1]?.isActive" class="flex">
-        <CartCourier />
+        <DeliveryCourier />
       </div>
       <div v-if="tabs[2]?.isActive" class="flex">
         <DeliveryCompany />
