@@ -5,6 +5,8 @@ interface Props {
   title: string
   message: string
   class?: string
+  classTitle?: string
+  classMessage?: string
 }
 const props = defineProps<Props>()
 
@@ -15,7 +17,7 @@ const props = defineProps<Props>()
 <template>
   <div :class="props.class" class="flex items-center gap-2">
 
-    <p class="text-sm leading-5 font-medium">
+    <p :class="props.classTitle" class="text-sm leading-5 font-medium">
       {{ props.title }}
     </p>
 
@@ -25,10 +27,10 @@ const props = defineProps<Props>()
       </WrapIcon>
 
       <div
-        class="item__popup absolute bottom-[calc(100%+12px)] left-1/2 -translate-x-1/2 z-10 inline-block min-w-[188px] opacity-0 transition-opacity">
+        class="item__popup absolute bottom-[calc(100%+12px)] left-1/2 -translate-x-1/2 z-10 inline-block min-w-[188px] opacity-0 transition-opacity invisible">
 
         <div class="grid gap-4 popup-with-arrow bg-white rounded-xl shadow-xl py-2 px-3">
-          <p class="text-xs leading-[18px] font-semibold text-left text-gray-700">{{ props.message }}</p>
+          <p :class="props.classMessage" class="text-xs leading-[18px] font-semibold text-left text-gray-700">{{ props.message }}</p>
         </div>
 
       </div>
@@ -40,6 +42,7 @@ const props = defineProps<Props>()
 
 <style scoped>
 .item:hover .item__popup {
+  visibility: visible;
   opacity: 1;
 }
 .popup-with-arrow::before {
