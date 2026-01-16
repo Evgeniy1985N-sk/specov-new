@@ -3,16 +3,25 @@ import Dropdown from './Dropdown.vue';
 
 const deliveryStore = useDeliveryStore()
 const toggleActiveAddress = useDeliveryStore().toggleActiveAddress
+const companyStore = useCompanyStore()
 const state = reactive({
   address: '',
+  company: ''
 })
-interface Item {
-  label: string
-  isActive: boolean
-}
 const address = computed(() => {
   return deliveryStore.address
 })
+const company = computed(() => {
+  return companyStore.company
+})
+
+const visibleTransportCompany = computed(() => {
+  return state.address
+})
+const visiblePickupPoint = computed(() => {
+  return state.company
+})
+
 watch(address, (newVal) => {
   newVal.filter((item) => {
     if (item.isActive) {
@@ -20,9 +29,12 @@ watch(address, (newVal) => {
     }
   })
 })
-
-const visibleTime = computed(() => {
-  return state.address
+watch(company, (newVal) => {
+  newVal.filter((item) => {
+    if (item.isActive) {
+      state.company = item.label
+    }
+  })
 })
 </script>
 
@@ -40,17 +52,20 @@ const visibleTime = computed(() => {
 
     </div>
 
-    <div v-if="visibleTime" class="grid">
+    <div v-if="visibleTransportCompany" class="grid">
       <span class="font-bold text-gray-950">Выберите транспортную компанию</span>
 
-      <CartTransportCompany />
+      <CartTransportCompanyTable />
+    </div>
+
+    <div v-if="visiblePickupPoint" class="grid">
+      <span class="font-bold text-gray-950">Выберите пункт выдачи</span>
+
+      <CartTransportCompanyPickupPoint />
     </div>
 
   </div>
 </template>
 
 <style scoped>
-.filled {
-  --color-white: #F5F5F5;
-}
 </style>
