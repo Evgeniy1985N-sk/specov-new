@@ -58,14 +58,27 @@ watch(company, (newVal) => {
       <CartTransportCompanyTable />
     </div>
 
-    <div v-if="visiblePickupPoint" class="grid">
+    <div v-if="visiblePickupPoint" class="grid gap-4">
       <span class="font-bold text-gray-950">Выберите пункт выдачи</span>
 
-      <CartTransportCompanyPickupPoint />
+      <div class="flex gap-6 border border-gray-300 rounded-xl">
+        <div class="max-w-[350px] w-full max-h-[364px] overflow-auto pt-6 pl-6 hide-scrollbar">
+          <CartTransportCompanyPickupPoint />
+        </div>
+
+      </div>
+
     </div>
 
   </div>
 </template>
 
 <style scoped>
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.hide-scrollbar :deep(::-webkit-scrollbar) {
+  display: none;
+}
 </style>
