@@ -1,8 +1,14 @@
 <script setup lang="ts">
-
+interface Address {
+  label: string
+  coords: number[]
+  isActive: boolean
+}
+const companyStore = useCompanyStore()
 const mapContainer = ref<HTMLDivElement | null>(null)
 let myMap: any = null
 let myPlacemark: any = null
+const address = ref<Address[]>()
 
 onMounted(() => {
   const script = document.createElement('script')
@@ -11,112 +17,93 @@ onMounted(() => {
     // @ts-expect-error ymaps доступен глобально
     const ymaps = window.ymaps
     ymaps.ready(() => {
-      const activeStore = stores.value.find(store => store.isActive)
-      if (!activeStore) return
-      
-      const coords = activeStore.coords
+      if (!address.value || address.value.length === 0) return
+
+      // Берём координаты первого адреса как начальный центр
+      const firstCoords = address.value[0]?.coords
 
       myMap = new ymaps.Map(mapContainer.value, {
-        center: coords,
+        center: firstCoords,
         zoom: 14,
-        controls: []
+        // controls: []
       })
 
-      myPlacemark = new ymaps.Placemark(
-        coords,
-        {},
-        {
-          iconLayout: 'default#image',
-          iconImageHref: '/image/pin.svg',
-          iconImageSize: [60, 60],
-          iconImageOffset: [-20, -40]
-        }
-      )
+      // Массив для хранения всех меток (опционально)
+      const placemarks = address.value.map(addr => {
+        return new ymaps.Placemark(
+          addr.coords,
+          {}, // можно добавить балун с данными: { balloonContent: addr.name }
+          {
+            iconLayout: 'default#image',
+            iconImageHref: '/image/pin2.svg',
+            iconImageSize: [60, 60],
+            iconImageOffset: [-20, -40]
+          }
+        )
+      })
 
-      myMap.geoObjects.add(myPlacemark)
+      // Добавляем все метки на карту
+      placemarks.forEach(placemark => {
+        myMap.geoObjects.add(placemark)
+      })
+
+      // Опционально: автоматически подогнать масштаб под все точки
+      myMap.setBounds(myMap.geoObjects.getBounds(), {
+        checkZoomRange: true
+      })
     })
   }
   document.head.appendChild(script)
 })
 
-const stores = ref([
-  {
-    id: 1,
-    coords: [57.132640, 65.604765],
-    isActive: true,
-    address: "Тюмень, улица 50 лет Октября, 118А",
-    text1: "Пн-Пт 8:00 — 19:00",
-    text2: "Сб-Вс Выходной",
-    phone: "+7 (3452) 410-626"
-  },
-  {
-    id: 2,
-    coords: [57.136904, 65.496751],
-    isActive: false,
-    address: "Тюмень, Горпищекомбинатовская улица, 1с1",
-    text1: "Пн-Вс 8:00 — 19:00",
-    text2: "",
-    phone: "+7 (3452) 30-30-90"
+const company = computed(() => {
+  return companyStore.company
+})
+watch(company, (newVal) => {
+  if (!newVal) return;
+
+  const activeItem = newVal.find(item => item.isActive);
+  if (activeItem) {
+    address.value = activeItem.address;
   }
-])
+}, { immediate: true });
 
-function toggleActive(index: number) {
-  if (stores.value[index]?.isActive) return
+watch(() => address.value?.find(address => address.isActive), (newactiveAddress) => {
+  if (!newactiveAddress || !myMap) return
 
-  stores.value = stores.value.map((item, i) => ({
-    ...item,
-    isActive: i === index
-  }))
-}
-
-watch(() => stores.value.find(store => store.isActive), (newActiveStore) => {
-  if (!newActiveStore || !myMap) return
-  
   if (myPlacemark) {
     myMap.geoObjects.remove(myPlacemark)
   }
-  
-  myMap.setCenter(newActiveStore.coords, 14, {
+
+  myMap.setCenter(newactiveAddress.coords, 20, {
     duration: 300
   })
-  
+
   // @ts-expect-error ymaps доступен глобально
   const ymaps = window.ymaps
   myPlacemark = new ymaps.Placemark(
-    newActiveStore.coords,
+    newactiveAddress.coords,
     {},
     {
       iconLayout: 'default#image',
-      iconImageHref: '/image/pin.svg',
+      iconImageHref: '/image/pin2.svg',
       iconImageSize: [60, 60],
       iconImageOffset: [-20, -40]
     }
   )
-  
+
   myMap.geoObjects.add(myPlacemark)
 })
 </script>
 
 <template>
 
-	<div class="flex flex-wrap lg:flex-nowrap gap-8">
-
-		<div class="w-full gap-2 font-semibold flex flex-col md:flex-row lg:flex-col">
-			<StoresItem v-for="(item, index) in stores" @click="toggleActive(index)" :isActive="item.isActive"
-				:address="item.address" :text1="item.text1" :text2="item.text2" :phone="item.phone" :key="item.id" />
-		</div>
-
-		<div class="w-full lg:max-w-[695px] h-[248px] sm:h-96 overflow-clip flex flex-col items-center rounded-2xl">
-
-			<div ref="mapContainer" class="w-full h-full map-container" />
-
-		</div>
-	</div>
+  <div ref="mapContainer" class="w-full h-full map-container" />
 
 </template>
 
 <style>
 .map-container .ymaps-2-1-79-ground-pane {
-	filter: grayscale(1);
+  filter: grayscale(1);
 }
 </style>

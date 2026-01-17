@@ -66,6 +66,8 @@ watch(company, (newVal) => {
           <CartTransportCompanyPickupPoint />
         </div>
 
+        <CartTransportCompanyMap />
+
       </div>
 
     </div>
