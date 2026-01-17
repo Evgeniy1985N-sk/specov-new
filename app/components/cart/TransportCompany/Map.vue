@@ -32,7 +32,15 @@ onMounted(() => {
       const placemarks = address.value.map(addr => {
         return new ymaps.Placemark(
           addr.coords,
-          {}, // можно добавить балун с данными: { balloonContent: addr.name }
+          {
+            balloonContent: `
+              <div class="grid gap-4">
+                <p class="text-sm leading-5 text-gray-950 font-semibold">${addr.label}</p>
+                <button class="px-[14px] py-2 rounded-lg bg-(--Brand-950) text-sm leading-5 text-white font-semibold cursor-pointer">Выбрать</button>
+              </div>
+            `,
+            hintContent: addr.label
+          }, // можно добавить балун с данными: { balloonContent: addr.name }
           {
             iconLayout: 'default#image',
             iconImageHref: '/image/pin2.svg',
@@ -75,7 +83,7 @@ watch(() => address.value?.find(address => address.isActive), (newactiveAddress)
     myMap.geoObjects.remove(myPlacemark)
   }
 
-  myMap.setCenter(newactiveAddress.coords, 20, {
+  myMap.setCenter(newactiveAddress.coords, 18, {
     duration: 300
   })
 
