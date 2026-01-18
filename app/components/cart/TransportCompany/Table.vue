@@ -8,7 +8,7 @@ const company = computed(() => {
 </script>
 
 <template>
-  <table>
+  <table class="overflow-hidden">
 
     <thead>
       <tr class="hidden lg:grid grid-cols-[400px_1fr_1fr] gap-6 p-4 pt-0 text-left">
@@ -50,7 +50,7 @@ const company = computed(() => {
           <p v-if="item.price" class="font-semibold text-gray-950">
             {{ item.price.toLocaleString('ru-RU') }} ₽
           </p>
-          <p v-else class="text-sm leading-5 text-gray-700">
+          <p v-else class="text-sm leading-5 text-gray-700 text-center md:text-left">
             Уточнит менеджер при подтверждении заказа
           </p>
         </td>
@@ -59,7 +59,7 @@ const company = computed(() => {
           <p v-if="item.delivery">
             {{ item.delivery }}
           </p>
-          <p v-else class="text-sm leading-5 text-gray-700">
+          <p v-else class="text-sm leading-5 text-gray-700 text-center md:text-left">
             Уточнит менеджер при подтверждении заказа
           </p>
         </td>

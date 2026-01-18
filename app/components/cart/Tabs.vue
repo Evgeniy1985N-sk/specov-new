@@ -53,6 +53,7 @@ function toggleActive(index: number) {
       </button>
     </div>
 
+    <!-- TABS -->
     <div class="grid">
       <div v-if="tabs[0]?.isActive" class="flex">
         <CartStore />
@@ -64,6 +65,7 @@ function toggleActive(index: number) {
         <DeliveryCompany />
       </div>
     </div>
+    <!-- TABS -->
 
   </div>
 </template>

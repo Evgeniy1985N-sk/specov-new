@@ -17,7 +17,7 @@ const props = defineProps<Props>()
 <template>
   <div :class="props.class" class="flex items-center gap-2">
 
-    <p :class="props.classTitle" class="text-sm leading-5 font-medium">
+    <p :class="props.classTitle" class="text-sm leading-5 font-medium text-center sm:text-left">
       {{ props.title }}
     </p>
 

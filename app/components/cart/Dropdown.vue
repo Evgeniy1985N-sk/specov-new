@@ -54,7 +54,7 @@ function getValue(value: string) {
     </UFormField>
 
     <div v-if="isShow"
-      class="absolute top-full left-0 w-full min-w-[290px] rounded-xl bg-white isolate z-100 shadow-md">
+      class="absolute top-full left-0 w-full sm:min-w-[290px] rounded-xl bg-white isolate z-100 shadow-md">
       <ul class="grid gap-4 px-3.5 py-2.5">
         <li v-for="(item, i) in props.items" :key="i" @click="getIndexItem(i), isShow = false, value = item.label"
           class="cursor-pointer">

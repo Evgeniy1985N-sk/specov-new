@@ -98,9 +98,6 @@ const goBack = () => {
   }
 };
 
-
-
-
 </script>
 
 <template>

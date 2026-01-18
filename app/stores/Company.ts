@@ -22,7 +22,6 @@ export const useCompanyStore = defineStore("company", () => {
       isActive: false,
       img: "/image/company/img-1.png",
       price: 432,
-      delivery: "Уточнит менеджер при подтверждении заказа",
       address: [
         {
           label: "Нагорный б-р, 5, корп. 2, пом. 4",
@@ -102,7 +101,6 @@ export const useCompanyStore = defineStore("company", () => {
       label: "Другая транспортная компания",
       isActive: false,
       img: "/image/company/img-3.png",
-      delivery: "Уточнит менеджер при подтверждении заказа",
     },
   ]);
   function toggleActiveCompany(index: number) {
