@@ -36,7 +36,7 @@ function toggleActive(index: number) {
 <template>
   <div class="grid gap-6">
 
-    <div class="flex lg:grid grid-cols-3 gap-1 bg-gray-100 p-1 rounded-lg">
+    <div class="flex flex-wrap lg:grid grid-cols-3 gap-1 bg-gray-100 p-1 rounded-lg">
       <button v-for="(tab, i) in tabs" :key="i" @click="toggleActive(i)" :class="tab.isActive ? 'bg-white' : ''"
         class="flex items-center grow gap-4 text-sm leading-5 w-full h-[60px] px-4 py-2.5 cursor-pointer transition rounded-lg">
         <WrapIcon class="w-6 h-6">

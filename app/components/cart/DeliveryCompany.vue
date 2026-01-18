@@ -39,7 +39,7 @@ watch(company, (newVal) => {
 </script>
 
 <template>
-  <div class="grid gap-10 w-full p-6 border border-gray-300 rounded-xl">
+  <div class="grid gap-10 w-full p-3 md:p-6 border border-gray-300 rounded-xl">
 
     <div class="grid gap-4">
       <div class="font-bold text-black">
@@ -52,7 +52,7 @@ watch(company, (newVal) => {
 
     </div>
 
-    <div v-if="visibleTransportCompany" class="grid">
+    <div v-if="visibleTransportCompany" class="grid gap-4">
       <span class="font-bold text-gray-950">Выберите транспортную компанию</span>
 
       <CartTransportCompanyTable />
@@ -61,8 +61,8 @@ watch(company, (newVal) => {
     <div v-if="visiblePickupPoint" class="grid gap-4">
       <span class="font-bold text-gray-950">Выберите пункт выдачи</span>
 
-      <div class="flex gap-6 border border-gray-300 rounded-xl">
-        <div class="max-w-[350px] w-full max-h-[364px] overflow-auto pt-6 pl-6 hide-scrollbar">
+      <div class="flex flex-col md:flex-row gap-6 border border-gray-300 rounded-xl">
+        <div class="lg:max-w-[350px] w-full max-h-[364px] overflow-auto pt-6 px-4 md:px-0 md:pl-6 hide-scrollbar">
           <CartTransportCompanyPickupPoint />
         </div>
 

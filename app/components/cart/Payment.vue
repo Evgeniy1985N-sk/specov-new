@@ -40,7 +40,7 @@ function toggleActive(index: number) {
 </script>
 
 <template>
-  <div class="grid gap-6 grid-cols-4">
+  <div class="grid gap-6 grid-cols-2 md:grid-cols-4">
 
     <button v-for="(item, i) in items" :key="i" @click="toggleActive(i)" 
     :class="item.isActive ? 'border-(--Brand-600)' : 'border-gray-300'"

@@ -106,7 +106,7 @@ watch(() => address.value?.find(address => address.isActive), (newactiveAddress)
 
 <template>
 
-  <div ref="mapContainer" class="w-full h-full map-container" />
+  <div ref="mapContainer" class="w-full h-80 md:h-full map-container" />
 
 </template>
 

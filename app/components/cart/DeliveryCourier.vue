@@ -74,7 +74,9 @@ const visibleTime = computed(() => {
         Укажите адрес доставки
       </div>
       <div class="grid gap-6">
-        <div class="flex gap-2">
+
+        <!-- FIELDS -->
+        <div class="flex flex-wrap lg:flex-nowrap gap-2">
 
           <Dropdown label="Город, улица, дом, корпус" :items="address"
             @handle-click="(index) => toggleActiveAddress(address, index)"
@@ -96,6 +98,7 @@ const visibleTime = computed(() => {
           </UFormField>
 
         </div>
+        <!-- FIELDS -->
 
         <UFormField class="w-full" label="Комментарий" name="floor" :ui="{ label: 'text-gray-700 font-medium' }">
           <UTextarea v-model="state.message" placeholder="" color="neutral" size="xl"
@@ -110,7 +113,7 @@ const visibleTime = computed(() => {
       <div class="font-bold text-black">
         Дата и время доставки
       </div>
-      <div class="grid grid-cols-2 gap-2">
+      <div class="flex flex-wrap sm:grid grid-cols-2 gap-2">
         <DropdownWithIcon label="Дата доставки" :items="time"
           @handle-click="(index) => toggleActiveTime(time, index)" />
         <DropdownWithIcon label="Время доставки" :items="hours"

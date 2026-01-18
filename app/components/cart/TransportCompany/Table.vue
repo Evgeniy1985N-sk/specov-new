@@ -11,7 +11,7 @@ const company = computed(() => {
   <table>
 
     <thead>
-      <tr class="grid grid-cols-[400px_1fr_1fr] gap-6 p-4 text-left">
+      <tr class="hidden lg:grid grid-cols-[400px_1fr_1fr] gap-6 p-4 pt-0 text-left">
         <th class="max-w-[400px] w-full text-sm leading-5 font-medium">
           Способ доставки
         </th>
@@ -31,9 +31,10 @@ const company = computed(() => {
       <tr v-for="(item, index) in company" @click="toggleActiveCompany(index)" :class="{ 'active': item.isActive }"
         class="item-custom relative grid grid-cols-[400px_1fr_1fr] gap-6 items-center p-4 text-left bg-gray-100 rounded-xl cursor-pointer">
 
-        <td class="flex gap-4 items-center pl-8">
+        <td class="flex gap-4 items-center lg:pl-8">
           <img :src="item.img" :alt="item.label">
-          <div class="grid">
+
+          <div class="flex flex-col items-center lg:grid">
             <p class="font-semibold text-gray-950">
               {{ item.label }}
             </p>
@@ -42,6 +43,7 @@ const company = computed(() => {
                 class-title="font-medium text-xs leading-[18px]" :message="item.message" />
             </span>
           </div>
+
         </td>
 
         <td>
@@ -103,5 +105,35 @@ const company = computed(() => {
 
 .item-custom.active:before {
   border: 6px solid var(--Brand-600);
+}
+@media (max-width: 1023px) {
+  .item-custom {
+    grid-template-columns: 1fr;
+    padding-top: 50px;
+  }
+  .item-custom:before {
+    top: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .item-custom td:before {
+    font-size: 16px;
+    line-height: 21px;
+  }
+  .item-custom td {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .item-custom td:nth-child(1):before {
+    content: 'Способ доставки:';
+  }
+  .item-custom td:nth-child(2):before {
+    content: 'Стоимость доставки:';
+  }
+  .item-custom td:nth-child(3):before {
+    content: 'Сроки доставки:';
+  }
 }
 </style>
