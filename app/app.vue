@@ -1,3 +1,4 @@
 <template>
+  тест
   <NuxtPage />
 </template>
