@@ -17,6 +17,8 @@ const route = useRoute()
 const isCatalogPage = computed(() => route.path === '/catalog')
 const counter = ref(0)
 const cart = useCartStore().cart
+const compare = useCompareStore().compare
+const toggleCompare = useCompareStore().toggleCompare
 
 function addToCart(itemId: string) {
   const existingItem = cart.find(item => item.id === itemId)
@@ -30,6 +32,8 @@ function addToCart(itemId: string) {
     })
   }
 }
+
+
 
 const spec = [
   { label: 'Макс. крутящий момент', value: '6 Нм' },
@@ -69,13 +73,10 @@ const classMedia = computed(() => ({
 <template>
 
   <!-- CARD -->
-  <div
-    :class="classCard"
-    class="gap-4 md:gap-8">
+  <div :class="classCard" class="gap-4 md:gap-8">
 
     <!-- Media -->
-    <div
-      :class="classMedia, props.classMedia"
+    <div :class="classMedia, props.classMedia"
       class="flex justify-center h-[155px] sm:h-[230px] xl:h-[280px] rounded-2xl border border-(--border) overflow-hidden xl:overflow-visible">
 
       <!-- BUTTONS -->
@@ -84,9 +85,7 @@ const classMedia = computed(() => ({
 
         <ProductButtonFavorite :date="date" />
 
-        <ProductButtonCompare>
-          <ProductIconCompare />
-        </ProductButtonCompare>
+        <ProductButtonCompare @handle-click="toggleCompare(props.item.id)" />
 
       </div>
       <!-- BUTTONS -->
@@ -122,8 +121,7 @@ const classMedia = computed(() => ({
     <!-- isRow -->
 
     <!-- Content -->
-    <div :class="classContent"
-      class="flex flex-col items-start self-stretch">
+    <div :class="classContent" class="flex flex-col items-start self-stretch">
 
       <!-- Prices -->
       <div :class="isRow ? 'w-full flex-row sm:flex-wrap gap-x-2' : ''"
@@ -136,7 +134,7 @@ const classMedia = computed(() => ({
         </div>
 
         <!-- Price + btns -->
-        <div :class="isRow ? 'w-full sm:w-auto' : 'w-full' " class="flex justify-between">
+        <div :class="isRow ? 'w-full sm:w-auto' : 'w-full'" class="flex justify-between">
 
           <div class="leading-[30px] text-zinc-950 font-semibold text-lg sm:text-xl">
             {{ props.item.price.toLocaleString('ru-RU') }} ₽
@@ -192,8 +190,7 @@ const classMedia = computed(() => ({
           </span>
         </UButton>
 
-        <UInputNumber v-model="counter" :min="0" size="xl" color="neutral"
-          :class="classCounter"
+        <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :class="classCounter"
           :ui="{ root: 'hidden! lg:flex! min-h-10' }" :increment="{
             class: 'active:bg-gray-100!',
             color: 'neutral',

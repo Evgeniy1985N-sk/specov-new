@@ -14,9 +14,14 @@ export interface ProductCard {
 	imgs: ProductImage[]
 	dsc?: string
 	link?: string
+	category?: string
 }
 
 export interface Cart {
 	id: string
 	count: number
+}
+
+export interface Compare {
+	id: string
 }
