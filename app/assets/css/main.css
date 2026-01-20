@@ -46,6 +46,13 @@ body {
   color: #535862; /* gray-600 */
 }
 
+.font-\[\'Russo_One\'\] {
+  font-family: 'Russo One', sans-serif;
+}
+.font-\[\'Inter\'\] {
+  font-family: 'Inter', sans-serif;
+}
+
 section:first-child,
 section:last-child {
   margin: 0;
