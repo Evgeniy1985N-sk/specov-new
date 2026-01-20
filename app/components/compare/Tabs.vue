@@ -1,55 +1,55 @@
 <script setup lang="ts">
-
-
-const tabs = ref([
-  {
-    label: 'Самовывоз',
-    isActive: true,
-  },
-  {
-    label: 'Доставка курьером',
-    isActive: false,
-  },
-  {
-    label: 'Транспортная компания',
-    isActive: false,
-  }
-])
-function toggleActive(index: number) {
-  tabs.value = tabs.value.map((item, i) => ({
-    ...item,
-    isActive: i === index
-  }));
+interface Category {
+  category: string
+  count: number
+  isActive: boolean
 }
+interface Props {
+  items?: Category[]
+}
+const props = defineProps<Props>()
+
+const emit = defineEmits<{
+  (e: 'handleClick', index: number): void
+}>()
+
 </script>
 
 <template>
-  <!-- TABS -->
+  <!-- itemS -->
   <div class="grid gap-6">
 
-    <div class="flex flex-wrap lg:grid grid-cols-3 gap-1 bg-gray-100 p-1 rounded-lg">
-      <button v-for="(tab, i) in tabs" :key="i" @click="toggleActive(i)" :class="tab.isActive ? 'bg-white' : ''"
-        class="flex items-center grow gap-4 text-sm leading-5 w-full h-[60px] px-4 py-2.5 cursor-pointer transition rounded-lg">
-        <div class="grid">
-          <p class="text-left text-gray-950 font-semibold">
-            {{ tab.label }}
-          </p>
+    <div class="flex gap-1 w-fit bg-gray-100 p-1 rounded-lg">
+
+      <div v-for="(item, i) in props.items" :key="i" :class="{'bg-white': item.isActive}"
+        class="flex items-center gap-4 h-10 px-4 cursor-pointer transition rounded-lg">
+
+        <div class="flex items-center gap-2">
+          <button @click="$emit('handleClick', i)" :class="item.isActive ? ' text-gray-950' : ' text-gray-600' " 
+          class="py-2.5 text-sm leading-5 text-left font-semibold cursor-pointer">
+            {{ item.category }}
+            {{ item.count }}
+          </button>
+          <button v-if="item.isActive" class="py-2.5 cursor-pointer">
+            <WrapIcon>
+              <CompareIconCross />
+            </WrapIcon>
+          </button>
         </div>
-      </button>
+
+      </div>
+
     </div>
 
-    <div class="grid">
-      <div v-if="tabs[0]?.isActive" class="flex">
-        <CartStore />
+    <!-- <div class="grid">
+      <div v-if="props.items[0]?.isActive" class="flex">
       </div>
-      <div v-if="tabs[1]?.isActive" class="flex">
-        <DeliveryCourier />
+      <div v-if="props.items[1]?.isActive" class="flex">
       </div>
-      <div v-if="tabs[2]?.isActive" class="flex">
-        <DeliveryCompany />
+      <div v-if="props.items[2]?.isActive" class="flex">
       </div>
-    </div>
+    </div> -->
 
   </div>
-  <!-- TABS -->
+  <!-- itemS -->
 </template>

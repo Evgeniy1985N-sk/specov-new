@@ -17,8 +17,8 @@ const route = useRoute()
 const isCatalogPage = computed(() => route.path === '/catalog')
 const counter = ref(0)
 const cart = useCartStore().cart
-const compare = useCompareStore().compare
-const toggleCompare = useCompareStore().toggleCompare
+const compare = useCompareStore().items
+const toggleCompare = useCompareStore().toggleitems
 
 function addToCart(itemId: string) {
   const existingItem = cart.find(item => item.id === itemId)
@@ -33,7 +33,9 @@ function addToCart(itemId: string) {
   }
 }
 
-
+onMounted(() => {
+  console.log(compare)
+})
 
 const spec = [
   { label: 'Макс. крутящий момент', value: '6 Нм' },
@@ -68,6 +70,7 @@ const classMedia = computed(() => ({
 }))
 
 </script>
+
 
 
 <template>
