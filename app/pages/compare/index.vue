@@ -1,17 +1,37 @@
 <script setup lang="ts">
 import type { ProductCard } from "~/types/product";
 
-const compareIds = useCompareStore().items
+interface Category {
+  category: string
+  count: number
+  isActive: boolean
+}
+
+const compareStore = useCompareStore()
+const deleteItemsStore = useCompareStore().deleteItems
 const allProducts = useProductsStore().allProducts
 const compareProducts = ref<ProductCard[]>([])
 const activeIndex = ref<number | null>(0);
+const activeProducts = ref<ProductCard[]>()
 
-compareIds.forEach((c) => {
-  const foundProduct = allProducts.find((item) => item.id == c.id);
-  if (foundProduct) {
-    compareProducts.value.push(foundProduct)
-  }
+const compareIds = computed(() => {
+  return compareStore.items
 })
+
+watch(compareIds, () => {
+  compareProducts.value = []
+  getCompareProducts()
+}, { deep: true })
+
+getCompareProducts()
+function getCompareProducts() {
+  compareIds.value.forEach((c) => {
+    const foundProduct = allProducts.find((item) => item.id == c.id);
+    if (foundProduct) {
+      compareProducts.value.push(foundProduct)
+    }
+  })
+}
 
 const groupedItems = computed(() => {
   return compareProducts.value.reduce((acc, item) => {
@@ -24,7 +44,6 @@ const groupedItems = computed(() => {
   }, {} as { [key: string]: typeof compareProducts.value[number][] });
 });
 
-
 const categoryCounts = computed(() => {
   return Object.entries(groupedItems.value).map(([category, items], i) => ({
     category,
@@ -35,6 +54,32 @@ const categoryCounts = computed(() => {
 
 function toggleActive(index: number) {
   activeIndex.value = index;
+}
+
+watch(categoryCounts, () => {
+  getActiveProducts()
+})
+
+onMounted(() => {
+  getActiveProducts()
+})
+
+function getActiveProducts() {
+  const activeCategory = categoryCounts.value?.find(item => item.isActive)?.category
+  activeProducts.value = compareProducts.value.filter(item => item.category == activeCategory)
+}
+
+function deleteProducts() {
+  activeProducts.value?.forEach((item) => {
+    deleteItemsStore(item.id)
+  })
+  activeIndex.value = 0
+}
+
+function deleteAllCompare() {
+  compareProducts.value?.forEach((item) => {
+    deleteItemsStore(item.id)
+  })
 }
 
 </script>
@@ -55,7 +100,7 @@ function toggleActive(index: number) {
           <TitleGoods title="Сравнение товаров" />
 
           <div class="flex gap-6 bg-gray-100 rounded-lg">
-            <button
+            <button @click="deleteAllCompare"
               class="flex gap-2.5 items-center p-4 pr-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
               <WrapIcon>
                 <CompareIconTrash />
@@ -77,7 +122,10 @@ function toggleActive(index: number) {
 
         </div>
 
-        <CompareTabs @handle-click="(i) => toggleActive(i)" :items="categoryCounts" />
+        <CompareTabs @handle-click="(i) => toggleActive(i)" @click-on-cross="deleteProducts" :items="categoryCounts"
+          class="mb-6" />
+
+        <CompareSlider :items="activeProducts" />
 
       </SectionContainer>
     </Section>

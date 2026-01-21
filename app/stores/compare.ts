@@ -5,7 +5,7 @@ import type { Compare } from "~/types/product";
 export const useCompareStore = defineStore("compare", () => {
   const items = ref<Compare[]>([]);
 
-  function toggleitems(idItem: string) {
+  function toggleItems(idItem: string) {
     const existItem = items.value.find(item => item.id === idItem)
     if (existItem) {
       items.value = items.value.filter(item => item.id !== idItem )
@@ -16,12 +16,17 @@ export const useCompareStore = defineStore("compare", () => {
     }
   }
 
-  watch(items, () => {
-    console.log(items.value.length)
-  }, {deep: true})
+  function deleteItems(idItem: string) {
+    items.value = items.value.filter(item => item.id !== idItem)
+  }
+
+  // watch(items, () => {
+  //   console.log(items.value)
+  // }, {deep: true})
 
   return {
     items,
-    toggleitems,
+    toggleItems,
+    deleteItems,
   };
 });
