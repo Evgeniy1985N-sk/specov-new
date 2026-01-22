@@ -15,6 +15,7 @@ export interface ProductCard {
 	dsc?: string
 	link?: string
 	category?: string
+	isComparre?: boolean
 }
 
 export interface Cart {

@@ -17,8 +17,9 @@ const route = useRoute()
 const isCatalogPage = computed(() => route.path === '/catalog')
 const counter = ref(0)
 const cart = useCartStore().cart
-const compare = useCompareStore().items
+const compareStore = useCompareStore()
 const toggleCompare = useCompareStore().toggleItems
+const compareIds = ref<string[]>([])
 
 function addToCart(itemId: string) {
   const existingItem = cart.find(item => item.id === itemId)
@@ -33,9 +34,18 @@ function addToCart(itemId: string) {
   }
 }
 
-// onMounted(() => {
-//   console.log(compare)
-// })
+const compareItems = computed(() => {
+  return compareStore.items
+})
+
+watch((compareItems), () => {
+  getCompareIds()
+}, { deep: true })
+
+getCompareIds()
+function getCompareIds() {
+  compareIds.value = compareItems.value.map((item) => item.id)
+}
 
 const spec = [
   { label: 'Макс. крутящий момент', value: '6 Нм' },
@@ -88,7 +98,8 @@ const classMedia = computed(() => ({
 
         <ProductButtonFavorite :date="date" />
 
-        <ProductButtonCompare @handle-click="toggleCompare(props.item.id)" />
+        <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
+          :is-active="compareIds.includes(props.item.id)" />
 
       </div>
       <!-- BUTTONS -->
@@ -148,9 +159,8 @@ const classMedia = computed(() => ({
 
             <ProductButtonFavorite class="py-0! shadow-none text-gray-600" :date="date" />
 
-            <ProductButtonCompare class="py-0! shadow-none text-gray-600">
-              <ProductIconCompare />
-            </ProductButtonCompare>
+            <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
+              :is-active="compareIds.includes(props.item.id)" />
 
           </div>
           <!-- IF ROW -->

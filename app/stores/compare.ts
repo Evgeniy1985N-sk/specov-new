@@ -20,9 +20,9 @@ export const useCompareStore = defineStore("compare", () => {
     items.value = items.value.filter(item => item.id !== idItem)
   }
 
-  // watch(items, () => {
-  //   console.log(items.value)
-  // }, {deep: true})
+  watch(items, () => {
+    console.log(items.value)
+  }, {deep: true})
 
   return {
     items,

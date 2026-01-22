@@ -1,12 +1,6 @@
 <script setup lang="ts">
 import type { ProductCard } from "~/types/product";
 
-interface Category {
-  category: string
-  count: number
-  isActive: boolean
-}
-
 const compareStore = useCompareStore()
 const deleteItemsStore = useCompareStore().deleteItems
 const allProducts = useProductsStore().allProducts
