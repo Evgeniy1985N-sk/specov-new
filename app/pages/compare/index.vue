@@ -38,7 +38,7 @@ const groupedItems = computed(() => {
   }, {} as { [key: string]: typeof compareProducts.value[number][] });
 });
 
-const categoryCounts = computed(() => {
+const categoryProducts = computed(() => {
   return Object.entries(groupedItems.value).map(([category, items], i) => ({
     category,
     count: items.length,
@@ -50,7 +50,7 @@ function toggleActive(index: number) {
   activeIndex.value = index;
 }
 
-watch(categoryCounts, () => {
+watch(categoryProducts, () => {
   getActiveProducts()
 })
 
@@ -59,7 +59,7 @@ onMounted(() => {
 })
 
 function getActiveProducts() {
-  const activeCategory = categoryCounts.value?.find(item => item.isActive)?.category
+  const activeCategory = categoryProducts.value?.find(item => item.isActive)?.category
   activeProducts.value = compareProducts.value.filter(item => item.category == activeCategory)
 }
 
@@ -93,22 +93,22 @@ function deleteAllCompare() {
 
           <TitleGoods title="Сравнение товаров" />
 
-          <div class="flex gap-6 bg-gray-100 rounded-lg">
+          <div v-if="compareIds.length" class="flex gap-4 sm:gap-0 sm:bg-gray-100 rounded-lg">
             <button @click="deleteAllCompare"
-              class="flex gap-2.5 items-center p-4 pr-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
+              class="flex gap-2.5 items-center p-2 sm:p-4 pr-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
               <WrapIcon>
                 <CompareIconTrash />
               </WrapIcon>
-              <span class="text-sm leading-5 font-semibold">
+              <span class="hidden sm:block text-sm leading-5 font-semibold">
                 Удалить все
               </span>
             </button>
             <button
-              class="flex gap-2.5 items-center p-4 pl-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
+              class="flex gap-2.5 items-center p-2 sm:p-4 pl-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
               <WrapIcon>
                 <CompareIconShare />
               </WrapIcon>
-              <span class="text-sm leading-5 font-semibold">
+              <span class="hidden sm:block text-sm leading-5 font-semibold">
                 Поделиться
               </span>
             </button>
@@ -116,7 +116,7 @@ function deleteAllCompare() {
 
         </div>
 
-        <CompareTabs @handle-click="(i) => toggleActive(i)" @click-on-cross="deleteProducts" :items="categoryCounts"
+        <CompareTabs @handle-click="(i) => toggleActive(i)" @click-on-cross="deleteProducts" :items="categoryProducts"
           class="mb-6" />
 
         <CompareSlider :items="activeProducts" />

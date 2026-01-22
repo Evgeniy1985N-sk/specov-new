@@ -29,6 +29,15 @@ const goNext = () => {
 	swiperInstance.value?.slideNext()
 }
 
+const canGoPrev = computed(() => {
+  const s = swiperInstance.value
+  return s && !s.isBeginning
+})
+const canGoNext = computed(() => {
+  const s = swiperInstance.value
+  return s && !s.isEnd
+})
+
 </script>
 
 <template>
@@ -36,27 +45,27 @@ const goNext = () => {
 		<div class="relative max-w-(--container) m-auto">
 
 			<swiper @swiper="onSwiper" :modules="[Navigation]"
-				:slides-per-view="2" :loop="true" :space-between="12" :allowTouchMove="true" :breakpoints="{
+				:slides-per-view="2" :loop="false" :space-between="12" :allowTouchMove="true" :breakpoints="{
 					768: { slidesPerView: 3, spaceBetween: 24 },
 					992: { slidesPerView: 4, spaceBetween: 24 },
 				}" :navigation="false">
 
 				<swiper-slide v-for="(item, i) in props.items" :key="item.id">
 
-					<ProductCard :item="item" class-media="h-[155px]! sm:h-[220px]!" />
+					<ProductCard :item="item" />
 
 				</swiper-slide>
 
 			</swiper>
 
-			<button @click="goPrev" class="custom-swiper-button-prev">
+			<button @click="goPrev" v-if="canGoPrev" class="custom-swiper-button-prev">
 				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M16.6666 10H3.33325M3.33325 10L8.33325 15M3.33325 10L8.33325 5" stroke="#535862" stroke-width="2"
 						stroke-linecap="round" stroke-linejoin="round"></path>
 				</svg>
 			</button>
 
-			<button @click="goNext" class="custom-swiper-button-next">
+			<button @click="goNext" v-if="canGoNext" class="custom-swiper-button-next">
 				<svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
 					<path d="M3.33325 10H16.6666M16.6666 10L11.6666 5M16.6666 10L11.6666 15" stroke="#535862" stroke-width="2"
 						stroke-linecap="round" stroke-linejoin="round"></path>
@@ -91,20 +100,8 @@ const goNext = () => {
 	bottom: 0;
 }
 
-@media (max-width: 1280px) {
-	.custom-swiper-button-prev {
-		left: 0;
-	}
 
-	.custom-swiper-button-next {
-		right: 0;
-	}
-}
-
-@media (max-width: 1024px) {
-	.swiper {
-		overflow: visible;
-	}
+@media (max-width: 640px) {
 
 	.custom-swiper-button-prev,
 	.custom-swiper-button-next {
@@ -112,16 +109,4 @@ const goNext = () => {
 	}
 }
 
-@media (max-width: 768px) {
-	.swiper {
-		max-width: 600px;
-		margin: 0;
-	}
-}
-
-@media (max-width: 576px) {
-	.swiper {
-		max-width: 320px;
-	}
-}
 </style>
