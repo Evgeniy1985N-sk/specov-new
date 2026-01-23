@@ -7,6 +7,7 @@ const allProducts = useProductsStore().allProducts
 const compareProducts = ref<ProductCard[]>([])
 const activeIndex = ref<number | null>(0);
 const activeProducts = ref<ProductCard[]>()
+const isDifference = ref(false)
 
 const compareIds = computed(() => {
   return compareStore.items
@@ -93,7 +94,7 @@ function deleteAllCompare() {
 
           <TitleGoods title="Сравнение товаров" />
 
-          <div v-if="compareIds.length" class="flex gap-4 sm:gap-0 sm:bg-gray-100 rounded-lg">
+          <div class="flex gap-4 sm:gap-0 sm:bg-gray-100 rounded-lg">
             <button @click="deleteAllCompare"
               class="flex gap-2.5 items-center p-2 sm:p-4 pr-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
               <WrapIcon>
@@ -119,8 +120,22 @@ function deleteAllCompare() {
         <CompareTabs @handle-click="(i) => toggleActive(i)" @click-on-cross="deleteProducts" :items="categoryProducts"
           class="mb-6" />
 
-        <CompareSlider :items="activeProducts" />
+        <CompareSlider :items="allProducts" />
 
+      </SectionContainer>
+    </Section>
+
+    <Section class="pt-10">
+      <SectionContainer>
+
+        <div class="flex justify-between items-center mb-8">
+          <h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">
+            Сравнение характеристик
+          </h2>
+          <USwitch v-model="isDifference" label="Показать различия" />
+        </div>
+
+        <CompareAccordion />
       </SectionContainer>
     </Section>
 
