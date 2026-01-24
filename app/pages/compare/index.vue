@@ -128,8 +128,8 @@ function deleteAllCompare() {
     <Section class="pt-10">
       <SectionContainer>
 
-        <div class="flex justify-between items-center mb-8">
-          <h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">
+        <div class="flex flex-wrap gap-2.5 justify-between items-center mb-5 sm:mb-8">
+          <h2 class="text-[20px] leading-8 sm:text-[24px] sm:leading-8 text-gray-950 font-['Russo_One']">
             Сравнение характеристик
           </h2>
           <USwitch v-model="isDifference" label="Показать различия" />
