@@ -1,5 +1,7 @@
 <script setup lang="ts">
 import type { ProductCard } from "~/types/product";
+import { useScroll } from '~/composables/useScroll'
+
 
 const compareStore = useCompareStore()
 const deleteItemsStore = useCompareStore().deleteItems
@@ -8,6 +10,7 @@ const compareProducts = ref<ProductCard[]>([])
 const activeIndex = ref<number | null>(0);
 const activeProducts = ref<ProductCard[]>()
 const isDifference = ref(false)
+const { scrollPosition } = useScroll()
 
 const compareIds = computed(() => {
   return compareStore.items
@@ -121,6 +124,8 @@ function deleteAllCompare() {
           class="mb-6" />
 
         <CompareSlider :items="allProducts" />
+        <CompareSliderScroll v-if="scrollPosition > 800" :items="allProducts" />
+
 
       </SectionContainer>
     </Section>
@@ -135,7 +140,7 @@ function deleteAllCompare() {
           <USwitch v-model="isDifference" label="Показать различия" />
         </div>
 
-        <CompareAccordion />
+        <CompareAccordion v-if="isDifference" />
       </SectionContainer>
     </Section>
 
