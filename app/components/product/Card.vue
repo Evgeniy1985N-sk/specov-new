@@ -6,6 +6,7 @@ interface Props {
   item: ProductCard
   classMedia?: string
   classBtns?: string
+  classTitle?: string
   isRow?: boolean
   isList?: boolean
   isCol?: boolean
@@ -141,11 +142,13 @@ const classMedia = computed(() => ({
       <div :class="isRow ? 'w-full flex-row sm:flex-wrap gap-x-2' : ''"
         class="sm:gap-2 flex flex-wrap sm:items-center flex-col sm:flex-row sm:flex-nowrap">
 
+        <!-- IF ROW -->
         <div v-if="isRow && props.item.oldPrice" class="lg:w-full order-1 lg:-order-1">
           <div class="bg-[seagreen] w-fit leading-[22px] text-center text-white text-xs px-1.5 rounded-md">
             -{{ props.item.discont }}%
           </div>
         </div>
+        <!-- IF ROW -->
 
         <!-- Price + btns -->
         <div :class="isRow ? 'w-full sm:w-auto' : 'w-full'" class="flex justify-between">
@@ -183,6 +186,7 @@ const classMedia = computed(() => ({
       <!-- Title -->
       <div v-if="!isRow" class="min-h-10 mt-1">
         <nuxt-link :to="{ name: 'products-id', params: { id: props.item.id } }"
+        :class="props.classTitle"
           class="text-sm text-gray-600 line-clamp-3 sm:line-clamp-2 overflow-ellipsis">
           {{ props.item.title }}
         </nuxt-link>

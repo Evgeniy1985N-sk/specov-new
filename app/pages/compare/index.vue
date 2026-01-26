@@ -120,12 +120,15 @@ function deleteAllCompare() {
 
         </div>
 
-        <CompareTabs @handle-click="(i) => toggleActive(i)" @click-on-cross="deleteProducts" :items="categoryProducts"
+        <CompareTabs v-if="compareProducts.length" @handle-click="(i) => toggleActive(i)" @click-on-cross="deleteProducts" :items="categoryProducts"
           class="mb-6" />
 
-        <CompareSlider :items="allProducts" />
-        <CompareSliderScroll v-if="scrollPosition > 800" :items="allProducts" />
+        <div class="flex gap-4">
+          <CompareSlider :items="activeProducts" />
+          <CompareSlider class="sm:hidden" :items="activeProducts" />
+        </div>
 
+        <CompareSliderScroll v-if="scrollPosition > 800" :items="activeProducts" />
 
       </SectionContainer>
     </Section>

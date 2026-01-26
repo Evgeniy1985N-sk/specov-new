@@ -33,7 +33,7 @@ const emit = defineEmits<{
 
 <template>
   <UAccordion :class="props.class" :items="items" type="multiple" :default-value="['0', '1', '2']"
-    :ui="{ root: 'grid gap-5', label: 'text-[20px] leading-[30px] cursor-pointer' }">
+    :ui="{ root: 'grid gap-5', label: 'text-lg leading-[28px] sm:text-[20px] sm:leading-[30px] cursor-pointer' }">
 
     <template #item-1="{ item }">
       <div class="grid gap-4">

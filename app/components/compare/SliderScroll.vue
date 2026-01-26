@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Navigation } from 'swiper/modules'
+import { Pagination } from 'swiper/modules'
 import type { Swiper as SwiperClass } from 'swiper/types'
 
 import 'swiper/css'
@@ -25,57 +25,60 @@ const onSwiper = (swiper: SwiperClass) => {
 
 <template>
 	<ClientOnly>
-		<div class="fixed top-0 left-0 z-100 w-full bg-white">
-			<div class="relative max-w-(--container) m-auto">
+		<!-- TOP SLIDER -->
+		<div class="fixed top-0 left-0 z-100 w-full pb-2 sm:pb-4 py-4 bg-white border-b border-gray-200">
 
-				<swiper @swiper="onSwiper" :modules="[Navigation]" :slides-per-view="2" :loop="false" :space-between="12"
-					:allowTouchMove="true" :breakpoints="{
-						768: { slidesPerView: 3, spaceBetween: 24 },
-						992: { slidesPerView: 4, spaceBetween: 24 },
-					}" :navigation="false">
+			<SectionContainer>
 
-					<swiper-slide v-for="(item, i) in props.items" :key="item.id">
+				<div class="flex gap-2">
+					<swiper class="slider" @swiper="onSwiper" :modules="[Pagination]" :slides-per-view="1" :loop="false"
+						:space-between="12" :allowTouchMove="true" :breakpoints="{
+							640: { slidesPerView: 2, spaceBetween: 8 },
+							768: { slidesPerView: 3, spaceBetween: 8 },
+							1200: { slidesPerView: 4, spaceBetween: 32 },
+						}" :pagination="{ clickable: true }">
 
-						<CompareCard :item="item" />
+						<swiper-slide v-for="(item, i) in props.items" :key="item.id">
 
-					</swiper-slide>
+							<CompareCard :item="item" />
 
-				</swiper>
+						</swiper-slide>
 
-			</div>
+					</swiper>
+					<swiper class="slider sm:hidden!" @swiper="onSwiper" :modules="[Pagination]" :slides-per-view="1" :loop="false"
+						:space-between="12" :allowTouchMove="true" :breakpoints="{
+							640: { slidesPerView: 2, spaceBetween: 8 },
+							768: { slidesPerView: 3, spaceBetween: 8 },
+							1200: { slidesPerView: 4, spaceBetween: 32 },
+						}" :pagination="{ clickable: true }">
+
+						<swiper-slide v-for="(item, i) in props.items" :key="item.id">
+
+							<CompareCard :item="item" />
+
+						</swiper-slide>
+
+					</swiper>
+				</div>
+
+			</SectionContainer>
 		</div>
+		<!-- TOP SLIDER -->
 	</ClientOnly>
 </template>
 
 <style scoped>
-.swiper {
-	max-width: 100%;
-	padding-bottom: 40px;
+.slider {
+	width: 100%;
+	padding-bottom: 16px;
 }
 
-.swiper-slide {
-	height: auto;
+.slider :deep(.swiper-pagination) {
+	bottom: -6px;
 }
 
-.custom-swiper-button-prev {
-	top: 28%;
-	left: -22px;
-}
-
-.custom-swiper-button-next {
-	top: 28%;
-	right: -22px;
-}
-
-.swiper-pagination {
-	bottom: 0;
-}
-
-
-@media (max-width: 640px) {
-
-	.custom-swiper-button-prev,
-	.custom-swiper-button-next {
+@media (min-width: 640px) {
+	.slider :deep(.swiper-pagination) {
 		display: none;
 	}
 }

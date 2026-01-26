@@ -13,8 +13,6 @@ interface Props {
 
 const date = ref('12.01.2026 в 17.00')
 const props = defineProps<Props>()
-const route = useRoute()
-const isCatalogPage = computed(() => route.path === '/catalog')
 const counter = ref(0)
 const cart = useCartStore().cart
 const compareStore = useCompareStore()
@@ -47,28 +45,6 @@ function getCompareIds() {
   compareIds.value = compareItems.value.map((item) => item.id)
 }
 
-const spec = [
-  { label: 'Макс. крутящий момент', value: '6 Нм' },
-  { label: 'Число скоростей', value: '1' },
-  { label: 'Тип аккумулятора', value: 'Li-lon' },
-  { label: 'Напряжение аккумулятора', value: '3.6 В' },
-  { label: 'Устройство аккумулятора', value: 'встроенный' },
-  { label: 'Вид упаковки', value: 'чемодан/кейс' },
-];
-
-const classContent = computed(() => ({
-  'sm:max-w-[130px] lg:max-w-[232px] w-full': props.isRow,
-  'min-h-[174px] sm:min-h-auto': isCatalogPage.value && !props.isRow
-}))
-
-const classCounter = computed(() => ({
-  'max-w-full hidden sm:flex!': props.isRow,
-}))
-
-const classButtonCart = computed(() => ({
-  'w-full': props.isRow
-}))
-
 </script>
 
 
@@ -76,50 +52,59 @@ const classButtonCart = computed(() => ({
 <template>
 
   <!-- CARD -->
-  <div>
+  <div class="card grid gap-2 lg:gap-0 cursor-pointer">
 
-    <ProductButtonFavorite :date="date" />
+    <div class="flex justify-between items-start">
+      <img class="max-w-[54px] h-[54px] object-contain" :src="props.item.image" :alt="props.item.title">
 
-    <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
-      :is-active="compareIds.includes(props.item.id)" />
-
-    <img :src="props.item.image" :alt="props.item.title">
-
-    <!-- Prices -->
-    <div class="sm:gap-2 flex flex-wrap sm:items-center flex-col sm:flex-row sm:flex-nowrap">
-
-      <!-- Price + btns -->
-      <div class="flex justify-between">
-
-        <div class="leading-[30px] text-zinc-950 font-semibold text-lg sm:text-xl">
-          {{ props.item.price.toLocaleString('ru-RU') }} ₽
-        </div>
-
-      </div>
-      <!-- Price + btns -->
-
-      <div v-if="props.item.oldPrice" class="gap-2 flex justify-center items-center">
-        <div class="text-zinc-400 line-through shrink-0">
-          {{ props.item.oldPrice.toLocaleString('ru-RU') }} ₽
-        </div>
-        <div v-if="!isRow" class="bg-[seagreen] leading-[22px] text-center text-white text-xs px-1.5 rounded-md">
-          -{{ props.item.discont }}%
-        </div>
+      <div class="card__btns hidden lg:grid gap-1 opacity-0 transition-opacity">
+        <ProductButtonFavorite :date="date" />
+        <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
+          :is-active="compareIds.includes(props.item.id)" :is-trash="true" />
       </div>
 
     </div>
-    <!-- Prices -->
 
+    <div class="flex justify-between items-end gap-4">
 
-    <UButton @click="addToCart(props.item.id)" class="shrink-0 gap-1 px-4 min-h-10">
-      <i class="flex items-center justify-center h-5 w-5">
-        <ProductIconCart />
-      </i>
-    </UButton>
+      <div class="grid">
+        <!-- Price -->
+        <div class="sm:gap-2 flex flex-wrap sm:items-center flex-col sm:flex-row sm:flex-nowrap">
+          <p class="text-sm leading-5 sm:text-base sm:leading-6 font-bold text-gray-950">
+            {{ props.item.price.toLocaleString('ru-RU') }} ₽
+          </p>
+          <div v-if="props.item.oldPrice" class="gap-2 hidden lg:flex justify-center items-center">
+            <div class="text-zinc-400 line-through shrink-0">
+              {{ props.item.oldPrice.toLocaleString('ru-RU') }} ₽
+            </div>
+            <div class="bg-[seagreen] leading-[22px] text-center text-white text-xs px-1.5 rounded-md">
+              -{{ props.item.discont }}%
+            </div>
+          </div>
+        </div>
+        <!-- Price -->
+         <p class="text-xs leading-[18px] sm:text-sm sm:leading-5 font-medium line-clamp-2">
+          {{ props.item.title }}
+         </p>
+      </div>
+
+      <UButton @click="addToCart(props.item.id)" class="card__btn-cart hidden lg:flex w-9 min-h-9 p-0 shrink-0 opacity-0 transition-opacity">
+        <WrapIcon>
+          <ProductIconCart />
+        </WrapIcon>
+      </UButton>
+    </div>
 
   </div>
   <!-- CARD -->
 
 </template>
 
-<style scoped></style>
+<style scoped>
+.card:hover .card__btns {
+  opacity: 1;
+}
+.card:hover :deep(.card__btn-cart) {
+  opacity: 1;
+}
+</style>
