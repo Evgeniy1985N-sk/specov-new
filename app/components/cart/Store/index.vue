@@ -89,7 +89,7 @@ watch(() => stores.value.find(store => store.isActive), (newActiveStore) => {
 
 <template>
 
-	<div class="flex flex-wrap gap-6 w-full border border-gray-300 rounded-lg">
+	<div class="flex flex-wrap md:flex-nowrap gap-6 w-full border border-gray-300 rounded-lg">
 
 		<div class="w-full gap-2 flex p-6">
 			<CartStoreItem v-for="(item, index) in stores" @click="toggleActive(index)" :isActive="item.isActive"

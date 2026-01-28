@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import CartTabs from '@/components/cart/Tabs.vue'
+import CartTabs2 from '@/components/cart/Tabs2.vue'
 import CartPayment from '@/components/cart/Payment.vue'
 
 interface Props {
@@ -63,7 +64,7 @@ const menu = ref([
     sub: [
 
       {
-        component: markRaw(CartPayment),
+        component: markRaw(CartTabs2),
         isActive: false,
       },
 
