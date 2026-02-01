@@ -13,7 +13,7 @@ onMounted(() => {
     ymaps.ready(() => {
       const activeStore = stores.value.find(store => store.isActive)
       if (!activeStore) return
-      
+
       const coords = activeStore.coords
 
       myMap = new ymaps.Map(mapContainer.value, {
@@ -47,7 +47,9 @@ const stores = ref([
     address: "Тюмень, улица 50 лет Октября, 118А",
     text1: "Пн-Пт 8:00 — 19:00",
     text2: "Сб-Вс Выходной",
-    phone: "+7 (3452) 410-626"
+    phone: "+7 (3452) 410-626",
+    phoneModal1: '+7 (3452) 66-62-00',
+    phoneModal2: '+7 (3452) 66-61-00',
   },
   {
     id: 2,
@@ -56,7 +58,9 @@ const stores = ref([
     address: "Тюмень, Горпищекомбинатовская улица, 1с1",
     text1: "Пн-Вс 8:00 — 19:00",
     text2: "",
-    phone: "+7 (3452) 30-30-90"
+    phone: "+7 (3452) 30-30-90",
+    phoneModal1: '+7 (3452) 00-62-11',
+    phoneModal2: '+7 (3452) 55-61-41',
   }
 ])
 
@@ -71,15 +75,15 @@ function toggleActive(index: number) {
 
 watch(() => stores.value.find(store => store.isActive), (newActiveStore) => {
   if (!newActiveStore || !myMap) return
-  
+
   if (myPlacemark) {
     myMap.geoObjects.remove(myPlacemark)
   }
-  
+
   myMap.setCenter(newActiveStore.coords, 14, {
     duration: 300
   })
-  
+
   // @ts-expect-error ymaps доступен глобально
   const ymaps = window.ymaps
   myPlacemark = new ymaps.Placemark(
@@ -92,31 +96,35 @@ watch(() => stores.value.find(store => store.isActive), (newActiveStore) => {
       iconImageOffset: [-20, -40]
     }
   )
-  
+
   myMap.geoObjects.add(myPlacemark)
 })
+
 </script>
 
 <template>
 
-	<div class="flex flex-wrap lg:flex-nowrap gap-8">
+  <div class="flex flex-wrap lg:flex-nowrap gap-8">
 
-		<div class="w-full gap-2 font-semibold flex flex-col md:flex-row lg:flex-col">
-			<StoresItem v-for="(item, index) in stores" @click="toggleActive(index)" :isActive="item.isActive"
-				:address="item.address" :text1="item.text1" :text2="item.text2" :phone="item.phone" :key="item.id" />
-		</div>
+    <!-- ADDRESS -->
+    <div class="w-full gap-2 font-semibold flex flex-col md:flex-row lg:flex-col">
+      <StoresItem v-for="(item, index) in stores" @click.self="toggleActive(index)" :isActive="item.isActive"
+        :address="item.address" :text1="item.text1" :text2="item.text2" :phone="item.phone" :key="item.id" :phoneModal1="item.phoneModal1" :phoneModal2="item.phoneModal2" />
+    </div>
+    <!-- ADDRESS -->
 
-		<div class="w-full lg:max-w-[695px] h-[248px] sm:h-96 overflow-clip flex flex-col items-center rounded-2xl">
+    <!-- MAP -->
+    <div class="w-full lg:max-w-[695px] h-[248px] sm:h-96 overflow-clip flex flex-col items-center rounded-2xl">
+      <div ref="mapContainer" class="w-full h-full map-container" />
+    </div>
+    <!-- MAP -->
 
-			<div ref="mapContainer" class="w-full h-full map-container" />
-
-		</div>
-	</div>
+  </div>
 
 </template>
 
 <style>
 .map-container .ymaps-2-1-79-ground-pane {
-	filter: grayscale(1);
+  filter: grayscale(1);
 }
 </style>

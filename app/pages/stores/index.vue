@@ -1,7 +1,7 @@
 <template>
   <Header />
   <main>
-  <Section class="h-screen/2">
+  <Section>
     <SectionContainer>
       <h1>
         Stores

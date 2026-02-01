@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import IconDots from './icon/Dots.vue';
-import IconPhone from './icon/Phone.vue';
 import IconPin from './icon/Pin.vue';
 
 interface Props {
@@ -9,6 +7,8 @@ interface Props {
   text1: string
   text2?: string
   phone: string
+  phoneModal1: string
+  phoneModal2: string
 }
 
 const props = defineProps<Props>()
@@ -19,7 +19,7 @@ const props = defineProps<Props>()
   <div
     :class="props.isActive ? 'border-green-600' : '' "
     class="hover:bg-gray-50 w-full gap-3 flex justify-center flex-col items-start border border-solid border-gray-300 p-6 rounded-2xl">
-    <div class="text-zinc-950 leading-6 self-stretch">
+    <div class="text-zinc-950 leading-6 self-stretch w-fit">
       {{ props.address }}
     </div>
     <div class="min-[1430px]:flex-nowrap gap-1 font-medium leading-5 text-gray-600 text-sm flex flex-wrap items-center">
@@ -28,20 +28,9 @@ const props = defineProps<Props>()
         <div v-if="props.text2">{{ props.text2 }}</div>
       </div>
     </div>
-    <div class="min-[1430px]:flex-nowrap gap-2 flex flex-wrap items-center">
-      <div class="h-5 w-5">
-        <IconPhone />
-      </div>
-      <a :href="'tel:' + props.phone" class="text-zinc-950 leading-5 text-sm">
-        {{ props.phone }}
-      </a>
-      <div
-        class="cursor-pointer border-zinc-300 p-[3px] flex justify-center h-6 w-6 flex-col bg-white items-center border border-solid rounded-full">
-        <div class="h-4 w-4">
-          <IconDots />
-        </div>
-      </div>
-    </div>
+
+    <StoresPhone :phone="props.phone" :phone-modal1="props.phoneModal1" :phone-modal2="props.phoneModal2" />
+
     <div class="min-[1430px]:flex-nowrap gap-2 flex flex-wrap items-center cursor-pointer">
       <div class="h-5 w-5">
         <IconPin />
