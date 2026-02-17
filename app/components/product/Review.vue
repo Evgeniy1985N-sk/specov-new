@@ -1,258 +1,246 @@
 <script setup lang="ts">
-interface Review {
-  name: string
-  date: string
-  stars: number
-  pros?: string
-  cons?: string
-  comments: string
-  isPurchasedFromUs: boolean
+import type { ProductReviewCollection, ProductReview } from '~/types/productReview'
+import { useProduct } from '~/composables/useProduct';
+
+const isSortByGrade = ref(true);
+const isSortByDate = ref(false);
+const isSortByGradeMax = ref(true);
+const isSortByDateMax = ref(true);
+const visibleCount = 3;
+
+interface Props {
+	reviews: ProductReviewCollection;
+}
+const props = defineProps<Props>();
+
+// Create a reactive sorted copy of reviews
+const sortedReviews = ref<ProductReview[]>([]);
+
+// Initialize with the data from props
+onMounted(() => {
+	if (props.reviews.data) {
+		sortedReviews.value = [...props.reviews.data];
+	}
+	sortReviews();
+});
+
+// Watch for changes in sorting criteria
+watch([isSortByGrade, isSortByGradeMax, isSortByDate, isSortByDateMax], () => {
+	sortReviews();
+});
+
+// Function to sort reviews
+function sortReviews() {
+	const reviewsCopy = props.reviews.data? [...props.reviews.data] : [];
+
+	if (isSortByGrade.value) {
+		// Sort by grade (stars)
+		if (isSortByGradeMax.value) {
+			// Highest to lowest
+			sortedReviews.value = reviewsCopy.sort((a, b) => b.stars - a.stars);
+		} else {
+			// Lowest to highest
+			sortedReviews.value = reviewsCopy.sort((a, b) => a.stars - b.stars);
+		}
+	} else if (isSortByDate.value) {
+		// Sort by date
+		if (isSortByDateMax.value) {
+			// Newest first
+			sortedReviews.value = reviewsCopy.sort((a, b) =>
+				new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+			);
+		} else {
+			// Oldest first
+			sortedReviews.value = reviewsCopy.sort((a, b) =>
+				new Date(a.created_at).getTime() - new Date(b.created_at).getTime()
+			);
+		}
+	}
 }
 
-const isSortByGrade = ref(true)
-const isSortByDate = ref(false)
-const isSortByGradeMax = ref(true)
-const isSortByDateMax = ref(true)
-const visibleCount = ref(3)
-const reviews = ref<Review[]>([
-  {
-    name: 'Александр',
-    date: '23 июля 2025',
-    stars: 5,
-    pros: 'Крутит, вертит, стучит, сверлит, долбит, светит :)',
-    cons: 'Слабые аккумуляторы',
-    comments: 'Шуруповерт отличный, а аккумуляторы не соответствуют заявленным характеристикам — слабые, быстро разряжаются.',
-    isPurchasedFromUs: true,
-  },
-  {
-    name: 'Виталий',
-    date: '19 июля 2025',
-    stars: 5,
-    pros: 'Работает. 2 АКБ, кейс удобный, заряд батареи менее часа.',
-    cons: 'Не обнаружил.',
-    comments: 'Первый шуруповёрт в использовании. Батареи хватает на 3 часа работы без перекуров. Кровельные саморезы 40 мм по дереву 20 мм + металл 2 мм — в общем, забор. В режиме сверла.',
-    isPurchasedFromUs: false,
-  },
-  {
-    name: 'Андрей',
-    date: '1 июля 2025',
-    stars: 4,
-    cons: '',
-    comments: 'Супер! Отличный патрон, подсветка, две батареи в комплекте. Крутит хорошо.',
-    isPurchasedFromUs: false,
-  },
-  {
-    name: 'Елена',
-    date: '10 июля 2025',
-    stars: 4,
-    pros: 'Лёгкий, удобно лежит в руке, быстро заряжается, кейс компактный.',
-    cons: 'Нет ударного режима, как ожидала.',
-    comments: 'Покупала для сборки мебели и мелкого ремонта. Справляется отлично! Жаль, что нет удара — тогда бы и плитку можно было бы сверлить.',
-    isPurchasedFromUs: true,
-  },
-  {
-    name: 'Дмитрий',
-    date: '28 июня 2025',
-    stars: 5,
-    pros: 'Мощный, надёжный, долго держит заряд, подсветка очень помогает в тёмных углах.',
-    comments: 'Использую уже месяц на стройке — ни разу не подвёл. Даже при -5°C работает нормально. Рекомендую профессионалам.',
-    isPurchasedFromUs: true,
-  },
-  {
-    name: 'Ирина',
-    date: '5 июля 2025',
-    stars: 3,
-    pros: 'Компактный, лёгкий, подходит для бытовых задач.',
-    cons: 'Аккумулятор садится за 20 минут активной работы.',
-    comments: 'Для вкручивания полки — самое то. Но если что-то серьёзное — не хватает мощности и автономности.',
-    isPurchasedFromUs: false,
-  }
-])
+const reviewsAgg = computed(() => props.reviews.agg);
 
+const { calcRating, declineReviewWord } = useProduct();
+
+const formatReviewDate = (d: Date): string => {
+	return new Intl.DateTimeFormat('ru-RU', {
+		day: '2-digit',
+		month: '2-digit',
+		year: '2-digit'
+	}).format(new Date(d));
+}
+
+const productRating = computed(() => {
+	return calcRating(reviewsAgg.value);
+});
+
+const productStars = computed(() => {
+	return Math.ceil(productRating.value);
+});
 
 function changeSortGrade() {
-  if (isSortByGrade.value) {
-    isSortByGradeMax.value = !isSortByGradeMax.value
-  }
-  isSortByDate.value = false
-  isSortByGrade.value = true
+	if (isSortByGrade.value) {
+		isSortByGradeMax.value = !isSortByGradeMax.value
+	} else {
+		isSortByGrade.value = true
+		isSortByDate.value = false
+	}
+	sortReviews();
 }
 
 function changeSortDate() {
-  if (isSortByDate.value) isSortByDateMax.value = !isSortByDateMax.value
-  isSortByDate.value = true
-  isSortByGrade.value = false
+	if (isSortByDate.value) {
+		isSortByDateMax.value = !isSortByDateMax.value
+	} else {
+		isSortByDate.value = true
+		isSortByGrade.value = false
+	}
+	sortReviews();
 }
+
+// Optional: Watch for changes in props.reviews.data
+watch(() => props.reviews.data, () => {
+	sortReviews();
+}, { deep: true });
 
 </script>
 
-
 <template>
+	<div class="flex flex-col-reverse sm:flex-row justify-between gap-4">
+		<div class="w-full max-w-[700px]">
+			<h2 class="hidden sm:block mb-4 font-['Russo_One'] text-gray-950 font-normal text-[24px] leading-8">Отзывы
+			</h2>
 
-  <div class="flex flex-col-reverse sm:flex-row justify-between gap-4">
+			<div class="flex items-center gap-4 font-semibold text-sm leading-5 mb-4 sm:mb-6 mt-2 sm:mt-0">
+				<span>
+					Сортировать по:
+				</span>
+				<p class="flex gap-4">
+					<ProductButtonSort @handle-click="changeSortGrade()" :is-sort-by-max="isSortByGradeMax"
+						text="Оценке" :is-active="isSortByGrade" />
+					<ProductButtonSort @handle-click="changeSortDate()" :is-sort-by-max="isSortByDateMax" text="Дате"
+						:is-active="isSortByDate" />
+				</p>
+			</div>
 
-    <div class="w-full max-w-[700px]">
-      <h2 class="hidden sm:block mb-4 font-['Russo_One'] text-gray-950 font-normal text-[24px] leading-8">Отзывы</h2>
+			<ul class="border-t border-gray-300">
+				<!-- Use sortedReviews instead of reviews -->
+				<li v-for="review in sortedReviews.slice(0, visibleCount)" :key="review.id"
+					class="grid gap-4 py-6 border-b border-gray-300">
 
-      <div class="flex items-center gap-4 font-semibold text-sm leading-5 mb-4 sm:mb-6 mt-2 sm:mt-0">
-        <span>
-          Сортировать по:
-        </span>
-        <p class="flex gap-4">
-          <ProductButtonSort @handle-click="changeSortGrade()" :is-sort-by-max="isSortByGradeMax" text="Оценке"
-            :is-active="isSortByGrade" />
-          <ProductButtonSort @handle-click="changeSortDate()" :is-sort-by-max="isSortByDateMax" text="Дате"
-            :is-active="isSortByDate" />
-        </p>
-      </div>
+					<!-- Rest of your review template remains the same -->
+					<div class="grid gap-2">
+						<div class="flex gap-2 flex-wrap ">
+							<span class="font-bold text-base leading-6 text-gray-950">
+								{{ review.name }}
+							</span>
+							<span class="text-sm leading-6 font-medium">
+								{{ formatReviewDate(review.created_at) }}
+							</span>
+							<UBadge v-if="review.purchased_from_us"
+								class="sm:ml-auto px-3 rounded-full text-(--Brand-800) bg-(--Brand-100)">
+								<i class="flex items-center justify-center w-4 h-4">
+									<ProductIconMark />
+								</i>
+								Товар куплен у нас
+							</UBadge>
+						</div>
+						<div v-if="review.stars" class="flex items-center text-warning-500 text-sm leading-5 font-bold">
+							<i v-for="star in review.stars"
+								class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
+								<ProductIconStar />
+							</i>
 
-      <ul class="border-t border-gray-300">
+							<i v-for="star in (5 - review.stars)"
+								class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
+								<ProductIconStar />
+							</i>
+							{{ review.stars }}.0
+						</div>
+					</div>
 
-        <li v-for="(review, i) in reviews.slice(0, visibleCount)" :key="i"
-          class="grid gap-4 py-6 border-b border-gray-300">
+					<div v-if="review.pros" class="grid gap-1">
+						<p class="text-sm font-bold leading-5 text-gray-950">
+							Плюсы:
+						</p>
+						<span class="text-sm font-medium leading-5 text-gray-600">
+							{{ review.pros }}
+						</span>
+					</div>
 
-          <div class="grid gap-2">
-            <div class="flex gap-2 flex-wrap ">
-              <span class="font-bold text-base leading-6 text-gray-950">
-                {{ review.name }}
-              </span>
-              <span class="text-sm leading-6 font-medium">
-                {{ review.date }}
-              </span>
-              <UBadge v-if="review.isPurchasedFromUs"
-                class="sm:ml-auto px-3 rounded-full text-(--Brand-800) bg-(--Brand-100)">
-                <i class="flex items-center justify-center w-4 h-4">
-                  <ProductIconMark />
-                </i>
-                Товар куплен у нас
-              </UBadge>
-            </div>
-            <div v-if="review.stars" class="flex items-center text-warning-500 text-sm leading-5 font-bold">
-              <i v-for="star in review.stars"
-                class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-                <ProductIconStar />
-              </i>
+					<div v-if="review.cons" class="grid gap-1">
+						<p class="text-sm font-bold leading-5 text-gray-950">
+							Минусы:
+						</p>
+						<span class="text-sm font-medium leading-5 text-gray-600">
+							{{ review.cons }}
+						</span>
+					</div>
 
-              <i v-for="star in (5 - review.stars)"
-                class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-                <ProductIconStar />
-              </i>
-              {{ review.stars }}.0
-            </div>
-          </div>
+					<div class="grid gap-1">
+						<p class="text-sm font-bold leading-5 text-gray-950">
+							Комментарий:
+						</p>
+						<span class="text-sm font-medium leading-5 text-gray-600">
+							{{ review.comment_text }}
+						</span>
+					</div>
+				</li>
+			</ul>
 
-          <div v-if="review.pros" class="grid gap-1">
-            <p class="text-sm font-bold leading-5 text-gray-950">
-              Плюсы:
-            </p>
-            <span class="text-sm font-medium leading-5 text-gray-600">
-              {{ review.pros }}
-            </span>
-          </div>
+			<UButton @click="visibleCount += 3" v-if="visibleCount <= sortedReviews.length"
+				class="w-full sm:w-auto table m-auto mt-6 bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5">
+				Показать еще
+			</UButton>
+		</div>
 
-          <div v-if="review.cons" class="grid gap-1">
-            <p class="text-sm font-bold leading-5 text-gray-950">
-              Минусы:
-            </p>
-            <span class="text-sm font-medium leading-5 text-gray-600">
-              {{ review.cons }}
-            </span>
-          </div>
+		<!-- Rest of your component remains the same -->
+		<div class="flex flex-col gap-6 sm:max-w-[280px] w-full">
+			<div class="">
+				<p class="text-5 text-gray-950 font-bold">
+					{{ productRating }}
+				</p>
 
-          <div class="grid gap-1">
-            <p class="text-sm font-bold leading-5 text-gray-950">
-              Комментарий:
-            </p>
-            <span class="text-sm font-medium leading-5 text-gray-600">
-              {{ review.comments }}
-            </span>
-          </div>
+				<div class="flex justify-between">
+					<span class="flex">
+						<i v-for="star in productStars"
+							class="w-6 h-6 flex items-center justify-center text-warning-500 p-0.5">
+							<ProductIconStar />
+						</i>
+						<i v-for="star in (5 - productStars)"
+							class="w-6 h-6 flex items-center justify-center text-gray-300 p-0.5">
+							<ProductIconStar />
+						</i>
+					</span>
+					<p class="text-sm leading-5 font-medium">
+						{{ declineReviewWord(reviewsAgg.tot_count) }}
+					</p>
+				</div>
+			</div>
 
-        </li>
+			<UButton
+				class="w-full flex items-center justify-center bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5">
+				Оставить отзыв
+			</UButton>
 
-      </ul>
+			<div v-for="starType in reviewsAgg.stars" :key="`stars-${starType.stars}`"
+				class="flex items-center justify-between">
+				<span class="flex">
+					<i v-for="star in starType.stars"
+						class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
+						<ProductIconStar />
+					</i>
 
-      <UButton @click="visibleCount += 3" v-if="visibleCount <= reviews.length"
-        class="w-full sm:w-auto table m-auto mt-6 bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5">
-        Показать еще
-      </UButton>
-    </div>
+					<i v-for="star in (5 - starType.stars)"
+						class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
+						<ProductIconStar />
+					</i>
+				</span>
 
-    <div class="flex flex-col gap-6 sm:max-w-[280px] w-full">
-
-      <div class="">
-
-        <p class="text-5 text-gray-950 font-bold">
-          4.8
-        </p>
-
-        <div class="flex justify-between">
-          <span class="flex">
-            <i v-for="star in 5" class="w-6 h-6 flex items-center justify-center text-warning-500 p-0.5">
-              <ProductIconStar />
-            </i>
-          </span>
-          <p class="text-sm leading-5 font-medium">
-            10 отзывов
-          </p>
-        </div>
-      </div>
-
-      <UButton
-        class="w-full flex items-center justify-center bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5">
-        Оставить отзыв
-      </UButton>
-
-      <div class="flex items-center justify-between">
-        <span class="flex">
-          <i v-for="star in 5" class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-            <ProductIconStar />
-          </i>
-
-          <i v-for="star in (5 - 5)" class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-            <ProductIconStar />
-          </i>
-        </span>
-
-        <p class="text-sm leading-5 font-medium">
-          5 отзывов
-        </p>
-      </div>
-
-      <div class="flex items-center justify-between">
-        <span class="flex">
-          <i v-for="star in 3" class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-            <ProductIconStar />
-          </i>
-
-          <i v-for="star in (5 - 3)" class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-            <ProductIconStar />
-          </i>
-        </span>
-
-        <p class="text-sm leading-5 font-medium">
-          3 отзыва
-        </p>
-      </div>
-
-      <div class="flex items-center justify-between">
-        <span class="flex">
-          <i v-for="star in 4" class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-            <ProductIconStar />
-          </i>
-
-          <i v-for="star in (5 - 4)" class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-            <ProductIconStar />
-          </i>
-        </span>
-
-        <p class="text-sm leading-5 font-medium">
-          4 отзывов
-        </p>
-      </div>
-
-    </div>
-
-  </div>
-
+				<p class="text-sm leading-5 font-medium">
+					{{ declineReviewWord(starType.cnt) }}
+				</p>
+			</div>
+		</div>
+	</div>
 </template>

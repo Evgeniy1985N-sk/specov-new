@@ -3,23 +3,31 @@ import IconCompare from '@/components/header/icon/Compare.vue'
 import IconFavorite from '@/components/header/icon/Favorite.vue'
 import IconCart from '@/components/header/icon/Cart.vue'
 
+const likesStore = useLikeStore();
+const likesSelected = computed( () => (likesStore.totalLikes > 0) );
+const comparesStore = useCompareStore();
+const comparesSelected = computed( () => (comparesStore.totalCompares > 0) );
+
 const isMenu = ref(false)
 const isCatalog = ref(false)
 const isProfile = ref(false)
 const buttons = [
   {
     src: '/compare',
-    icon: IconCompare
+    icon: IconCompare,
+	selected: comparesSelected.value
   },
   {
     src: '/favorite',
-    icon: IconFavorite
+    icon: IconFavorite,
+	selected: likesSelected.value
   },
   {
     src: '/cart',
     icon: IconCart
   },
-]
+];
+
 const items = ref([
   {
     id: '1',
@@ -107,7 +115,8 @@ const items = ref([
     dsc: 'Ручной инструмент / Ударно-рычажный',
     link: '/catalog',
   },
-])
+]);
+
 const itemsPart = computed(() => items.value.slice(0, 6))
 const itemsPart2 = computed(() => items.value.slice(6, 9))
 
@@ -135,7 +144,7 @@ watch(() => isShowSearch, () => {
     <NuxtLink v-for="item in buttons" :to="item.src"
       class="text-(--Brand-950) hidden lg:flex border-zinc-300 p-[11px] justify-spacse-between h-11 w-11 flex-col bg-white hover:bg-gray-300 transition items-center border border-solid rounded-lg">
       <span class="h-5 w-5">
-        <component :is="item.icon" />
+        <component :is="item.icon" :selected="item.selected"/>
       </span>
     </NuxtLink>
     <!-- buttons -->

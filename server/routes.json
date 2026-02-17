@@ -1,0 +1,18 @@
+{
+  "/stores": "/stores",
+  "/product-groups": "/productGroups",
+  "/main-categories": "/mainCategories",  
+  "/category": "/categories",
+  "/category/:categorySlug": "/categories?slug=:categorySlug",
+  "/product-live/:productID": "/productLive1?id=:productID",
+  "/product-live/:productID/:charName": "/productLiveChar1?productId=:productID&charName=:charName",
+  "/product-review/:productID": "/productReview?productId=:productID",
+  "/product-similar/:productID": "/productSimilar?productId=:productID",
+  "/product-related/:productID": "/productRelated?productId=:productID",
+  "/product/:productSlug": "/product1?slug=:productSlug",
+  "/product-page/:productSlug": "/productPage1?slug=:productSlug",
+  "/user/last-viewed-products": "/lastViewed",
+  "/catalog/:categorySlug": "/catalog?categorySlug=:categorySlug",
+  "/search/:term": "/search?term=:term",
+  "/catalog-product-count/:categorySlug": "/catalogProdCount?categorySlug=:categorySlug"
+}

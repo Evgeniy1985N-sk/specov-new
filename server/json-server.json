@@ -1,0 +1,9 @@
+{
+  "port": 59001,
+  "routes": "routes.json",
+  "watch": true,
+  "delay": 100,
+  "read-only": false,
+  "no-cors": false,
+  "no-gzip": false
+}

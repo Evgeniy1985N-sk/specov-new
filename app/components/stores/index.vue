@@ -1,8 +1,12 @@
 <script setup lang="ts">
+import { ref, onMounted, watch } from 'vue'
+import { useStoreApi } from '@/composables/api/useStoreApi';
 
 const mapContainer = ref<HTMLDivElement | null>(null)
 let myMap: any = null
 let myPlacemark: any = null
+
+const currentStoreId = ref<number | undefined>(undefined);
 
 onMounted(() => {
   const script = document.createElement('script')
@@ -11,7 +15,8 @@ onMounted(() => {
     // @ts-expect-error ymaps доступен глобально
     const ymaps = window.ymaps
     ymaps.ready(() => {
-      const activeStore = stores.value.find(store => store.isActive)
+      // const activeStore = stores.value.find(store => store.isActive)
+      const activeStore = stores.value.find(store => store.id == currentStoreId.value)
       if (!activeStore) return
       
       const coords = activeStore.coords
@@ -39,6 +44,32 @@ onMounted(() => {
   document.head.appendChild(script)
 })
 
+// Fetch stores from server
+const { publicList } = useStoreApi();
+const { data: storeList, pending, error } = await useAsyncData(
+	'store-list',
+	() => publicList(),
+	{server: true, lazy: false}
+);
+
+// Transform the fetched data into the format needed for the menu
+const stores = computed(() => {
+	if (!storeList.value) {
+		return [];
+	}
+
+	currentStoreId.value = 1;
+	return storeList.value.map(store => ({
+		id: store.id,
+		coords: [parseFloat(store.pos_lat), parseFloat(store.pos_lon)],
+		address: store.address,
+		text1: store.work_hours,
+		text2: "Сб-Вс Выходной",
+		phone: store.tels,
+	}));
+});
+
+/*
 const stores = ref([
   {
     id: 1,
@@ -59,6 +90,7 @@ const stores = ref([
     phone: "+7 (3452) 30-30-90"
   }
 ])
+*/
 
 function toggleActive(index: number) {
   if (stores.value[index]?.isActive) return

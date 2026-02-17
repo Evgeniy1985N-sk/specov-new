@@ -1,0 +1,84 @@
+{
+	"products": [
+	    {
+	      "id": 60616,
+	      "name": "Костюм муж. \"Родос\" п/к цв. коричневый, тк. смесовая 245 г/м², ВО",
+	      "name_lat": "kostium-muzh-rodos-p-k-tsv-korichnevyi-tk-smesovaia-245-g-m2-vo",
+	      "price": 4284,
+	      "old_price": 4760,
+	      "discount": 10,
+	      "char": {
+		"id": 2351,
+		"name": "48-50/170-176"
+	      },
+	      "available": false,
+	      "quant": 0,
+	      "quant_descr": "none",
+	      "imgs": [
+		{
+		  "ref_1c": "f9866754-3374-11ef-a2a2-00155d327e58",
+		  "size": 219340,
+		  "ext": "jpg",
+		  "preview_ext": "png",
+		  "main": true
+		}
+	      ]
+	    },
+	    {
+	      "id": 60616,
+	      "name": "Костюм муж. \"Родос\" п/к цв. коричневый, тк. смесовая 245 г/м², ВО",
+	      "name_lat": "kostium-muzh-rodos-p-k-tsv-korichnevyi-tk-smesovaia-245-g-m2-vo",
+	      "price": 4284,
+	      "old_price": 4760,
+	      "discount": 10,
+	      "char": {
+		"id": 2351,
+		"name": "48-50/170-176"
+	      },
+	      "available": false,
+	      "quant": 0,
+	      "quant_descr": "none",
+	      "imgs": [
+		{
+		  "ref_1c": "f9866754-3374-11ef-a2a2-00155d327e58",
+		  "size": 219340,
+		  "ext": "jpg",
+		  "preview_ext": "png",
+		  "main": true
+		}
+	      ]
+	    }	    	
+	],
+	"categories": [
+          {
+            "id": 3170,
+            "name": "Воронки",
+            "description": null,
+            "name_lat": "voronki",
+            "product_count": 1,
+            "icon": null,
+            "children": null,
+            "parents": null
+          },
+          {
+            "id": 3820,
+            "name": "Лежаки подкатные",
+            "description": null,
+            "name_lat": "lezhaki-podkatnye",
+            "product_count": 1,
+            "icon": null,
+            "children": null,
+            "parents": null
+          },
+          {
+            "id": 3172,
+            "name": "Манометры",
+            "description": null,
+            "name_lat": "manometry",
+            "product_count": 1,
+            "icon": null,
+            "children": null,
+            "parents": null
+          }	
+	]
+}

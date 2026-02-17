@@ -1,0 +1,98 @@
+[
+  {
+    "id": 155938,
+    "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+    "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+    "price": -648,
+    "old_price": 72,
+    "discount": 10,
+    "char": {
+      "id": 33501,
+      "name": "100 мл.(1/40)"
+    },
+    "available": true,
+    "quant": 281,
+    "quant_descr": "many",
+    "imgs": [
+      {
+        "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+        "size": 249267,
+        "ext": "png",
+        "preview_ext": "png",
+        "main": true
+      }
+    ]
+  },
+  {
+    "id": 155938,
+    "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+    "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+    "price": -648,
+    "old_price": 72,
+    "discount": 10,
+    "char": {
+      "id": 33501,
+      "name": "100 мл.(1/40)"
+    },
+    "available": true,
+    "quant": 1,
+    "quant_descr": "few",
+    "imgs": [
+      {
+        "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+        "size": 249267,
+        "ext": "png",
+        "preview_ext": "png",
+        "main": true
+      }
+    ]
+  },
+  {
+    "id": 155938,
+    "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+    "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+    "price": -648,
+    "old_price": 72,
+    "discount": 10,
+    "char": {
+      "id": 33501,
+      "name": "100 мл.(1/40)"
+    },
+    "available": true,
+    "quant": 1,
+    "quant_descr": "few",
+    "imgs": [
+      {
+        "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+        "size": 249267,
+        "ext": "png",
+        "preview_ext": "png",
+        "main": true
+      }
+    ]
+  },
+  {
+    "id": 155938,
+    "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+    "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+    "price": -648,
+    "old_price": 72,
+    "discount": 10,
+    "char": {
+      "id": 33501,
+      "name": "100 мл.(1/40)"
+    },
+    "available": true,
+    "quant": 113,
+    "quant_descr": "many",
+    "imgs": [
+      {
+        "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+        "size": 249267,
+        "ext": "png",
+        "preview_ext": "png",
+        "main": true
+      }
+    ]
+  }
+]

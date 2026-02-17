@@ -5,6 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
+    "mock": "json-server ./server/index.cjs --routes ./server/routes.json --port 59001",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
@@ -20,5 +21,8 @@
     "vue": "^3.5.24",
     "vue-router": "^4.6.3",
     "vue-yandex-maps": "^2.2.5"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.4"
   }
 }

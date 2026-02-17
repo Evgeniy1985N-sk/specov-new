@@ -1,0 +1,23 @@
+{
+  "category": {
+    "id": 0,
+    "name": "",
+    "description": null,
+    "name_lat": "",
+    "product_count": null,
+    "icon": null,
+    "picture": null,
+    "children": null,
+    "parents": null,
+    "is_root": false
+  },
+  "products": null,
+  "filters": null,
+  "brands": null,
+  "countries": null,
+  "stores": null,
+  "total_count": 24,
+  "min_price": 0,
+  "max_price": 0,
+  "last_viewed": null
+}

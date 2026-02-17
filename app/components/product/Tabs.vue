@@ -1,31 +1,24 @@
 <script setup lang="ts">
 import { useScroll } from '~/composables/useScroll'
 import { useScrollTo } from '~/composables/useScrollTo'
+import type { ProductFilter, ProductCard } from '~/types/product'
+import type { ProductReviewCollection } from '~/types/productReview'
 
 const { scrollPosition } = useScroll()
 const { scrollToSection } = useScrollTo()
 
 const offsetEl = ref(800)
 
-const relatedProducts = useProductsStore().related
+
+interface Props {
+	productDescription: string;
+	filters: ProductFilter[];
+	reviews: ProductReviewCollection;
+	relatedProducts: ProductCard[];
+}
+const props = defineProps<Props>();
 
 const isMoreText = ref(false)
-
-const specifications = [
-  { label: 'Артикул', value: 'HR2470' },
-  { label: 'Модель', value: 'HR2470' },
-  { label: 'Бренд', value: 'Makita' },
-  { label: 'Тип товара', value: 'Перфоратор' },
-  { label: 'Тип питания', value: 'Сетевой' },
-  { label: 'Расположение двигателя', value: 'Горизонтальное' },
-  { label: 'Тип двигателя', value: 'Щеточный' },
-  { label: 'Тип патрона', value: 'SDS-plus' },
-  { label: 'Мощность, Вт', value: '780' },
-  { label: 'Напряжение, В', value: '230' },
-  { label: 'Макс. обороты', value: '1100' },
-  { label: 'Макс. диаметр сверления (дерево), мм', value: '32' },
-  { label: 'Макс. диаметр сверления (металл), мм', value: '13' }
-];
 
 interface Tab {
   label: string
@@ -93,13 +86,7 @@ function toggleActive(index: number) {
         <h2 class="mb-4 font-['Russo_One'] text-gray-950 font-normal text-[24px] leading-8">О товаре</h2>
         <p :class="[!isMoreText ? 'line-clamp-4 overflow-hidden' : '']"
           class="text-sm leading-5 font-medium text-gray-600 sm:line-clamp-none sm:overflow-visible">
-          Предназначен для сверления, сверления с ударом и долбления (три режима) в таких материалах как бетон,
-          природный камень, дерево, металл. У перфоратора отсутствует удар на холостом ходу, он имеет
-          электронную регулировку числа оборотов двигателя, предохранительную (расцепную) муфту, обрезиненный
-          корпус редуктора и антивибрационную боковую рукоятку. Тип крепления хвостика – SDS-plus.
-          Многофункциональный перфоратор Makita HR 2470 дополнен реверсом. Для данной модели характерен
-          одинаковый вращающий момент, как при прямом, так и при обратном вращении. Переключение осуществляется
-          путем поворота щеток.
+			{{ props.productDescription }}
         </p>
         <button @click="isMoreText = !isMoreText"
           class="flex sm:hidden gap-1.5 items-center text-sm leading-5 cursor-pointer text-gray-600 mt-4">
@@ -109,6 +96,7 @@ function toggleActive(index: number) {
           </i>
         </button>
       </div>
+	<!--
       <div class="flex flex-col gap-4">
         <div class="font-sans font-bold text-base leading-6 text-black">Комплектация</div>
         <p class="line-clamp-4 overflow-hidden text-sm leading-5 font-medium text-gray-600">
@@ -121,6 +109,7 @@ function toggleActive(index: number) {
           12 месяцев
         </p>
       </div>
+	-->
     </div>
 
     <div id="characteristics" class="max-w-[450px]">
@@ -128,7 +117,7 @@ function toggleActive(index: number) {
       <h2 class="mb-4 font-['Russo_One'] text-gray-950 font-normal text-[24px] leading-8">Характеристики</h2>
 
       <div class="grid gap-4 w-full">
-        <p v-for="(item, i) in specifications" :key="i" class="flex items-baseline text-sm leading-5">
+        <p v-for="item in filters" :key="item.id" class="flex items-baseline text-sm leading-5">
           <span class="max-w-[500px] font-medium text-gray-600 whitespace-nowrap pr-2">
             {{ item.label }}
           </span>
@@ -141,9 +130,9 @@ function toggleActive(index: number) {
 
     </div>
 
-    <div id="reviews">
+    <div id="reviews" v-if="props.reviews">
       <h2 class="sm:hidden mb-4 font-['Russo_One'] text-gray-950 font-normal text-[24px] leading-8">Отзывы</h2>
-      <ProductReview />
+      <ProductReview :reviews="props.reviews" />
     </div>
 
     <div id="goods">

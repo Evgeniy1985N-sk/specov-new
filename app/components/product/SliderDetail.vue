@@ -8,10 +8,10 @@ import 'swiper/css/pagination'
 import 'swiper/css/thumbs'
 import 'swiper/css/navigation'
 
-import type { ProductImage } from '~/types/product'
+import type { Picture } from '~/types/picture'
 
 interface Props {
-	imgs?: ProductImage[]
+	imgs?: Picture[]
 }
 const props = defineProps<Props>()
 
@@ -34,6 +34,9 @@ const slideMainPrev = () => {
 const slideMainNext = () => {
 	if (mainSwiper.value) mainSwiper.value.slideNext()
 }
+
+const { picturePreview, pictureDetail } = useProductPicture();
+
 </script>
 
 <template>
@@ -54,8 +57,8 @@ const slideMainNext = () => {
 				<!-- Миниатюры -->
 				<swiper class="thumbs-swiper" :direction="'vertical'" :slides-per-view="6" :space-between="4"
 					:loop="false" :watch-slides-progress="true" :modules="[Thumbs]" @swiper="setThumbsSwiper">
-					<swiper-slide v-for="(item, i) in props.imgs" :key="i">
-						<img :src="item.src" :alt="item.alt + ' thumb'" class="w-full h-auto rounded" />
+					<swiper-slide v-for="item in props.imgs" :key="item.ref_1c">
+						<img :src="picturePreview(item)" :alt="'thumb'+item.ref_1c" class="w-full h-auto rounded" />
 					</swiper-slide>
 				</swiper>
 
@@ -75,7 +78,7 @@ const slideMainNext = () => {
 				:thumbs="{ swiper: thumbsSwiper }" :pagination="{ clickable: true }" @swiper="setMainSwiper"
 				class="main-swiper">
 				<swiper-slide v-for="(item, i) in props.imgs" :key="i">
-					<img :src="item.src" :alt="item.alt" class="w-full h-auto object-cover" />
+					<img :src="pictureDetail(item)" :alt="'img'+item.ref_1c" class="w-full h-auto object-cover" />
 				</swiper-slide>
 			</swiper>
 
