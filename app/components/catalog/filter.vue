@@ -35,6 +35,26 @@ const visCountryCount = 5;
 const minPrice = ref<number | undefined>();
 const maxPrice = ref<number | undefined>();
 
+//if flag is set always enabled
+const ignoreBrandDisabled = ref(false);
+const ignoreCountriesDisabled = ref(false);
+const ignoreStoresDisabled = ref(false);
+const ignoreDynDisabledByFilterId = ref<Record<number, boolean>>({});
+watch(
+	() => props.brands,
+	() => {
+		ignoreBrandDisabled.value = false;
+		ignoreCountriesDisabled.value = false;
+		ignoreStoresDisabled.value = false;
+		ignoreDynDisabledByFilterId.value = <Record<number, boolean>>{};
+	},
+	{ deep: true, immediate: true }
+);
+const isDynItemDisabled = (filterId: number, itemDisabledFromProps: boolean): boolean => {
+	if (ignoreDynDisabledByFilterId.value[filterId]) return false;
+	return itemDisabledFromProps;
+}
+
 const items = computed<AccordionItem[]>(() => {
 	const items: AccordionItem[] = [];
 
@@ -219,36 +239,33 @@ function buildFilterQuery() {
 
 const updateCountrySelection = (newId: number, checked: boolean) => {
 	updateArraySelection(selectedCountries, newId, checked);
-	// if (checked) {
-	// 	// Add to array if not already present
-	// 	if (!selectedCountries.value.includes(newId)) {
-	// 		selectedCountries.value = [...selectedCountries.value, newId];
-	// 	}
-	// } else {
-	// 	selectedCountries.value = selectedCountries.value.filter(id => id !== newId);
-	// }
+	if (!checked) ignoreCountriesDisabled.value = true;
 };
 
 const updateBrandSelection = (newId: number, checked: boolean) => {
 	updateArraySelection(selectedBrands, newId, checked);
-	// if (checked) {
-	// 	if (!selectedBrands.value.includes(newId)) {
-	// 		selectedBrands.value = [...selectedBrands.value, newId];
-	// 	}
-	// } else {
-	// 	selectedBrands.value = selectedBrands.value.filter(id => id !== newId);
-	// }
+	if (!checked) ignoreBrandDisabled.value = true;
 };
 const updateStoreSelection = (newId: number, checked: boolean) => {
 	updateArraySelection(selectedStores, newId, checked);
-	// if (checked) {
-	// 	if (!selectedStores.value.includes(newId)) {
-	// 		selectedStores.value = [...selectedStores.value, newId];
-	// 	}
-	// } else {
-	// 	selectedStores.value = selectedStores.value.filter(id => id !== newId);
-	// }
+	if (!checked) ignoreStoresDisabled.value = true;
 };
+
+// const updateDynFilterSelection = (id: number, hash: string) => {
+// 	filterState[id][hash]
+// 	ignoreDynDisabledByFilterId.value[id] = checked;
+// };
+function updateDynSelection(filterId: number, hash: string, checked: boolean) {
+	if (!filterState[filterId] || typeof filterState[filterId] !== 'object') {
+		filterState[filterId] = {};
+	}
+
+	filterState[filterId][hash] = checked;
+
+	if (!checked) {
+		ignoreDynDisabledByFilterId.value[filterId] = true;
+	}
+}
 
 function updateArraySelection<T>(
 	arrayRef: Ref<T[]>,
@@ -369,7 +386,8 @@ defineExpose({
 
 			<div @click="$emit('handleClick', { id: 'store' })" class="grid grid-cols-2 lg:grid-cols-1 gap-4">
 				<label v-for="st in stores" :key="st.id" class="flex gap-2 items-center cursor-pointer">
-					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)"
+					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)" 
+						:disabled="(ignoreStoresDisabled === true) ? false : st.disabled"
 						@update:model-value="updateStoreSelection(st.id, $event as boolean)" />
 					<span class="text-sm leading-5 text-gray-950">
 						{{ st.address }}
@@ -412,6 +430,7 @@ defineExpose({
 					:class="(ind < visBrandCount || isBrandHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
 					<UCheckbox size="xl" :model-value="selectedBrands.includes(br.id)"
+						:disabled="(ignoreBrandDisabled === true) ? false : br.disabled"
 						@update:model-value="updateBrandSelection(br.id, $event as boolean)" />
 					<span class="text-sm leading-5 text-gray-950">
 						{{ br.name }}
@@ -432,7 +451,8 @@ defineExpose({
 				<label v-for="(c, ind) in props.countries" :key="c.id"
 					:class="(ind < visCountryCount || isCountryHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
-					<UCheckbox size="xl" :model-value="selectedCountries.includes(c.id)"
+					<UCheckbox size="xl" :model-value="selectedCountries.includes(c.id)" 
+						:disabled="(ignoreCountriesDisabled === true) ? false : c.disabled"
 						@update:model-value="updateCountrySelection(c.id, $event as boolean)" />
 					<span class="text-sm leading-5 text-gray-950">
 						{{ c.name }}
@@ -444,17 +464,20 @@ defineExpose({
 				class="mt-3 text-[12px] leading-[18px] font-medium text-(--Brand-700)">
 				{{ isCountryHidden ? 'Показать еще' : 'Скрыть' }}
 			</button>
-
 		</template>
 
 		<!-- Dynamic filters -->
 		<template v-for="filter in props.filters" :key="filter.id" #[`filter-${filter.id}`]>
-			<div  @click="$emit('handleClick', { id: `dyn-${filter.id}` })" class="grid gap-4">
+			<div @click="$emit('handleClick', { id: `dyn-${filter.id}` })" class="grid gap-4">
 
 				<!-- TEXT / LIST → CHECKBOXES -->
 				<template v-if="filter.data_type === 't_text' || filter.data_type === 't_list'">
 					<label v-for="item in filter.items" :key="item.hash" class="flex gap-2 items-center cursor-pointer">
-						<UCheckbox size="xl" v-model="filterState[filter.id][item.hash]" />
+						<UCheckbox size="xl" 
+							:model-value="filterState[filter.id][item.hash]" 
+							:disabled="isDynItemDisabled(filter.id, item.disabled)"
+							@update:model-value="updateDynSelection(filter.id, item.hash, $event as boolean)"
+						/>
 						<span class="text-sm leading-5 text-gray-950">
 							{{ item.value }}
 						</span>
@@ -463,20 +486,23 @@ defineExpose({
 
 				<!-- BOOLEAN -->
 				<template v-else-if="filter.data_type === 't_bool'">
-					<UCheckbox size="xl" v-model="filterState[filter.id]" :label="filter.name" />
+					<UCheckbox size="xl" v-model="filterState[filter.id]" :label="filter.name"
+						:disabled="filter.disabled" />
 				</template>
 
 				<!-- NUMBER -->
 				<template v-else-if="filter.data_type === 't_number'">
 					<div class="flex gap-2">
-						<UInput v-model="filterState[filter.id].min" type="number" placeholder="От" />
-						<UInput v-model="filterState[filter.id].max" type="number" placeholder="До" />
+						<UInput v-model="filterState[filter.id].min" type="number" placeholder="От"
+							:disabled="filter.disabled" />
+						<UInput v-model="filterState[filter.id].max" type="number" placeholder="До"
+							:disabled="filter.disabled" />
 					</div>
 				</template>
 
 				<!-- DATE -->
 				<template v-else-if="filter.data_type === 't_date'">
-					<UInput v-model="filterState[filter.id]" type="date" />
+					<UInput v-model="filterState[filter.id]" type="date" :disabled="filter.disabled" />
 				</template>
 
 			</div>

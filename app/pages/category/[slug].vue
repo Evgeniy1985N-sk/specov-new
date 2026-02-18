@@ -7,6 +7,8 @@ import { type CategoryCatalogParams } from '~/types/productCat';
 const route = useRoute()
 
 const { catalog } = useProductCatApi();
+const { mainCategories } = useProductCatApi()
+
 const { data, error } = await useAsyncData(
 	() => {
 		// Extract parameters inside the key function
@@ -16,7 +18,7 @@ const { data, error } = await useAsyncData(
 
 		return `category-${catSlug}-${from}-${count}-${JSON.stringify(route.query)}`;
 	},
-	() => {
+	async () => {
 		const catSlug = parseInt(route.params.slug as string, 10);
 		const from = Number(route.query.from) || 0;
 		const count = Number(route.query.count) || 20;
@@ -27,7 +29,15 @@ const { data, error } = await useAsyncData(
 			...route.query,
 		};
 
-		return catalog(catSlug, apiParams);
+		const [pageData, mainCats] = await Promise.all([
+			catalog(catSlug, apiParams),
+			mainCategories(),
+		]);
+
+		return {
+			pageData,
+			mainCats
+		}
 	},
 	{ 
 		server: true, 
@@ -91,7 +101,6 @@ if (error.value) {
 		message: errorDetails?.message || 'Unknown error',
 		url: route.fullPath,
 		catSlug,
-		apiParams
 	});
 
 	// Throw the error with appropriate status
@@ -106,13 +115,16 @@ if (error.value) {
 	});
 }
 
-const category = computed(() => {
-	return data.value?.category;
+const curCategory = computed(() => {
+	return data.value?.pageData.category;
 });
 
 const { picturePreview } = useCategory();
 
-watch(category, (cat) => {
+//header
+provide('mainCatsData', data.value?.mainCats );
+
+watch(curCategory, (cat) => {
 	if (!cat) return;
 
 	useSeoMeta({
@@ -127,5 +139,5 @@ watch(category, (cat) => {
 </script>
 
 <template>
-	<Category v-if="data?.category" :data="data" />
+	<Category v-if="data?.pageData.category" :data="data.pageData" />
 </template>

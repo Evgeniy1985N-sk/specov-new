@@ -19,6 +19,13 @@ export interface ProductCatPublicList {
 	}[]
 }
 
+export interface ProductCatMain {
+	id: number;
+	name: string;
+	name_lat: string;
+	picture?: Picture;
+}
+	
 //******************
 // CategoryCatalogParams is used to pass parameters to a service
 // to fetch category catalog data.
@@ -33,9 +40,9 @@ export interface CategoryCatalogParams {
 	count: number;
 }
 
-export type BrandFilter = { id: number, name: string };
-export type StoreFilter = { id: number, address: string };
-export type CountryFilter = { id: number, name: string };
+export type BrandFilter = { id: number, name: string, disabled: boolean };
+export type StoreFilter = { id: number, address: string, disabled: boolean };
+export type CountryFilter = { id: number, name: string, disabled: boolean };
 
 // CategoryCatalog is the main model for showing list of products
 export interface CategoryCatalog {

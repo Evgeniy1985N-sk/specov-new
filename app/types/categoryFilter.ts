@@ -8,7 +8,9 @@ export interface CategoryFilter {
 	items: {
 		value: string;
 		hash: string;
+		disabled: boolean;
 	}[];
+	disabled?: boolean;
 }
 
 type CategoryFilterBoolPresentType = "is_radio" | "is_dropbos";

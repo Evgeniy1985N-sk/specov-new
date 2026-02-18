@@ -26,6 +26,10 @@ const { data: categories} = await useAsyncData(
 const menu = computed(() => {
 	if (!categories.value) return [];
 
+	if (!activeCategoryId.value && categories.value?.length){
+		//default
+		activeCategoryId.value = categories.value[0]?.id ?? 0;
+	}
 	return categories.value.map(category => ({
 		id: category.id,
 		name: category.name,
@@ -160,9 +164,13 @@ watch(() => props.isShow, (newVal) => {
 						<ul class="grid gap-10 col-2">
 							<li v-for="group in item.sub">
 
-								<p class="mb-4 text-[20px] leading-[30px] text-gray-950 font-bold">
-									{{ group.title }}
-								</p>
+								<NuxtLink
+									:to="categoryLink(group)"
+								>
+									<p class="mb-4 text-[20px] leading-[30px] text-gray-950 font-bold">
+										{{ group.title }}
+									</p>
+								</NuxtLink>
 
 								<ul class="columns-3 gap-x-8 gap-y-3">
 
@@ -217,7 +225,11 @@ watch(() => props.isShow, (newVal) => {
 							<!-- menu 2 -->
 							<div v-if="levelMenu == 1" @click="toggleSubMenu(item.id, group.id)"
 								class="flex gap-1.5 items-center py-2.5 px-3.5 border-b border-(--border)">
-								{{ group.title }}
+								<NuxtLink
+									:to="categoryLink(group)"
+								>
+									{{ group.title }}
+								</NuxtLink>
 								<WrapIcon class="ml-auto">
 									<HeaderCatalogMenuIconAng />
 								</WrapIcon>

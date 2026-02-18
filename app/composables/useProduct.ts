@@ -1,6 +1,6 @@
 import { type ProductReviewAgg, type ProductReviewTot } from "@/types/productReview";
 import { type Picture } from "@/types/picture";
-import type { ProductCard } from "~/types/product";
+// import type { ProductCard } from "~/types/product";
 
 export const useProduct = () => {
 

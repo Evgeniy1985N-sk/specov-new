@@ -6,22 +6,35 @@ import { type ProductGroupPublicList } from "@/types/productGroup";
 const { publicList: prodGroupList } = useProductGroupApi()
 const { mainCategories } = useProductCatApi()
 
+// const { data, pending, error } = await useAsyncData(
+//   'productGroups',
+//   () => prodGroupList(),
+// );
+//
+// const { data: mainCatsData } = await useAsyncData(
+//   'mainCategories',
+//   () => mainCategories(),
+// );
 const { data, pending, error } = await useAsyncData(
-  'productGroups',
-  () => prodGroupList(),
+	'productGroupsAndCategories',
+	async () => {
+		const [groups, categories] = await Promise.all([
+			prodGroupList(),
+			mainCategories(),
+		]);
+
+		return {
+			groups,
+			categories,
+		};
+	}
 );
 
-const { data: mainCatsData } = await useAsyncData(
-  'mainCategories',
-  () => mainCategories(),
-);
+const popularProducts = computed( () => (data.value?.groups as ProductGroupPublicList[])?.find((item) => item.id == 1) );
+const buildingProducts = computed( () => (data.value?.groups as ProductGroupPublicList[])?.find((item) => item.id == 2) );
+const gardenProducts = computed( () => (data.value?.groups as ProductGroupPublicList[])?.find((item) => item.id == 3) );
 
-
-const popularProducts = computed( () => (data.value as ProductGroupPublicList[])?.find((item) => item.id == 1) );
-const buildingProducts = computed( () => (data.value as ProductGroupPublicList[])?.find((item) => item.id == 2) );
-const gardenProducts = computed( () => (data.value as ProductGroupPublicList[])?.find((item) => item.id == 3) );
-
-provide('mainCatsData', mainCatsData );
+provide('mainCatsData', data.value?.categories );
 
 </script>
 
