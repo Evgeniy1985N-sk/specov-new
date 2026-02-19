@@ -24,6 +24,11 @@ export interface ProductCard {
 	quant?: number;
 	quant_descr?: ProductQuantDescr;
 	available: boolean;
+	filters: {
+		id: number;
+		name: string;
+		val: string;
+	}[]
 }
 
 export interface ProductCatParent {

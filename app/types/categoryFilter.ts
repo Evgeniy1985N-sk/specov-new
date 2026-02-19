@@ -9,6 +9,9 @@ export interface CategoryFilter {
 		value: string;
 		hash: string;
 		disabled: boolean;
+		data_type: string;
+		min: number;
+		max: number;
 	}[];
 	disabled?: boolean;
 }

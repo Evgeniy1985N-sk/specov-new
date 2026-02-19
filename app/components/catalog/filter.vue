@@ -100,10 +100,36 @@ const emit = defineEmits<{
 	handleClick: [{ id: string }]
 }>();
 
+const emitStatic = (id: string) => {
+	emit('handleClick', { id });
+};
+
+const debounce = <T extends (...args: any[]) => void>(fn: T, waitMs = 350) => {
+	let timer: ReturnType<typeof setTimeout> | undefined;
+
+	return (...args: Parameters<T>) => {
+		if (timer) {
+			clearTimeout(timer);
+		}
+		timer = setTimeout(() => {
+			fn(...args);
+		}, waitMs);
+	};
+};
+
+const emitDyn = (filterId: number) => {
+	emit('handleClick', { id: `dyn-${filterId.toString()}` });
+};
+
+const emitDynDebounced = debounce(emitDyn, 400);
+
+const formatPrice = (price?: number): string => 
+	price!==undefined ? String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : '';
+
 const formattedMinPrice = computed({
 	get() {
 		// Только если значение реально задано — форматируем
-		return minPrice.value !== undefined ? String(minPrice.value).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : ''
+		return formatPrice(minPrice.value);
 	},
 	set(val: string) {
 		const clean = val.replace(/\D/g, '')
@@ -114,13 +140,16 @@ const formattedMinPrice = computed({
 
 const formattedMaxPrice = computed({
 	get() {
-		return maxPrice.value !== undefined ? String(maxPrice.value).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : ''
+		return formatPrice(maxPrice.value);
 	},
 	set(val: string) {
 		const clean = val.replace(/\D/g, '')
 		maxPrice.value = clean ? Number(clean) : undefined
 	}
-})
+});
+const formatDynNumVal = (val?: number): string => {
+	return val!==undefined ? val.toString() : "";
+}
 
 // type FilterValue =
 // 	| Record<string, boolean> // t_text, t_list
@@ -384,7 +413,7 @@ defineExpose({
 
 		<template #availability="{ item }">
 
-			<div @click="$emit('handleClick', { id: 'store' })" class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+			<div @click="emitStatic('store')" class="grid grid-cols-2 lg:grid-cols-1 gap-4">
 				<label v-for="st in stores" :key="st.id" class="flex gap-2 items-center cursor-pointer">
 					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)" 
 						:disabled="(ignoreStoresDisabled === true) ? false : st.disabled"
@@ -399,9 +428,9 @@ defineExpose({
 
 		<template #price="{ item }">
 
-			<div @click="$emit('handleClick', { id: 'price' })" class="flex gap-2">
+			<div @click="emitStatic('price')" class="flex gap-2">
 
-				<UInput color="neutral" v-model="formattedMinPrice" :placeholder="`от ${formattedMinPrice}`"
+				<UInput color="neutral" v-model="formattedMinPrice" :placeholder="`от ${formatPrice(props.minPrice)}`"
 					:ui="{ base: 'font-medium text-gray-950 ring-gray-900', trailing: 'pe-1' }">
 					<template v-if="formattedMinPrice?.length" #trailing>
 						<UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
@@ -409,7 +438,7 @@ defineExpose({
 					</template>
 				</UInput>
 
-				<UInput color="neutral" v-model="formattedMaxPrice" :placeholder="`до ${formattedMaxPrice}`"
+				<UInput color="neutral" v-model="formattedMaxPrice" :placeholder="`до ${formatPrice(props.maxPrice)}`"
 					:ui="{ base: 'font-medium text-gray-950', trailing: 'pe-1' }">
 					<template v-if="formattedMaxPrice?.length" #trailing>
 						<UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
@@ -425,7 +454,7 @@ defineExpose({
 
 		<template #brand="{ item }" v-if="props.brands?.length">
 
-			<div @click="$emit('handleClick', { id: 'brand' })" class="grid gap-4">
+			<div @click="emitStatic('brand')" class="grid gap-4">
 				<label v-for="(br, ind) in props.brands" :key="br.id"
 					:class="(ind < visBrandCount || isBrandHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
@@ -447,7 +476,7 @@ defineExpose({
 
 		<template #country="{ item }" v-if="props.countries?.length">
 
-			<div @click="$emit('handleClick', { id: 'country' })" class="grid gap-4">
+			<div @click="emitStatic('country')" class="grid gap-4">
 				<label v-for="(c, ind) in props.countries" :key="c.id"
 					:class="(ind < visCountryCount || isCountryHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
@@ -468,7 +497,7 @@ defineExpose({
 
 		<!-- Dynamic filters -->
 		<template v-for="filter in props.filters" :key="filter.id" #[`filter-${filter.id}`]>
-			<div @click="$emit('handleClick', { id: `dyn-${filter.id}` })" class="grid gap-4">
+			<div @click="emitDyn(filter.id)" class="grid gap-4">
 
 				<!-- TEXT / LIST → CHECKBOXES -->
 				<template v-if="filter.data_type === 't_text' || filter.data_type === 't_list'">
@@ -493,10 +522,16 @@ defineExpose({
 				<!-- NUMBER -->
 				<template v-else-if="filter.data_type === 't_number'">
 					<div class="flex gap-2">
-						<UInput v-model="filterState[filter.id].min" type="number" placeholder="От"
-							:disabled="filter.disabled" />
-						<UInput v-model="filterState[filter.id].max" type="number" placeholder="До"
-							:disabled="filter.disabled" />
+						<UInput 
+							v-model="filterState[filter.id].min" type="number" :placeholder="`От ${formatDynNumVal(filter.items[0]?.min)}`"
+							:disabled="filter.disabled" 
+							@input="emitDynDebounced(filter.id)"
+						/>
+						<UInput 
+							v-model="filterState[filter.id].max" type="number" :placeholder="`До ${formatDynNumVal(filter.items[0]?.max)}`"
+							:disabled="filter.disabled" 
+							@input="emitDynDebounced(filter.id)"
+						/>
 					</div>
 				</template>
 

@@ -48,15 +48,6 @@ const productDetailLink = (item: ProductCard) => {
 	return `/products/${encodeURIComponent(item.name_lat)}/${encodeURIComponent(item.char.name_lat)}`;
 }
 
-const spec = [
-  { label: 'Макс. крутящий момент', value: '6 Нм' },
-  { label: 'Число скоростей', value: '1' },
-  { label: 'Тип аккумулятора', value: 'Li-lon' },
-  { label: 'Напряжение аккумулятора', value: '3.6 В' },
-  { label: 'Устройство аккумулятора', value: 'встроенный' },
-  { label: 'Вид упаковки', value: 'чемодан/кейс' },
-];
-
 const classContent = computed(() => ({
   'sm:max-w-[130px] lg:max-w-[232px] w-full': props.isRow,
   'min-h-[174px] sm:min-h-auto': isCatalogPage.value && !props.isRow
@@ -117,16 +108,18 @@ const classMedia = computed(() => ({
       <span class="text-sm leading-5">
 		Код товара: {{ props.item.id }}
       </span>
-      <p class="mb-4 sm:mb-[46px] text-sm leading-5 text-gray-950 font-bold">
-        {{ props.item.name }}
-      </p>
+		<nuxt-link :to="productDetailLink(props.item)">
+		  <p class="mb-4 sm:mb-[46px] text-sm leading-5 text-gray-950 font-bold">
+			{{ props.item.name }}
+		  </p>
+		</nuxt-link>
       <div class="hidden sm:grid gap-4">
-        <p v-for="(item, i) in spec" :key="i" class="flex gap-1 text-sm leading-5">
+        <p v-for="(filter, i) in item.filters" :key="filter.id" class="flex gap-1 text-sm leading-5">
           <span class="font-medium text-gray-600">
-            {{ item.label }}
+            {{ filter.name }}
           </span>
           <b class="min-w-16 font-bold text-gray-950">
-            {{ item.value }}
+            {{ filter.val}}
           </b>
         </p>
       </div>
