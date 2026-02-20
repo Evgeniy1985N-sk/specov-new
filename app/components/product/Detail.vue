@@ -1,51 +1,103 @@
 <script setup lang="ts">
-import { useProductsStore } from '@/stores/products'
+// import { useProductsStore } from '@/stores/products'
 import { useScroll } from '~/composables/useScroll'
-import { useCartStore } from '@/stores/cart'
+import { useCartsStore } from '~/stores/carts'
 import { useScrollTo } from '~/composables/useScrollTo'
+import { useProductApi } from '~/composables/api/useProductApi';
+import { useProduct } from '~/composables/useProduct';
+import { useProductPicture } from '~/composables/useProductPicture';
+import { stockDescr, stockDescrLocal } from '~/utils/stockDescr';
+import type { ProductChar, ProductDetailPage } from '~/types/product';
+import type { Picture } from '~/types/picture';
 
-
-const cart = useCartStore().cart
+const { addToCart, setQuantityInFirst } = useCartsStore();
 
 const { scrollPosition } = useScroll()
 const { scrollToSection } = useScrollTo()
 
 const showModal = ref(false)
 
-const buildingProducts = useProductsStore().building
-const gardenProducts = useProductsStore().garden
-
-const route = useRoute()
-const productId = route.params.id as string
-
-const allProducts = useProductsStore().allProducts
-
-const product = allProducts.find(item => item.id == productId)
-
-const counter = ref(0)
-
-const specifications = [
-  { label: 'Макс. крутящий момент', value: '6 Нм' },
-  { label: 'Число скоростей', value: '1' },
-  { label: 'Тип аккумулятора', value: 'Li-lon' },
-  { label: 'Напряжение аккумулятора', value: '3.6 В' },
-  { label: 'Устройство аккумулятора', value: 'встроенный' },
-  { label: 'Вид упаковки', value: 'чемодан/кейс' },
-  { label: 'Тип двигателя', value: 'щеточный' },
-];
-
-function addToCart(itemId: string) {
-  const existingItem = cart.find(item => item.id === itemId)
-
-  if (existingItem) {
-    existingItem.count = counter.value
-  } else {
-    cart.push({
-      id: itemId,
-      count: counter.value
-    })
-  }
+interface Props {
+	detailPage: ProductDetailPage;
+	productSlug: string;
+	charSlug?: string; //product char name
+	productImg?: Picture;
 }
+const props = defineProps<Props>();
+
+const { calcRating, declineReviewWord } = useProduct();
+
+const { live: productLive } = useProductApi();
+
+const product = computed(() => props.detailPage?.product);
+
+const { pictureDetail } = useProductPicture();
+
+const productStars = computed( () => {
+	const rat = calcRating(props.detailPage.reviews.agg);
+	return Math.ceil(rat);
+});
+
+//live data: client call
+const { data: productLiveData, } = useAsyncData(
+	`product-live-${props.detailPage.product.id}`,
+  () => productLive(product.value.id, props.charSlug),
+  { server: true, immediate: true }
+);
+
+const productChar = ref<ProductChar|undefined>(); //current selected characteristic
+const productStock = computed(() => {
+  return productLiveData.value?.stock?.find(st =>
+    (!productChar.value && !st.char) ||
+    (productChar.value?.id === st.char?.id)
+  );
+});
+
+const productPriceOld = computed( () => {
+	return undefined;
+});
+
+const getStockClass = (storeId: number) => {
+  const stockStatus = stockDescr(storeId, productLiveData.value?.stock_total);
+  return stockStatus === 'many' ? "text-(--Brand-700)": "text-red-700";
+};
+
+const counter = ref(0); //quantity
+watch(counter, newCounter => {
+	if(!props.detailPage?.product){
+		return;
+	}
+	setQuantityInFirst(
+		props.detailPage.product, 
+		newCounter, 
+		{char: productStock.value?.char, price: productStock.value?.price ?? 0}
+	);
+});
+
+const addProductToCart = () => {
+	if(!props.detailPage?.product){
+		return;
+	}
+	addToCart(
+		0, 
+		{
+			id: props.detailPage.product.id, 
+			name: props.detailPage.product.name, 
+			name_lat: props.detailPage.product.name_lat
+		}, 
+		{char: productStock.value?.char, price: productStock.value?.price ?? 0},
+		props.productImg
+	);
+}
+
+const productDescription = computed( () => {
+	if(!props.detailPage?.product){
+		return;
+	}
+	return (props.detailPage.product.description && props.detailPage.product?.description.length)
+		? props.detailPage.product.description 
+		: props.detailPage.product.name_full;
+});
 
 </script>
 
@@ -54,7 +106,7 @@ function addToCart(itemId: string) {
 
     <Header />
 
-    <Breadcrumbs />
+    <Breadcrumbs :categories="product.product_cat_path"/>
 
     <main>
 
@@ -68,13 +120,14 @@ function addToCart(itemId: string) {
             <div class="flex justify-between pb-15">
 
               <div class="flex gap-4">
-                <img class="w-12 h-12 object-contain" :src="product?.image" :alt="product?.title">
+                <img class="w-12 h-12 object-contain" :src="productImg? pictureDetail(productImg):undefined" 
+					:alt="product?.name"/>
                 <div>
                   <span class="text-sm leading-5 font-medium">
-                    Код товара: 15561175
+					Код товара: {{ product?.code_1c }}
                   </span>
                   <p class="text-gray-950 font-bold max-w-[308px] lg:max-w-full line-clamp-1 overflow-hidden">
-                    {{ product?.title }}
+                    {{ product?.name }}
                   </p>
                 </div>
               </div>
@@ -82,13 +135,13 @@ function addToCart(itemId: string) {
               <div class="flex items-center gap-6 shrink-0">
                 <div class="flex items-center gap-2">
                   <p class="text-[20px] leading-[30px] font-semibold text-gray-950">
-                    {{ product?.price.toLocaleString('ru-RU') }} ₽
+                    {{ productStock?.price.toLocaleString('ru-RU') }} ₽
                   </p>
-                  <span v-if="product?.oldPrice" class="text-sm leading-5 text-gray-400 font-medium line-through">
-                    {{ product?.oldPrice.toLocaleString('ru-RU') }} ₽
+                  <span v-if="productPriceOld" class="text-sm leading-5 text-gray-400 font-medium line-through">
+                    {{ productPriceOld }} ₽
                   </span>
                 </div>
-                <UButton @click="addToCart(product.id)" class="shrink-0 gap-1 px-4 min-h-10">
+                <UButton @click="addProductToCart" class="shrink-0 gap-1 px-4 min-h-10">
                   <i class="flex items-center justify-center h-5 w-5">
                     <ProductIconCart />
                   </i>
@@ -106,7 +159,7 @@ function addToCart(itemId: string) {
         <!-- button basket fixet -->
         <div class="sm:hidden fixed bottom-20 z-100 w-full">
           <SectionContainer>
-            <UButton @click="addToCart(product.id)" class="w-full">
+            <UButton @click="addProductToCart" class="w-full">
               <i class="flex items-center justify-center h-5 w-5">
                 <ProductIconCart />
               </i>
@@ -124,18 +177,23 @@ function addToCart(itemId: string) {
 
             <div class="flex gap-2 sm:gap-4 flex-wrap">
               <p class="text-xs sm:text-sm leading-5 text-gray-600 font-medium">
-                Код товара: 15561175
+				Код товара: {{ product?.code_1c }}
               </p>
               <div class="flex">
 
                 <div class="flex">
-                  <i v-for="(__, i) in 5" class="flex items-center justify-center w-5 h-5" :key="i">
-                    <img src="/image/star.svg" alt="Star">
-                  </i>
+				  <i v-for="star in productStars"
+					class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
+					<ProductIconStar />
+				  </i>
+				  <i v-for="star in (5 - productStars)"
+					class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
+					<ProductIconStar />
+				  </i>
                 </div>
 
                 <a href="#reviews" class="text-sm leading-5 text-(--Brand-700) font-medium">
-                  15 отзывов
+					{{ declineReviewWord(props.detailPage.reviews.agg.tot_count) }}
                 </a>
 
               </div>
@@ -158,9 +216,9 @@ function addToCart(itemId: string) {
             <div class="lg:max-w-[592px] min-w-0">
               <h1
                 class="mb-6 font-['Russo_One'] text-lg leading-7 sm:text-3xl sm:leading-10 tracking-[0] text-gray-950">
-                {{ product?.title }}
+                {{ product?.name }}
               </h1>
-              <ProductSliderDetail :imgs="product?.imgs" />
+              <ProductSliderDetail :imgs="product?.pictures" />
             </div>
 
             <!--col-2-->
@@ -171,7 +229,7 @@ function addToCart(itemId: string) {
                   Характеристики
                 </div>
                 <div class="grid gap-4">
-                  <p v-for="(item, i) in specifications" :key="i" class="flex gap-1 text-sm leading-5">
+                  <p v-for="item in product.filters" :key="item.id" class="flex gap-1 text-sm leading-5">
                     <span class="font-medium text-gray-600">
                       {{ item.label }}
                     </span>
@@ -188,15 +246,14 @@ function addToCart(itemId: string) {
                   О товаре
                 </div>
                 <p class="text-sm leading-5 font-medium text-gray-600">
-                  Предназначен для сверления, сверления с ударом и долбления (три режима) в таких материалах как бетон,
-                  природный камень, дерево, металл...
+					{{ productDescription }}
                 </p>
                 <ProductButtonLink text="Читать далее" @handle-click="scrollToSection('about')" />
               </div>
 
               <button @click="scrollToSection('goods')"
                 class="flex gap-2 items-center bg-gray-100 rounded-2xl p-2 text-base leading-6 text-black cursor-pointer hover:text-(--Brand-700) transition">
-                <img class="w-10 h-9" src="/image/example.png" alt="Example">
+                <img class="w-10 h-9" src="/image/example.png" alt="Example"/>
                 <span class="text-left font-bold">
                   Сопутствующие товары
                 </span>
@@ -214,7 +271,7 @@ function addToCart(itemId: string) {
 
                 <div>
                   <p class="text-[24px] leading-8 sm:text-[36px] sm:leading-11 text-gray-950 font-semibold">
-                    {{ product?.price.toLocaleString('ru-RU') }} ₽
+                    {{ productStock?.price.toLocaleString('ru-RU') }} ₽
                   </p>
                   <span class="text-gray-600 text-sm leading-5 font-medium">
                     Цена за шт.
@@ -233,7 +290,7 @@ function addToCart(itemId: string) {
                     }" />
 
 
-                  <UButton @click="addToCart(product.id)" class="gap-1 px-4">
+                  <UButton @click="addProductToCart" class="gap-1 px-4">
                     <i class="flex items-center justify-center h-5 w-5">
                       <ProductIconCart />
                     </i>
@@ -268,9 +325,10 @@ function addToCart(itemId: string) {
 
                         <div class="flex gap-6 justify-between items-center flex-wrap pb-6 border-b border-gray-300">
                           <div class="flex gap-5">
-                            <img class="w-12 h-12 object-contain" :src="product?.image" :alt="product?.title">
+								<img class="w-12 h-12 object-contain" :src="productImg? pictureDetail(productImg):undefined" 
+									:alt="product?.name"/>
                             <p class="max-w-[290px] font-semibold text-gray-950">
-                              {{ product?.title }}
+                              {{ product?.name }}
                             </p>
                           </div>
                           <UInputNumber v-model="counter" :min="0" size="lg" color="neutral"
@@ -285,7 +343,7 @@ function addToCart(itemId: string) {
                             }" />
                           <div class="flex gap-2 items-center">
                             <p class="text-[20px] leading-[30px] text-gray-950 font-semibold">
-                              {{ product?.price.toLocaleString('ru-RU') }} ₽
+                              {{ productStock?.price.toLocaleString('ru-RU') }} ₽
                             </p>
                             <button class="flex justify-center items-center w-9 h-9 cursor-pointer">
                               <ProductIconTrash />
@@ -299,14 +357,14 @@ function addToCart(itemId: string) {
                               Итого:
                             </span>
                             <p class="text-[30px] leading-[38px] text-gray-950 font-semibold">
-                              {{ product?.price.toLocaleString('ru-RU') }} ₽
+                              {{ productStock?.price.toLocaleString('ru-RU') }} ₽
                             </p>
                           </div>
                           <div class="flex gap-2 flex-wrap">
                             <UButton @click="showModal = false" color="neutral" solid class="gap-2 px-5" size="xl">
                               Продолжить покупки
                             </UButton>
-                            <UButton @click="addToCart(product.id)" class="gap-2 px-5">
+                            <UButton @click="addProductToCart" class="gap-2 px-5">
                               В корзину
                               <i class="flex items-center justify-center h-5 w-5">
                                 <ProductIconArrowRight />
@@ -341,23 +399,17 @@ function addToCart(itemId: string) {
                 </div>
 
                 <div class="grid gap-3">
-                  <div class="text-sm leading-5 font-medium">
+                  <div v-for="st in props.detailPage?.stores" :key="st.id" class="text-sm leading-5 font-medium">
                     <p>
-                      ул. 50 лет Октября, 118А
+						{{ st.address }}
                     </p>
                     <span
-                      class="text-(--Brand-700) font-bold relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-current before:rounded-full">
-                      Много
-                    </span>
-                  </div>
-
-                  <div class="text-sm leading-5 font-medium">
-                    <p>
-                      ул. Горпищекомбинатовская, 1с1
-                    </p>
-                    <span
-                      class="text-red-700 font-bold relative pl-4 before:content-[''] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-current before:rounded-full">
-                      Мало
+						:class="[
+						'font-bold relative pl-4 before:content-[\'\'] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-current before:rounded-full',
+						getStockClass(st.id)
+						]"
+					>
+						{{ stockDescrLocal(st.id, productLiveData?.stock_total) }}
                     </span>
                   </div>
                 </div>
@@ -399,7 +451,12 @@ function addToCart(itemId: string) {
 
       <Section class="mt-0">
         <SectionContainer>
-          <ProductTabs />
+          <ProductTabs 
+			:product-description="productDescription ?? ''"
+			:filters="props.detailPage.product.filters ?? []"
+			:reviews="props.detailPage.reviews ?? []"
+			:related-products="props.detailPage.related"
+		  />
         </SectionContainer>
       </Section>
 
@@ -410,7 +467,7 @@ function addToCart(itemId: string) {
             <SectionButton text="Смотреть всё" path="/" />
           </SectionHeader>
 
-          <ProductSlider :items="buildingProducts" />
+          <ProductSlider :items="props.detailPage.similar" />
 
         </SectionContainer>
       </Section>
@@ -422,7 +479,7 @@ function addToCart(itemId: string) {
             <SectionButton text="Смотреть всё" path="/" />
           </SectionHeader>
 
-          <ProductSlider :items="gardenProducts" />
+          <ProductSlider :items="props.detailPage.last_viewed" />
 
         </SectionContainer>
       </Section>
@@ -441,3 +498,4 @@ function addToCart(itemId: string) {
 
   </div>
 </template>
+

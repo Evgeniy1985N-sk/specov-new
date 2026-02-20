@@ -1,0 +1,118 @@
+[
+  {
+    "id": 172682,
+    "name": "GECO Крем-гель для очистки рук, тела и волос от производст. загрязнений",
+    "name_lat": "geco-krem-gel`-dlya-ochistki-ruk,-tela-i-volos-ot-proizvodst.-zagryaznenijj",
+    "price": -2430,
+    "old_price": 270,
+    "discount": 10,
+    "char_id": 39058,
+    "char_name": "1000 мл (помпа)",
+    "available": false,
+    "quant": 0,
+    "quant_descr": "none",
+    "imgs": null
+  },
+  {
+    "id": 172682,
+    "name": "GECO Крем-гель для очистки рук, тела и волос от производст. загрязнений",
+    "name_lat": "geco-krem-gel`-dlya-ochistki-ruk,-tela-i-volos-ot-proizvodst.-zagryaznenijj",
+    "price": -2430,
+    "old_price": 270,
+    "discount": 10,
+    "char_id": 39058,
+    "char_name": "1000 мл (помпа)",
+    "available": false,
+    "quant": 0,
+    "quant_descr": "none",
+    "imgs": null
+  },
+  {
+    "id": 155938,
+    "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+    "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+    "price": -648,
+    "old_price": 72,
+    "discount": 10,
+    "char_id": 33501,
+    "char_name": "100 мл.(1/40)",
+    "available": true,
+    "quant": 281,
+    "quant_descr": "many",
+    "imgs": [
+      {
+        "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+        "size": 249267,
+        "ext": "png",
+        "preview_ext": "png",
+        "main": true
+      }
+    ]
+  },
+  {
+    "id": 155938,
+    "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+    "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+    "price": -648,
+    "old_price": 72,
+    "discount": 10,
+    "char_id": 33501,
+    "char_name": "100 мл.(1/40)",
+    "available": true,
+    "quant": 1,
+    "quant_descr": "few",
+    "imgs": [
+      {
+        "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+        "size": 249267,
+        "ext": "png",
+        "preview_ext": "png",
+        "main": true
+      }
+    ]
+  },
+  {
+    "id": 155938,
+    "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+    "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+    "price": -648,
+    "old_price": 72,
+    "discount": 10,
+    "char_id": 33501,
+    "char_name": "100 мл.(1/40)",
+    "available": true,
+    "quant": 1,
+    "quant_descr": "few",
+    "imgs": [
+      {
+        "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+        "size": 249267,
+        "ext": "png",
+        "preview_ext": "png",
+        "main": true
+      }
+    ]
+  },
+  {
+    "id": 155938,
+    "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+    "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+    "price": -648,
+    "old_price": 72,
+    "discount": 10,
+    "char_id": 33501,
+    "char_name": "100 мл.(1/40)",
+    "available": true,
+    "quant": 113,
+    "quant_descr": "many",
+    "imgs": [
+      {
+        "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+        "size": 249267,
+        "ext": "png",
+        "preview_ext": "png",
+        "main": true
+      }
+    ]
+  }
+]

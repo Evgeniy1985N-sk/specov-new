@@ -1,0 +1,26 @@
+{
+  "comment_count": 0,
+  "rating": 0,
+  "chars": [
+    {
+      "store_id": 1,
+      "char": {
+        "id": 3158,
+        "name": "41"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 2,
+      "char": {
+        "id": 3158,
+        "name": "41"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    }
+  ]
+}

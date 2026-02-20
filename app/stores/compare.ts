@@ -30,3 +30,4 @@ export const useCompareStore = defineStore("compare", () => {
     deleteItems,
   };
 });
+

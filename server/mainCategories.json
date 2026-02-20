@@ -1,0 +1,74 @@
+[
+  {
+    "id": 3444,
+    "name": "Спецодежда",
+    "description": null,
+    "name_lat": "zimniaia-spetsodezhda",
+    "product_count": null,
+    "icon": null,
+    "picture": null,
+    "children": null,
+    "parents": null,
+    "is_root": false
+  },
+  {
+    "id": 3113,
+    "name": "Инструменты",
+    "description": null,
+    "name_lat": "instrumenty-i-stroitel-noe-oborudovanie",
+    "product_count": null,
+    "icon": null,
+    "picture": {
+      "ref_1c": "803989e5-6c9c-41dc-a94f-c93db936a0b9",
+      "size": 129138,
+      "ext": "png",
+      "preview_ext": "png",
+      "main": false
+    },
+    "children": null,
+    "parents": null,
+    "is_root": false
+  },
+  {
+    "id": 3768,
+    "name": "Электроинструмент",
+    "description": null,
+    "name_lat": "akkumuliatornyi-instrument",
+    "product_count": null,
+    "icon": null,
+    "picture": {
+      "ref_1c": "f81afaa9-3e63-4f7b-acd7-a89d81851983",
+      "size": 32180,
+      "ext": "webp",
+      "preview_ext": "webp",
+      "main": false
+    },
+    "children": null,
+    "parents": null,
+    "is_root": false
+  },
+  {
+    "id": 3743,
+    "name": "Сад и огород",
+    "description": null,
+    "name_lat": "sad-i-ogorod",
+    "product_count": null,
+    "icon": null,
+    "picture": null,
+    "children": null,
+    "parents": null,
+    "is_root": false
+  },
+  {
+    "id": 3735,
+    "name": "Текстиль",
+    "description": null,
+    "name_lat": "tekstil",
+    "product_count": null,
+    "icon": null,
+    "picture": null,
+    "children": null,
+    "parents": null,
+    "is_root": false
+  }
+]

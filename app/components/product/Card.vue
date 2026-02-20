@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import type { ProductCard } from '~/types/product'
-import { useCartStore } from '@/stores/cart'
+import type { ProductCard } from '~/types/product';
+import { useCartsStore } from '@/stores/carts';
+import { useCompareStore } from '@/stores/compare';
+
+const { addToCart } = useCartsStore();
+const { addToCompare } = useCompareStore();
 
 interface Props {
   item: ProductCard
@@ -12,27 +16,38 @@ interface Props {
   isCol?: boolean
 }
 
-const date = ref('12.01.2026 в 17.00')
-const props = defineProps<Props>()
-const route = useRoute()
-const isCatalogPage = computed(() => route.path === '/catalog')
-const counter = ref(0)
+const date = ref('12.01.2026 в 17.00');
+const props = defineProps<Props>();
+const route = useRoute();
+const isCatalogPage = computed(() => route.path === '/catalog');
+const counter = ref(0);
 const cart = useCartStore().cart
 const compareStore = useCompareStore()
 const toggleCompare = useCompareStore().toggleItems
 const compareIds = ref<string[]>([])
 
-function addToCart(itemId: string) {
-  const existingItem = cart.find(item => item.id === itemId)
+const productImg = computed(() => {
+  return props.item.imgs.find(p => p.main) ?? undefined;
+});
 
-  if (existingItem) {
-    existingItem.count = counter.value
-  } else {
-    cart.push({
-      id: itemId,
-      count: counter.value
-    })
-  }
+const addProductToCart = () => {
+	addToCart(
+		0, 
+		{
+			id: props.item.id, 
+			name: props.item.name, 
+			name_lat: props.item.name_lat
+		}, 
+		{char: props.item.char, price: props.item.price},
+		productImg.value
+	);
+}
+
+const productDetailLink = (item: ProductCard) => {
+	if(!item.char || !item.char.id){
+		return `/products/${encodeURIComponent(item.name_lat)}`;
+	}
+	return `/products/${encodeURIComponent(item.name_lat)}/${encodeURIComponent(item.char.name_lat)}`;
 }
 
 const compareItems = computed(() => {
@@ -47,15 +62,6 @@ getCompareIds()
 function getCompareIds() {
   compareIds.value = compareItems.value.map((item) => item.id)
 }
-
-const spec = [
-  { label: 'Макс. крутящий момент', value: '6 Нм' },
-  { label: 'Число скоростей', value: '1' },
-  { label: 'Тип аккумулятора', value: 'Li-lon' },
-  { label: 'Напряжение аккумулятора', value: '3.6 В' },
-  { label: 'Устройство аккумулятора', value: 'встроенный' },
-  { label: 'Вид упаковки', value: 'чемодан/кейс' },
-];
 
 const classContent = computed(() => ({
   'sm:max-w-[130px] lg:max-w-[232px] w-full': props.isRow,
@@ -99,8 +105,10 @@ const classMedia = computed(() => ({
 
         <ProductButtonFavorite :date="date" />
 
-        <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
-          :is-active="compareIds.includes(props.item.id)" />
+        <ProductButtonCompare 
+			:is-active="compareIds.includes(props.item.id.toString())" 
+			@handle-click="addToCompare(props.item)" 
+		/>
 
       </div>
       <!-- BUTTONS -->
@@ -117,18 +125,20 @@ const classMedia = computed(() => ({
     <!-- isRow -->
     <div v-if="isRow" class="max-w-[280px]">
       <span class="text-sm leading-5">
-        Код товара: 15561175
+		Код товара: {{ props.item.id }}
       </span>
-      <p class="mb-4 sm:mb-[46px] text-sm leading-5 text-gray-950 font-bold">
-        {{ props.item.title }}
-      </p>
+		<nuxt-link :to="productDetailLink(props.item)">
+		  <p class="mb-4 sm:mb-[46px] text-sm leading-5 text-gray-950 font-bold">
+			{{ props.item.name }}
+		  </p>
+		</nuxt-link>
       <div class="hidden sm:grid gap-4">
-        <p v-for="(item, i) in spec" :key="i" class="flex gap-1 text-sm leading-5">
+        <p v-for="(filter, i) in item.filters" :key="filter.id" class="flex gap-1 text-sm leading-5">
           <span class="font-medium text-gray-600">
-            {{ item.label }}
+            {{ filter.name }}
           </span>
           <b class="min-w-16 font-bold text-gray-950">
-            {{ item.value }}
+            {{ filter.val}}
           </b>
         </p>
       </div>
@@ -142,10 +152,9 @@ const classMedia = computed(() => ({
       <div :class="isRow ? 'w-full flex-row sm:flex-wrap gap-x-2' : ''"
         class="sm:gap-2 flex flex-wrap sm:items-center flex-col sm:flex-row sm:flex-nowrap">
 
-        <!-- IF ROW -->
-        <div v-if="isRow && props.item.oldPrice" class="lg:w-full order-1 lg:-order-1">
+        <div v-if="isRow && props.item.old_price" class="lg:w-full order-1 lg:-order-1">
           <div class="bg-[seagreen] w-fit leading-[22px] text-center text-white text-xs px-1.5 rounded-md">
-            -{{ props.item.discont }}%
+            -{{ props.item.discount }}%
           </div>
         </div>
         <!-- IF ROW -->
@@ -163,7 +172,7 @@ const classMedia = computed(() => ({
             <ProductButtonFavorite class="py-0! shadow-none text-gray-600" :date="date" />
 
             <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
-              :is-active="compareIds.includes(props.item.id)" />
+              :is-active="compareIds.includes(props.item.id.toString())" />
 
           </div>
           <!-- IF ROW -->
@@ -171,12 +180,12 @@ const classMedia = computed(() => ({
         </div>
         <!-- Price + btns -->
 
-        <div v-if="props.item.oldPrice" class="gap-2 flex justify-center items-center">
+        <div v-if="props.item.old_price" class="gap-2 flex justify-center items-center">
           <div class="text-zinc-400 line-through shrink-0">
-            {{ props.item.oldPrice.toLocaleString('ru-RU') }} ₽
+            {{ props.item.old_price.toLocaleString('ru-RU') }} ₽
           </div>
           <div v-if="!isRow" class="bg-[seagreen] leading-[22px] text-center text-white text-xs px-1.5 rounded-md">
-            -{{ props.item.discont }}%
+            -{{ props.item.discount }}%
           </div>
         </div>
 
@@ -185,10 +194,10 @@ const classMedia = computed(() => ({
 
       <!-- Title -->
       <div v-if="!isRow" class="min-h-10 mt-1">
-        <nuxt-link :to="{ name: 'products-id', params: { id: props.item.id } }"
-        :class="props.classTitle"
+		  <nuxt-link :to="productDetailLink(item)"
+			:class="props.classTitle"
           class="text-sm text-gray-600 line-clamp-3 sm:line-clamp-2 overflow-ellipsis">
-          {{ props.item.title }}
+          {{ props.item.name + (props.item.char? ", " + props.item.char.name : "") }}
         </nuxt-link>
       </div>
       <!-- Title -->
@@ -198,7 +207,7 @@ const classMedia = computed(() => ({
         :class="props.classBtns, isRow ? 'max-w-[130px] sm:max-w-full flex-col-reverse gap-2 lg:gap-4' : 'gap-4 mt-auto'"
         class="w-full font-semibold flex flex-wrap xl:flex-nowrap lg:justify-center pt-5 lg:items-center">
 
-        <UButton @click="addToCart(props.item.id)" :class="classButtonCart" class="shrink-0 gap-1 px-4 min-h-10">
+        <UButton @click="addProductToCart" :class="classButtonCart" class="shrink-0 gap-1 px-4 min-h-10">
           <i class="flex items-center justify-center h-5 w-5">
             <ProductIconCart />
           </i>

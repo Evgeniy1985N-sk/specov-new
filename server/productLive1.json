@@ -1,0 +1,126 @@
+{
+  "comment_count": 0,
+  "rating": 0,
+  "chars": [
+    {
+      "store_id": 1,
+      "char": {
+        "id": 3158,
+        "name": "41"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 1,
+      "char": {
+        "id": 3160,
+        "name": "43"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 1,
+      "char": {
+        "id": 3161,
+        "name": "44"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 1,
+      "char": {
+        "id": 3162,
+        "name": "45"
+      },
+      "quant": 1,
+      "quant_descr": "few",
+      "price": 4463
+    },
+    {
+      "store_id": 2,
+      "char": {
+        "id": 3158,
+        "name": "41"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 2,
+      "char": {
+        "id": 3159,
+        "name": "42"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 2,
+      "char": {
+        "id": 3160,
+        "name": "43"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 2,
+      "char": {
+        "id": 3161,
+        "name": "44"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 2,
+      "char": {
+        "id": 3162,
+        "name": "45"
+      },
+      "quant": 2,
+      "quant_descr": "few",
+      "price": 4463
+    },
+    {
+      "store_id": 2,
+      "char": {
+        "id": 3163,
+        "name": "46"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4463
+    },
+    {
+      "store_id": 0,
+      "char": {
+        "id": 3160,
+        "name": "43"
+      },
+      "quant": 0,
+      "quant_descr": "none",
+      "price": 4250
+    },
+    {
+      "store_id": 0,
+      "char": {
+        "id": 3163,
+        "name": "46"
+      },
+      "quant": 1,
+      "quant_descr": "few",
+      "price": 4463
+    }
+  ]
+}
