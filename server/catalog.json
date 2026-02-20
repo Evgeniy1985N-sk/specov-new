@@ -1,0 +1,902 @@
+{
+  "category": {
+    "id": 3551,
+    "name": "Брюки",
+    "description": null,
+    "name_lat": "briuki",
+    "product_count": 147,
+    "icon": null,
+    "picture": null,
+    "children": null,
+    "parents": [
+      {
+        "id": 3298,
+        "name": "Спецодежда, обувь, СИЗ",
+        "name_lat": "spetsodezhda-obuv-siz"
+      },
+      {
+        "id": 3444,
+        "name": "Зимняя спецодежда",
+        "name_lat": "zimniaia-spetsodezhda"
+      }
+    ],
+    "is_root": false
+  },
+  "products": [
+    {
+      "id": 60052,
+      "name": "Брюки муж. \"Европа\" утепл.  цв. черный, тк. Дюспо 80 гр./м²",
+      "name_lat": "briuki-muzh-evropa-sn-utepl-tsv-chernyi-tk-diuspo-80-gr-m2",
+      "price": 2304,
+      "old_price": 2560,
+      "discount": 10,
+      "char": {
+        "id": 2026,
+        "name": "48-50/182-188"
+      },
+      "available": false,
+      "quant": 0,
+      "quant_descr": "none",
+      "imgs": [
+        {
+          "ref_1c": "48f54164-27d8-11ef-a2a2-00155d327e58",
+          "size": 460966,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60052,
+      "name": "Брюки муж. \"Европа\" утепл.  цв. черный, тк. Дюспо 80 гр./м²",
+      "name_lat": "briuki-muzh-evropa-sn-utepl-tsv-chernyi-tk-diuspo-80-gr-m2",
+      "price": 2419,
+      "old_price": 2688,
+      "discount": 10,
+      "char": {
+        "id": 2027,
+        "name": "52-54/170-176"
+      },
+      "available": false,
+      "quant": 0,
+      "quant_descr": "none",
+      "imgs": [
+        {
+          "ref_1c": "48f54164-27d8-11ef-a2a2-00155d327e58",
+          "size": 460966,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60104,
+      "name": "Брюки жен. \"Вьюга\" утепл.  цв. синий, тк. смесовая 210 гр./м²",
+      "name_lat": "briuki-zhen-v-iuga-utepl-tsv-sinii-tk-smesovaia-210-gr-m2",
+      "price": 1998,
+      "old_price": 2220,
+      "discount": 10,
+      "char": {
+        "id": 2815,
+        "name": "48-50/170-176"
+      },
+      "available": false,
+      "quant": 0,
+      "quant_descr": "none",
+      "imgs": [
+        {
+          "ref_1c": "6b0f09fb-27d6-11ef-a2a2-00155d327e58",
+          "size": 517084,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4670,
+        "name": "44-46/158-164"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4671,
+        "name": "44-46/170-176"
+      },
+      "available": true,
+      "quant": 3,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4672,
+        "name": "44-46/182-188"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4673,
+        "name": "48-50/158-164"
+      },
+      "available": true,
+      "quant": 3,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4674,
+        "name": "48-50/170-176"
+      },
+      "available": true,
+      "quant": 2,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4675,
+        "name": "48-50/182-188"
+      },
+      "available": true,
+      "quant": 10,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4676,
+        "name": "52-54/158-164"
+      },
+      "available": true,
+      "quant": 3,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4677,
+        "name": "52-54/170-176"
+      },
+      "available": false,
+      "quant": 0,
+      "quant_descr": "none",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4678,
+        "name": "52-54/182-188"
+      },
+      "available": true,
+      "quant": 3,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4679,
+        "name": "56-58/158-164"
+      },
+      "available": false,
+      "quant": 0,
+      "quant_descr": "none",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4680,
+        "name": "56-58/170-176"
+      },
+      "available": true,
+      "quant": 2,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4682,
+        "name": "60-62/170-176"
+      },
+      "available": false,
+      "quant": 0,
+      "quant_descr": "none",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4683,
+        "name": "60-62/182-188"
+      },
+      "available": false,
+      "quant": 0,
+      "quant_descr": "none",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 2259,
+      "old_price": 2510,
+      "discount": 10,
+      "char": {
+        "id": 4684,
+        "name": "64-66/170-176"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 2259,
+      "old_price": 2510,
+      "discount": 10,
+      "char": {
+        "id": 4685,
+        "name": "64-66/182-188"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60232,
+      "name": "Брюки муж. \"ХАЙ-ТЕК\" утепл.  цв. серый/черный, тк. Nautica 125 гр./м²",
+      "name_lat": "briuki-muzh-khai-tek-utepl-tsv-seryi-chernyi-tk-nautica-125-gr-m2",
+      "price": 5117,
+      "old_price": 5686,
+      "discount": 10,
+      "char": {
+        "id": 4704,
+        "name": "60-62/182-188"
+      },
+      "available": false,
+      "quant": 0,
+      "quant_descr": "none",
+      "imgs": [
+        {
+          "ref_1c": "b59e176d-27d9-11ef-a2a2-00155d327e58",
+          "size": 308341,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60404,
+      "name": "Брюки жен. \"Снежана\" утепл.  цв. серый, тк. Дюспо 90 гр./м²",
+      "name_lat": "briuki-zhen-snezhana-utepl-tsv-seryi-tk-diuspo-90-gr-m2",
+      "price": 2088,
+      "old_price": 2321,
+      "discount": 10,
+      "char": {
+        "id": 7426,
+        "name": "60-62/158-164"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "abb74c5b-27d6-11ef-a2a2-00155d327e58",
+          "size": 973549,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60404,
+      "name": "Брюки жен. \"Снежана\" утепл.  цв. серый, тк. Дюспо 90 гр./м²",
+      "name_lat": "briuki-zhen-snezhana-utepl-tsv-seryi-tk-diuspo-90-gr-m2",
+      "price": 2088,
+      "old_price": 2321,
+      "discount": 10,
+      "char": {
+        "id": 7427,
+        "name": "64-66/158-164"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "abb74c5b-27d6-11ef-a2a2-00155d327e58",
+          "size": 973549,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60421,
+      "name": "Брюки жен. \"Снежана\" утепл.  цв. темно-синий, тк. Taslan  135 г/м²",
+      "name_lat": "briuki-zhen-snezhana-utepl-tsv-temno-sinii-tk-taslan-135-g-m2",
+      "price": 2079,
+      "old_price": 2310,
+      "discount": 10,
+      "char": {
+        "id": 8226,
+        "name": "64-66/158-164"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "fa19519d-27d7-11ef-a2a2-00155d327e58",
+          "size": 995792,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60404,
+      "name": "Брюки жен. \"Снежана\" утепл.  цв. серый, тк. Дюспо 90 гр./м²",
+      "name_lat": "briuki-zhen-snezhana-utepl-tsv-seryi-tk-diuspo-90-gr-m2",
+      "price": 2088,
+      "old_price": 2321,
+      "discount": 10,
+      "char": {
+        "id": 7424,
+        "name": "48-50/158-164"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "abb74c5b-27d6-11ef-a2a2-00155d327e58",
+          "size": 973549,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 60230,
+      "name": "Брюки муж. \"Европа СН\" утепл.  цв. черный, тк. п/э 90 гр./м²",
+      "name_lat": "briuki-muzh-evropa-utepl-tsv-chernyi-tk-p-e-90-gr-m2",
+      "price": 1389,
+      "old_price": 1544,
+      "discount": 10,
+      "char": {
+        "id": 4681,
+        "name": "56-58/182-188"
+      },
+      "available": true,
+      "quant": 3,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "76dcf7d7-27d8-11ef-a2a2-00155d327e58",
+          "size": 125555,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    }
+  ],
+  "filters": [
+    {
+      "id": 20,
+      "name": "Вес (нетто), кг",
+      "data_type": "t_number",
+      "options": null,
+      "items": [
+        {
+          "value": "0.525",
+          "hash": "35e81aca3dffdbc83bed1712b5bf3c9f"
+        },
+        {
+          "value": "0.65",
+          "hash": "e939cd38fc37dbb5f40538abaf8a18f4"
+        }
+      ]
+    },
+    {
+      "id": 33,
+      "name": "Цвет",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "Синий",
+          "hash": "d84e27a7ece3427db33cae19c62d629a"
+        },
+        {
+          "value": "Темно-серый",
+          "hash": "b18d903c7b663c6891e3af6651395687"
+        },
+        {
+          "value": "Черный",
+          "hash": "75112571c19ba6300072c8b58bb66505"
+        }
+      ]
+    },
+    {
+      "id": 37,
+      "name": "Тип изделия",
+      "data_type": "t_text",
+      "options": null,
+      "items": [
+        {
+          "value": "Брюки",
+          "hash": "815389271881febc17d337506add8911"
+        }
+      ]
+    },
+    {
+      "id": 242,
+      "name": "Пол",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "Женский",
+          "hash": "0460e8d2a2546e94ce68922ba21146ef"
+        },
+        {
+          "value": "Мужской/Женский",
+          "hash": "4d9d28664d75de7bbded381aa864cd91"
+        }
+      ]
+    },
+    {
+      "id": 248,
+      "name": "Состав ткани",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "100% полиэстер",
+          "hash": "687a9e3baa39f71fc1dd17dc0c319bc9"
+        },
+        {
+          "value": "100% полиэфир",
+          "hash": "4dd63e6442e1a0f26a5deb2750cb65e3"
+        },
+        {
+          "value": "Полиэстр",
+          "hash": "de470d6b76b43d18c6a809314ccde3f2"
+        }
+      ]
+    },
+    {
+      "id": 249,
+      "name": "Плотность ткани",
+      "data_type": "t_text",
+      "options": null,
+      "items": [
+        {
+          "value": "135 гр/м2",
+          "hash": "b198c338eea4ba6696fcee08a81f4425"
+        },
+        {
+          "value": "90 гр/м2",
+          "hash": "d7c2ef847e03018b0b3d782a773f0dab"
+        }
+      ]
+    },
+    {
+      "id": 890,
+      "name": "Тип застежки",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "Молния",
+          "hash": "15592fcdff205d4ac98104e0f9038772"
+        }
+      ]
+    },
+    {
+      "id": 891,
+      "name": "Пропитка",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "ВО",
+          "hash": "45beb48e8af104de0de8a515f0032fb9"
+        }
+      ]
+    },
+    {
+      "id": 894,
+      "name": "Тип основной ткани",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "Полиэстр",
+          "hash": "90ccc5f41dbbc6fe687eb1c52adc3ed2"
+        },
+        {
+          "value": "Полиэфир",
+          "hash": "ef898696667aa349d3e6e9e103b80672"
+        }
+      ]
+    },
+    {
+      "id": 895,
+      "name": "Название основной ткани",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "Дюспо",
+          "hash": "6db869944c44a7a6cf6a1c96122205b6"
+        },
+        {
+          "value": "Полиэстр",
+          "hash": "7b407135b8191313b6d76a26738dfb4b"
+        },
+        {
+          "value": "Таслан",
+          "hash": "2f4c7bc06052e452676430251912150c"
+        }
+      ]
+    },
+    {
+      "id": 909,
+      "name": "Название утеплителя",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "Синтепон",
+          "hash": "5419bc2342ba342d256e733d2722613e"
+        },
+        {
+          "value": "Синтепон ",
+          "hash": "5419bc2342ba342d256e733d2722613e"
+        }
+      ]
+    },
+    {
+      "id": 914,
+      "name": "ТР ТС/ТУ",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": " 019/2011",
+          "hash": "fe2a33ef8b93d8cc8faa00e7be15b8c5"
+        },
+        {
+          "value": "019/2011",
+          "hash": "fe2a33ef8b93d8cc8faa00e7be15b8c5"
+        }
+      ]
+    },
+    {
+      "id": 915,
+      "name": "ГОСТ",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": " 12.4.280-2014, 12.4.303-2016",
+          "hash": "58ca342745b111be546c4bfa4f5fa330"
+        },
+        {
+          "value": "12.4.280-2014, 12.4.303-2016",
+          "hash": "58ca342745b111be546c4bfa4f5fa330"
+        }
+      ]
+    },
+    {
+      "id": 920,
+      "name": "Класс защиты / климатический пояс",
+      "data_type": "t_text",
+      "options": null,
+      "items": [
+        {
+          "value": "1,2,4/I, II, III, особый",
+          "hash": "ff8171fcb3b23e118d67ab22cee1ed03"
+        },
+        {
+          "value": "1,2,4/I,II,III,\"Особый\"",
+          "hash": "879f5e19a9d67af350795adc063a4a80"
+        },
+        {
+          "value": "1,2,4/I-II,III,\"Особый\"",
+          "hash": "36ffbbd80a8e5faacdd5f5fdd0f54ed5"
+        }
+      ]
+    },
+    {
+      "id": 942,
+      "name": "Ткань подкладки",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "100% п/э",
+          "hash": "be24895b614e2aefeb487e27f1cf8468"
+        },
+        {
+          "value": "Полиэстр",
+          "hash": "4bbeda1d96208d6cd5cfdf2909ca9228"
+        }
+      ]
+    },
+    {
+      "id": 943,
+      "name": "Плотность утеплителя",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "150 гр/м.кв",
+          "hash": "57bf056e5166fcc04d9e20ee4cfe8741"
+        },
+        {
+          "value": " 240 гр/м2 ",
+          "hash": "d09938649af551a72dbcee52538025e8"
+        },
+        {
+          "value": "240 гр/м2",
+          "hash": "d09938649af551a72dbcee52538025e8"
+        }
+      ]
+    },
+    {
+      "id": 944,
+      "name": "Температурный режим",
+      "data_type": "t_text",
+      "options": {},
+      "items": [
+        {
+          "value": "-25",
+          "hash": "3ee427ec1dbe44b4c55a0cb1682b39d1"
+        }
+      ]
+    }
+  ],
+  "brands": [],
+  "countries": [
+    {
+      "id": 1,
+      "name": "РОССИЯ"
+    }
+  ],
+  "stores": [
+    {
+      "id": 1,
+      "address": "625049, ул. Горпищекомбинатовская, 1, сооруж. 1"
+    },
+    {
+      "id": 2,
+      "address": "625013, ул. 50 лет Октября, 118а"
+    }
+  ],
+  "total_count": 24,
+  "min_price": 1389,
+  "max_price": 5117,
+  "last_viewed": null
+}

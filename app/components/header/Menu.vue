@@ -2,23 +2,30 @@
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation } from 'swiper/modules'
 
+import type { ProductCatPublicList } from '~/types/productCat';
+import { useCategory } from '~/composables/useCategory';
+
 import 'swiper/css'
 import 'swiper/css/navigation'
 
-const slides = [
-	{ name: 'Спецодежда', src: '/spetsodezhda' },
-	{ name: 'Инструменты', src: '/instrumenty' },
-	{ name: 'СИЗ', src: '/siz' },
-	{ name: 'Строительное оборудование', src: '/stroitelnoe-oborudovanie' },
-	{ name: 'Электроинструмент', src: '/elektroinstrument' },
-	{ name: 'Текстиль', src: '/tekstil' },
-	{ name: 'Всё для сада', src: '/vsyo-dlya-sada' },
-	{ name: 'Текст-1', src: '/tekstil' },
-	{ name: 'Текст-2', src: '/vsyo-dlya-sada' },
-]
+// const slides = [
+// 	{ name: 'Спецодежда', src: '/spetsodezhda' },
+// 	{ name: 'Инструменты', src: '/instrumenty' },
+// 	{ name: 'СИЗ', src: '/siz' },
+// 	{ name: 'Строительное оборудование', src: '/stroitelnoe-oborudovanie' },
+// 	{ name: 'Электроинструмент', src: '/elektroinstrument' },
+// 	{ name: 'Текстиль', src: '/tekstil' },
+// 	{ name: 'Всё для сада', src: '/vsyo-dlya-sada' },
+// 	{ name: 'Текст-1', src: '/tekstil' },
+// 	{ name: 'Текст-2', src: '/vsyo-dlya-sada' },
+// ]
 
 const prevButton = ref<HTMLElement | null>(null)
 const nextButton = ref<HTMLElement | null>(null)
+
+const { link } = useCategory();
+
+const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 
 </script>
 
@@ -30,8 +37,8 @@ const nextButton = ref<HTMLElement | null>(null)
 					prevEl: prevButton,
 					nextEl: nextButton,
 				}">
-				<swiper-slide v-for="(item, i) in slides" :key="i" class="w-auto! shrink-0! flex! items-center">
-					<a :href="item.src" class="whitespace-nowrap text-gray-600 hover:text-(--Brand-700)">
+				<swiper-slide v-for="(item, i) in mainCatsData" :key="i" class="w-auto! shrink-0! flex! items-center">
+					<a :href="link(item)" class="whitespace-nowrap text-gray-600 hover:text-(--Brand-700)">
 						{{ item.name }}
 					</a>
 				</swiper-slide>

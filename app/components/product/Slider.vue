@@ -27,7 +27,7 @@ const props = defineProps<Props>()
 		}" 
 		:navigation="false">
 
-			<swiper-slide v-for="(item, i) in props.items" :key="item.id">
+			<swiper-slide v-for="item in props.items" :key="item.id">
 
 				<ProductCard :item="item" />
 

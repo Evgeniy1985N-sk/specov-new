@@ -1,0 +1,524 @@
+{
+  "product": {
+    "id": 45727,
+    "name": "Аккумуляторная угловая шлифмашина Milwaukee M18 M18 FUEL FSAG125X-0 (БЕЗ АКБ и ЗУ) d-125 мм",
+    "name_lat": "akkumuliatornaia-uglovaia-shlifmashina-milwaukee-m18-m18-fuel-fsag125x-0-bez-akb-i-zu-d-125-mm",
+    "code_1c": "00-00023516",
+    "measure_unit": null,
+    "artikul": "4933478701",
+    "name_full": "Аккумуляторная угловая шлифмашина Milwaukee M18 M18 FUEL FSAG125X-0 (БЕЗ АКБ и ЗУ) d-125 мм",
+    "brand": "Milwaukee",
+    "producer": null,
+    "description": "",
+    "country": "КИТАЙ",
+    "product_cat_path": null,
+    "pictures": [
+      {
+        "ref_1c": "75006efc-e9cb-11ef-a2b7-00155d327e58",
+        "size": 25338,
+        "ext": "jpg",
+        "preview_ext": "png",
+        "main": true
+      }
+    ],
+    "filters": [
+      {
+        "id": 370,
+        "label": "Бренд",
+        "value": "Milwaukee",
+        "data_type": "t_text"
+      },
+      {
+        "id": 343,
+        "label": "Вид упаковки",
+        "value": "Коробка",
+        "data_type": "t_text"
+      },
+      {
+        "id": 27,
+        "label": "Гарантия (мес)",
+        "value": "12",
+        "data_type": "t_number"
+      },
+      {
+        "id": 225,
+        "label": "Диаметр диска, мм",
+        "value": "125",
+        "data_type": "t_text"
+      },
+      {
+        "id": 360,
+        "label": "Ёмкость АКБ, А*ч",
+        "value": "0",
+        "data_type": "t_text"
+      },
+      {
+        "id": 366,
+        "label": "Класс",
+        "value": "Профессиональный",
+        "data_type": "t_text"
+      },
+      {
+        "id": 310,
+        "label": "Количество аккумуляторов в комплекте",
+        "value": "0",
+        "data_type": "t_number"
+      },
+      {
+        "id": 181,
+        "label": "Напряжение аккумулятора, В",
+        "value": "18",
+        "data_type": "t_number"
+      },
+      {
+        "id": 322,
+        "label": "Плавный пуск",
+        "value": "Нет",
+        "data_type": "t_bool"
+      },
+      {
+        "id": 317,
+        "label": "Подсветка рабочей зоны",
+        "value": "Нет",
+        "data_type": "t_bool"
+      },
+      {
+        "id": 138,
+        "label": "Посадочный диаметр (мм)",
+        "value": "22.2",
+        "data_type": "t_text"
+      },
+      {
+        "id": 359,
+        "label": "Серия аккумуляторной системы",
+        "value": "Milwaukee REDLithium",
+        "data_type": "t_text"
+      },
+      {
+        "id": 362,
+        "label": "Число оборотов (мин)",
+        "value": "8500",
+        "data_type": "t_text"
+      },
+      {
+        "id": 361,
+        "label": "Электронная защита",
+        "value": "Нет",
+        "data_type": "t_bool"
+      },
+      {
+        "id": 20,
+        "label": "Вес (нетто), кг",
+        "value": "2.7",
+        "data_type": "t_number"
+      },
+      {
+        "id": 312,
+        "label": "Зарядное устройство в комплекте",
+        "value": "Нет",
+        "data_type": "t_bool"
+      },
+      {
+        "id": 311,
+        "label": "Тип двигателя",
+        "value": "бесщеточный",
+        "data_type": "t_list"
+      },
+      {
+        "id": 506,
+        "label": "Регулировка оборотов",
+        "value": "Нет",
+        "data_type": "t_bool"
+      }
+    ]
+  },
+  "stores": [
+    {
+      "id": 2,
+      "address": "625013, ул. 50 лет Октября, 118а",
+      "email": "magazin50lo@spetsov.ru",
+      "work_hours": "ежедневно с 8:00 до 19:00, суббота, воскресенье - выходной",
+      "tels": "+7 (3452) 410-626, 410-746, 410-634",
+      "pos_lat": "57.132728",
+      "pos_lon": "65.604762"
+    },
+    {
+      "id": 1,
+      "address": "625049, ул. Горпищекомбинатовская, 1, сооруж. 1",
+      "email": "magazingrp@spetsov.ru",
+      "work_hours": "ежедневно с 8:00 до 19:00",
+      "tels": "+7 (3452) 30-30-90, 666-100, 666-200. Офис: 30-60-77",
+      "pos_lat": "57.137088",
+      "pos_lon": "65.496618"
+    }
+  ],
+  "similar": [
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 281,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 113,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    }
+  ],
+  "related": [
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 281,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 113,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    }
+  ],
+  "last_viewed": [
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 281,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    },
+    {
+      "id": 155938,
+      "name": "GECO Спрей-дезодорант для ног и рук от чрезмерного потоотделения с антиб.  эффектом",
+      "name_lat": "geco-sprejj-dezodorant-dlya-nog-i-ruk-ot-chrezmernogo-potootdeleniya-s-antib.--e`ffektom",
+      "price": -648,
+      "old_price": 72,
+      "discount": 10,
+      "char": {
+        "id": 33501,
+        "name": "100 мл.(1/40)"
+      },
+      "available": true,
+      "quant": 113,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "a7bc6bde-fbaf-46bf-a2ba-273432908429",
+          "size": 249267,
+          "ext": "png",
+          "preview_ext": "png",
+          "main": true
+        }
+      ]
+    }
+  ],
+  "reviews": {
+    "data": [
+      {
+        "id": 2,
+        "name": "Александр",
+        "created_at": "2026-02-02T10:19:27.182452+05:00",
+        "stars": 5,
+        "pros": "Крутит, вертит, стучит, сверлит, долбит, светит :)",
+        "cons": "Слабые аккумуляторы",
+        "comment_text": "Шуруповерт отличный, а аккумуляторы не соответствуют заявленным характеристикам — слабые, быстро разряжаются.",
+        "purchased_from_us": true
+      },
+      {
+        "id": 3,
+        "name": "Виталий",
+        "created_at": "2025-02-02T10:20:56.915732+05:00",
+        "stars": 4,
+        "pros": "Работает. 2 АКБ, кейс удобный, заряд батареи менее часа.",
+        "cons": "Не обнаружил.",
+        "comment_text": "Первый шуруповёрт в использовании. Батареи хватает на 3 часа работы без перекуров. Кровельные саморезы 40 мм по дереву 20 мм + металл 2 мм — в общем, забор. В режиме сверла.",
+        "purchased_from_us": true
+      },
+      {
+        "id": 4,
+        "name": "Андрей",
+        "created_at": "2026-01-02T10:21:38.212698+05:00",
+        "stars": 4,
+        "pros": "",
+        "cons": "",
+        "comment_text": "Супер! Отличный патрон, подсветка, две батареи в комплекте. Крутит хорошо.",
+        "purchased_from_us": true
+      },
+      {
+        "id": 5,
+        "name": "Петр",
+        "created_at": "2025-10-01T11:11:14.315244+05:00",
+        "stars": 1,
+        "pros": "",
+        "cons": "",
+        "comment_text": "Китайское говно",
+        "purchased_from_us": true
+      },
+      {
+        "id": 6,
+        "name": "Петр",
+        "created_at": "2025-12-30T11:12:07.68042+05:00",
+        "stars": 3,
+        "pros": "",
+        "cons": "",
+        "comment_text": "так себе, сойдет",
+        "purchased_from_us": true
+      }
+    ],
+    "agg": {
+      "tot_count": 5,
+      "stars": [
+        {
+          "stars": 1,
+          "cnt": 1
+        },
+        {
+          "stars": 3,
+          "cnt": 1
+        },
+        {
+          "stars": 4,
+          "cnt": 2
+        },
+        {
+          "stars": 5,
+          "cnt": 1
+        }
+      ]
+    }
+  }
+}

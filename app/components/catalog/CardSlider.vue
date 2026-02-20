@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
+import { type ProductCatPublicList } from "@/types/productCat";
+import { categoryLink } from "@/utils/categoryLink";
 
-interface Item {
-  name: string
-  quantity: number
-  image: string
-}
+const {imgSrc } = useCategory();
 
 interface Props {
-  items: Item[]
-  class?: string
+  items: ProductCatPublicList[];
+  class?: string;
 }
 
 const props = defineProps<Props>()
+
+const { declineProductWord } = useProduct();
 
 </script>
 
@@ -22,19 +22,19 @@ const props = defineProps<Props>()
 
     <swiper :slides-per-view="1" :space-between="8" :class="props.class">
 
-      <swiper-slide v-for="(item, i) in props.items" :key="i">
+      <swiper-slide v-for="(item, i) in props.items" :key="item.id">
 
-        <NuxtLink to="/catalog"
+		<NuxtLink :to="categoryLink(item)"
           class="flex items-center gap-4 p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-100 transition">
           <span class="flex items-center w-10 h-10 rounded-lg bg-white">
-            <img :src="item.image" :alt="item.name">
+            <img :src="imgSrc(item)" alt="фото">
           </span>
           <div class="grid gap-.5">
             <p class="line-clamp-1 text-sm leading-5 text-gray-950 font-semibold">
               {{ item.name }}
             </p>
             <span class="text-[12px] leading-[18px] font-medium">
-              {{ item.quantity }} товаров
+				{{declineProductWord(item.product_count)}}
             </span>
           </div>
         </NuxtLink>

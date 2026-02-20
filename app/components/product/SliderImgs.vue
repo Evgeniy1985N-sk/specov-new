@@ -6,14 +6,15 @@ import { Pagination } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/pagination'
 
-import type { ProductImage } from '~/types/product'
-
+import type { Picture } from '~/types/picture'
+import { useProductPicture } from '~/composables/useProductPicture';
 
 interface Props {
-	imgs: ProductImage[]
+	imgs: Picture[]
 }
 const props = defineProps<Props>()
 
+const { picturePreview } = useProductPicture();
 
 </script>
 
@@ -25,7 +26,7 @@ const props = defineProps<Props>()
 
 			<swiper-slide v-for="(item, i) in props.imgs" :key="i">
 
-				<img :src="item.src" :alt="item.alt" class="img-sl max-w-[115px] sm:max-w-full">
+				<img :src="picturePreview(item)" class="max-w-[115px] sm:max-w-full">
 
 			</swiper-slide>
 

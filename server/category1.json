@@ -1,0 +1,47 @@
+{
+  "id": 3364,
+  "name": "Ручной измерительный инструмент",
+  "description": null,
+  "name_lat": "ruchnoi-izmeritel-nyi-instrument",
+  "product_count": null,
+  "icon": null,
+  "children": [
+    {
+      "id": 3650,
+      "name": "Штангенциркули",
+      "description": null,
+      "name_lat": "shtangentsirkuli",
+      "product_count": 6,
+      "icon": null,
+      "children": null,
+      "parents": null
+    },
+    {
+      "id": 3373,
+      "name": "Линейки",
+      "description": null,
+      "name_lat": "lineiki",
+      "product_count": 18,
+      "icon": null,
+      "children": null,
+      "parents": null
+    },
+    {
+      "id": 3372,
+      "name": "Рулетки",
+      "description": null,
+      "name_lat": "ruletki",
+      "product_count": 45,
+      "icon": null,
+      "children": null,
+      "parents": null
+    }
+  ],
+  "parents": [
+    {
+      "id": 3152,
+      "name": "Измерительное оборудование ",
+      "name_lat": "izmeritel-noe-oborudovanie"
+    }
+  ]
+}

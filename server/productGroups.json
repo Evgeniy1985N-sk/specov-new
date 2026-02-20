@@ -1,0 +1,395 @@
+[
+  {
+    "id": 1,
+    "title": "Популярные товары",
+    "products": [
+      {
+        "id": 60376,
+        "name": "Куртка муж. \"Челленджер\" утепл.  цв. синий/серый , тк. смесовая 139 г/м²",
+        "name_lat": "kurtka-muzh-chellendzher-utepl-tsv-sinii-seryi-tk-smesovaia-139-g-m2",
+        "price": 6330,
+        "old_price": 5380.5,
+        "discount": 15,
+        "char": null,
+        "available": true,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": [
+          {
+            "ref_1c": "449cc7d0-aab0-4e9d-874b-926d9a743aba",
+            "size": 69120,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": true
+          },
+          {
+            "ref_1c": "135e7495-b81e-429d-95a6-1abe457494dc",
+            "size": 121477,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "de6565b5-c067-4fb5-a9c3-fe31e57127a7",
+            "size": 56324,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "0bde712e-85d2-4ca8-878e-a2abcd374824",
+            "size": 154478,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "1a5b6ef5-24ad-4044-b242-bd8f3e1fd357",
+            "size": 116397,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          }
+        ]
+      },
+      {
+        "id": 56580,
+        "name": "Электростанция бензиновая РЕСАНТА БГ8000Э ",
+        "name_lat": "elektrostantsiia-benzinovaia-resanta-bg8000e",
+        "price": 59790,
+        "old_price": 50821.5,
+        "discount": 15,
+        "char": null,
+        "available": true,
+        "quant": 0,
+        "quant_descr": "few",
+        "imgs": [
+          {
+            "ref_1c": "154714bc-c1b4-11ef-a2b1-00155d327e58",
+            "size": 61705,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "1bc5d40e744f02b465f86472c3baab6c",
+            "size": 148515,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": true
+          },
+          {
+            "ref_1c": "137e57bfeb68186e2706b93945dcdb48",
+            "size": 124693,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "7bdeff514e626f5baebe100774a46157",
+            "size": 122120,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "bf4d8112e25646b77700928552b456e6",
+            "size": 159815,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "1c5342f994ecb30f65b6057519038569",
+            "size": 158488,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "206d158589ad345203a70d224997af5a",
+            "size": 106996,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          },
+          {
+            "ref_1c": "2a4e60dbcb92955e12b5065735b4681a",
+            "size": 128195,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": false
+          }
+        ]
+      },
+      {
+        "id": 58389,
+        "name": "Угольник алюминивый Remocolor 250мм 15-3-025 (40)",
+        "name_lat": "ugol-nik-aliuminivyi-remocolor-250mm-15-3-025-40",
+        "price": 527,
+        "old_price": 447.95,
+        "discount": 15,
+        "char": null,
+        "available": true,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": []
+      },
+      {
+        "id": 260442,
+        "name": "Разработка логотипа (Салехардский речной порт)",
+        "name_lat": "razrabotka-logotipa-(salekhardskijj-rechnojj-port)",
+        "price": 750,
+        "old_price": 637.5,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": []
+      },
+      {
+        "id": 328282,
+        "name": "Халат \"Симпл-001\" (тк.Смесовая,120) MedLine, белый",
+        "name_lat": "khalat-zhenskijj-simpl-001-(tk.smesovaya,120)-medline,-belyjj",
+        "price": 1810,
+        "old_price": 1538.5,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": []
+      },
+      {
+        "id": 52460,
+        "name": "Лебедка ручная НW-2500 г/п 1.100кг L- 8м",
+        "name_lat": "lebedka-ruchnaia-nw-2500-g-p-1-100kg-l-8m",
+        "price": 0,
+        "old_price": 0,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": []
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "title": "Для стройки",
+    "products": [
+      {
+        "id": 60718,
+        "name": "Фартук-сарафан (тк.Нейлон), синий (арт.51031000)",
+        "name_lat": "fartuk-sarafan-tk-neilon-sinii-art-51031000",
+        "price": 578,
+        "old_price": 491.3,
+        "discount": 15,
+        "char": null,
+        "available": true,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": [
+          {
+            "ref_1c": "a7616fe9-1c8d-4f28-8cf8-186350c24c88",
+            "size": 186881,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": true
+          }
+        ]
+      },
+      {
+        "id": 44933,
+        "name": "Логотип (DOORHAN) спина",
+        "name_lat": "logotip-doorhan-spina",
+        "price": 615,
+        "old_price": 522.75,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "none",
+        "imgs": []
+      },
+      {
+        "id": 59455,
+        "name": "Опрессовщик наконечников кабеля и гильз ТОР YQK-120A",
+        "name_lat": "opressovshchik-nakonechnikov-kabelia-i-gil-z-tor-yqk-120a",
+        "price": 4842,
+        "old_price": 4115.7,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "none",
+        "imgs": [
+          {
+            "ref_1c": "69b50b2d-3da3-11ef-a2a2-00155d327e58",
+            "size": 23641,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": true
+          }
+        ]
+      },
+      {
+        "id": 155662,
+        "name": "Корщетка-чашка, со штифтом, стальная латунированная волнистая проволока 60 мм",
+        "name_lat": "korshhetka-chashka,-so-shtiftom,-stal`naya-latunirovannaya-volnistaya-provoloka-60-mm",
+        "price": 124,
+        "old_price": 105.4,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "none",
+        "imgs": []
+      },
+      {
+        "id": 260433,
+        "name": "Логотип (УК Коморова) спина",
+        "name_lat": "logotip-(uk-komorova)-spina",
+        "price": 225,
+        "old_price": 191.25,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": []
+      },
+      {
+        "id": 58378,
+        "name": "Кувалда \"MATRIX\" 1000гр.\"optimal\" с фибер.об.р 10950 (12)",
+        "name_lat": "kuvalda-matrix-1000gr-optimal-s-fiber-ob-r-10950-12",
+        "price": 0,
+        "old_price": 0,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": []
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "title": "Для сада",
+    "products": [
+      {
+        "id": 61195,
+        "name": "Плащ влагозащитный \"Eхtra Vision\" СОП оранжевый",
+        "name_lat": "plashch-vlagozashchitnyi-ekhtra-vision-sop-oranzhevyi",
+        "price": 1925,
+        "old_price": 1636.25,
+        "discount": 15,
+        "char": null,
+        "available": true,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": [
+          {
+            "ref_1c": "d3536ec8-3570-4617-bfeb-c2a58ff6474d",
+            "size": 30458,
+            "ext": "webp",
+            "preview_ext": "png",
+            "main": true
+          }
+        ]
+      },
+      {
+        "id": 60961,
+        "name": "Костюм муж. \"Капер\" п/к цв. серый/черный, тк. Томбой 245 гр./м²",
+        "name_lat": "kostium-muzh-kaper-p-k-tsv-seryi-chernyi-tk-tomboi-245-gr-m2",
+        "price": 5439,
+        "old_price": 4623.15,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "none",
+        "imgs": [
+          {
+            "ref_1c": "2b812ee5-3383-11ef-a2a2-00155d327e58",
+            "size": 59880,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": true
+          }
+        ]
+      },
+      {
+        "id": 50565,
+        "name": "Ротор 220-24 в сб.к. TW0350",
+        "name_lat": "rotor-220-24-v-sb-k-tw0350",
+        "price": 4200,
+        "old_price": 3570,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "none",
+        "imgs": []
+      },
+      {
+        "id": 50667,
+        "name": "Шатун для HR4010C/HR4011C",
+        "name_lat": "shatun-dlia-hr4010c-hr4011c",
+        "price": 120,
+        "old_price": 102,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "none",
+        "imgs": []
+      },
+      {
+        "id": 52876,
+        "name": "Тележка ТГУ-300  (с откидной полкой)",
+        "name_lat": "telezhka-tgu-300-s-otkidnoi-polkoi",
+        "price": 23600,
+        "old_price": 20060,
+        "discount": 15,
+        "char": null,
+        "available": false,
+        "quant": 0,
+        "quant_descr": "many",
+        "imgs": [
+          {
+            "ref_1c": "bdaafc08-5dee-11ef-a2a4-00155d327e58",
+            "size": 17735,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": true
+          }
+        ]
+      },
+      {
+        "id": 53067,
+        "name": "Тепловая пушка BALLU BHP-Р2-15",
+        "name_lat": "teplovaia-pushka-ballu-bhp-r2-15",
+        "price": 22390,
+        "old_price": 19031.5,
+        "discount": 15,
+        "char": null,
+        "available": true,
+        "quant": 0,
+        "quant_descr": "few",
+        "imgs": [
+          {
+            "ref_1c": "87e71d4e-c1a8-11ef-a2b1-00155d327e58",
+            "size": 42793,
+            "ext": "jpg",
+            "preview_ext": "png",
+            "main": true
+          }
+        ]
+      }
+    ]
+  }
+]

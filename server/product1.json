@@ -1,0 +1,133 @@
+{
+  "id": 45727,
+  "name": "Аккумуляторная угловая шлифмашина Milwaukee M18 M18 FUEL FSAG125X-0 (БЕЗ АКБ и ЗУ) d-125 мм",
+  "name_lat": "akkumuliatornaia-uglovaia-shlifmashina-milwaukee-m18-m18-fuel-fsag125x-0-bez-akb-i-zu-d-125-mm",
+  "code_1c": "00-00023516",
+  "measure_unit": null,
+  "artikul": "4933478701",
+  "name_full": "Аккумуляторная угловая шлифмашина Milwaukee M18 M18 FUEL FSAG125X-0 (БЕЗ АКБ и ЗУ) d-125 мм",
+  "brand": "Milwaukee",
+  "producer": null,
+  "description": "",
+  "country": "КИТАЙ",
+  "product_cat_path": null,
+  "pictures": [
+    {
+      "ref_1c": "75006efc-e9cb-11ef-a2b7-00155d327e58",
+      "size": 25338,
+      "ext": "jpg",
+      "preview_ext": "png",
+      "main": true
+    }
+  ],
+  "filters": [
+    {
+      "id": 370,
+      "label": "Бренд",
+      "value": "Milwaukee",
+      "data_type": "t_text"
+    },
+    {
+      "id": 343,
+      "label": "Вид упаковки",
+      "value": "Коробка",
+      "data_type": "t_text"
+    },
+    {
+      "id": 27,
+      "label": "Гарантия (мес)",
+      "value": "12",
+      "data_type": "t_number"
+    },
+    {
+      "id": 225,
+      "label": "Диаметр диска, мм",
+      "value": "125",
+      "data_type": "t_text"
+    },
+    {
+      "id": 360,
+      "label": "Ёмкость АКБ, А*ч",
+      "value": "0",
+      "data_type": "t_text"
+    },
+    {
+      "id": 366,
+      "label": "Класс",
+      "value": "Профессиональный",
+      "data_type": "t_text"
+    },
+    {
+      "id": 310,
+      "label": "Количество аккумуляторов в комплекте",
+      "value": "0",
+      "data_type": "t_number"
+    },
+    {
+      "id": 181,
+      "label": "Напряжение аккумулятора, В",
+      "value": "18",
+      "data_type": "t_number"
+    },
+    {
+      "id": 322,
+      "label": "Плавный пуск",
+      "value": "Нет",
+      "data_type": "t_bool"
+    },
+    {
+      "id": 317,
+      "label": "Подсветка рабочей зоны",
+      "value": "Нет",
+      "data_type": "t_bool"
+    },
+    {
+      "id": 138,
+      "label": "Посадочный диаметр (мм)",
+      "value": "22.2",
+      "data_type": "t_text"
+    },
+    {
+      "id": 359,
+      "label": "Серия аккумуляторной системы",
+      "value": "Milwaukee REDLithium",
+      "data_type": "t_text"
+    },
+    {
+      "id": 362,
+      "label": "Число оборотов (мин)",
+      "value": "8500",
+      "data_type": "t_text"
+    },
+    {
+      "id": 361,
+      "label": "Электронная защита",
+      "value": "Нет",
+      "data_type": "t_bool"
+    },
+    {
+      "id": 20,
+      "label": "Вес (нетто), кг",
+      "value": "2.7",
+      "data_type": "t_number"
+    },
+    {
+      "id": 312,
+      "label": "Зарядное устройство в комплекте",
+      "value": "Нет",
+      "data_type": "t_bool"
+    },
+    {
+      "id": 311,
+      "label": "Тип двигателя",
+      "value": "бесщеточный",
+      "data_type": "t_list"
+    },
+    {
+      "id": 506,
+      "label": "Регулировка оборотов",
+      "value": "Нет",
+      "data_type": "t_bool"
+    }
+  ]
+}
