@@ -4,6 +4,7 @@
 :root {
   --Base-White: white;
   --Brand-100: #D3F8E3;
+  --Brand-200: #AAF0CD;
   --Brand-700: #097350;
   --Brand-600: #0c8f61;
   --Brand-800: #0A5B40;
@@ -46,6 +47,23 @@ body {
   color: #535862; /* gray-600 */
 }
 
+body > #__nuxt {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex-grow: 1;
+}
+
+.font-\[\'Russo_One\'\] {
+  font-family: 'Russo One', sans-serif;
+}
+.font-\[\'Inter\'\] {
+  font-family: 'Inter', sans-serif;
+}
+
 section:first-child,
 section:last-child {
   margin: 0;
@@ -80,10 +98,12 @@ section:last-child {
   height: auto;
 }
 
-/* 12px text-xs
+/* 
+12px text-xs
 14px text-sm
 16px text-base
-18px text-lg */
+18px text-lg 
+*/
 
 /* leading-3 12px
 leading-4 (16px)

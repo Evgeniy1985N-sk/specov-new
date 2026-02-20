@@ -11,12 +11,12 @@ const props = defineProps<Props>()
 const buttons = [
   {
     name: 'Избранное',
-    src: '/compare',
+    src: '/favorite',
     icon: IconFavorite
   },
   {
     name: 'Сравнение',
-    src: '/favorite',
+    src: '/compare',
     icon: IconCompare
   },
 ]
@@ -34,7 +34,7 @@ const menu = [
     name: "Сервис и гарантия",
     src: "/service-warranty"
   },
-    {
+  {
     name: "Юрлицам",
     src: "/business"
   },
@@ -51,12 +51,12 @@ const menu = [
 
         <div class="grid gap-6 bg-white rounded-xl px-8 py-6">
 
-          <a v-for="item in buttons" :href="item.src" class="flex items-center gap-2 text-base leading-6 text-gray-600">
+          <NuxtLink v-for="item in buttons" :href="item.src" class="flex items-center gap-2 text-base leading-6 text-gray-600">
             <span class="h-5 w-5">
               <component :is="item.icon" />
             </span>
             {{ item.name }}
-          </a>
+          </NuxtLink>
 
         </div>
 

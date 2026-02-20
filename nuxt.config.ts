@@ -3,7 +3,11 @@ export default defineNuxtConfig({
 	compatibilityDate: "2025-07-15",
 	devtools: { enabled: true },
 	modules: ["@nuxt/ui", '@pinia/nuxt'],
-	css: ["~/assets/css/main.css"],
+	css: ["~/assets/css/main.css", '~/assets/css/fonts.css'],
+	ui: {
+		// Отключаем загрузку шрифтов через Nuxt UI
+		fonts: false,
+	},
 	runtimeConfig: {
 		public: {
 			apiBase: 'http://localhost:59001',

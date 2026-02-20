@@ -10,6 +10,7 @@ interface Props {
   item: ProductCard
   classMedia?: string
   classBtns?: string
+  classTitle?: string
   isRow?: boolean
   isList?: boolean
   isCol?: boolean
@@ -18,11 +19,12 @@ interface Props {
 const date = ref('12.01.2026 в 17.00');
 const props = defineProps<Props>();
 const route = useRoute();
-// console.log(route)
 const isCatalogPage = computed(() => route.path === '/catalog');
 const counter = ref(0);
-// const compare = useCompareStore().compare
-// const toggleCompare = useCompareStore().toggleCompare
+const cart = useCartStore().cart
+const compareStore = useCompareStore()
+const toggleCompare = useCompareStore().toggleItems
+const compareIds = ref<string[]>([])
 
 const productImg = computed(() => {
   return props.item.imgs.find(p => p.main) ?? undefined;
@@ -46,6 +48,19 @@ const productDetailLink = (item: ProductCard) => {
 		return `/products/${encodeURIComponent(item.name_lat)}`;
 	}
 	return `/products/${encodeURIComponent(item.name_lat)}/${encodeURIComponent(item.char.name_lat)}`;
+}
+
+const compareItems = computed(() => {
+  return compareStore.items
+})
+
+watch((compareItems), () => {
+  getCompareIds()
+}, { deep: true })
+
+getCompareIds()
+function getCompareIds() {
+  compareIds.value = compareItems.value.map((item) => item.id)
 }
 
 const classContent = computed(() => ({
@@ -74,6 +89,7 @@ const classMedia = computed(() => ({
 </script>
 
 
+
 <template>
 
   <!-- CARD -->
@@ -89,7 +105,10 @@ const classMedia = computed(() => ({
 
         <ProductButtonFavorite :date="date" />
 
-        <ProductButtonCompare @handle-click="addToCompare(props.item)" />
+        <ProductButtonCompare 
+			:is-active="compareIds.includes(props.item.id.toString())" 
+			@handle-click="addToCompare(props.item)" 
+		/>
 
       </div>
       <!-- BUTTONS -->
@@ -138,6 +157,7 @@ const classMedia = computed(() => ({
             -{{ props.item.discount }}%
           </div>
         </div>
+        <!-- IF ROW -->
 
         <!-- Price + btns -->
         <div :class="isRow ? 'w-full sm:w-auto' : 'w-full'" class="flex justify-between">
@@ -151,9 +171,8 @@ const classMedia = computed(() => ({
 
             <ProductButtonFavorite class="py-0! shadow-none text-gray-600" :date="date" />
 
-            <ProductButtonCompare class="py-0! shadow-none text-gray-600">
-              <ProductIconCompare />
-            </ProductButtonCompare>
+            <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
+              :is-active="compareIds.includes(props.item.id.toString())" />
 
           </div>
           <!-- IF ROW -->
@@ -176,6 +195,7 @@ const classMedia = computed(() => ({
       <!-- Title -->
       <div v-if="!isRow" class="min-h-10 mt-1">
 		  <nuxt-link :to="productDetailLink(item)"
+			:class="props.classTitle"
           class="text-sm text-gray-600 line-clamp-3 sm:line-clamp-2 overflow-ellipsis">
           {{ props.item.name + (props.item.char? ", " + props.item.char.name : "") }}
         </nuxt-link>

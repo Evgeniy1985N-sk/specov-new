@@ -8,15 +8,40 @@ export const popularProducts = [
     oldPrice: 10500,
     discont: 10,
     category: "шлифмашины",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-1.png", alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903" },
-      { src: "/image/products/img-2.png", alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903" },
-      { src: "/image/products/img-3.png", alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903" },
-      { src: "/image/products/img-4.png", alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903" },
-      { src: "/image/products/img-5.png", alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903" },
-      { src: "/image/products/img-6.png", alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903" },
-      { src: "/image/products/img-7.png", alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903" },
-      { src: "/image/products/img-8.png", alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903" },
+      {
+        src: "/image/products/img-1.png",
+        alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903",
+      },
+      {
+        src: "/image/products/img-2.png",
+        alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903",
+      },
+      {
+        src: "/image/products/img-3.png",
+        alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903",
+      },
+      {
+        src: "/image/products/img-4.png",
+        alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903",
+      },
+      {
+        src: "/image/products/img-5.png",
+        alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903",
+      },
+      {
+        src: "/image/products/img-6.png",
+        alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903",
+      },
+      {
+        src: "/image/products/img-7.png",
+        alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903",
+      },
+      {
+        src: "/image/products/img-8.png",
+        alt: "Аккумуляторная угловая шлифмашина Ryobi ONE+ R18AG-0 5133001903",
+      },
     ],
   },
   {
@@ -27,11 +52,24 @@ export const popularProducts = [
     oldPrice: 13400,
     discont: 10,
     category: "газонокосилки",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-2.png", alt: "Электрическая газонокосилка Grizzly 1,8 кВт, 38 см ш.с. SKY-16" },
-      { src: "/image/products/img-1.png", alt: "Электрическая газонокосилка Grizzly 1,8 кВт, 38 см ш.с. SKY-16" },
-      { src: "/image/products/img-3.png", alt: "Электрическая газонокосилка Grizzly 1,8 кВт, 38 см ш.с. SKY-16" },
-      { src: "/image/products/img-4.png", alt: "Электрическая газонокосилка Grizzly 1,8 кВт, 38 см ш.с. SKY-16" },
+      {
+        src: "/image/products/img-2.png",
+        alt: "Электрическая газонокосилка Grizzly 1,8 кВт, 38 см ш.с. SKY-16",
+      },
+      {
+        src: "/image/products/img-1.png",
+        alt: "Электрическая газонокосилка Grizzly 1,8 кВт, 38 см ш.с. SKY-16",
+      },
+      {
+        src: "/image/products/img-3.png",
+        alt: "Электрическая газонокосилка Grizzly 1,8 кВт, 38 см ш.с. SKY-16",
+      },
+      {
+        src: "/image/products/img-4.png",
+        alt: "Электрическая газонокосилка Grizzly 1,8 кВт, 38 см ш.с. SKY-16",
+      },
     ],
   },
   {
@@ -40,11 +78,24 @@ export const popularProducts = [
     title: "Перфоратор SDS-plus KEYANG HD26-2T",
     price: 2550,
     category: "перфораторы",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-3.png", alt: "Перфоратор SDS-plus KEYANG HD26-2T" },
-      { src: "/image/products/img-1.png", alt: "Перфоратор SDS-plus KEYANG HD26-2T" },
-      { src: "/image/products/img-3.png", alt: "Перфоратор SDS-plus KEYANG HD26-2T" },
-      { src: "/image/products/img-4.png", alt: "Перфоратор SDS-plus KEYANG HD26-2T" },
+      {
+        src: "/image/products/img-3.png",
+        alt: "Перфоратор SDS-plus KEYANG HD26-2T",
+      },
+      {
+        src: "/image/products/img-1.png",
+        alt: "Перфоратор SDS-plus KEYANG HD26-2T",
+      },
+      {
+        src: "/image/products/img-3.png",
+        alt: "Перфоратор SDS-plus KEYANG HD26-2T",
+      },
+      {
+        src: "/image/products/img-4.png",
+        alt: "Перфоратор SDS-plus KEYANG HD26-2T",
+      },
     ],
   },
   {
@@ -55,11 +106,24 @@ export const popularProducts = [
     oldPrice: 10500,
     discont: 10,
     category: "плиткорезы",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-4.png", alt: "Усиленный плиткорез РемоКолор 46-0-660" },
-      { src: "/image/products/img-1.png", alt: "Усиленный плиткорез РемоКолор 46-0-660" },
-      { src: "/image/products/img-3.png", alt: "Усиленный плиткорез РемоКолор 46-0-660" },
-      { src: "/image/products/img-4.png", alt: "Усиленный плиткорез РемоКолор 46-0-660" },
+      {
+        src: "/image/products/img-4.png",
+        alt: "Усиленный плиткорез РемоКолор 46-0-660",
+      },
+      {
+        src: "/image/products/img-1.png",
+        alt: "Усиленный плиткорез РемоКолор 46-0-660",
+      },
+      {
+        src: "/image/products/img-3.png",
+        alt: "Усиленный плиткорез РемоКолор 46-0-660",
+      },
+      {
+        src: "/image/products/img-4.png",
+        alt: "Усиленный плиткорез РемоКолор 46-0-660",
+      },
     ],
   },
 ];
@@ -68,9 +132,11 @@ export const buildingProducts = [
   {
     id: "gigant-nailer",
     image: "/image/products/img-5.png",
-    title: "Гвоздезабивной пистолет (гвозди 47/F/055/049/300/J/SK50; длина гвоздей 15-50 мм) Gigant NG50",
+    title:
+      "Гвоздезабивной пистолет (гвозди 47/F/055/049/300/J/SK50; длина гвоздей 15-50 мм) Gigant NG50",
     price: 3729,
     category: "пневмоинструмент",
+    isCompare: false,
     imgs: [
       { src: "/image/products/img-5.png", alt: "Гвоздезабивной пистолет..." },
       { src: "/image/products/img-6.png", alt: "Гвоздезабивной пистолет..." },
@@ -86,11 +152,24 @@ export const buildingProducts = [
     oldPrice: 13400,
     discont: 20,
     category: "газонокосилки",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-6.png", alt: "Электрическая газонокосилка Grizzly..." },
-      { src: "/image/products/img-2.png", alt: "Электрическая газонокосилка Grizzly..." },
-      { src: "/image/products/img-7.png", alt: "Электрическая газонокосилка Grizzly..." },
-      { src: "/image/products/img-8.png", alt: "Электрическая газонокосилка Grizzly..." },
+      {
+        src: "/image/products/img-6.png",
+        alt: "Электрическая газонокосилка Grizzly...",
+      },
+      {
+        src: "/image/products/img-2.png",
+        alt: "Электрическая газонокосилка Grizzly...",
+      },
+      {
+        src: "/image/products/img-7.png",
+        alt: "Электрическая газонокосилка Grizzly...",
+      },
+      {
+        src: "/image/products/img-8.png",
+        alt: "Электрическая газонокосилка Grizzly...",
+      },
     ],
   },
   {
@@ -99,24 +178,51 @@ export const buildingProducts = [
     title: 'Пневмогидравлический заклепочник 3/16" SUMAKE ST-6615 35087',
     price: 11950,
     category: "пневмоинструмент",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-7.png", alt: 'Пневмогидравлический заклепочник...' },
-      { src: "/image/products/img-6.png", alt: 'Пневмогидравлический заклепочник...' },
-      { src: "/image/products/img-5.png", alt: 'Пневмогидравлический заклепочник...' },
-      { src: "/image/products/img-8.png", alt: 'Пневмогидравлический заклепочник...' },
+      {
+        src: "/image/products/img-7.png",
+        alt: "Пневмогидравлический заклепочник...",
+      },
+      {
+        src: "/image/products/img-6.png",
+        alt: "Пневмогидравлический заклепочник...",
+      },
+      {
+        src: "/image/products/img-5.png",
+        alt: "Пневмогидравлический заклепочник...",
+      },
+      {
+        src: "/image/products/img-8.png",
+        alt: "Пневмогидравлический заклепочник...",
+      },
     ],
   },
   {
     id: "kraftool-riveter",
     image: "/image/products/img-8.png",
-    title: "Пневматический заклепочник KRAFTOOL 2.4-6.4 мм, композитный корпус 31185_z02",
+    title:
+      "Пневматический заклепочник KRAFTOOL 2.4-6.4 мм, композитный корпус 31185_z02",
     price: 13807,
     category: "пневмоинструмент",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-8.png", alt: "Пневматический заклепочник KRAFTOOL..." },
-      { src: "/image/products/img-6.png", alt: "Пневматический заклепочник KRAFTOOL..." },
-      { src: "/image/products/img-7.png", alt: "Пневматический заклепочник KRAFTOOL..." },
-      { src: "/image/products/img-4.png", alt: "Пневматический заклепочник KRAFTOOL..." },
+      {
+        src: "/image/products/img-8.png",
+        alt: "Пневматический заклепочник KRAFTOOL...",
+      },
+      {
+        src: "/image/products/img-6.png",
+        alt: "Пневматический заклепочник KRAFTOOL...",
+      },
+      {
+        src: "/image/products/img-7.png",
+        alt: "Пневматический заклепочник KRAFTOOL...",
+      },
+      {
+        src: "/image/products/img-4.png",
+        alt: "Пневматический заклепочник KRAFTOOL...",
+      },
     ],
   },
 ];
@@ -130,11 +236,24 @@ export const gardenProducts = [
     oldPrice: 8190,
     discont: 10,
     category: "триммеры",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-9.png", alt: "Аккумуляторный триммер Ryobi..." },
-      { src: "/image/products/img-1.png", alt: "Аккумуляторный триммер Ryobi..." },
-      { src: "/image/products/img-11.png", alt: "Аккумуляторный триммер Ryobi..." },
-      { src: "/image/products/img-12.png", alt: "Аккумуляторный триммер Ryobi..." },
+      {
+        src: "/image/products/img-9.png",
+        alt: "Аккумуляторный триммер Ryobi...",
+      },
+      {
+        src: "/image/products/img-1.png",
+        alt: "Аккумуляторный триммер Ryobi...",
+      },
+      {
+        src: "/image/products/img-11.png",
+        alt: "Аккумуляторный триммер Ryobi...",
+      },
+      {
+        src: "/image/products/img-12.png",
+        alt: "Аккумуляторный триммер Ryobi...",
+      },
     ],
   },
   {
@@ -145,11 +264,24 @@ export const gardenProducts = [
     oldPrice: 250,
     discont: 20,
     category: "садовый-инвентарь",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-10.png", alt: "Ручной опрыскиватель Gigant..." },
-      { src: "/image/products/img-2.png", alt: "Ручной опрыскиватель Gigant..." },
-      { src: "/image/products/img-11.png", alt: "Ручной опрыскиватель Gigant..." },
-      { src: "/image/products/img-12.png", alt: "Ручной опрыскиватель Gigant..." },
+      {
+        src: "/image/products/img-10.png",
+        alt: "Ручной опрыскиватель Gigant...",
+      },
+      {
+        src: "/image/products/img-2.png",
+        alt: "Ручной опрыскиватель Gigant...",
+      },
+      {
+        src: "/image/products/img-11.png",
+        alt: "Ручной опрыскиватель Gigant...",
+      },
+      {
+        src: "/image/products/img-12.png",
+        alt: "Ручной опрыскиватель Gigant...",
+      },
     ],
   },
   {
@@ -158,11 +290,24 @@ export const gardenProducts = [
     title: "Садовый измельчитель Ryobi RSH3045U 5133004335",
     price: 25385,
     category: "садовая-техника",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-11.png", alt: "Садовый измельчитель Ryobi..." },
-      { src: "/image/products/img-9.png", alt: "Садовый измельчитель Ryobi..." },
-      { src: "/image/products/img-11.png", alt: "Садовый измельчитель Ryobi..." },
-      { src: "/image/products/img-12.png", alt: "Садовый измельчитель Ryobi..." },
+      {
+        src: "/image/products/img-11.png",
+        alt: "Садовый измельчитель Ryobi...",
+      },
+      {
+        src: "/image/products/img-9.png",
+        alt: "Садовый измельчитель Ryobi...",
+      },
+      {
+        src: "/image/products/img-11.png",
+        alt: "Садовый измельчитель Ryobi...",
+      },
+      {
+        src: "/image/products/img-12.png",
+        alt: "Садовый измельчитель Ryobi...",
+      },
     ],
   },
   {
@@ -171,11 +316,24 @@ export const gardenProducts = [
     title: "Электрическая газонокосилка Bosch Rotak 320 ER 06008A600A",
     price: 11856,
     category: "газонокосилки",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-12.png", alt: "Электрическая газонокосилка Bosch..." },
-      { src: "/image/products/img-10.png", alt: "Электрическая газонокосилка Bosch..." },
-      { src: "/image/products/img-8.png", alt: "Электрическая газонокосилка Bosch..." },
-      { src: "/image/products/img-5.png", alt: "Электрическая газонокосилка Bosch..." },
+      {
+        src: "/image/products/img-12.png",
+        alt: "Электрическая газонокосилка Bosch...",
+      },
+      {
+        src: "/image/products/img-10.png",
+        alt: "Электрическая газонокосилка Bosch...",
+      },
+      {
+        src: "/image/products/img-8.png",
+        alt: "Электрическая газонокосилка Bosch...",
+      },
+      {
+        src: "/image/products/img-5.png",
+        alt: "Электрическая газонокосилка Bosch...",
+      },
     ],
   },
 ];
@@ -184,27 +342,55 @@ export const relatedProducts = [
   {
     id: "bouiu-lawn-mowe",
     image: "/image/products/img-13.png",
-    title: "Бита с 6-ти гранной торцевой головкой (10 мм; 48 мм) Gigant GBS 11031",
+    title:
+      "Бита с 6-ти гранной торцевой головкой (10 мм; 48 мм) Gigant GBS 11031",
     price: 213,
     category: "расходники",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-13.png", alt: "Бита с 6-ти гранной торцевой головкой..." },
-      { src: "/image/products/img-14.png", alt: "Бита с 6-ти гранной торцевой головкой..." },
-      { src: "/image/products/img-15.png", alt: "Бита с 6-ти гранной торцевой головкой..." },
-      { src: "/image/products/img-16.png", alt: "Бита с 6-ти гранной торцевой головкой..." },
+      {
+        src: "/image/products/img-13.png",
+        alt: "Бита с 6-ти гранной торцевой головкой...",
+      },
+      {
+        src: "/image/products/img-14.png",
+        alt: "Бита с 6-ти гранной торцевой головкой...",
+      },
+      {
+        src: "/image/products/img-15.png",
+        alt: "Бита с 6-ти гранной торцевой головкой...",
+      },
+      {
+        src: "/image/products/img-16.png",
+        alt: "Бита с 6-ти гранной торцевой головкой...",
+      },
     ],
   },
   {
     id: "uioshn-mow",
     image: "/image/products/img-14.png",
-    title: "Бита с торцевой головкой магнитная (8 мм; 45 мм) 2 шт. MATRIX 11569",
+    title:
+      "Бита с торцевой головкой магнитная (8 мм; 45 мм) 2 шт. MATRIX 11569",
     price: 87,
     category: "расходники",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-16.png", alt: "Бита с торцевой головкой магнитная..." },
-      { src: "/image/products/img-14.png", alt: "Бита с торцевой головкой магнитная..." },
-      { src: "/image/products/img-13.png", alt: "Бита с торцевой головкой магнитная..." },
-      { src: "/image/products/img-16.png", alt: "Бита с торцевой головкой магнитная..." },
+      {
+        src: "/image/products/img-16.png",
+        alt: "Бита с торцевой головкой магнитная...",
+      },
+      {
+        src: "/image/products/img-14.png",
+        alt: "Бита с торцевой головкой магнитная...",
+      },
+      {
+        src: "/image/products/img-13.png",
+        alt: "Бита с торцевой головкой магнитная...",
+      },
+      {
+        src: "/image/products/img-16.png",
+        alt: "Бита с торцевой головкой магнитная...",
+      },
     ],
   },
   {
@@ -213,20 +399,33 @@ export const relatedProducts = [
     title: "Биты для кровельных саморезов (5 шт) Sturm 1041-05-08",
     price: 267,
     category: "расходники",
+    isCompare: false,
     imgs: [
-      { src: "/image/products/img-14.png", alt: "Биты для кровельных саморезов..." },
-      { src: "/image/products/img-17.png", alt: "Биты для кровельных саморезов..." },
-      { src: "/image/products/img-15.png", alt: "Биты для кровельных саморезов..." },
-      { src: "/image/products/img-16.png", alt: "Биты для кровельных саморезов..." },
+      {
+        src: "/image/products/img-14.png",
+        alt: "Биты для кровельных саморезов...",
+      },
+      {
+        src: "/image/products/img-17.png",
+        alt: "Биты для кровельных саморезов...",
+      },
+      {
+        src: "/image/products/img-15.png",
+        alt: "Биты для кровельных саморезов...",
+      },
+      {
+        src: "/image/products/img-16.png",
+        alt: "Биты для кровельных саморезов...",
+      },
     ],
   },
-  // Остальные товары в relatedProducts — тоже "расходники"
   {
     id: "bschh-mower",
     image: "/image/products/img-16.png",
     title: "Набор бит 61 шт (PH, PZ, SL, T(TX), HEX, SQ(R)) Gigant G-11333",
     price: 1175,
     category: "расходники",
+    isCompare: false,
     imgs: [
       { src: "/image/products/img-14.png", alt: "Набор бит 61 шт..." },
       { src: "/image/products/img-14.png", alt: "Набор бит 61 шт..." },
@@ -240,7 +439,13 @@ export const relatedProducts = [
     title: "Набор бит 61 шт (PH, PZ, SL, T(TX), HEX, SQ(R)) Gigant G-11333",
     price: 1175,
     category: "расходники",
-    imgs: [ /* ... */ ],
+    isCompare: false,
+    imgs: [
+      { src: "/image/products/img-1.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-10.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-8.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-6.png", alt: "Набор бит 61 шт..." },
+    ],
   },
   {
     id: "bosch-lawn-mowerhhjj-g",
@@ -248,7 +453,13 @@ export const relatedProducts = [
     title: "Набор бит 61 шт (PH, PZ, SL, T(TX), HEX, SQ(R)) Gigant G-11333",
     price: 1175,
     category: "расходники",
-    imgs: [ /* ... */ ],
+    isCompare: false,
+    imgs: [
+      { src: "/image/products/img-5.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-12.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-6.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-13.png", alt: "Набор бит 61 шт..." },
+    ],
   },
   {
     id: "bosch-lawn-hjhj-ggj",
@@ -256,6 +467,12 @@ export const relatedProducts = [
     title: "Набор бит 61 шт (PH, PZ, SL, T(TX), HEX, SQ(R)) Gigant G-11333",
     price: 1175,
     category: "расходники",
-    imgs: [ /* ... */ ],
+    isCompare: false,
+    imgs: [
+      { src: "/image/products/img-8.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-13.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-9.png", alt: "Набор бит 61 шт..." },
+      { src: "/image/products/img-4.png", alt: "Набор бит 61 шт..." },
+    ],
   },
 ];
