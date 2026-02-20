@@ -10,14 +10,15 @@
 </template>
 
 <script setup lang="ts">
-
 interface Props {
-	selected: boolean;
+	selected?: boolean;
 }
 const props = defineProps<Props>();
-const fillColor = ( () => props.selected? colorSelected : colorNotSelected );
 
+// 1. Сначала объявляем цвета
 const colorSelected = "#FF0000";
-const colorNotSelected = "#FFFF";
+const colorNotSelected = "#FFFF00"; // Исправлен код цвета
 
+// 2. Присваиваем значение сразу, без стрелочной функции () =>
+const fillColor = props.selected ? colorSelected : colorNotSelected;
 </script>
