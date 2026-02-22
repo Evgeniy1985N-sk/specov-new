@@ -8,10 +8,9 @@ export interface CategoryFilter {
 	items: {
 		value: string;
 		hash: string;
-		disabled: boolean;
-		data_type: string;
 		min: number;
 		max: number;
+		disabled: boolean;
 	}[];
 	disabled?: boolean;
 }
@@ -33,3 +32,4 @@ export interface CategoryFilterNumberOptions {
 
 export type CategoryFilterListPresentType = "is_checkbox" | "is_radio" | "is_dropbos";
 
+export type CategoryFilterListOption = { id: number; val: string };

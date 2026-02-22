@@ -2,7 +2,10 @@
 import type { LocationQuery } from 'vue-router'
 
 import type { AccordionItem } from '@nuxt/ui'
-import { type CategoryFilter } from "@/types/categoryFilter";
+import type { 
+	CategoryFilter,
+	CategoryFilterListOption,
+} from "@/types/categoryFilter";
 
 import type {
 	BrandFilter,
@@ -151,6 +154,26 @@ const formatDynNumVal = (val?: number): string => {
 	return val!==undefined ? val.toString() : "";
 }
 
+//list options
+const getListOptions = (filter: CategoryFilter): CategoryFilterListOption[] => {
+	const opts = (filter.options as any)?.values;
+	return Array.isArray(opts) ? opts : [];
+};
+
+const ensureListStateShape = (filter: CategoryFilter) => {
+	if (filter.data_type !== 't_list') return;
+
+	const options = getListOptions(filter);
+	if (!filterState[filter.id] || typeof filterState[filter.id] !== 'object') {
+		filterState[filter.id] = {};
+	}
+
+	for (const opt of options) {
+		if (filterState[filter.id][opt.id] == null) {
+			filterState[filter.id][opt.id] = false;
+		}
+	}
+};
 // type FilterValue =
 // 	| Record<string, boolean> // t_text, t_list
 // 	| boolean                 // t_bool
@@ -177,6 +200,7 @@ watchEffect(() => {
 		if (!(filter.id in filterState)) {
 			filterState[filter.id] = createDefaultFilterValue(filter);
 		}
+		ensureListStateShape(filter);
 	})
 });
 
@@ -208,63 +232,74 @@ function resetFilters() {
 	})
 }
 
-function buildFilterQuery() {
-	const query: Record<string, any> = {}
+const buildFilterQuery = (): Record<string, any> => {
+	const query: Record<string, any> = {};
 
-	// Static filters
-	if (selectedBrands.value.length) {
-		query.brands = selectedBrands.value.join(',')
-	}
+	// Static
+	if (selectedBrands.value.length) query.brands = selectedBrands.value.join(',');
+	if (selectedCountries.value.length) query.countries = selectedCountries.value.join(',');
+	if (selectedStores.value.length) query.stores = selectedStores.value.join(',');
 
-	if (selectedCountries.value.length) {
-		query.countries = selectedCountries.value.join(',')
-	}
+	if (minPrice.value != null && minPrice.value !== props.minPrice) query.min_price = minPrice.value;
+	if (maxPrice.value != null && maxPrice.value !== props.maxPrice) query.max_price = maxPrice.value;
 
-	if (selectedStores.value.length) {
-		query.stores = selectedStores.value.join(',')
-	}
+	// Dynamic typed
+	for (const [filterIdStr, state] of Object.entries(filterState)) {
+		const filterId = Number(filterIdStr);
+		if (Number.isNaN(filterId) || state == null) continue;
 
-	if (minPrice.value != null) query.min_price = minPrice.value
-	if (maxPrice.value != null) query.max_price = maxPrice.value
+		const filter = props.filters.find((f) => f.id === filterId);
+		if (!filter) continue;
 
-	// Dynamic filters
-	Object.entries(filterState).forEach(([filterId, value]) => {
-		if (value == null) return
+		if (filter.data_type === 't_text') {
+			const hashes = Object.keys(state).filter((k) => Boolean(state[k]));
+			if (hashes.length) query[`filters_hash[${filterId}]`] = hashes.join(',');
+			continue;
+		}
 
-		// checkbox list
-		if (
-			typeof value === 'boolean'
-			|| (typeof value === 'object' && !('min' in value))
-		) {
-			const hashes = Object.keys(value).filter(k => value[k])
-			if (hashes.length) {
-				query[`filters[${filterId}]`] = hashes.join(',')
+		if (filter.data_type === 't_list') {
+			const presentType = (filter.options as any)?.present_type;
+
+			// checkbox -> option ids
+			if (presentType === 'is_checkbox') {
+				const ids = Object.keys(state)
+					.filter((k) => Boolean(state[k]))
+					.map((k) => Number(k))
+					.filter((n) => !Number.isNaN(n));
+
+				if (ids.length) query[`filters_list[${filterId}]`] = ids.join(',');
+				continue;
+			}
+
+			// radio -> you said you can use hashes (store in state as { [hash]: true } or a single hash string)
+			// If your radio UI stores hashes in an object:
+			if (presentType === 'is_radio') {
+				const hashes = Object.keys(state).filter((k) => Boolean(state[k]));
+				if (hashes.length) query[`filters_hash[${filterId}]`] = hashes.join(',');
+				continue;
 			}
 		}
 
-		// number range
-		else if (typeof value === 'object' && 'min' in value) {
-			if (value.min != null) {
-				query[`filters[${filterId}][min]`] = value.min
-			}
-			if (value.max != null) {
-				query[`filters[${filterId}][max]`] = value.max
-			}
+		if (filter.data_type === 't_number') {
+			if (state.min != null) query[`filters_num[${filterId}][min]`] = state.min;
+			if (state.max != null) query[`filters_num[${filterId}][max]`] = state.max;
+			continue;
 		}
 
-		// boolean
-		else if (typeof value === 'boolean') {
-			query[`filters[${filterId}]`] = value
+		if (filter.data_type === 't_bool') {
+			if (state === true) query[`filters_hash[${filterId}]`] = '1';
+			continue;
 		}
 
-		// date
-		// else if (typeof value === 'string') {
-		// 	query[`filters[${filterId}]`] = value
-		// }
-	});
+		//not used
+		if (filter.data_type === 't_date') {
+			if (typeof state === 'string' && state.length) query[`filters_date[${filterId}]`] = state;
+			continue;
+		}
+	}
 
 	return query;
-}
+};
 
 const updateCountrySelection = (newId: number, checked: boolean) => {
 	updateArraySelection(selectedCountries, newId, checked);
@@ -448,7 +483,12 @@ defineExpose({
 
 			</div>
 
-			<CatalogInputRange :max-range="props.maxPrice" v-model:min-value="minPrice" v-model:max-value="maxPrice" />
+			<CatalogInputRange 
+				:max-range="props.maxPrice" 
+				:min-range="props.minPrice" 
+				v-model:min-value="minPrice" 
+				v-model:max-value="maxPrice" 
+			/>
 
 		</template>
 
@@ -500,7 +540,7 @@ defineExpose({
 			<div @click="emitDyn(filter.id)" class="grid gap-4">
 
 				<!-- TEXT / LIST → CHECKBOXES -->
-				<template v-if="filter.data_type === 't_text' || filter.data_type === 't_list'">
+				<template v-if="filter.data_type === 't_text'">
 					<label v-for="item in filter.items" :key="item.hash" class="flex gap-2 items-center cursor-pointer">
 						<UCheckbox size="xl" 
 							:model-value="filterState[filter.id][item.hash]" 
@@ -513,10 +553,29 @@ defineExpose({
 					</label>
 				</template>
 
+				<template v-else-if="filter.data_type === 't_list' && (filter.options as any)?.present_type === 'is_checkbox'">
+					<label
+						v-for="opt in ((filter.options as any)?.values || [])"
+						:key="opt.id"
+						class="flex gap-2 items-center cursor-pointer"
+					>
+						<UCheckbox
+							size="xl"
+							:model-value="Boolean(filterState[filter.id]?.[opt.id])"
+							:disabled="isDynItemDisabled(filter.id, filter.disabled ?? false)"
+							@update:model-value="(v) => { filterState[filter.id][opt.id] = v as boolean; emitDyn(filter.id); }"
+						/>
+						<span class="text-sm leading-5 text-gray-950">
+							{{ opt.val }}
+						</span>
+					</label>
+				</template>
+
 				<!-- BOOLEAN -->
 				<template v-else-if="filter.data_type === 't_bool'">
 					<UCheckbox size="xl" v-model="filterState[filter.id]" :label="filter.name"
-						:disabled="filter.disabled" />
+						:disabled="isDynItemDisabled(filter.id, filter.disabled ?? false)"
+					/>
 				</template>
 
 				<!-- NUMBER -->
@@ -533,6 +592,10 @@ defineExpose({
 							@input="emitDynDebounced(filter.id)"
 						/>
 					</div>
+
+					<!--
+					<CatalogInputRange :max-range="filter.items[0]?.min" v-model:min-value="filter.items[0]?.min" v-model:max-value="filter.items[0]?.max" />
+						-->
 				</template>
 
 				<!-- DATE -->

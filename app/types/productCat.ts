@@ -17,6 +17,10 @@ export interface ProductCatPublicList {
 		name: string;
 		name_lat: string;
 	}[]
+	filters: CategoryFilter[];
+	brands: BrandFilter[];
+	countries: CountryFilter[];
+	stores: StoreFilter[];
 }
 
 export interface ProductCatMain {
@@ -57,6 +61,17 @@ export interface CategoryCatalog {
 	max_price: number;
 	last_viewed: ProductCard[];
 }
+
+export type CategoryCatalogPrecalc = Pick<
+	CategoryCatalog,
+	| 'total_count'
+	| 'brands'
+	| 'countries'
+	| 'stores'
+	| 'filters'
+	| 'min_price'
+	| 'max_price'
+>;
 
 export type CategoryCatalogSortDir = "asc" | "desc";
 export type CategoryCatalogSortCol =

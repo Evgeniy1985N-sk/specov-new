@@ -1,7 +1,12 @@
 import { useNuxtApp } from "nuxt/app";
 import type { $Fetch } from "ofetch";
 import { productCatEndpoints } from '@/api/endpoints/productCat';
-import { type CategoryCatalog, type CategoryCatalogParams, type ProductCatPublicList } from "@/types/productCat";
+import { 
+	type CategoryCatalog, 
+	type CategoryCatalogPrecalc, 
+	type CategoryCatalogParams, 
+	type ProductCatPublicList,
+} from "@/types/productCat";
 
 export function useProductCatApi() {
 	const api = useNuxtApp().$backendAPI as $Fetch;
@@ -20,8 +25,8 @@ export function useProductCatApi() {
 			return api<CategoryCatalog>(productCatEndpoints.catalog(id, params));
 		},
 
-		catalogProductCount(id: number, params: CategoryCatalogParams): Promise<CategoryCatalog>{
-			return api<CategoryCatalog>(productCatEndpoints.catalogProductCount(id, params));
+		catalogProductCount(id: number, params: CategoryCatalogParams): Promise<CategoryCatalogPrecalc>{
+			return api<CategoryCatalogPrecalc>(productCatEndpoints.catalogProductCount(id, params));
 		},
 	}
 }

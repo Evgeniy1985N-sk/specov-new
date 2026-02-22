@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import type { CategoryCatalog, CategoryCatalogParams, CategoryCatalogSortCol, CategoryCatalogSortDir } from '~/types/productCat';
+import type { CategoryCatalog, CategoryCatalogParams, CategoryCatalogPrecalc, CategoryCatalogSortCol, CategoryCatalogSortDir } from '~/types/productCat';
 import type { ProductCard } from '~/types/product';
 import { useProductCatApi } from '~/composables/api/useProductCatApi';
+import { useCategory } from '~/composables/useCategory';
 
 const props = defineProps<{
 	data: CategoryCatalog;
@@ -176,8 +177,24 @@ const showMore = async () => {
 	productVisibleCount.value = newCount;
 };
 
-const foundProdCountForFilter = ref(0);
+const { 
+	mergeDynFilters,
+	mergeBrandFilters,
+	mergeCountryFilters,
+	mergeStoreFilters,
+} = useCategory();
 const prodCountForFilterIsLoading = ref(false);
+const facetState = ref<CategoryCatalogPrecalc>({
+	total_count: 0,
+	filters: mergeDynFilters(props.data.category.filters, props.data.filters),
+	brands: mergeBrandFilters(props.data.category.brands, props.data.brands),
+	countries: mergeCountryFilters(props.data.category.countries, props.data.countries),
+	stores: mergeStoreFilters(props.data.category.stores, props.data.stores),
+	min_price: props.data.min_price,
+	max_price: props.data.max_price,
+});
+//returns count, filters, brands, countries, stors 
+//for petential products.
 const fetchProdCountForFilter = async (): Promise<boolean> => {
 	try {
 
@@ -188,9 +205,17 @@ const fetchProdCountForFilter = async (): Promise<boolean> => {
 			...filters,
 		};
 		prodCountForFilterIsLoading.value = true;
-		const catalogData = await catalogProductCount(props.data.category.id, apiParams);
-		foundProdCountForFilter.value = catalogData.total_count;
+		const newData = await catalogProductCount(props.data.category.id, apiParams);
 
+		facetState.value = <CategoryCatalogPrecalc>{
+			total_count: newData.total_count,
+			filters: mergeDynFilters(props.data.category.filters, newData.filters),
+			brands: mergeBrandFilters(props.data.category.brands, newData.brands),
+			countries: mergeCountryFilters(props.data.category.countries, newData.countries),
+			stores: mergeStoreFilters(props.data.category.stores, newData.stores),
+			min_price: newData.min_price,
+			max_price: newData.max_price,
+		};
 		return true;
 	} catch (error) {
 		console.error('Error fetching product count for filter:', error);
@@ -208,10 +233,6 @@ onMounted(() => {
 </script>
 
 <template>
-	<!--
-	<div>TotalCount:{{ props.data.total_count }}</div>
-	<div>Visible:{{ productVisibleCount }}</div>
--->
 
 	<Header />
 
@@ -255,9 +276,12 @@ onMounted(() => {
 							<!-- HEADER -->
 
 							<!-- FILTER -->
-							<CatalogFilter ref="filterRef" :brands="props.data.brands" :countries="props.data.countries"
-								:filters="props.data.filters" :stores="props.data.stores"
-								:minPrice="props.data.min_price" :maxPrice="props.data.max_price"
+							<CatalogFilter ref="filterRef" 
+								:brands="facetState.brands" 
+								:countries="facetState.countries"
+								:filters="facetState.filters" 
+								:stores="facetState.stores"
+								:minPrice="facetState.min_price" :maxPrice="facetState.max_price"
 								class="px-4 sm:px-6 lg:px-0" @handle-click="filterClick" />
 							<!-- FILTER -->
 
@@ -278,7 +302,7 @@ onMounted(() => {
 						</div>
 
 						<!-- POPOVER -->
-						<CatalogPopover v-if="isShowPopover" :goods="foundProdCountForFilter"
+						<CatalogPopover v-if="isShowPopover" :goods="facetState.total_count"
 							@handle-click="applyProductSettings"
 							class="hidden! lg:inline-block!" 
 							:top="filterTop"
