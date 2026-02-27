@@ -159,19 +159,19 @@ watch(initialTop, (newVal) => {
       <ProductReview :reviews="props.reviews" />
     </div>
 
+    <div id="docs">
+      <h2 class="text-2xl font-bold mb-4">Документы</h2>
+      <div class="space-y-6">
+        <p>Здесь будут документы...</p>
+      </div>
+    </div>
+
     <div id="goods">
       <SectionHeader>
         <SectionTitle text="Сопутствующие товары" />
         <SectionButton text="Смотреть всё" path="/" />
       </SectionHeader>
       <ProductSliderVar :items="relatedProducts" />
-    </div>
-
-    <div id="docs">
-      <h2 class="text-2xl font-bold mb-4">Документы</h2>
-      <div class="space-y-6">
-        <p>Здесь будут документы...</p>
-      </div>
     </div>
 
   </div>

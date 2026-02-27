@@ -269,7 +269,7 @@ const productDescription = computed(() => {
             <!--col-3-->
             <aside class="flex flex-col gap-2 sm:gap-6 sm:max-w-[280px] shrink-0 w-full">
 
-              <div class="flex flex-col gap-6 bg-gray-100 rounded-lg p-6">
+              <div class="flex flex-col gap-6 bg-gray-100 rounded-xl p-6">
 
                 <div>
                   <p class="text-[24px] leading-8 sm:text-[36px] sm:leading-11 text-gray-950 font-semibold">
@@ -327,8 +327,8 @@ const productDescription = computed(() => {
 
                         <div class="flex gap-6 justify-between items-center flex-wrap pb-6 border-b border-gray-300">
                           <div class="flex gap-5">
-                            <img class="w-12 h-12 object-contain" :src="productImg ? pictureDetail(productImg) : undefined"
-                              :alt="product?.name" />
+                            <img class="w-12 h-12 object-contain"
+                              :src="productImg ? pictureDetail(productImg) : undefined" :alt="product?.name" />
                             <p class="max-w-[290px] font-semibold text-gray-950">
                               {{ product?.name }}
                             </p>
@@ -385,35 +385,35 @@ const productDescription = computed(() => {
 
               </div>
 
-              <div class="flex flex-col gap-6 bg-gray-100 rounded-lg p-6">
+              <div class="flex flex-col gap-6 bg-gray-100 rounded-xl p-6">
 
                 <div class="font-sans font-bold text-base leading-6 text-black">
                   Способы получения заказа
                 </div>
 
-                <div class="flex items-center gap-2 text-(--Brand-700)">
-                  <span class="flex items-center justify-center w-5 h-5">
-                    <ProductIconShop />
-                  </span>
-                  <p class="text-sm leading-5 font-bold">
-                    Самовывоз из магазина
-                  </p>
-                </div>
-
                 <div class="grid gap-3">
-                  <div v-for="st in props.detailPage?.stores" :key="st.id" class="text-sm leading-5 font-medium">
-                    <p>
-                      {{ st.address }}
-                    </p>
-                    <span :class="[
-                      'font-bold capitalize relative pl-4 before:content-[\'\'] before:absolute before:left-0 before:top-1.5 before:w-2 before:h-2 before:bg-current before:rounded-full',
-                      getStockClass(st.id)
-                    ]">
-                      {{ stockDescrLocal(st.id, productLiveData?.stock_total) }}
+                  <div class="flex items-center gap-2 text-(--Brand-700)">
+                    <span class="flex items-center justify-center w-5 h-5">
+                      <ProductIconShop />
                     </span>
+                    <p class="text-sm leading-5 font-bold">
+                      Самовывоз из магазина
+                    </p>
+                  </div>
+                  <div class="grid gap-3">
+                    <div v-for="st in props.detailPage?.stores" :key="st.id" class="text-sm leading-5 font-medium">
+                      <p>
+                        {{ st.address }}
+                      </p>
+                      <span :class="[
+                        'font-bold capitalize relative pl-4 before:content-[\'\'] before:absolute before:left-0 before:top-1.5 before:w-2 before:h-2 before:bg-current before:rounded-full',
+                        getStockClass(st.id)
+                      ]">
+                        {{ stockDescrLocal(st.id, productLiveData?.stock_total) }}
+                      </span>
+                    </div>
                   </div>
                 </div>
-
 
                 <div>
                   <div class="flex items-center gap-2 text-(--Brand-700)">
@@ -438,7 +438,6 @@ const productDescription = computed(() => {
                   </div>
                   <p class="text-sm leading-5 font-medium">СДЭК, DPD, Деловые линии</p>
                 </div>
-
 
               </div>
 

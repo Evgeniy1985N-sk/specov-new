@@ -16,7 +16,7 @@ const classIcon = computed(() => ({
 
 <template>
   <button @click="$emit('handleClick')" :class="{'text-gray-950': props.isActive }"
-    class="min-w-[83px] cursor-pointer flex gap-1.5">
+    class="flex items-center gap-1.5 min-w-[83px] cursor-pointer">
     {{ props.text }}
     <i v-if="props.isActive" :class="classIcon" class="transiton">
       <Pyramid />
