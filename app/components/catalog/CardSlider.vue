@@ -4,7 +4,7 @@ import 'swiper/css'
 import { type ProductCatPublicList } from "@/types/productCat";
 import { categoryLink } from "@/utils/categoryLink";
 
-const {imgSrc } = useCategory();
+const { imgSrc } = useCategory();
 
 interface Props {
   items: ProductCatPublicList[];
@@ -24,9 +24,9 @@ const { declineProductWord } = useProduct();
 
       <swiper-slide v-for="(item, i) in props.items" :key="item.id">
 
-		<NuxtLink :to="categoryLink(item)"
+        <NuxtLink :to="categoryLink(item)"
           class="flex items-center gap-4 p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-100 transition">
-          <span class="flex items-center w-10 h-10 rounded-lg bg-white">
+          <span class="flex items-center shrink-0 w-10 h-10 rounded-lg bg-white">
             <img :src="imgSrc(item)" alt="фото">
           </span>
           <div class="grid gap-.5">
@@ -34,7 +34,7 @@ const { declineProductWord } = useProduct();
               {{ item.name }}
             </p>
             <span class="text-[12px] leading-[18px] font-medium">
-				{{declineProductWord(item.product_count)}}
+              {{ declineProductWord(item.product_count) }}
             </span>
           </div>
         </NuxtLink>

@@ -97,9 +97,9 @@ provide('mainCatsData', data.value?.categories );
         </SectionContainer>
       </Section>
 
-      <Feedback />
+      <Feedback class-custom="mb-0" />
 
-      <Section>
+      <Section class="m-0 pt-(--section-indent)">
         <SectionContainer>
           <Stores />
         </SectionContainer>

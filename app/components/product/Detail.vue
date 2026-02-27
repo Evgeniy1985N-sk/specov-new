@@ -11,19 +11,20 @@ import type { ProductChar, ProductDetailPage } from '~/types/product';
 import type { Picture } from '~/types/picture';
 
 const { addToCart, setQuantityInFirst } = useCartsStore();
-
 const { scrollPosition } = useScroll()
 const { scrollToSection } = useScrollTo()
 
 const showModal = ref(false)
 
 interface Props {
-	detailPage: ProductDetailPage;
-	productSlug: string;
-	charSlug?: string; //product char name
-	productImg?: Picture;
+  detailPage: ProductDetailPage;
+  productSlug: string;
+  charSlug?: string; //product char name
+  productImg?: Picture;
 }
 const props = defineProps<Props>();
+
+const positionTabs = ref(0)
 
 const { calcRating, declineReviewWord } = useProduct();
 
@@ -33,19 +34,19 @@ const product = computed(() => props.detailPage?.product);
 
 const { pictureDetail } = useProductPicture();
 
-const productStars = computed( () => {
-	const rat = calcRating(props.detailPage.reviews.agg);
-	return Math.ceil(rat);
+const productStars = computed(() => {
+  const rat = calcRating(props.detailPage.reviews.agg);
+  return Math.ceil(rat);
 });
 
 //live data: client call
 const { data: productLiveData, } = useAsyncData(
-	`product-live-${props.detailPage.product.id}`,
+  `product-live-${props.detailPage.product.id}`,
   () => productLive(product.value.id, props.charSlug),
   { server: true, immediate: true }
 );
 
-const productChar = ref<ProductChar|undefined>(); //current selected characteristic
+const productChar = ref<ProductChar | undefined>(); //current selected characteristic
 const productStock = computed(() => {
   return productLiveData.value?.stock?.find(st =>
     (!productChar.value && !st.char) ||
@@ -53,50 +54,50 @@ const productStock = computed(() => {
   );
 });
 
-const productPriceOld = computed( () => {
-	return undefined;
+const productPriceOld = computed(() => {
+  return undefined;
 });
 
 const getStockClass = (storeId: number) => {
   const stockStatus = stockDescr(storeId, productLiveData.value?.stock_total);
-  return stockStatus === 'many' ? "text-(--Brand-700)": "text-red-700";
+  return stockStatus === 'many' ? "text-(--Brand-700)" : "text-red-700";
 };
 
 const counter = ref(0); //quantity
 watch(counter, newCounter => {
-	if(!props.detailPage?.product){
-		return;
-	}
-	setQuantityInFirst(
-		props.detailPage.product, 
-		newCounter, 
-		{char: productStock.value?.char, price: productStock.value?.price ?? 0}
-	);
+  if (!props.detailPage?.product) {
+    return;
+  }
+  setQuantityInFirst(
+    props.detailPage.product,
+    newCounter,
+    { char: productStock.value?.char, price: productStock.value?.price ?? 0 }
+  );
 });
 
 const addProductToCart = () => {
-	if(!props.detailPage?.product){
-		return;
-	}
-	addToCart(
-		0, 
-		{
-			id: props.detailPage.product.id, 
-			name: props.detailPage.product.name, 
-			name_lat: props.detailPage.product.name_lat
-		}, 
-		{char: productStock.value?.char, price: productStock.value?.price ?? 0},
-		props.productImg
-	);
+  if (!props.detailPage?.product) {
+    return;
+  }
+  addToCart(
+    0,
+    {
+      id: props.detailPage.product.id,
+      name: props.detailPage.product.name,
+      name_lat: props.detailPage.product.name_lat
+    },
+    { char: productStock.value?.char, price: productStock.value?.price ?? 0 },
+    props.productImg
+  );
 }
 
-const productDescription = computed( () => {
-	if(!props.detailPage?.product){
-		return;
-	}
-	return (props.detailPage.product.description && props.detailPage.product?.description.length)
-		? props.detailPage.product.description 
-		: props.detailPage.product.name_full;
+const productDescription = computed(() => {
+  if (!props.detailPage?.product) {
+    return;
+  }
+  return (props.detailPage.product.description && props.detailPage.product?.description.length)
+    ? props.detailPage.product.description
+    : props.detailPage.product.name_full;
 });
 
 </script>
@@ -106,25 +107,25 @@ const productDescription = computed( () => {
 
     <Header />
 
-    <Breadcrumbs :categories="product.product_cat_path"/>
+    <Breadcrumbs :categories="product.product_cat_path" />
 
     <main>
 
       <Section v-if="product" class="mb-6!">
 
         <!-- card fixed -->
-        <div :class="scrollPosition > 800 ? 'opacity-100' : 'pointer-events-none'"
+        <div :class="scrollPosition > positionTabs ? 'opacity-100' : 'pointer-events-none'"
           class="hidden sm:block opacity-0 fixed top-0 left-0 z-100 w-full py-4 border-b border-gray-300 bg-white transition">
           <SectionContainer>
 
             <div class="flex justify-between pb-15">
 
               <div class="flex gap-4">
-                <img class="w-12 h-12 object-contain" :src="productImg? pictureDetail(productImg):undefined" 
-					:alt="product?.name"/>
+                <img class="w-12 h-12 object-contain" :src="productImg ? pictureDetail(productImg) : undefined"
+                  :alt="product?.name" />
                 <div>
                   <span class="text-sm leading-5 font-medium">
-					Код товара: {{ product?.code_1c }}
+                    Код товара: {{ product?.code_1c }}
                   </span>
                   <p class="text-gray-950 font-bold max-w-[308px] lg:max-w-full line-clamp-1 overflow-hidden">
                     {{ product?.name }}
@@ -155,6 +156,7 @@ const productDescription = computed( () => {
 
           </SectionContainer>
         </div>
+        <!-- card fixed -->
 
         <!-- button basket fixet -->
         <div class="sm:hidden fixed bottom-20 z-100 w-full">
@@ -169,7 +171,7 @@ const productDescription = computed( () => {
             </UButton>
           </SectionContainer>
         </div>
-
+        <!-- button basket fixet -->
 
         <SectionContainer>
 
@@ -177,23 +179,23 @@ const productDescription = computed( () => {
 
             <div class="flex gap-2 sm:gap-4 flex-wrap">
               <p class="text-xs sm:text-sm leading-5 text-gray-600 font-medium">
-				Код товара: {{ product?.code_1c }}
+                Код товара: {{ product?.code_1c }}
               </p>
-              <div class="flex">
+              <div class="flex gap-1">
 
                 <div class="flex">
-				  <i v-for="star in productStars"
-					class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
-					<ProductIconStar />
-				  </i>
-				  <i v-for="star in (5 - productStars)"
-					class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
-					<ProductIconStar />
-				  </i>
+                  <i v-for="star in productStars"
+                    class="flex items-center justify-center shrink-0 w-5 h-5 text-warning-500 p-0.5">
+                    <ProductIconStar />
+                  </i>
+                  <i v-for="star in (5 - productStars)"
+                    class="flex items-center justify-center shrink-0 w-5 h-5 text-gray-300 p-0.5">
+                    <ProductIconStar />
+                  </i>
                 </div>
 
                 <a href="#reviews" class="text-sm leading-5 text-(--Brand-700) font-medium">
-					{{ declineReviewWord(props.detailPage.reviews.agg.tot_count) }}
+                  {{ declineReviewWord(props.detailPage.reviews.agg.tot_count) }}
                 </a>
 
               </div>
@@ -213,7 +215,7 @@ const productDescription = computed( () => {
           <div class="flex flex-wrap sm:flex-nowrap gap-8">
 
             <!--col-1-->
-            <div class="lg:max-w-[592px] min-w-0">
+            <div class="lg:max-w-[592px] w-full min-w-0">
               <h1
                 class="mb-6 font-['Russo_One'] text-lg leading-7 sm:text-3xl sm:leading-10 tracking-[0] text-gray-950">
                 {{ product?.name }}
@@ -229,11 +231,11 @@ const productDescription = computed( () => {
                   Характеристики
                 </div>
                 <div class="grid gap-4">
-                  <p v-for="item in product.filters" :key="item.id" class="flex gap-1 text-sm leading-5">
-                    <span class="font-medium text-gray-600">
-                      {{ item.label }}
+                  <p v-for="item in product.filters.slice(0, 5)" :key="item.id" class="text-sm leading-5 line-clamp-2">
+                    <span class="mr-1 font-medium text-gray-600">
+                      {{ item.label }}:
                     </span>
-                    <b class="min-w-16 font-bold text-gray-950">
+                    <b class="inline min-w-16 font-bold text-gray-950 break-all">
                       {{ item.value }}
                     </b>
                   </p>
@@ -245,15 +247,15 @@ const productDescription = computed( () => {
                 <div class="font-sans font-bold text-base leading-6 text-black">
                   О товаре
                 </div>
-                <p class="text-sm leading-5 font-medium text-gray-600">
-					{{ productDescription }}
+                <p class="text-sm leading-5 font-medium text-gray-600 line-clamp-4">
+                  {{ productDescription }}
                 </p>
                 <ProductButtonLink text="Читать далее" @handle-click="scrollToSection('about')" />
               </div>
 
               <button @click="scrollToSection('goods')"
                 class="flex gap-2 items-center bg-gray-100 rounded-2xl p-2 text-base leading-6 text-black cursor-pointer hover:text-(--Brand-700) transition">
-                <img class="w-10 h-9" src="/image/example.png" alt="Example"/>
+                <img class="w-10 h-9" src="/image/example.png" alt="Example" />
                 <span class="text-left font-bold">
                   Сопутствующие товары
                 </span>
@@ -284,10 +286,10 @@ const productDescription = computed( () => {
                     variant: 'ghost',
                     size: 'xl',
                   }" :decrement="{
-                      color: 'neutral',
-                      variant: 'ghost',
-                      size: 'xl'
-                    }" />
+                    color: 'neutral',
+                    variant: 'ghost',
+                    size: 'xl'
+                  }" />
 
 
                   <UButton @click="addProductToCart" class="gap-1 px-4">
@@ -325,8 +327,8 @@ const productDescription = computed( () => {
 
                         <div class="flex gap-6 justify-between items-center flex-wrap pb-6 border-b border-gray-300">
                           <div class="flex gap-5">
-								<img class="w-12 h-12 object-contain" :src="productImg? pictureDetail(productImg):undefined" 
-									:alt="product?.name"/>
+                            <img class="w-12 h-12 object-contain" :src="productImg ? pictureDetail(productImg) : undefined"
+                              :alt="product?.name" />
                             <p class="max-w-[290px] font-semibold text-gray-950">
                               {{ product?.name }}
                             </p>
@@ -401,15 +403,13 @@ const productDescription = computed( () => {
                 <div class="grid gap-3">
                   <div v-for="st in props.detailPage?.stores" :key="st.id" class="text-sm leading-5 font-medium">
                     <p>
-						{{ st.address }}
+                      {{ st.address }}
                     </p>
-                    <span
-						:class="[
-						'font-bold relative pl-4 before:content-[\'\'] before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:w-2 before:h-2 before:bg-current before:rounded-full',
-						getStockClass(st.id)
-						]"
-					>
-						{{ stockDescrLocal(st.id, productLiveData?.stock_total) }}
+                    <span :class="[
+                      'font-bold capitalize relative pl-4 before:content-[\'\'] before:absolute before:left-0 before:top-1.5 before:w-2 before:h-2 before:bg-current before:rounded-full',
+                      getStockClass(st.id)
+                    ]">
+                      {{ stockDescrLocal(st.id, productLiveData?.stock_total) }}
                     </span>
                   </div>
                 </div>
@@ -451,12 +451,9 @@ const productDescription = computed( () => {
 
       <Section class="mt-0">
         <SectionContainer>
-          <ProductTabs 
-			:product-description="productDescription ?? ''"
-			:filters="props.detailPage.product.filters ?? []"
-			:reviews="props.detailPage.reviews ?? []"
-			:related-products="props.detailPage.related"
-		  />
+          <ProductTabs :product-description="productDescription ?? ''" :filters="props.detailPage.product.filters ?? []"
+            :reviews="props.detailPage.reviews ?? []" :related-products="props.detailPage.related"
+            @update-position="(top) => positionTabs = top" />
         </SectionContainer>
       </Section>
 
@@ -498,4 +495,3 @@ const productDescription = computed( () => {
 
   </div>
 </template>
-

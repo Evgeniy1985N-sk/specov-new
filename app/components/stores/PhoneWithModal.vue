@@ -20,8 +20,7 @@ onBeforeUnmount(() => {
 
 interface Props {
   phone: string
-  phoneModal1: string
-  phoneModal2: string
+  phoneModal: string[]
   classPhone?: string
 }
 
@@ -47,7 +46,7 @@ const props = defineProps<Props>()
 
       <!-- Modal -->
       <div v-if="isModal"
-        class="absolute right-0 sm:right-auto sm:left-[calc(100%+12px)] bottom-6 sm:-bottom-2 grid gap-3 -mr-2 p-4 bg-white rounded-xl shadow-lg">
+        class="absolute -right-[50px] sm:right-auto sm:left-[calc(100%+12px)] -bottom-6 sm:-bottom-2.5 grid gap-3 -mr-2 p-4 bg-white rounded-xl shadow-lg">
         <div class="flex justify-between items-center">
           <span class="font-medium">
             Телефоны
@@ -57,12 +56,9 @@ const props = defineProps<Props>()
           </WrapIcon>
 
         </div>
-        <div class="grid gap-4">
-          <a class="text-lg leading-7 font-bold text-gray-950 whitespace-nowrap" :href="'tel:' + props.phoneModal1">
-            {{ props.phoneModal1 }}
-          </a>
-          <a class="text-lg leading-7 font-bold text-gray-950 whitespace-nowrap" :href="'tel:' + props.phoneModal2">
-            {{ props.phoneModal2 }}
+        <div class="grid gap-2">
+          <a v-for="item in props.phoneModal" class="text-lg leading-7 font-bold text-gray-950 whitespace-nowrap" :href="'tel:' + item">
+            {{ item }}
           </a>
         </div>
       </div>

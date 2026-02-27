@@ -17,7 +17,7 @@ const activeSubcategoryId = ref<number | null>(null);
 
 // Fetch catalog from server
 const { publicList } = useProductCatApi();
-const { data: categories} = await useAsyncData(
+const { data: categories } = await useAsyncData(
 	'productCat',
 	() => publicList()
 );
@@ -26,7 +26,7 @@ const { data: categories} = await useAsyncData(
 const menu = computed(() => {
 	if (!categories.value) return [];
 
-	if (!activeCategoryId.value && categories.value?.length){
+	if (!activeCategoryId.value && categories.value?.length) {
 		//default
 		activeCategoryId.value = categories.value[0]?.id ?? 0;
 	}
@@ -111,8 +111,10 @@ watch(() => props.isShow, (newVal) => {
 </script>
 
 <template>
+
+	<!-- MODAL WINDOW MENU -->
 	<div v-if="props.isShow"
-		class="custom-scrollbar absolute h-[calc(100vh-128px)] inset-0 lg:top-32 z-100 lg:py-6 bg-white lg:border-t border-(--border) overflow-auto">
+		class="absolute h-[calc(100vh-128px)] inset-0 lg:top-32 z-100 lg:py-6 bg-white lg:border-t border-(--border)">
 
 		<!-- BUTTON BACK -->
 		<div class="lg:hidden border-b border-(--border) py-2.5 sm:py-6">
@@ -140,7 +142,9 @@ watch(() => props.isShow, (newVal) => {
 		</div>
 		<!-- BUTTON BACK -->
 
-		<SectionContainer class="max-w-full lg:max-w-(--container) relative px-6 lg:px-4">
+		<!-- CONTAINER MENU -->
+		<SectionContainer
+			class="max-w-full lg:max-w-(--container) relative px-6 lg:px-4 overflow-auto lg:min-h-[calc(100vh-180px)] custom-scrollbar">
 
 			<HeaderSearch class="mt-6 mb-6 lg:hidden" />
 
@@ -153,28 +157,25 @@ watch(() => props.isShow, (newVal) => {
 
 					<div :class="[item.isActive ? 'lg:text-(--Brand-700)' : 'text-gray-600']"
 						class="flex gap-1.5 items-center text-sm leading-5 font-bold hover:text-(--Brand-700)">
-						<span class="flex items-center justify-center h-6 w-6">
+						<span class="flex items-center justify-center shrink-0 h-6 w-6">
 							<component :is="item.icon" />
 						</span>
 						{{ item.name }}
 					</div>
 
-					<div v-if="item.isActive"
-						class="lg:absolute top-0 left-0 px-4 pb-4 grid gap-8 grid-cols-[280px_1fr]">
+					<!-- SUB MENU -->
+					<div v-if="item.isActive" class="lg:absolute top-0 left-0 px-4 pb-4 grid gap-8 grid-cols-[280px_1fr]">
 						<ul class="grid gap-10 col-2">
-							<li v-for="group in item.sub">
+							<li v-for="group in item.sub" class="grid gap-4" >
 
-								<NuxtLink
-									:to="categoryLink(group)"
-								>
-									<p class="mb-4 text-[20px] leading-[30px] text-gray-950 font-bold">
-										{{ group.title }}
-									</p>
+								<NuxtLink :to="categoryLink(group)" class="text-[20px] leading-[30px] text-gray-950 font-bold">
+									{{ group.title }}
 								</NuxtLink>
 
-								<ul class="columns-3 gap-x-8 gap-y-3">
+								<!-- SUB MENU UL -->
+								<ul v-if="group.items?.length" class="grid grid-cols-3 gap-x-8 gap-y-2">
 
-									<li v-for="category in group.items" class="mb-3">
+									<li v-for="category in group.items">
 										<NuxtLink
 											class="custom-item flex items-center justify-between gap-2 hover:text-(--Brand-700) text-gray-950 transition"
 											:to="categoryLink(category)">
@@ -184,25 +185,28 @@ watch(() => props.isShow, (newVal) => {
 											<span class="shrink-0 text-sm leading-5 font-medium text-gray-600">
 												{{ category.quantity }}
 											</span>
-											<WrapIcon class="w-9 h-9">
+											<WrapIcon class="w-5 h-5">
 												<HeaderCatalogMenuIconAng />
 											</WrapIcon>
 										</NuxtLink>
 									</li>
 
 								</ul>
+								<!-- SUB MENU UL -->
+
 
 							</li>
 						</ul>
 					</div>
+					<!-- SUB MENU -->
+
 
 				</li>
 
 			</ul>
 
 			<!-- mobile menu -->
-			<ul
-				class="grid gap-1 lg:hidden border-t border-(--border) text-sm leading-5 font-bold text-gray-600 pb-[100px]">
+			<ul class="grid gap-1 lg:hidden border-t border-(--border) text-sm leading-5 font-bold text-gray-600 pb-[100px]">
 
 				<li v-for="item in menu" :key="item.id">
 
@@ -225,9 +229,7 @@ watch(() => props.isShow, (newVal) => {
 							<!-- menu 2 -->
 							<div v-if="levelMenu == 1" @click="toggleSubMenu(item.id, group.id)"
 								class="flex gap-1.5 items-center py-2.5 px-3.5 border-b border-(--border)">
-								<NuxtLink
-									:to="categoryLink(group)"
-								>
+								<NuxtLink :to="categoryLink(group)">
 									{{ group.title }}
 								</NuxtLink>
 								<WrapIcon class="ml-auto">
@@ -263,8 +265,12 @@ watch(() => props.isShow, (newVal) => {
 			</ul>
 
 		</SectionContainer>
+		<!-- CONTAINER MENU -->
+
 
 	</div>
+	<!-- MODAL WINDOW MENU -->
+
 </template>
 
 

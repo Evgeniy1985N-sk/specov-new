@@ -61,13 +61,13 @@ interface StoreType {
   coords: number[],
   isActive: boolean,
   address: string,
-  text1: string,
-  text2: string,
+  time: string,
   phone: string
-  phoneModal1: string
-  phoneModal2: string
+  phoneModal: string[]
 }
+
 const stores = ref<StoreType[]>([]);
+
 watch(() => storeList.value, (newStoreList) => {
   if (!newStoreList) {
     stores.value = [];
@@ -75,18 +75,20 @@ watch(() => storeList.value, (newStoreList) => {
   }
 
   currentStoreId.value = DEFAULT_STORE_ID;
+
   stores.value = newStoreList.map(store => ({
     id: store.id,
     coords: [parseFloat(store.pos_lat), parseFloat(store.pos_lon)],
     isActive: (currentStoreId.value == store.id),
-    address: store.name || '',
-    text1: store.work_hours,
-    text2: "Сб-Вс Выходной",
-    phone: store.tels,
-    phoneModal1: 'tel: test1',
-    phoneModal2: 'tel: test1'
+    address: store.address,
+    time: store.work_hours,
+    phone: store.tels.split(',')[0] || '',
+    phoneModal: store.tels.split(',') || '',
   }));
+
 }, { immediate: true });
+
+// console.log('store list', storeList.value)
 
 function toggleActive(index: number) {
   if (stores.value[index]?.isActive) return
@@ -133,8 +135,8 @@ watch(() => stores.value.find(store => store.isActive), (newActiveStore) => {
     <!-- ADDRESS -->
     <div class="w-full gap-2 font-semibold flex flex-col md:flex-row lg:flex-col">
       <StoresItem v-for="(item, index) in stores" @click.self="toggleActive(index)" :isActive="item.isActive"
-        :address="item.address" :text1="item.text1" :text2="item.text2" :phone="item.phone" :key="item.id"
-        :phoneModal1="item.phoneModal1" :phoneModal2="item.phoneModal2" />
+        :address="item.address" :time="item.time" :phone="item.phone" :key="item.id"
+        :phoneModal="item.phoneModal" />
     </div>
     <!-- ADDRESS -->
 

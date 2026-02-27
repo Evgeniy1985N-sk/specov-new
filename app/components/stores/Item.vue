@@ -4,11 +4,9 @@ import IconPin from './icon/Pin.vue';
 interface Props {
   isActive: boolean
   address: string
-  text1: string
-  text2?: string
+  time: string
   phone: string
-  phoneModal1: string
-  phoneModal2: string
+  phoneModal: string[]
 }
 
 const props = defineProps<Props>()
@@ -19,17 +17,18 @@ const props = defineProps<Props>()
   <div
     :class="props.isActive ? 'border-green-600' : '' "
     class="hover:bg-gray-50 w-full gap-3 flex justify-center flex-col items-start border border-solid border-gray-300 p-6 rounded-2xl">
+
     <div class="text-zinc-950 leading-6 self-stretch w-fit">
       {{ props.address }}
     </div>
+
     <div class="min-[1430px]:flex-nowrap gap-1 font-medium leading-5 text-gray-600 text-sm flex flex-wrap items-center">
-      <div class="gap-3 flex flex-col items-start">
-        <div>{{ props.text1 }}</div>
-        <div v-if="props.text2">{{ props.text2 }}</div>
+      <div class="gap-3 flex flex-col items-start max-w-[250px]">
+        {{ props.time }}
       </div>
     </div>
 
-    <StoresPhone :phone="props.phone" :phone-modal1="props.phoneModal1" :phone-modal2="props.phoneModal2" />
+    <StoresPhoneWithModal :phone="props.phone" :phoneModal="props.phoneModal" />
 
     <div class="min-[1430px]:flex-nowrap gap-2 flex flex-wrap items-center cursor-pointer">
       <div class="h-5 w-5">
@@ -40,5 +39,6 @@ const props = defineProps<Props>()
         маршрут
       </div>
     </div>
+    
   </div>
 </template>
