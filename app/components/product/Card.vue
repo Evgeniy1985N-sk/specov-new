@@ -27,27 +27,27 @@ const toggleCompare = useCompareStore().toggleItems
 const compareIds = ref<string[]>([])
 
 const productImg = computed(() => {
-  return props.item.imgs.find(p => p.main) ?? undefined;
+  return props.item.imgs?.find(p => p.main) ?? undefined;
 });
 
 const addProductToCart = () => {
-	addToCart(
-		0, 
-		{
-			id: props.item.id, 
-			name: props.item.name, 
-			name_lat: props.item.name_lat
-		}, 
-		{char: props.item.char, price: props.item.price},
-		productImg.value
-	);
+  addToCart(
+    0,
+    {
+      id: props.item.id,
+      name: props.item.name,
+      name_lat: props.item.name_lat
+    },
+    { char: props.item.char, price: props.item.price },
+    productImg.value
+  );
 }
 
 const productDetailLink = (item: ProductCard) => {
-	if(!item.char || !item.char.id){
-		return `/products/${encodeURIComponent(item.name_lat)}`;
-	}
-	return `/products/${encodeURIComponent(item.name_lat)}/${encodeURIComponent(item.char.name_lat)}`;
+  if (!item.char || !item.char.id) {
+    return `/products/${encodeURIComponent(item.name_lat)}`;
+  }
+  return `/products/${encodeURIComponent(item.name_lat)}/${encodeURIComponent(item.char.name_lat)}`;
 }
 
 const compareItems = computed(() => {
@@ -105,17 +105,15 @@ const classMedia = computed(() => ({
 
         <ProductButtonFavorite :date="date" />
 
-        <ProductButtonCompare 
-			:is-active="compareIds.includes(props.item.id.toString())" 
-			@handle-click="addToCompare(props.item)" 
-		/>
+        <ProductButtonCompare :is-active="compareIds.includes(props.item.id.toString())"
+          @handle-click="addToCompare(props.item)" />
 
       </div>
       <!-- BUTTONS -->
 
       <!-- SLIDER -->
       <div class="flex items-center justify-center w-full h-fit">
-        <ProductSliderImgs :imgs="props.item.imgs" />
+        <ProductSliderImgs :imgs="props.item.imgs ?? []" :link="productDetailLink(item)" />
       </div>
       <!-- SLIDER -->
 
@@ -125,20 +123,20 @@ const classMedia = computed(() => ({
     <!-- isRow -->
     <div v-if="isRow" class="max-w-[280px]">
       <span class="text-sm leading-5">
-		Код товара: {{ props.item.id }}
+        Код товара: {{ props.item.id }}
       </span>
-		<nuxt-link :to="productDetailLink(props.item)">
-		  <p class="mb-4 sm:mb-[46px] text-sm leading-5 text-gray-950 font-bold">
-			{{ props.item.name }}
-		  </p>
-		</nuxt-link>
+      <nuxt-link :to="productDetailLink(props.item)">
+        <p class="mb-4 sm:mb-[46px] text-sm leading-5 text-gray-950 font-bold">
+          {{ props.item.name }}
+        </p>
+      </nuxt-link>
       <div class="hidden sm:grid gap-4">
         <p v-for="(filter, i) in item.filters" :key="filter.id" class="flex gap-1 text-sm leading-5">
           <span class="font-medium text-gray-600">
             {{ filter.name }}
           </span>
           <b class="min-w-16 font-bold text-gray-950">
-            {{ filter.val}}
+            {{ filter.val }}
           </b>
         </p>
       </div>
@@ -194,10 +192,9 @@ const classMedia = computed(() => ({
 
       <!-- Title -->
       <div v-if="!isRow" class="min-h-10 mt-1">
-		  <nuxt-link :to="productDetailLink(item)"
-			:class="props.classTitle"
-          class="text-sm text-gray-600 line-clamp-3 sm:line-clamp-2 overflow-ellipsis">
-          {{ props.item.name + (props.item.char? ", " + props.item.char.name : "") }}
+        <nuxt-link :to="productDetailLink(item)" :class="props.classTitle"
+          class="text-sm text-gray-600 line-clamp-3 sm:line-clamp-2 overflow-ellipsis font-medium">
+          {{ props.item.name + (props.item.char ? ", " + props.item.char.name : "") }}
         </nuxt-link>
       </div>
       <!-- Title -->
@@ -217,7 +214,7 @@ const classMedia = computed(() => ({
         </UButton>
 
         <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :class="classCounter"
-          :ui="{ root: 'hidden! lg:flex! min-h-10' }" :increment="{
+          :ui="{ root: 'hidden! lg:flex! min-h-10', base: 'min-h-10' }" :increment="{
             class: 'active:bg-gray-100!',
             color: 'neutral',
             variant: 'ghost',

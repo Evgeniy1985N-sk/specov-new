@@ -26,7 +26,7 @@ const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 
 					<swiper-slide v-for="(item, i) in mainCatsData" :key="item.id" :class="`slide-${i}`" class="rounded-2xl overflow-hidden">
 						<NuxtLink :to="link(item)" class="block h-full">
-							<img :src="imgSrc(item)" :alt="item.name" class="absolute bottom-0 -z-1" />
+							<img :src="imgSrc(item)" :alt="item.name" class="absolute bottom-0 left-0 -z-1" />
 							<div class="flex flex-col h-full">
 								<div
 									class="text-[#0A0D12] font-sans font-semibold sm:text-xl text-xs leading-[18px] sm:leading-[30px] tracking-[0%]">
@@ -34,7 +34,6 @@ const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 								</div>
 							</div>
 						</NuxtLink>
-
 					</swiper-slide>
 
 				</swiper>
@@ -64,18 +63,18 @@ const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 	background: #EEEEEE;
 }
 
-.slide-0 img {
+/* .slide-0 img {
 	right: 20px;
-}
+} */
 
 .slide-1 {
 	background: #F6F4E8;
 }
 
-.slide-1 img {
+/* .slide-1 img {
 	right: 20px;
 	bottom: 12px;
-}
+} */
 
 .slide-2 {
 	background: #C9E0E4;
@@ -114,8 +113,8 @@ const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 		max-width: 90px;
 	}
 
-	.slide-1 img {
+	/* .slide-1 img {
 		bottom: 6px;
-	}
+	} */
 }
 </style>

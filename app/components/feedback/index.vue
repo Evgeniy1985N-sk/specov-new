@@ -1,9 +1,12 @@
 <script setup lang="ts">
-
+interface Props {
+	classCustom?: string
+}
+const props = defineProps<Props>()
 </script>
 
 <template>
-	<Section>
+	<Section :class="props.classCustom">
 		<div class="max-w-(--container) m-auto sm:px-4">
 			<div class="items-end flex rounded-2xl lg:m-0">
 				<div

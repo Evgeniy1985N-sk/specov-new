@@ -17,7 +17,7 @@ export interface ProductCard {
 	old_price?: number
 	discount?: number
 	char?: ProductChar; //characteristic
-	imgs: Picture[];
+	imgs?: Picture[];
 	dsc?: string;
 	link?: string;
 	category?: string;

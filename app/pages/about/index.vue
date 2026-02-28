@@ -12,8 +12,8 @@
     <Section>
       <SectionContainer>
 
-        <div class="grid lg:grid-cols-2 gap-8">
-          <Title2 tag="h1">
+        <div class="grid items-start lg:grid-cols-2 gap-8">
+          <Title2 tag="h1" class="sm:text-[30px]! leading-[38px]!">
             «Спецов» – лидер в Тюменском регионе по продаже спецодежды, профессионального инструмента и оборудования для
             самых разных направлений промышленности и производства.
           </Title2>
@@ -41,7 +41,7 @@
           <TextWork class="text-[18px] leading-7 font-medium">
             Работаем по всей России
           </TextWork>
-          <Title2 class="max-w-[800px] " tag="h1">
+          <Title2 class="max-w-[800px] sm:text-[30px]! leading-[38px]!" tag="h1">
             География наших поставок охватывает не только Тюменскую область, но и включает в себя всю Россию – от
             Калининграда и Мурманска до Владивостока и Сахалина.
           </Title2>
@@ -60,7 +60,7 @@
     <Section>
       <SectionContainer>
 
-        <Title2 class="mb-10">
+        <Title2 class="mb-10 sm:text-[30px]! leading-[38px]!">
           Покупайте как юрлицо или как физлицо
         </Title2>
 

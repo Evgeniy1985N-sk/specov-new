@@ -167,7 +167,8 @@ const handleSubmit = (e: Event) => {
 
       </form>
 
-      <div v-if="isShow" class="absolute top-full left-0 mt-1.5 w-full p-4 rounded-xl bg-white z-100 sm:shadow">
+      <!-- HINTS WITH MODAL WINDOW -->
+      <div v-if="isShow && input" class="absolute top-full left-0 mt-1.5 w-full p-4 rounded-xl bg-white z-100 sm:shadow">
         
         <!-- Show loading indicator -->
         <div v-if="isLoading" class="p-4 text-center text-gray-500">
@@ -242,6 +243,7 @@ const handleSubmit = (e: Event) => {
         </NuxtLink>
 
       </div>
+      <!-- HINTS WITH MODAL WINDOW -->
 
     </div>
 

@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { useScroll } from '~/composables/useScroll'
 import { useScrollTo } from '~/composables/useScrollTo'
+import { useDefinePosition } from '~/composables/useDefinePosition'
 import type { ProductFilter, ProductCard } from '~/types/product'
 import type { ProductReviewCollection } from '~/types/productReview'
 
+const el = ref<HTMLElement | null>(null);
 const { scrollPosition } = useScroll()
 const { scrollToSection } = useScrollTo()
-
-const offsetEl = ref(800)
-
+const { initialTop, height } = useDefinePosition(el)
 
 interface Props {
-	productDescription: string;
-	filters: ProductFilter[];
-	reviews: ProductReviewCollection;
-	relatedProducts: ProductCard[];
+  productDescription: string;
+  filters: ProductFilter[];
+  reviews: ProductReviewCollection;
+  relatedProducts: ProductCard[];
 }
 const props = defineProps<Props>();
 
@@ -61,12 +61,19 @@ function toggleActive(index: number) {
   }));
 }
 
+const emit = defineEmits<{
+  (e: 'updatePosition', position: number): void
+}>()
+
+watch(initialTop, (newVal) => {
+  emit('updatePosition', height.value + initialTop.value)
+})
 </script>
 
 <template>
-
-  <div :class="scrollPosition > offsetEl ? 'fixed top-20 left-0 w-full z-100' : ''" class="hidden sm:block">
-    <SectionContainer :class="scrollPosition > offsetEl ? 'md:px-4! lg:px-0!' : ''" class="p-0!">
+  <!-- TOP PANEL -->
+  <div v-if="scrollPosition > initialTop + height" class="fixed top-20 left-0 w-full z-100 hidden sm:block">
+    <SectionContainer class="p-0! md:px-4! lg:px-0!">
       <div class="flex lg:grid grid-cols-5 gap-1 bg-gray-100 p-1 rounded-lg">
 
         <button v-for="(tab, i) in tabs" :key="i" @click="scrollToSection(tab.to), toggleActive(i)"
@@ -79,6 +86,21 @@ function toggleActive(index: number) {
     </SectionContainer>
   </div>
 
+  <div ref="el" class="hidden sm:block">
+    <SectionContainer class="p-0!">
+      <div class="flex lg:grid grid-cols-5 gap-1 bg-gray-100 p-1 rounded-lg">
+
+        <button v-for="(tab, i) in tabs" :key="i" @click="scrollToSection(tab.to), toggleActive(i)"
+          :class="tab.isActive ? 'bg-white text-gray-950' : 'text-gray-600'"
+          class="flex items-center justify-center grow text-sm leading-5 font-semibold h-10 cursor-pointer transition rounded-lg">
+          {{ tab.label }}
+        </button>
+
+      </div>
+    </SectionContainer>
+  </div>
+  <!-- TOP PANEL -->
+
   <div class="grid gap-6 sm:gap-20 sm:pt-6">
 
     <div id="about" class="grid gap-10 max-w-[700px]">
@@ -86,7 +108,7 @@ function toggleActive(index: number) {
         <h2 class="mb-4 font-['Russo_One'] text-gray-950 font-normal text-[24px] leading-8">О товаре</h2>
         <p :class="[!isMoreText ? 'line-clamp-4 overflow-hidden' : '']"
           class="text-sm leading-5 font-medium text-gray-600 sm:line-clamp-none sm:overflow-visible">
-			{{ props.productDescription }}
+          {{ props.productDescription }}
         </p>
         <button @click="isMoreText = !isMoreText"
           class="flex sm:hidden gap-1.5 items-center text-sm leading-5 cursor-pointer text-gray-600 mt-4">
@@ -96,7 +118,7 @@ function toggleActive(index: number) {
           </i>
         </button>
       </div>
-	<!--
+      <!--
       <div class="flex flex-col gap-4">
         <div class="font-sans font-bold text-base leading-6 text-black">Комплектация</div>
         <p class="line-clamp-4 overflow-hidden text-sm leading-5 font-medium text-gray-600">
@@ -117,15 +139,17 @@ function toggleActive(index: number) {
       <h2 class="mb-4 font-['Russo_One'] text-gray-950 font-normal text-[24px] leading-8">Характеристики</h2>
 
       <div class="grid gap-4 w-full">
-        <p v-for="item in filters" :key="item.id" class="flex items-baseline text-sm leading-5">
-          <span class="max-w-[500px] font-medium text-gray-600 whitespace-nowrap pr-2">
+
+        <p v-for="item in filters" :key="item.id" class="flex items-baseline flex-wrap text-sm leading-5 pr-2">
+          <span class="max-w-[500px] font-medium text-gray-600 whitespace-nowrap">
             {{ item.label }}
           </span>
-          <span class="flex-1 border-b border-dotted border-gray-300 border-opacity-0 relative h-0 mx-2"></span>
-          <b class="font-bold text-gray-950 whitespace-nowrap">
+          <span class="flex-1 border-b border-dotted border-gray-300 border-opacity-0 relative min-w-6 h-0 mr-2"></span>
+          <b class="font-bold text-gray-950">
             {{ item.value }}
           </b>
         </p>
+
       </div>
 
     </div>
@@ -135,19 +159,19 @@ function toggleActive(index: number) {
       <ProductReview :reviews="props.reviews" />
     </div>
 
+    <div id="docs">
+      <h2 class="text-2xl font-bold mb-4">Документы</h2>
+      <div class="space-y-6">
+        <p>Здесь будут документы...</p>
+      </div>
+    </div>
+
     <div id="goods">
       <SectionHeader>
         <SectionTitle text="Сопутствующие товары" />
         <SectionButton text="Смотреть всё" path="/" />
       </SectionHeader>
       <ProductSliderVar :items="relatedProducts" />
-    </div>
-
-    <div id="docs">
-      <h2 class="text-2xl font-bold mb-4">Документы</h2>
-      <div class="space-y-6">
-        <p>Здесь будут документы...</p>
-      </div>
     </div>
 
   </div>

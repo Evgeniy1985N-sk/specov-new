@@ -186,10 +186,10 @@ const {
 const prodCountForFilterIsLoading = ref(false);
 const facetState = ref<CategoryCatalogPrecalc>({
 	total_count: 0,
-	filters: mergeDynFilters(props.data.category.filters, props.data.filters),
-	brands: mergeBrandFilters(props.data.category.brands, props.data.brands),
-	countries: mergeCountryFilters(props.data.category.countries, props.data.countries),
-	stores: mergeStoreFilters(props.data.category.stores, props.data.stores),
+	filters: mergeDynFilters(props.data.category.filters ?? [], props.data.filters ?? []),
+	brands: mergeBrandFilters(props.data.category.brands ?? [], props.data.brands ?? []),
+	countries: mergeCountryFilters(props.data.category.countries ?? [], props.data.countries ?? []),
+	stores: mergeStoreFilters(props.data.category.stores ?? [], props.data.stores ?? []),
 	min_price: props.data.min_price,
 	max_price: props.data.max_price,
 });
