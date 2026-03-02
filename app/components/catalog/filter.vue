@@ -123,8 +123,8 @@ const emitDyn = (filterId: number) => {
 
 const emitDynDebounced = debounce(emitDyn, 400);
 
-const formatPrice = (price?: number): string => 
-	price!==undefined ? String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : '';
+const formatPrice = (price?: number): string =>
+	price !== undefined ? String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : '';
 
 const formattedMinPrice = computed({
 	get() {
@@ -148,7 +148,7 @@ const formattedMaxPrice = computed({
 	}
 });
 const formatDynNumVal = (val?: number): string => {
-	return val!==undefined ? val.toString() : "";
+	return val !== undefined ? val.toString() : "";
 }
 
 // type FilterValue =
@@ -414,8 +414,8 @@ defineExpose({
 		<template #availability="{ item }">
 
 			<div @click="emitStatic('store')" class="grid grid-cols-2 lg:grid-cols-1 gap-4">
-				<label v-for="st in stores" :key="st.id" class="flex gap-2 items-center cursor-pointer">
-					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)" 
+				<label v-for="st in stores" :key="st.id" :class="true ? 'opacity-40 pointer-events-none' : '' " class="flex gap-2 items-center cursor-pointer">
+					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)"
 						:disabled="(ignoreStoresDisabled === true) ? false : st.disabled"
 						@update:model-value="updateStoreSelection(st.id, $event as boolean)" />
 					<span class="text-sm leading-5 text-gray-950">
@@ -423,6 +423,10 @@ defineExpose({
 					</span>
 				</label>
 			</div>
+
+			<button class="mt-4 text-xs font-medium text-(--Brand-700) cursor-pointer">
+				Показать еще
+			</button>
 
 		</template>
 
@@ -480,7 +484,7 @@ defineExpose({
 				<label v-for="(c, ind) in props.countries" :key="c.id"
 					:class="(ind < visCountryCount || isCountryHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
-					<UCheckbox size="xl" :model-value="selectedCountries.includes(c.id)" 
+					<UCheckbox size="xl" :model-value="selectedCountries.includes(c.id)"
 						:disabled="(ignoreCountriesDisabled === true) ? false : c.disabled"
 						@update:model-value="updateCountrySelection(c.id, $event as boolean)" />
 					<span class="text-sm leading-5 text-gray-950">
@@ -502,11 +506,9 @@ defineExpose({
 				<!-- TEXT / LIST → CHECKBOXES -->
 				<template v-if="filter.data_type === 't_text' || filter.data_type === 't_list'">
 					<label v-for="item in filter.items" :key="item.hash" class="flex gap-2 items-center cursor-pointer">
-						<UCheckbox size="xl" 
-							:model-value="filterState[filter.id][item.hash]" 
+						<UCheckbox size="xl" :model-value="filterState[filter.id][item.hash]"
 							:disabled="isDynItemDisabled(filter.id, item.disabled)"
-							@update:model-value="updateDynSelection(filter.id, item.hash, $event as boolean)"
-						/>
+							@update:model-value="updateDynSelection(filter.id, item.hash, $event as boolean)" />
 						<span class="text-sm leading-5 text-gray-950">
 							{{ item.value }}
 						</span>
@@ -515,23 +517,18 @@ defineExpose({
 
 				<!-- BOOLEAN -->
 				<template v-else-if="filter.data_type === 't_bool'">
-					<UCheckbox size="xl" v-model="filterState[filter.id]" :label="filter.name"
-						:disabled="filter.disabled" />
+					<UCheckbox size="xl" v-model="filterState[filter.id]" :label="filter.name" :disabled="filter.disabled" />
 				</template>
 
 				<!-- NUMBER -->
 				<template v-else-if="filter.data_type === 't_number'">
 					<div class="flex gap-2">
-						<UInput 
-							v-model="filterState[filter.id].min" type="number" :placeholder="`От ${formatDynNumVal(filter.items[0]?.min)}`"
-							:disabled="filter.disabled" 
-							@input="emitDynDebounced(filter.id)"
-						/>
-						<UInput 
-							v-model="filterState[filter.id].max" type="number" :placeholder="`До ${formatDynNumVal(filter.items[0]?.max)}`"
-							:disabled="filter.disabled" 
-							@input="emitDynDebounced(filter.id)"
-						/>
+						<UInput v-model="filterState[filter.id].min" type="number"
+							:placeholder="`От ${formatDynNumVal(filter.items[0]?.min)}`" :disabled="filter.disabled"
+							@input="emitDynDebounced(filter.id)" />
+						<UInput v-model="filterState[filter.id].max" type="number"
+							:placeholder="`До ${formatDynNumVal(filter.items[0]?.max)}`" :disabled="filter.disabled"
+							@input="emitDynDebounced(filter.id)" />
 					</div>
 				</template>
 

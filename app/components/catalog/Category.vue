@@ -67,7 +67,7 @@ watch(sort, () => {
 });
 
 const classAside = computed(() => ({
-	'fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible overscroll-[contain] transition z-100 sm:z-99 lg:relative flex items-start w-full lg:max-w-[280px] bg-white': true,
+	'fixed top-0 -left-full lg:left-0 h-screen lg:overflow-visible lg:h-full overscroll-[contain] transition z-100 sm:z-99 lg:relative flex items-start w-full lg:max-w-[280px] bg-white': true,
 	'left-0': isShoWFilter.value
 }));
 
@@ -208,10 +208,6 @@ onMounted(() => {
 </script>
 
 <template>
-	<!--
-	<div>TotalCount:{{ props.data.total_count }}</div>
-	<div>Visible:{{ productVisibleCount }}</div>
--->
 
 	<Header />
 
@@ -231,7 +227,7 @@ onMounted(() => {
 					<!-- ASIDE -->
 					<aside ref="aside" :class="classAside" v-if="isCardVisible">
 
-						<div class="grid gap-6 pb-36 sm:pb-40 lg:p-4 bg-white lg:bg-gray-100 rounded-lg w-full h-auto">
+						<div class="grid gap-6 pb-36 sm:pb-40 lg:p-4 bg-white lg:bg-gray-100 rounded-xl w-full h-auto">
 
 							<!-- HEADER -->
 							<div
