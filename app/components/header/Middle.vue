@@ -4,9 +4,9 @@ import IconFavorite from '@/components/header/icon/Favorite.vue'
 import IconCart from '@/components/header/icon/Cart.vue'
 
 const likesStore = useLikeStore();
-const likesSelected = computed( () => (likesStore.totalLikes > 0) );
+const likesSelected = computed(() => (likesStore.totalLikes > 0));
 const comparesStore = useCompareStore();
-const comparesSelected = computed( () => (comparesStore.totalCompares > 0) );
+const comparesSelected = computed(() => (comparesStore.totalCompares > 0));
 
 const isMenu = ref(false)
 const isCatalog = ref(false)
@@ -15,12 +15,12 @@ const buttons = [
   {
     src: '/compare',
     icon: IconCompare,
-	selected: comparesSelected.value
+    selected: comparesSelected.value
   },
   {
     src: '/favorite',
     icon: IconFavorite,
-	selected: likesSelected.value
+    selected: likesSelected.value
   },
   {
     src: '/cart',
@@ -125,14 +125,14 @@ interface Search {
 }
 const { isShowSearch } = inject<Search>('search')!
 watch(() => isShowSearch, () => {
-  if(isCatalog.value) isCatalog.value = false
-}, {deep: true})
+  if (isCatalog.value) isCatalog.value = false
+}, { deep: true })
 
 </script>
 
 <template>
   <div class="flex-wrap justify-between sm:flex-nowrap max-w-(--container) w-full m-auto px-4 gap-4 self-stretch
-    items-center sm:justify-center flex">
+    items-center flex">
 
     <HeaderLogo />
 
@@ -144,12 +144,14 @@ watch(() => isShowSearch, () => {
     <NuxtLink v-for="item in buttons" :to="item.src"
       class="text-(--Brand-950) hidden lg:flex border-zinc-300 p-[11px] justify-spacse-between h-11 w-11 flex-col bg-white hover:bg-gray-300 transition items-center border border-solid rounded-lg">
       <span class="h-5 w-5">
-        <component :is="item.icon" :selected="item.selected"/>
+        <component :is="item.icon" :selected="item.selected" />
       </span>
     </NuxtLink>
     <!-- buttons -->
 
+    <!-- BUTTON LOGIN -->
     <HeaderLogin />
+    <!-- BUTTON LOGIN -->
 
     <HeaderBurger :is-active="isMenu" @click="isMenu = !isMenu" />
 

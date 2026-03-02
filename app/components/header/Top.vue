@@ -10,7 +10,7 @@ const props = defineProps<Props>()
   <!-- top -->
   <div :class="props.class" class="hidden lg:block bg-gray-100 w-full">
     <div class="max-w-(--container) m-auto px-4 gap-1 self-stretch items-center 
-      justify-between flex-wrap flex leading-5 text-sm py-2">
+      justify-between flex-wrap flex py-1.5">
 
       <!-- left -->
       <HeaderNav />

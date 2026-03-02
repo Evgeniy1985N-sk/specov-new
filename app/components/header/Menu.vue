@@ -30,15 +30,16 @@ const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 </script>
 
 <template>
+
 	<ClientOnly>
-		<div class="relative max-w-[950px]">
-			<swiper class="h-8" :modules="[Navigation]" :slides-per-view="'auto'" :space-between="20"
+		<div class="slider-wrapper relative max-w-[950px]">
+			<swiper class="h-7" :modules="[Navigation]" :slides-per-view="'auto'" :space-between="20"
 				:watch-slides-progress="true" :navigation="{
 					prevEl: prevButton,
 					nextEl: nextButton,
 				}">
 				<swiper-slide v-for="(item, i) in mainCatsData" :key="i" class="w-auto! shrink-0! flex! items-center">
-					<a :href="link(item)" class="whitespace-nowrap text-gray-600 hover:text-(--Brand-700)">
+					<a :href="link(item)" class="text-sm whitespace-nowrap text-gray-600 hover:text-(--Brand-700)">
 						{{ item.name }}
 					</a>
 				</swiper-slide>
@@ -53,8 +54,7 @@ const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 				</svg>
 			</button>
 
-			<div class="absolute left-5 top-0 h-full w-16 bg-linear-to-r from-white to-transparent z-10 pointer-events-none">
-			</div>
+			<div class="slider-wrapper__gradient absolute left-5 top-0 h-full w-16 bg-linear-to-r from-white to-transparent z-10 pointer-events-none"></div>
 
 			<button ref="nextButton"
 				class="absolute z-20 top-1/2 right-0 -translate-y-1/2 transition border-zinc-300 p-[5px] flex justify-center items-center h-8 w-8 bg-white hover:bg-gray-300 border border-solid rounded-full cursor-pointer">
@@ -64,18 +64,18 @@ const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 				</svg>
 			</button>
 
+			<span class="slider-wrapper__gradient absolute right-5 top-0 h-full w-16 bg-linear-to-l from-white to-transparent z-10 pointer-events-none text-0">...</span>
 
-			<div class="absolute right-5 top-0 h-full w-16 bg-linear-to-l from-white to-transparent z-10 pointer-events-none">
-			</div>
 		</div>
 	</ClientOnly>
+
 </template>
 
 <style scoped>
 .swiper-button-disabled {
 	display: none !important;
 }
-.swiper-button-disabled + div {
+.swiper-button-disabled + .slider-wrapper__gradient {
 	display: none !important;
 }
 </style>

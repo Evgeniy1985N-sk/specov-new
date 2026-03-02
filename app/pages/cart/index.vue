@@ -196,7 +196,7 @@ cart.forEach((item) => {
 
           <!-- ASIDE -->
           <aside class="hidden lg:flex items-start w-full max-w-[280px]">
-            <div class="sticky top-0 grid gap-4 p-6 bg-gray-100 rounded-lg w-full">
+            <div class="sticky top-0 grid gap-4 p-6 bg-gray-100 rounded-xl w-full">
 
               <div class="font-bold text-black">
                 Детали заказа
@@ -259,9 +259,11 @@ cart.forEach((item) => {
 
               <div class="grid gap-4">
 
+                <UInput color="neutral" size="lg" placeholder="Введите промокод" :ui="{base: 'min-h-9!'}" />
+
                 <CartTotal />
 
-                <UButton @click="isShowThanks = true" size="xl" type="submit">
+                <UButton @click="isShowThanks = true" size="xl" type="submit" :ui="{base: 'min-h-11!'}">
                   Оформить заказ
                 </UButton>
 

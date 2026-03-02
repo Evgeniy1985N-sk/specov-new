@@ -16,8 +16,8 @@ const menu = ref([
 </script>
 
 <template>
-  <nav class="font-medium text-gray-600 flex flex-wrap justify-center gap-x-5 gap-y-2.5 items-center">
-    <NuxtLink v-for="(item, index) in menu" :to="item.src" :key="index" class="hover:text-(--Brand-700)">
+  <nav class="flex flex-wrap justify-center gap-x-5 gap-y-2.5 items-center">
+    <NuxtLink v-for="(item, index) in menu" :to="item.src" :key="index" class="text-xs leading-[18px] font-medium hover:text-(--Brand-700) transition-colors">
       {{ item.name }}
     </NuxtLink>
   </nav>

@@ -100,21 +100,15 @@ watch(() => props.isShow, (newVal) => {
 			html.classList.remove('xl:overflow-hidden', 'xl:mr-[17px]')
 		}
 	}
-
 })
-
-// interface Search {
-//   showSearch: () => void
-// }
-// const { showSearch } = inject<Search>('search')!
 
 </script>
 
 <template>
 
-	<!-- MODAL WINDOW MENU -->
+	<!-- MODAL WINDOW CATALOG MENU -->
 	<div v-if="props.isShow"
-		class="absolute h-[calc(100vh-128px)] inset-0 lg:top-32 z-100 lg:py-6 bg-white lg:border-t border-(--border)">
+		class="fixed h-[calc(100vh-71px)] inset-0 lg:top-32 z-100 lg:py-6 bg-white lg:border-t border-(--border) overflow-auto">
 
 		<!-- BUTTON BACK -->
 		<div class="lg:hidden border-b border-(--border) py-2.5 sm:py-6">
@@ -146,7 +140,7 @@ watch(() => props.isShow, (newVal) => {
 		<SectionContainer
 			class="max-w-full lg:max-w-(--container) relative px-6 lg:px-4 overflow-auto lg:min-h-[calc(100vh-180px)] custom-scrollbar">
 
-			<HeaderSearch class="mt-6 mb-6 lg:hidden" />
+			<HeaderSearch :is-main-component="false" class="mt-6 mb-6 lg:hidden" />
 
 			<!-- desk menu -->
 			<ul class="hidden lg:grid gap-1 lg:max-w-[280px]">
@@ -222,6 +216,7 @@ watch(() => props.isShow, (newVal) => {
 						</WrapIcon>
 					</div>
 
+					<!-- menu 1 SUB -->
 					<ul v-if="item.isActive" class="grid gap-1">
 
 						<li v-for="group in item.sub" :key="group.id">
@@ -267,9 +262,8 @@ watch(() => props.isShow, (newVal) => {
 		</SectionContainer>
 		<!-- CONTAINER MENU -->
 
-
 	</div>
-	<!-- MODAL WINDOW MENU -->
+		<!-- MODAL WINDOW CATALOG MENU -->
 
 </template>
 
