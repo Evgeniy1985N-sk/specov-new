@@ -48,7 +48,7 @@ provide<UiState>('UiState', {
   </header>
 </template>
 
-<style>
+<style scoped>
 .popup::after {
   content: '';
   position: fixed;

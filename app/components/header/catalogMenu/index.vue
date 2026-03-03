@@ -87,7 +87,7 @@ onMounted(() => {
 	}
 })
 
-watch(() => isShowCatalogMenu, (newVal) => {
+watch(isShowCatalogMenu, (newVal) => {
 	const html = document.querySelector('html')
 	if (newVal) {
 		if (html) {
@@ -144,8 +144,7 @@ watch(() => isShowCatalogMenu, (newVal) => {
 			<ul class="hidden lg:grid gap-1 lg:max-w-[280px]">
 
 				<li v-for="item in menu" :key="item.id" @click="toggleActive(item.id)"
-					:class="[item.isActive ? 'lg:bg-gray-100' : 'lg:relative z-1']"
-					class="py-2.5 px-3.5 rounded-lg">
+					:class="[item.isActive ? 'lg:bg-gray-100' : 'lg:relative z-1']" class="py-2.5 px-3.5 rounded-lg">
 
 					<!-- MAIN MENU ITEM -->
 					<div :class="[item.isActive ? 'lg:text-(--Brand-700)' : 'text-gray-600']"

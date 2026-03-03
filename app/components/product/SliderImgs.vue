@@ -85,5 +85,10 @@ const onSwiperInit = (swiper: SwiperClass) => {
 		bottom: 0;
 		display: block;
 	}
+
+	.swiper :deep(.swiper-pagination .swiper-pagination-bullet) {
+		width: 6px;
+		height: 6px;
+	}
 }
 </style>

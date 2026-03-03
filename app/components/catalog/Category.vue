@@ -67,7 +67,7 @@ watch(sort, () => {
 });
 
 const classAside = computed(() => ({
-	'fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible lg:h-full overscroll-[contain] transition z-100 lg:relative flex items-start w-full lg:max-w-[280px] bg-white': true,
+	'fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible lg:h-full overscroll-[contain] transition z-100 lg:z-1 lg:relative flex items-start w-full lg:max-w-[280px] bg-white': true,
 	'left-0': isShoWFilter.value
 }));
 
