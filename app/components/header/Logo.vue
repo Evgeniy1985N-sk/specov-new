@@ -1,8 +1,7 @@
 <script setup lang="ts">
-interface Search {
-  isShowSearch: boolean
-}
-const { isShowSearch } = inject<Search>('search')!
+import type { UiState } from '~/types/uiState';
+
+const { isShowSearch } = inject<UiState>('UiState')!
 </script>
 
 <template>

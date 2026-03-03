@@ -2,6 +2,7 @@
 import { type ProductCard } from "@/types/product";
 import { type ProductCatPublicList } from "@/types/productCat";
 import { useProductApi } from '@/composables/api/useProductApi';
+import type { UiState } from "~/types/uiState";
 
 interface Props {
   class?: string
@@ -53,18 +54,7 @@ const emit = defineEmits<{
   (e: 'handleClick', value?: string): void
 }>()
 
-interface Search {
-  showSearch: () => void
-  closeSearch: () => void
-}
-
-const { showSearch, closeSearch } = inject<Search>('search')!
-
-// watch(isShow, showSearch)
-interface Search {
-  isShowSearch: Ref<boolean>
-}
-const { isShowSearch } = inject<Search>('search')!
+const { isShowSearch, showSearch, closeSearch } = inject<UiState>('UiState')!
 
 // Watch the input for changes and debounce the search
 watch(input, (newValue) => {

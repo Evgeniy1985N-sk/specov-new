@@ -1,16 +1,32 @@
 <script setup lang="ts">
+
+import type { UiState } from '~/types/uiState'
+
 const isShowSearch = ref(false)
+const isShowCatalogMenu = ref(false)
+
 function showSearch() {
   isShowSearch.value = true
 }
 function closeSearch() {
   isShowSearch.value = false
 }
-provide('search', {
+function toggleShowCatalogMenu() {
+  isShowCatalogMenu.value = !isShowCatalogMenu.value
+}
+function closeCatalogMenu() {
+  isShowCatalogMenu.value = false
+}
+
+provide<UiState>('UiState', {
   isShowSearch,
+  isShowCatalogMenu,
   showSearch,
-  closeSearch
+  closeSearch,
+  toggleShowCatalogMenu,
+  closeCatalogMenu,
 })
+
 </script>
 
 <template>

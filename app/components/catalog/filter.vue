@@ -413,7 +413,7 @@ defineExpose({
 
 		<template #availability="{ item }">
 
-			<div @click="emitStatic('store')" class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+			<div @click="emitStatic('store')" class="custom-scrollbar lg:overflow-auto lg:max-h-[244px] flex flex-wrap lg:grid lg:grid-cols-1 gap-4">
 				<label v-for="st in stores" :key="st.id" :class="true ? 'opacity-40 pointer-events-none' : '' " class="flex gap-2 items-center cursor-pointer">
 					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)"
 						:disabled="(ignoreStoresDisabled === true) ? false : st.disabled"
@@ -543,4 +543,28 @@ defineExpose({
 	</UAccordion>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #0C8F61 #D5D7DA;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #D5D7DA;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #0C8F61;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #0C8F61;
+}
+</style>

@@ -4,16 +4,14 @@ import Battery from '@/components/header/catalogMenu/icon/Battery.vue';
 import { useProductCatApi } from '@/composables/api/useProductCatApi';
 import { type ProductCatPublicList } from "@/types/productCat";
 import { categoryLink } from "@/utils/categoryLink";
+import type { UiState } from '~/types/uiState';
 
-interface Props {
-	isShow: boolean
-}
-
-const props = defineProps<Props>()
+const { isShowCatalogMenu, closeCatalogMenu } = inject<UiState>('UiState')!
 const emit = defineEmits(['hideCatalog'])
 const levelMenu = ref(0)
 const activeCategoryId = ref<number | null>(null);
 const activeSubcategoryId = ref<number | null>(null);
+const isShowAllSubItems = ref(false)
 
 // Fetch catalog from server
 const { publicList } = useProductCatApi();
@@ -89,7 +87,7 @@ onMounted(() => {
 	}
 })
 
-watch(() => props.isShow, (newVal) => {
+watch(() => isShowCatalogMenu, (newVal) => {
 	const html = document.querySelector('html')
 	if (newVal) {
 		if (html) {
@@ -107,8 +105,8 @@ watch(() => props.isShow, (newVal) => {
 <template>
 
 	<!-- MODAL WINDOW CATALOG MENU -->
-	<div v-if="props.isShow"
-		class="fixed h-[calc(100vh-71px)] inset-0 lg:top-32 z-100 lg:py-6 bg-white lg:border-t border-(--border) overflow-auto">
+	<div @click.self="closeCatalogMenu" v-if="isShowCatalogMenu"
+		class="fixed inset-0 lg:top-[140px] z-100 h-[calc(100vh-71px)] lg:pt-2 bg-white lg:bg-black/20 overflow-auto">
 
 		<!-- BUTTON BACK -->
 		<div class="lg:hidden border-b border-(--border) py-2.5 sm:py-6">
@@ -138,7 +136,7 @@ watch(() => props.isShow, (newVal) => {
 
 		<!-- CONTAINER MENU -->
 		<SectionContainer
-			class="max-w-full lg:max-w-(--container) relative px-6 lg:px-4 overflow-auto lg:min-h-[calc(100vh-180px)] custom-scrollbar">
+			class="custom-scrollbar relative max-w-full lg:max-w-[1248px] w-full p-4 lg:px-4 overflow-auto lg:h-[600px] lg:bg-white lg:rounded-3xl">
 
 			<HeaderSearch :is-main-component="false" class="mt-6 mb-6 lg:hidden" />
 
@@ -147,53 +145,80 @@ watch(() => props.isShow, (newVal) => {
 
 				<li v-for="item in menu" :key="item.id" @click="toggleActive(item.id)"
 					:class="[item.isActive ? 'lg:bg-gray-100' : 'lg:relative z-1']"
-					class="py-2.5 px-3.5 rounded-lg cursor-pointer">
+					class="py-2.5 px-3.5 rounded-lg">
 
+					<!-- MAIN MENU ITEM -->
 					<div :class="[item.isActive ? 'lg:text-(--Brand-700)' : 'text-gray-600']"
-						class="flex gap-1.5 items-center text-sm leading-5 font-bold hover:text-(--Brand-700)">
-						<span class="flex items-center justify-center shrink-0 h-6 w-6">
+						class="flex gap-1.5 items-center text-sm leading-5 font-bold hover:text-(--Brand-700)  cursor-pointer">
+						<WrapIcon class="shrink-0 h-6! w-6!">
 							<component :is="item.icon" />
-						</span>
+						</WrapIcon>
 						{{ item.name }}
 					</div>
+					<!-- MAIN MENU ITEM -->
 
 					<!-- SUB MENU -->
-					<div v-if="item.isActive" class="lg:absolute top-0 left-0 px-4 pb-4 grid gap-8 grid-cols-[280px_1fr]">
-						<ul class="grid gap-10 col-2">
-							<li v-for="group in item.sub" class="grid gap-4" >
+					<div v-if="item.isActive"
+						class="lg:absolute lg:top-0 lg:left-0 p-4 pb-0 grid gap-8 grid-cols-[280px_1fr] lg:w-full">
 
-								<NuxtLink :to="categoryLink(group)" class="text-[20px] leading-[30px] text-gray-950 font-bold">
+						<!-- SUB MENU UL WRAPPER -->
+						<ul class="grid gap-10 lg:gap-2 col-2 lg:pb-4">
+
+							<!-- SUB MENU LI -->
+							<li v-for="group in item.sub" class="grid gap-4 p-6 bg-gray-100 rounded-3xl">
+
+								<!-- SUB MENU ITEM -->
+								<NuxtLink :to="categoryLink(group)"
+									class="flex items-center gap-2 text-[20px] leading-[30px] text-gray-950 font-semibold">
 									{{ group.title }}
+									<WrapIcon class="w-6! h-6!">
+										<HeaderCatalogMenuIconAng />
+									</WrapIcon>
 								</NuxtLink>
+								<!-- SUB MENU ITEM -->
 
 								<!-- SUB MENU UL -->
-								<ul v-if="group.items?.length" class="grid grid-cols-3 gap-x-8 gap-y-2">
+								<ul v-if="group.items?.length" class="grid grid-cols-3 gap-x-8 gap-y-3">
 
-									<li v-for="category in group.items">
+									<li v-for="category in group.items.slice(0, !isShowAllSubItems ? 9 : group.items.length)">
 										<NuxtLink
 											class="custom-item flex items-center justify-between gap-2 hover:text-(--Brand-700) text-gray-950 transition"
 											:to="categoryLink(category)">
-											<p class="w-full max-w-[190px] text-sm leading-5 font-medium">
+											<p class="w-full max-w-[190px] text-sm leading-5 font-medium text-gray-950">
 												{{ category.name }}
 											</p>
 											<span class="shrink-0 text-sm leading-5 font-medium text-gray-600">
 												{{ category.quantity }}
 											</span>
-											<WrapIcon class="w-5 h-5">
-												<HeaderCatalogMenuIconAng />
-											</WrapIcon>
 										</NuxtLink>
 									</li>
 
 								</ul>
 								<!-- SUB MENU UL -->
 
+								<!-- BUTTON SHOW ALL ITEMS -->
+								<button v-if="group.items && group.items?.length > 9" @click="isShowAllSubItems = !isShowAllSubItems"
+									class="hidden lg:flex items-center gap-1.5 text-sm cursor-pointer">
+									<span v-if="!isShowAllSubItems">
+										Показать еще
+									</span>
+									<span v-else>
+										Скрыть
+									</span>
+									<i :class="{ 'rotate-180': isShowAllSubItems }" class="flex items-center justify-center w-5 h-5">
+										<HeaderCatalogMenuIconAngDown />
+									</i>
+								</button>
+								<!-- BUTTON SHOW ALL ITEMS -->
 
 							</li>
+							<!-- SUB MENU LI -->
+
 						</ul>
+						<!-- SUB MENU UL WRAPPER -->
+
 					</div>
 					<!-- SUB MENU -->
-
 
 				</li>
 
@@ -217,7 +242,7 @@ watch(() => props.isShow, (newVal) => {
 					</div>
 
 					<!-- menu 1 SUB -->
-					<ul v-if="item.isActive" class="grid gap-1">
+					<ul v-if="item.isActive" class="h-0 lg:h-auto grid gap-1">
 
 						<li v-for="group in item.sub" :key="group.id">
 
@@ -263,7 +288,7 @@ watch(() => props.isShow, (newVal) => {
 		<!-- CONTAINER MENU -->
 
 	</div>
-		<!-- MODAL WINDOW CATALOG MENU -->
+	<!-- MODAL WINDOW CATALOG MENU -->
 
 </template>
 

@@ -2,6 +2,7 @@
 import IconCompare from '@/components/header/icon/Compare.vue'
 import IconFavorite from '@/components/header/icon/Favorite.vue'
 import IconCart from '@/components/header/icon/Cart.vue'
+import type { UiState } from '~/types/uiState';
 
 const likesStore = useLikeStore();
 const likesSelected = computed(() => (likesStore.totalLikes > 0));
@@ -9,7 +10,8 @@ const comparesStore = useCompareStore();
 const comparesSelected = computed(() => (comparesStore.totalCompares > 0));
 
 const isMenu = ref(false)
-const isCatalog = ref(false)
+const { isShowSearch, isShowCatalogMenu, toggleShowCatalogMenu, closeCatalogMenu } = inject<UiState>('UiState')!
+
 const isProfile = ref(false)
 const buttons = [
   {
@@ -120,12 +122,8 @@ const items = ref([
 const itemsPart = computed(() => items.value.slice(0, 6))
 const itemsPart2 = computed(() => items.value.slice(6, 9))
 
-interface Search {
-  isShowSearch: boolean
-}
-const { isShowSearch } = inject<Search>('search')!
 watch(() => isShowSearch, () => {
-  if (isCatalog.value) isCatalog.value = false
+  if (isShowCatalogMenu.value) closeCatalogMenu()
 }, { deep: true })
 
 </script>
@@ -136,7 +134,7 @@ watch(() => isShowSearch, () => {
 
     <HeaderLogo />
 
-    <HeaderCatalogButton @toggle-catalog="isCatalog = !isCatalog" :is-active="isCatalog" />
+    <HeaderCatalogButton @toggle-catalog="toggleShowCatalogMenu" :is-active="isShowCatalogMenu" />
 
     <HeaderSearch :items-part="itemsPart" :items-part2="itemsPart2" class="w-full order-1 sm:order-0" />
 
@@ -158,15 +156,14 @@ watch(() => isShowSearch, () => {
     <HeaderMobileMenu :is-show="isMenu" />
 
     <!-- CATALOG MENU -->
-    <HeaderCatalogMenu :is-show="isCatalog" @hide-catalog="isCatalog = !isCatalog" />
+    <HeaderCatalogMenu :is-show="isShowCatalogMenu" @hide-catalog="toggleShowCatalogMenu" />
     <!-- CATALOG MENU -->
 
     <HeaderProfile :is-show="isProfile" />
 
     <!-- MOBILE MENU BOTTOM -->
-    <HeaderMobileMenuBottom @toggle-catalog="isCatalog = !isCatalog" @toggle-profile="isProfile = !isProfile" />
+    <HeaderMobileMenuBottom @toggle-catalog="toggleShowCatalogMenu" @toggle-profile="isProfile = !isProfile" />
     <!-- MOBILE MENU BOTTOM -->
-
 
   </div>
 </template>
