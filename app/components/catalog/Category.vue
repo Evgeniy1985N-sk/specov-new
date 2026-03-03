@@ -67,7 +67,7 @@ watch(sort, () => {
 });
 
 const classAside = computed(() => ({
-	'fixed top-0 -left-full lg:left-0 h-screen lg:overflow-visible lg:h-full overscroll-[contain] transition z-100 sm:z-99 lg:relative flex items-start w-full lg:max-w-[280px] bg-white': true,
+	'fixed top-0 -left-full lg:left-0 h-screen overflow-auto lg:overflow-visible lg:h-full overscroll-[contain] transition z-100 lg:relative flex items-start w-full lg:max-w-[280px] bg-white': true,
 	'left-0': isShoWFilter.value
 }));
 
@@ -76,7 +76,7 @@ const classAside = computed(() => ({
 const filterClick = async (filter: { id: string }) => {
 
 	filterTop.value = mousePositionY.value;
-	console.log("filter click, mousePositionY:",mousePositionY.value)
+	console.log("filter click, mousePositionY:", mousePositionY.value)
 	const res = await fetchProdCountForFilter();
 	if (res) {
 		isShowPopover.value = true;
@@ -204,7 +204,48 @@ onMounted(() => {
 	filterRef.value?.initFromQuery(route.query);
 	sorterRef.value?.initFromQuery(route.query);
 });
-
+const cards = ref([
+	{
+		name: 'Столярные Столярные',
+		quantity: 698,
+		image: '/image/example/img-1.jpg'
+	},
+	{
+		name: 'Специальные Столярные Столярные',
+		quantity: 418,
+		image: '/image/example/img-2.jpg'
+	},
+	{
+		name: 'Искробезопасные Искробезопасные Искробезопасные',
+		quantity: 698,
+		image: '/image/example/img-3.jpg'
+	},
+	{
+		name: 'Безынерционные Искробезопасные Искробезопасные',
+		quantity: 698,
+		image: '/image/example/img-4.jpg'
+	},
+	{
+		name: 'С медным бойком Искробезопасные Искробезопасные Искробезопасные',
+		quantity: 35,
+		image: '/image/example/img-5.jpg'
+	},
+	{
+		name: 'Молотки плиточника',
+		quantity: 8,
+		image: '/image/example/img-6.jpg'
+	},
+	{
+		name: 'Кровельщика',
+		quantity: 110,
+		image: '/image/example/img-7.jpg'
+	},
+	{
+		name: 'Молотки-топоры',
+		quantity: 12,
+		image: '/image/example/img-8.jpg'
+	},
+])
 </script>
 
 <template>
@@ -219,19 +260,18 @@ onMounted(() => {
 			<SectionContainer>
 				<TitleGoods class="mb-6" :goods="data.total_count" :title="data.category.name" />
 
-				<CatalogCardSlider v-if="childCategories" :items="childCategories" class="mb-8 hidden! md:block!" />
+				<!-- <CatalogCardSlider v-if="childCategories" :items="childCategories" class="mb-8 hidden! md:block!" /> -->
+
+				<CatalogCardSlider :items="cards" class="mb-6 hidden! md:block!" />
 
 				<div class="flex gap-8">
 
-
 					<!-- ASIDE -->
 					<aside ref="aside" :class="classAside" v-if="isCardVisible">
-
 						<div class="grid gap-6 pb-36 sm:pb-40 lg:p-4 bg-white lg:bg-gray-100 rounded-xl w-full h-auto">
 
 							<!-- HEADER -->
-							<div
-								class="flex lg:hidden justify-between items-center p-4 sm:p-6 border-b border-gray-200">
+							<div class="flex lg:hidden justify-between items-center p-4 sm:p-6 border-b border-gray-200">
 
 								<button @click="isShoWFilter = false" class="flex items-center gap-2">
 									<WrapIcon>
@@ -252,9 +292,8 @@ onMounted(() => {
 
 							<!-- FILTER -->
 							<CatalogFilter ref="filterRef" :brands="props.data.brands" :countries="props.data.countries"
-								:filters="props.data.filters" :stores="props.data.stores"
-								:minPrice="props.data.min_price" :maxPrice="props.data.max_price"
-								class="px-4 sm:px-6 lg:px-0" @handle-click="filterClick" />
+								:filters="props.data.filters" :stores="props.data.stores" :minPrice="props.data.min_price"
+								:maxPrice="props.data.max_price" class="px-4 sm:px-6 lg:px-0" @handle-click="filterClick" />
 							<!-- FILTER -->
 
 							<!-- BUTTONS -->
@@ -274,11 +313,8 @@ onMounted(() => {
 						</div>
 
 						<!-- POPOVER -->
-						<CatalogPopover v-if="isShowPopover" :goods="foundProdCountForFilter"
-							@handle-click="applyProductSettings"
-							class="hidden! lg:inline-block!" 
-							:top="filterTop"
-						/>
+						<CatalogPopover v-if="isShowPopover" :goods="foundProdCountForFilter" @handle-click="applyProductSettings"
+							class="hidden! lg:inline-block!" :top="filterTop" />
 						<!-- POPOVER -->
 
 
@@ -289,8 +325,7 @@ onMounted(() => {
 					<div class="w-full" v-if="isCardVisible">
 
 						<!-- Top -->
-						<div
-							class="grid grid-cols-[auto_auto] sm:flex justify-between items-center flex-wrap gap-x-2 gap-y-4 pb-6">
+						<div class="grid grid-cols-[auto_auto] sm:flex justify-between items-center flex-wrap gap-x-2 gap-y-4 pb-6">
 							<CatalogSort ref="sorterRef" @handle-click="(value) => sort = value" />
 
 							<button @click="isShoWFilter = !isShoWFilter"
@@ -305,11 +340,12 @@ onMounted(() => {
 						<!-- Top -->
 
 
-						<CatalogCardSlider v-if="childCategories" :items="childCategories" class="mb-6! md:hidden!" />
-
+						<!-- <CatalogCardSlider v-if="childCategories" :items="childCategories" class="mb-6! md:hidden!" /> -->
+						<CatalogCardSlider :items="cards" class="mb-6 md:hidden!" />
 
 						<!-- Cards -->
-						<div :class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6'"
+						<div
+							:class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6'"
 							class="grid lg:gap-8">
 							<ProductCard :is-row="isList" :is-list="!isList" v-for="item in displayedItems" :item="item"
 								:key="item.id" />
