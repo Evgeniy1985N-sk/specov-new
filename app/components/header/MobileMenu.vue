@@ -1,13 +1,14 @@
 <script setup lang="ts">
 import IconCompare from '@/components/header/icon/Compare.vue'
 import IconFavorite from '@/components/header/icon/Favorite.vue'
+import type { UiState } from '~/types/uiState'
 
 interface Props {
   isShow: boolean
 }
 const props = defineProps<Props>()
 
-const isShowSearch = inject('isShowSearch')
+const { isShowSearch } = inject<UiState>('UiState')!
 
 const buttons = [
   {

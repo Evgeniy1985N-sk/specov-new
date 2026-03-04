@@ -30,7 +30,7 @@ provide<UiState>('UiState', {
 </script>
 
 <template>
-  <header :class="{ 'popup': isShowSearch }"
+  <header @click.self="closeSearch" :class="{ 'popup': isShowSearch }"
     class="relative z-100 w-full left-0 py-3 sm:pt-4 lg:pt-0 flex flex-col items-center gap-2 sm:gap-3 self-stretch bg-white shadow-[0px_4px_6px_-1px_#0A0D120D]">
 
     <!-- TOP -->

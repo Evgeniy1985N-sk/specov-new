@@ -6,9 +6,7 @@ import type { UiState } from "~/types/uiState";
 
 interface Props {
   class?: string
-  isMainComponent?: boolean | true
 }
-
 const props = defineProps<Props>()
 const input = ref('');
 const dropdown = ref<HTMLElement | null>(null)
@@ -31,19 +29,9 @@ const prodImageSrc = (item: ProductCard) => {
 }
 
 const { link: catLink, imgSrc: catImgSrc } = useCategory();
-
-const handleClickOutside = (event: Event) => {
-  if (dropdown.value && !dropdown.value.contains(event.target as Node)) {
-    closeSearch()
-  }
-}
-
-onMounted(() => {
-  document.addEventListener('click', handleClickOutside)
-})
+const { isShowSearch, showSearch, closeSearch } = inject<UiState>('UiState')!
 
 onBeforeUnmount(() => {
-  document.removeEventListener('click', handleClickOutside)
   // Clear timeout on unmount to prevent memory leaks
   if (searchTimeout.value) {
     clearTimeout(searchTimeout.value)
@@ -54,7 +42,6 @@ const emit = defineEmits<{
   (e: 'handleClick', value?: string): void
 }>()
 
-const { isShowSearch, showSearch, closeSearch } = inject<UiState>('UiState')!
 
 // Watch the input for changes and debounce the search
 watch(input, (newValue) => {

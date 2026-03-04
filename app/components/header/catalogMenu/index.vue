@@ -138,7 +138,7 @@ watch(isShowCatalogMenu, (newVal) => {
 		<SectionContainer
 			class="custom-scrollbar relative max-w-full lg:max-w-[1248px] w-full p-4 lg:px-4 overflow-auto lg:h-[600px] lg:bg-white lg:rounded-3xl">
 
-			<HeaderSearch :is-main-component="false" class="mt-6 mb-6 lg:hidden" />
+			<HeaderSearch class="mt-6 mb-6 lg:hidden" />
 
 			<!-- desk menu -->
 			<ul class="hidden lg:grid gap-1 lg:max-w-[280px]">
