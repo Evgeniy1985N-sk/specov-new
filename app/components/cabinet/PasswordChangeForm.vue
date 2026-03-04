@@ -36,7 +36,7 @@ const handleSave = () => {
 <template>
   <div class="bg-(--Base-White) rounded-xl p-5">
     <div class="flex items-center gap-3 mb-5">
-      <div class="w-10 h-10 bg-(--Background) rounded-lg flex items-center justify-center">
+      <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
         <img src="/image/cabinet/passcode.svg" alt="">
       </div>
       <h3 class="text-lg font-bold text-(--Text-950)">Изменить пароль</h3>
@@ -72,7 +72,7 @@ const handleSave = () => {
 
       <button
         @click="handleSave"
-        class="px-4 py-2.5 mt-2 bg-(--Background) text-(--Text-950) text-base font-semibold rounded-lg hover:bg-(--border) transition-colors cursor-pointer"
+        class="px-4 py-2.5 mt-2 bg-gray-100 text-(--Text-950) text-base font-semibold rounded-lg hover:bg-(--border) transition-colors cursor-pointer"
       >
         Сохранить
       </button>

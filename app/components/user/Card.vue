@@ -81,7 +81,7 @@ const handleUnblockConfirm = () => {
     <div v-if="user.blocked" class="min-[750px]:hidden mt-6">
       <button
         @click="handleUnblock"
-        class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-(--Background) border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) hover:opacity-70 transition-opacity"
+        class="w-full flex items-center justify-center gap-2 px-4 py-2.5 bg-gray-100 border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) hover:opacity-70 transition-opacity"
       >
         <img src="/image/cabinet/reverse-left.svg" alt="" class="w-5 h-5 shrink-0">
         Восстановить

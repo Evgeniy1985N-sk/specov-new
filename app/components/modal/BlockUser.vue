@@ -59,7 +59,7 @@ defineExpose({
     <div class="bg-white rounded-xl p-6 relative">
       <button
         @click="handleClose"
-        class="absolute top-6 right-6 w-6 h-6 flex items-center justify-center hover:bg-(--Background) rounded transition-colors"
+        class="absolute top-6 right-6 w-6 h-6 flex items-center justify-center hover:bg-gray-100 rounded transition-colors"
       >
         <svg width="12" height="12" viewBox="0 0 12 12" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10.8335 0.833313L0.833496 10.8333M0.833496 0.833313L10.8335 10.8333" stroke="#535862" stroke-width="1.66667" stroke-linecap="round" stroke-linejoin="round"/>
@@ -88,7 +88,7 @@ defineExpose({
         </button>
         <button
           @click="handleClose"
-          class="flex-1 px-4 py-3 border border-(--border) bg-white text-(--Brand-950) text-sm font-semibold rounded-lg hover:bg-(--Background) transition-colors cursor-pointer"
+          class="flex-1 px-4 py-3 border border-(--border) bg-white text-(--Brand-950) text-sm font-semibold rounded-lg hover:bg-gray-100 transition-colors cursor-pointer"
         >
           Отмена
         </button>

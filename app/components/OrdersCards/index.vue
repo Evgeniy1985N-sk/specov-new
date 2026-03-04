@@ -66,7 +66,7 @@ const desktopGridClass = computed(() => {
 
 <template>
   <div 
-    class="bg-(--Background) rounded-lg transition-all"
+    class="bg-gray-100 rounded-lg transition-all"
     :class="isExpanded ? 'border border-(--border)' : ''"
   >
     <div 
@@ -150,7 +150,7 @@ const desktopGridClass = computed(() => {
       <NuxtLink 
         v-if="!isExpanded"
         :to="`${basePath}/orders/${order.id}`"
-        class="w-full py-3 px-4 border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) flex items-center justify-center gap-2 hover:bg-(--Background) transition-colors"
+        class="w-full py-3 px-4 border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) flex items-center justify-center gap-2 hover:bg-gray-100 transition-colors"
       >
         Смотреть товары
       <img src="/image/cabinet/arrow-right.svg" alt="">

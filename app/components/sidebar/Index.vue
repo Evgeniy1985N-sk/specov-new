@@ -43,7 +43,7 @@ const dataLabel = computed(() => {
       <NuxtLink
         :to="makePath('')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isRootActive ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isRootActive ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/building.svg" alt="Кабинет" width="20" height="20" :class="isRootActive ? 'filter-brand' : ''" />
         <span>Кабинет</span>
@@ -54,7 +54,7 @@ const dataLabel = computed(() => {
       <NuxtLink
         :to="makePath('orders')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isActive(makePath('orders')) ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isActive(makePath('orders')) ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/shopping-bag.svg" alt="Заказы" width="20" height="20" :class="isActive(makePath('orders')) ? 'filter-brand' : ''" />
         <span>Заказы</span>
@@ -63,7 +63,7 @@ const dataLabel = computed(() => {
       <NuxtLink
         :to="makePath('promo')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isActive(makePath('promo')) ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isActive(makePath('promo')) ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/promo.svg" alt="Промокоды" width="20" height="20" :class="isActive(makePath('promo')) ? 'filter-brand' : ''" />
         <span>Промокоды</span>
@@ -72,7 +72,7 @@ const dataLabel = computed(() => {
       <NuxtLink
         :to="makePath('discounts')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isActive(makePath('discounts')) ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isActive(makePath('discounts')) ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/sale.svg" alt="Скидки" width="20" height="20" :class="isActive(makePath('discounts')) ? 'filter-brand' : ''" />
         <span>Скидки</span>
@@ -83,7 +83,7 @@ const dataLabel = computed(() => {
       <NuxtLink
         :to="makePath('appeals')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isActive(makePath('appeals')) ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isActive(makePath('appeals')) ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/annotation-dots.svg" alt="Обращения" width="20" height="20" :class="isActive(makePath('appeals')) ? 'filter-brand' : ''" />
         <span>Обращения</span>
@@ -94,7 +94,7 @@ const dataLabel = computed(() => {
       <NuxtLink
         :to="makePath('addresses')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isActive(makePath('addresses')) ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isActive(makePath('addresses')) ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/marker.svg" alt="Адреса доставки" width="20" height="20" :class="isActive(makePath('addresses')) ? 'filter-brand' : ''" />
         <span>Адреса доставки</span>
@@ -103,7 +103,7 @@ const dataLabel = computed(() => {
       <NuxtLink
         :to="makePath('data')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isActive(makePath('data')) ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isActive(makePath('data')) ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/clipboard.svg" :alt="dataLabel" width="20" height="20" :class="isActive(makePath('data')) ? 'filter-brand' : ''" />
         <span>{{ dataLabel }}</span>
@@ -113,7 +113,7 @@ const dataLabel = computed(() => {
         v-if="basePath === '/cabinet-corporate'"
         :to="makePath('users')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isActive(makePath('users')) ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isActive(makePath('users')) ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/users.svg" alt="Пользователи" width="20" height="20" :class="isActive(makePath('users')) ? 'filter-brand' : ''" />
         <span>Пользователи</span>
@@ -122,7 +122,7 @@ const dataLabel = computed(() => {
       <NuxtLink
         :to="makePath('notifications')"
         class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-        :class="isActive(makePath('notifications')) ? 'bg-(--Background) text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'"
+        :class="isActive(makePath('notifications')) ? 'bg-gray-100 text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'"
       >
         <img src="/image/sidebar/bell-ringing.svg" alt="Уведомления" width="20" height="20" :class="isActive(makePath('notifications')) ? 'filter-brand' : ''" />
         <span>Уведомления</span>

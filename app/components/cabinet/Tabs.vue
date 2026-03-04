@@ -30,7 +30,7 @@ const activeTab = computed({
       :class="[
         'px-3.5 py-2.5 rounded-lg text-sm font-medium transition-colors max-[510px]:w-full',
         activeTab === tab.id
-          ? 'bg-(--Background) text-(--Brand-700)'
+          ? 'bg-gray-100 text-(--Brand-700)'
           : 'bg-(--Base-White) text-(--Text-600)'
       ]"
     >

@@ -56,12 +56,12 @@ onBeforeUnmount(() => {
                   </svg>
                 </summary>
                 <div class="absolute z-10 mt-1 w-48 bg-(--Base-White) rounded-lg shadow-md py-1">
-                  <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-(--Background)">Все
+                  <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">Все
                     заказы</button>
-                  <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-(--Background)">В
+                  <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">В
                     обработке</button>
                   <button
-                    class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-(--Background)">Завершённые</button>
+                    class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">Завершённые</button>
                 </div>
               </details>
             </div>

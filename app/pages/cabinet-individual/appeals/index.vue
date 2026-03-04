@@ -100,12 +100,12 @@ onBeforeUnmount(() => {
                       </svg>
                     </summary>
                     <div class="absolute z-10 mt-1 w-48 bg-(--Base-White) rounded-lg shadow-md py-1">
-                      <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-(--Background)">Все
+                      <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">Все
                         статусы</button>
-                      <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-(--Background)">В
+                      <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">В
                         работе</button>
                       <button
-                        class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-(--Background)">Закрытые</button>
+                        class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">Закрытые</button>
                     </div>
                   </details>
 
@@ -121,9 +121,9 @@ onBeforeUnmount(() => {
                       </svg>
                     </summary>
                     <div class="absolute z-10 mt-1 w-48 bg-(--Base-White) rounded-lg shadow-md py-1">
-                      <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-(--Background)">За
+                      <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">За
                         неделю</button>
-                      <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-(--Background)">За
+                      <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">За
                         месяц</button>
                     </div>
                   </details>

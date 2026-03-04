@@ -11,7 +11,7 @@ defineProps<Props>()
 <template>
   <div class="bg-(--Base-White) rounded-xl p-5">
     <div class="flex flex-col">
-      <div class="w-12 h-12 bg-(--Background) rounded-lg flex items-center justify-center mb-3">
+      <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
         <img src="/image/cabinet/user-square.svg" alt="">
       </div>
       <div class="text-sm text-(--Text-600) mb-1">Персональный менеджер</div>

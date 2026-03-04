@@ -29,7 +29,7 @@ const isActive = (path: string) => {
       <nav class="bg-(--Base-White) rounded-xl p-4">
         <NuxtLink to="/cabinet-corporate"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate') && !route.path.includes('/navigation') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate') && !route.path.includes('/navigation') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/building.svg" alt="Кабинет" width="20" height="20"
             :class="isActive('/cabinet-corporate') && !route.path.includes('/navigation') ? 'filter-brand' : ''" />
           <span>Кабинет</span>
@@ -39,7 +39,7 @@ const isActive = (path: string) => {
 
         <NuxtLink to="/cabinet-corporate/orders"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate/orders') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate/orders') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/shopping-bag.svg" alt="Заказы" width="20" height="20"
             :class="isActive('/cabinet-corporate/orders') ? 'filter-brand' : ''" />
           <span>Заказы</span>
@@ -47,7 +47,7 @@ const isActive = (path: string) => {
 
         <NuxtLink to="/cabinet-corporate/promo"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate/promo') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate/promo') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/promo.svg" alt="Промокоды" width="20" height="20"
             :class="isActive('/cabinet-corporate/promo') ? 'filter-brand' : ''" />
           <span>Промокоды</span>
@@ -55,7 +55,7 @@ const isActive = (path: string) => {
 
         <NuxtLink to="/cabinet-corporate/discounts"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate/discounts') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate/discounts') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/sale.svg" alt="Скидки" width="20" height="20"
             :class="isActive('/cabinet-corporate/discounts') ? 'filter-brand' : ''" />
           <span>Скидки</span>
@@ -65,7 +65,7 @@ const isActive = (path: string) => {
 
         <NuxtLink to="/cabinet-corporate/appeals"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate/appeals') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate/appeals') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/annotation-dots.svg" alt="Обращения" width="20" height="20"
             :class="isActive('/cabinet-corporate/appeals') ? 'filter-brand' : ''" />
           <span>Обращения</span>
@@ -75,7 +75,7 @@ const isActive = (path: string) => {
 
         <NuxtLink to="/cabinet-corporate/addresses"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate/addresses') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate/addresses') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/marker.svg" alt="Адреса доставки" width="20" height="20"
             :class="isActive('/cabinet-corporate/addresses') ? 'filter-brand' : ''" />
           <span>Адреса доставки</span>
@@ -83,7 +83,7 @@ const isActive = (path: string) => {
 
         <NuxtLink to="/cabinet-corporate/data"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate/data') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate/data') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/clipboard.svg" alt="Данные юрлица" width="20" height="20"
             :class="isActive('/cabinet-corporate/data') ? 'filter-brand' : ''" />
           <span>Данные юрлица</span>
@@ -91,7 +91,7 @@ const isActive = (path: string) => {
 
         <NuxtLink to="/cabinet-corporate/users"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate/users') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate/users') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/users.svg" alt="Пользователи" width="20" height="20"
             :class="isActive('/cabinet-corporate/users') ? 'filter-brand' : ''" />
           <span>Пользователи</span>
@@ -99,7 +99,7 @@ const isActive = (path: string) => {
 
         <NuxtLink to="/cabinet-corporate/notifications"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
-          :class="isActive('/cabinet-corporate/notifications') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-(--Background)'">
+          :class="isActive('/cabinet-corporate/notifications') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">
           <img src="/image/sidebar/bell-ringing.svg" alt="Уведомления" width="20" height="20"
             :class="isActive('/cabinet-corporate/notifications') ? 'filter-brand' : ''" />
           <span>Уведомления</span>

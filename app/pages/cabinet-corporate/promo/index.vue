@@ -11,7 +11,7 @@ const usePromocode = (code: string) => {
 </script>
 
 <template>
-  <div class="pt-[117px] sm:pt-[73px] lg:pt-[173px] min-h-screen bg-(--Background)">
+  <div class="pt-[117px] sm:pt-[73px] lg:pt-[173px] min-h-screen bg-gray-100">
     <Header />
 
     <main class="pt-8 pb-23">

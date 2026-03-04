@@ -92,7 +92,7 @@ const handleCloseNotification = () => {
             <Tabs v-model="activeTab" :tabs="tabs" />
 
             <div>
-              <div class="hidden min-[750px]:flex gap-6 px-4 py-3 mb-4 bg-(--Background) rounded-2xl">
+              <div class="hidden min-[750px]:flex gap-6 px-4 py-3 mb-4 bg-gray-100 rounded-2xl">
                 <div
                   class="min-[750px]:w-[181px] min-[1280px]:w-[248px] text-left text-sm font-medium text-(--Text-600)">
                   ФИО</div>

@@ -75,7 +75,7 @@ const isStarActive = (star: number) => {
             <div class=" bg-(--Base-White) rounded-lg p-4">
               <div class="flex flex-col gap-6">
                 <div v-for="message in appeal.messages" :key="message.id"
-                  class="flex flex-col gap-2 bg-(--Background) rounded-lg p-4">
+                  class="flex flex-col gap-2 bg-gray-100 rounded-lg p-4">
                   <div v-if="message.sender === 'manager'"
                     class="flex flex-col min-[600px]:flex-row min-[600px]:items-start min-[600px]:justify-between gap-2">
                     <div

@@ -111,7 +111,7 @@ onBeforeUnmount(() => {
             'px-4 py-2.5 rounded-lg text-sm font-semibold transition-colors max-[510px]:w-full min-[510px]:w-[104px]',
             isFormValid 
               ? 'bg-(--Brand-950) text-white hover:bg-(--Brand-700) cursor-pointer' 
-              : 'bg-(--Background) text-(--Text-600) cursor-not-allowed'
+              : 'bg-gray-100 text-(--Text-600) cursor-not-allowed'
           ]"
         >
           Создать
