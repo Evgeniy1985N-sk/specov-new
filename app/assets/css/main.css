@@ -57,6 +57,10 @@ main {
   flex-grow: 1;
 }
 
+:focus-visible {
+  outline: none;
+}
+
 .font-\[\'Russo_One\'\] {
   font-family: 'Russo One', sans-serif;
 }
