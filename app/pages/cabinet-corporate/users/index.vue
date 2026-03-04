@@ -17,7 +17,7 @@ const tabs = [
 ]
 
 const filteredUsers = computed(() => {
-  return cabinetStore.users.filter(user => 
+  return cabinetStore.users.filter(user =>
     activeTab.value === 'active' ? !user.blocked : user.blocked
   )
 })
@@ -37,7 +37,7 @@ const handleSubmitAdd = (data: { fullName: string; phone: string; email: string;
   cabinetStore.addUser(data)
   showAddForm.value = false
   activeTab.value = 'active'
-  
+
   notificationText.value = 'Пользователь добавлен'
   notificationIcon.value = '/image/cabinet/user.svg'
   showNotification.value = true
@@ -50,10 +50,10 @@ const handleEdit = (userId: string) => {
 const handleBlock = (userId: string) => {
   const user = cabinetStore.users.find(u => u.id === userId)
   if (!user) return
-  
+
   const wasBlocked = user.blocked
   cabinetStore.toggleUserBlock(userId)
-  
+
   if (wasBlocked) {
     activeTab.value = 'active'
     notificationText.value = 'Пользователь восстановлен'
@@ -72,63 +72,50 @@ const handleCloseNotification = () => {
 </script>
 
 <template>
-  <div class="pt-[117px] sm:pt-[73px] lg:pt-[173px] min-h-screen bg-gray-100">
-    <Header />
+  <Header />
 
-    <main class="pt-8 pb-23">
-      <div class="max-w-(--container) mx-auto px-4 min-[750px]:px-8 xl:px-0">
-        <div class="flex gap-8 min-[1280px]:mx-4.5">
-          <div class="hidden xl:block">
-            <Sidebar />
-          </div>
+  <main class="pt-8 pb-23 bg-gray-100">
+    <div class="max-w-(--container) mx-auto px-4 min-[750px]:px-8 xl:px-0">
+      <div class="flex gap-8 min-[1280px]:mx-4.5">
+        <div class="hidden xl:block">
+          <Sidebar />
+        </div>
 
-          <div class="flex-1 flex flex-col gap-4 min-[750px]:gap-6">
-            <template v-if="showAddForm">
-              <UserAddForm 
-                @cancel="handleCancelAdd"
-                @submit="handleSubmitAdd"
-              />
-            </template>
-            <template v-else>
-              <CabinetPageHeader 
-                title="Пользователи" 
-                back-to="/cabinet-corporate/navigation"
-                :add-button-text="'Добавить пользователя'"
-                @add="handleAddUser"
-              />
+        <div class="flex-1 flex flex-col gap-4 min-[750px]:gap-6">
+          <template v-if="showAddForm">
+            <UserAddForm @cancel="handleCancelAdd" @submit="handleSubmitAdd" />
+          </template>
+          <template v-else>
+            <CabinetPageHeader title="Пользователи" back-to="/cabinet-corporate/navigation"
+              :add-button-text="'Добавить пользователя'" @add="handleAddUser" />
 
-              <Tabs v-model="activeTab" :tabs="tabs" />
+            <Tabs v-model="activeTab" :tabs="tabs" />
 
-              <div>
-                <div class="hidden min-[750px]:flex gap-6 px-4 py-3 mb-4 bg-gray-100 rounded-2xl">
-                  <div class="min-[750px]:w-[181px] min-[1280px]:w-[248px] text-left text-sm font-medium text-(--Text-600)">ФИО</div>
-                  <div class="min-[750px]:w-[181px] min-[1280px]:w-[248px] text-left text-sm font-medium text-(--Text-600)">Email</div>
-                  <div class="min-[750px]:w-[181px] min-[1280px]:w-[248px] text-left text-sm font-medium text-(--Text-600)">Телефон</div>
-                  <div class="min-[750px]:w-14 min-[1280px]:w-14"></div>
-                </div>
-
-                <div class="flex flex-col gap-4 min-[750px]:gap-2">
-                  <UserCard
-                    v-for="user in filteredUsers"
-                    :key="user.id"
-                    :user="user"
-                    @edit="handleEdit"
-                    @block="handleBlock"
-                  />
-                </div>
+            <div>
+              <div class="hidden min-[750px]:flex gap-6 px-4 py-3 mb-4 bg-gray-100 rounded-2xl">
+                <div
+                  class="min-[750px]:w-[181px] min-[1280px]:w-[248px] text-left text-sm font-medium text-(--Text-600)">
+                  ФИО</div>
+                <div
+                  class="min-[750px]:w-[181px] min-[1280px]:w-[248px] text-left text-sm font-medium text-(--Text-600)">
+                  Email</div>
+                <div
+                  class="min-[750px]:w-[181px] min-[1280px]:w-[248px] text-left text-sm font-medium text-(--Text-600)">
+                  Телефон</div>
+                <div class="min-[750px]:w-14 min-[1280px]:w-14"></div>
               </div>
-            </template>
-          </div>
+
+              <div class="flex flex-col gap-4 min-[750px]:gap-2">
+                <UserCard v-for="user in filteredUsers" :key="user.id" :user="user" @edit="handleEdit"
+                  @block="handleBlock" />
+              </div>
+            </div>
+          </template>
         </div>
       </div>
-    </main>
+    </div>
+  </main>
 
-    <Notification
-      :show="showNotification"
-      :text="notificationText"
-      :icon="notificationIcon"
-      @close="handleCloseNotification"
-    />
-  </div>
+  <Notification :show="showNotification" :text="notificationText" :icon="notificationIcon"
+    @close="handleCloseNotification" />
 </template>
-

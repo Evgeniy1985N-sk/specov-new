@@ -16,7 +16,7 @@ const isActive = (path: string) => {
 <template>
   <Header />
 
-  <main class="pt-8 pb-23">
+  <main class="pt-8 pb-23 bg-gray-100">
     <div class="max-w-(--container) mx-auto px-4 min-[510px]:px-8 xl:px-0">
       <div class="flex items-center justify-between mb-6">
         <div>
