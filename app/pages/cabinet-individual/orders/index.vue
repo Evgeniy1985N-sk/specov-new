@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const cabinetStore = useCabinetStore()
 
 const ordersSortOpen = ref(false)
@@ -25,6 +26,8 @@ onMounted(() => {
 onBeforeUnmount(() => {
   document.removeEventListener('click', handleDocumentClick)
 })
+
+const page = ref(1);
 </script>
 
 <template>
@@ -90,8 +93,64 @@ onBeforeUnmount(() => {
                 :index="index" :show-user-column="false" />
             </div>
           </div>
+
+          <UPagination class="pagination-unic" v-model:page="page" size="lg" show-edges :sibling-count="1" :total="500"
+            :ui="{ list: 'justify-center', 
+            ellipsis: 'h-[38px] pb-0 text-gray-600 bg-gray-100 ring-0', 
+            item: 'ring-0', 
+            first: 'ring-0 before:content-[`→`]', 
+            last: 'ring-0 before:content-[`→`]' }" 
+            />
+
         </div>
       </div>
     </div>
   </main>
 </template>
+
+<style>
+.pagination-unic button[data-slot="base"] {
+  width: 2.375rem;
+  height: 2.375rem;
+  color: #535862;
+  font-weight: 600;
+  background: #F5F5F5;
+}
+
+.pagination-unic button[data-selected="true"] {
+  min-height: auto;
+  color: #fff;
+  background: #053628;
+}
+
+.pagination-unic button[data-type="ellipsis"] {
+  background: #F5F5F5 !important;
+}
+
+.pagination-unic button[aria-label="First Page"],
+.pagination-unic button[aria-label="Last Page"] {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.pagination-unic button[aria-label="First Page"] span,
+.pagination-unic button[aria-label="Last Page"] span {
+  display: none;
+}
+.pagination-unic button[aria-label="First Page"]:before {
+  content: url('/image/arrow-right.svg');
+  transform: scale(-1,-1);
+}
+.pagination-unic button[aria-label="Last Page"]:before {
+    content: url('/image/arrow-right.svg');
+}
+
+
+/* .pagination-unic span[data-slot="leadingIcon"], */
+.pagination-unic button[disabled=""],
+.pagination-unic button[aria-label="Previous Page"],
+.pagination-unic button[aria-label="Next Page"] {
+  display: none;
+}
+
+</style>
