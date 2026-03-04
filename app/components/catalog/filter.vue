@@ -23,6 +23,8 @@ interface Props {
 	maxPrice: number;
 }
 
+const DEBOUNCE_TIME = 400;
+
 const props = defineProps<Props>()
 
 const selectedBrands = ref<number[]>([]);
@@ -43,6 +45,7 @@ const ignoreBrandDisabled = ref(false);
 const ignoreCountriesDisabled = ref(false);
 const ignoreStoresDisabled = ref(false);
 const ignoreDynDisabledByFilterId = ref<Record<number, boolean>>({});
+/*
 watch(
 	() => props.brands,
 	() => {
@@ -53,6 +56,8 @@ watch(
 	},
 	{ deep: true, immediate: true }
 );
+*/
+
 const isDynItemDisabled = (filterId: number, itemDisabledFromProps: boolean): boolean => {
 	if (ignoreDynDisabledByFilterId.value[filterId]) return false;
 	return itemDisabledFromProps;
@@ -68,11 +73,12 @@ const items = computed<AccordionItem[]>(() => {
 		})
 	}
 
-	//always present
-	items.push({
-		label: 'Цена',
-		slot: 'price',
-	});
+	//if (props.minPrice !== props.maxPrice) {
+		items.push({
+			label: 'Цена',
+			slot: 'price',
+		});
+	//}
 
 	if (props.brands.length > 0) {
 		items.push({
@@ -99,6 +105,7 @@ const items = computed<AccordionItem[]>(() => {
 	return items
 });
 
+/*
 const emit = defineEmits<{
 	handleClick: [{ id: string }]
 }>();
@@ -106,6 +113,20 @@ const emit = defineEmits<{
 const emitStatic = (id: string) => {
 	emit('handleClick', { id });
 };
+*/
+
+type FacetKind = 'brand' | 'country' | 'store' | 'dyn' | 'price';
+
+type FacetChange =
+	| { kind: 'brand'; checked: boolean; id: number }
+	| { kind: 'country'; checked: boolean; id: number }
+	| { kind: 'store'; checked: boolean; id: number }
+	| { kind: 'dyn'; checked: boolean; filterId: number }
+	| { kind: 'price' };
+
+const emit = defineEmits<{
+	handleClick: [FacetChange];
+}>();
 
 const debounce = <T extends (...args: any[]) => void>(fn: T, waitMs = 350) => {
 	let timer: ReturnType<typeof setTimeout> | undefined;
@@ -120,11 +141,17 @@ const debounce = <T extends (...args: any[]) => void>(fn: T, waitMs = 350) => {
 	};
 };
 
-const emitDyn = (filterId: number) => {
-	emit('handleClick', { id: `dyn-${filterId.toString()}` });
+const emitDyn = (filterId: number, checked: boolean) => {
+	emit('handleClick', { kind: 'dyn', filterId, checked });
 };
 
-const emitDynDebounced = debounce(emitDyn, 400);
+const emitDynDebounced = debounce((filterId: number) => {
+	emit('handleClick', { kind: 'dyn', filterId, checked: true });
+}, DEBOUNCE_TIME);
+
+const emitPriceDebounced = debounce(() => {
+	emit('handleClick', { kind: 'price' });
+}, DEBOUNCE_TIME);
 
 const formatPrice = (price?: number): string => 
 	price!==undefined ? String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : '';
@@ -218,6 +245,11 @@ function resetFilters() {
 	isBrandHidden.value = true
 	isCountryHidden.value = true
 
+	ignoreBrandDisabled.value = false;
+	ignoreCountriesDisabled.value = false;
+	ignoreStoresDisabled.value = false;
+	ignoreDynDisabledByFilterId.value = {};
+
 	// Dynamic filters
 	Object.keys(filterState).forEach((id: string) => {
 		const idNum = Number(id.replace('filter-', ''))
@@ -303,16 +335,16 @@ const buildFilterQuery = (): Record<string, any> => {
 
 const updateCountrySelection = (newId: number, checked: boolean) => {
 	updateArraySelection(selectedCountries, newId, checked);
-	if (!checked) ignoreCountriesDisabled.value = true;
+	ignoreCountriesDisabled.value = !checked ? true : false;
 };
 
 const updateBrandSelection = (newId: number, checked: boolean) => {
 	updateArraySelection(selectedBrands, newId, checked);
-	if (!checked) ignoreBrandDisabled.value = true;
+	ignoreBrandDisabled.value = !checked ? true : false;
 };
 const updateStoreSelection = (newId: number, checked: boolean) => {
 	updateArraySelection(selectedStores, newId, checked);
-	if (!checked) ignoreStoresDisabled.value = true;
+	ignoreStoresDisabled.value = !checked ? true : false;
 };
 
 // const updateDynFilterSelection = (id: number, hash: string) => {
@@ -326,9 +358,7 @@ function updateDynSelection(filterId: number, hash: string, checked: boolean) {
 
 	filterState[filterId][hash] = checked;
 
-	if (!checked) {
-		ignoreDynDisabledByFilterId.value[filterId] = true;
-	}
+	ignoreDynDisabledByFilterId.value[filterId] = !checked ? true : false;
 }
 
 function updateArraySelection<T>(
@@ -448,11 +478,14 @@ defineExpose({
 
 		<template #availability="{ item }">
 
-			<div @click="emitStatic('store')" class="grid grid-cols-2 lg:grid-cols-1 gap-4">
+			<div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
 				<label v-for="st in stores" :key="st.id" class="flex gap-2 items-center cursor-pointer">
 					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)" 
 						:disabled="(ignoreStoresDisabled === true) ? false : st.disabled"
-						@update:model-value="updateStoreSelection(st.id, $event as boolean)" />
+						@update:model-value="
+							updateStoreSelection(st.id, $event as boolean);
+							emit('handleClick', { kind: 'store', id: st.id, checked: $event as boolean });
+						" />
 					<span class="text-sm leading-5 text-gray-950">
 						{{ st.address }}
 					</span>
@@ -463,18 +496,24 @@ defineExpose({
 
 		<template #price="{ item }">
 
-			<div @click="emitStatic('price')" class="flex gap-2">
+			<div class="flex gap-2">
 
-				<UInput color="neutral" v-model="formattedMinPrice" :placeholder="`от ${formatPrice(props.minPrice)}`"
-					:ui="{ base: 'font-medium text-gray-950 ring-gray-900', trailing: 'pe-1' }">
+				<UInput color="neutral" v-model="formattedMinPrice" 
+					:placeholder="`от ${formatPrice(props.minPrice)}`"
+					:ui="{ base: 'font-medium text-gray-950 ring-gray-900', trailing: 'pe-1' }"
+					@update:model-value="() => { emitPriceDebounced(); }"
+					>
 					<template v-if="formattedMinPrice?.length" #trailing>
 						<UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
 							class="text-gray-500 hover:text-gray-600" @click="formattedMinPrice = ''" />
 					</template>
 				</UInput>
 
-				<UInput color="neutral" v-model="formattedMaxPrice" :placeholder="`до ${formatPrice(props.maxPrice)}`"
-					:ui="{ base: 'font-medium text-gray-950', trailing: 'pe-1' }">
+				<UInput color="neutral" v-model="formattedMaxPrice" 
+					:placeholder="`до ${formatPrice(props.maxPrice)}`"
+					:ui="{ base: 'font-medium text-gray-950', trailing: 'pe-1' }"
+					@update:model-value="() => { emitPriceDebounced(); }"
+					>
 					<template v-if="formattedMaxPrice?.length" #trailing>
 						<UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
 							class="text-gray-500 hover:text-gray-600" @click="formattedMaxPrice = ''" />
@@ -486,21 +525,24 @@ defineExpose({
 			<CatalogInputRange 
 				:max-range="props.maxPrice" 
 				:min-range="props.minPrice" 
-				v-model:min-value="minPrice" 
-				v-model:max-value="maxPrice" 
+				@update:min-value="() => { emitPriceDebounced(); }"
+				@update:max-value="() => { emitPriceDebounced(); }"
 			/>
 
 		</template>
 
 		<template #brand="{ item }" v-if="props.brands?.length">
 
-			<div @click="emitStatic('brand')" class="grid gap-4">
+			<div class="grid gap-4">
 				<label v-for="(br, ind) in props.brands" :key="br.id"
 					:class="(ind < visBrandCount || isBrandHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
 					<UCheckbox size="xl" :model-value="selectedBrands.includes(br.id)"
 						:disabled="(ignoreBrandDisabled === true) ? false : br.disabled"
-						@update:model-value="updateBrandSelection(br.id, $event as boolean)" />
+						@update:model-value="
+							updateBrandSelection(br.id, $event as boolean);
+							emit('handleClick', { kind: 'brand', id: br.id, checked: $event as boolean });
+						" />
 					<span class="text-sm leading-5 text-gray-950">
 						{{ br.name }}
 					</span>
@@ -516,13 +558,16 @@ defineExpose({
 
 		<template #country="{ item }" v-if="props.countries?.length">
 
-			<div @click="emitStatic('country')" class="grid gap-4">
+			<div class="grid gap-4">
 				<label v-for="(c, ind) in props.countries" :key="c.id"
 					:class="(ind < visCountryCount || isCountryHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
 					<UCheckbox size="xl" :model-value="selectedCountries.includes(c.id)" 
 						:disabled="(ignoreCountriesDisabled === true) ? false : c.disabled"
-						@update:model-value="updateCountrySelection(c.id, $event as boolean)" />
+						@update:model-value="
+							updateCountrySelection(c.id, $event as boolean);
+							emit('handleClick', { kind: 'country', id: c.id, checked: $event as boolean });
+						" />
 					<span class="text-sm leading-5 text-gray-950">
 						{{ c.name }}
 					</span>
@@ -537,7 +582,7 @@ defineExpose({
 
 		<!-- Dynamic filters -->
 		<template v-for="filter in props.filters" :key="filter.id" #[`filter-${filter.id}`]>
-			<div @click="emitDyn(filter.id)" class="grid gap-4">
+			<div class="grid gap-4">
 
 				<!-- TEXT / LIST → CHECKBOXES -->
 				<template v-if="filter.data_type === 't_text'">
@@ -545,7 +590,10 @@ defineExpose({
 						<UCheckbox size="xl" 
 							:model-value="filterState[filter.id][item.hash]" 
 							:disabled="isDynItemDisabled(filter.id, item.disabled)"
-							@update:model-value="updateDynSelection(filter.id, item.hash, $event as boolean)"
+							@update:model-value="
+								updateDynSelection(filter.id, item.hash, $event as boolean);
+								emit('handleClick', { kind: 'dyn', filterId: filter.id, checked: $event as boolean });
+							"
 						/>
 						<span class="text-sm leading-5 text-gray-950">
 							{{ item.value }}
@@ -563,7 +611,11 @@ defineExpose({
 							size="xl"
 							:model-value="Boolean(filterState[filter.id]?.[opt.id])"
 							:disabled="isDynItemDisabled(filter.id, filter.disabled ?? false)"
-							@update:model-value="(v) => { filterState[filter.id][opt.id] = v as boolean; emitDyn(filter.id); }"
+							@update:model-value="(v) => {
+								const checked = v as boolean;
+								filterState[filter.id][opt.id] = checked;
+								emitDyn(filter.id, checked);
+							}"
 						/>
 						<span class="text-sm leading-5 text-gray-950">
 							{{ opt.val }}
@@ -573,8 +625,16 @@ defineExpose({
 
 				<!-- BOOLEAN -->
 				<template v-else-if="filter.data_type === 't_bool'">
-					<UCheckbox size="xl" v-model="filterState[filter.id]" :label="filter.name"
+					<UCheckbox
+						size="xl"
+						:model-value="Boolean(filterState[filter.id])"
+						:label="filter.name"
 						:disabled="isDynItemDisabled(filter.id, filter.disabled ?? false)"
+						@update:model-value="(v) => {
+							const checked = v as boolean;
+							filterState[filter.id] = checked;
+							emitDyn(filter.id, checked);
+						}"
 					/>
 				</template>
 
@@ -600,7 +660,15 @@ defineExpose({
 
 				<!-- DATE -->
 				<template v-else-if="filter.data_type === 't_date'">
-					<UInput v-model="filterState[filter.id]" type="date" :disabled="filter.disabled" />
+					<UInput
+						:model-value="filterState[filter.id]"
+						type="date"
+						:disabled="filter.disabled"
+						@update:model-value="(v) => {
+							filterState[filter.id] = v as string;
+							emit('handleClick', { kind: 'dyn', filterId: filter.id, checked: true });
+						}"
+					/>
 				</template>
 
 			</div>

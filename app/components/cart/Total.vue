@@ -1,8 +1,16 @@
 <script setup lang="ts">
+
+import { useProduct } from '@/composables/useProduct';
+
+const { declineProductWord  } = useProduct();
+
 interface Props {
   class?: string
+  itemCount: number;
+  totalAmount: number;
 }
-const props = defineProps<Props>()
+const props = defineProps<Props>();
+
 </script>
 
 
@@ -11,11 +19,11 @@ const props = defineProps<Props>()
   <div class="grid gap-2">
     <p class="flex items-baseline text-sm leading-5 text-gray-950 font-semibold">
       <span class="max-w-[500px] whitespace-nowrap pr-2">
-        1 товар
+		  {{ declineProductWord(props.itemCount) }}
       </span>
       <span class="flex-1 border-b border-dotted border-gray-300 border-opacity-0 relative h-0 mx-2"></span>
       <b class="font-bold text-gray-950 whitespace-nowrap">
-        7 990 ₽
+		{{ props.totalAmount.toLocaleString("ru-RU") }} ₽
       </b>
     </p>
     <p class="flex items-baseline text-[20px] leading-[30px] text-gray-950 font-semibold">
@@ -24,7 +32,7 @@ const props = defineProps<Props>()
       </span>
       <span class="flex-1 border-b border-dotted border-gray-300 border-opacity-0 relative h-0 mx-2"></span>
       <b class="whitespace-nowrap">
-        7 990 ₽
+		{{ props.totalAmount.toLocaleString("ru-RU") }} ₽
       </b>
     </p>
   </div>

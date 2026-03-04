@@ -4,12 +4,12 @@ import { Swiper, SwiperSlide } from 'swiper/vue'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
-import type { ProductCatPublicList } from '~/types/productCat';
 import { useCategory } from '~/composables/useCategory';
 
 const { imgSrc, link } = useCategory();
 
-const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
+const { mainCats, ensureMainCats } = useMainCats();
+await ensureMainCats();
 
 </script>
 
@@ -24,7 +24,7 @@ const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
 					1025: { slidesPerView: 4, spaceBetween: 32, },
 				}" :navigation="false">
 
-					<swiper-slide v-for="(item, i) in mainCatsData" :key="item.id" :class="`slide-${i}`" class="rounded-2xl overflow-hidden">
+					<swiper-slide v-for="(item, i) in mainCats" :key="item.id" :class="`slide-${i}`" class="rounded-2xl overflow-hidden">
 						<NuxtLink :to="link(item)" class="block h-full">
 							<img :src="imgSrc(item)" :alt="item.name" class="absolute bottom-0 left-0 -z-1" />
 							<div class="flex flex-col h-full">

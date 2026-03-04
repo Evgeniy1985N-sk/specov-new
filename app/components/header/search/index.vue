@@ -22,7 +22,7 @@ const { search: searchAPICall } = useProductApi();
 
 const { picturePreview: productPicturePreview, link: productLink } = useProduct();
 const prodImageSrc = (item: ProductCard) => {
-  const img = item.imgs.find(p => p.main) ?? undefined;
+  const img = item.imgs?.find(p => p.main) ?? undefined;
 	if(!img){
 		return undefined;
 	}

@@ -13,6 +13,7 @@ export interface ProductCard {
 	id: number;
 	name: string;
 	name_lat: string;
+	code_1c: string;
 	price: number
 	old_price?: number
 	discount?: number
@@ -20,15 +21,10 @@ export interface ProductCard {
 	imgs?: Picture[];
 	dsc?: string;
 	link?: string;
-	category?: string;
 	quant?: number;
 	quant_descr?: ProductQuantDescr;
 	available: boolean;
-	filters: {
-		id: number;
-		name: string;
-		val: string;
-	}[]
+	filters_display: ProductFilter[];
 }
 
 export interface ProductCatParent {
@@ -107,6 +103,7 @@ export interface ProductForCart  {
 	id: number;
 	name: string;
 	name_lat: string;
+	code_1c: string;
 	char?: ProductChar;
 	quant: number;
 	price: number;

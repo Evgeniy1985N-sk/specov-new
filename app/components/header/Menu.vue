@@ -2,8 +2,8 @@
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation } from 'swiper/modules'
 
-import type { ProductCatPublicList } from '~/types/productCat';
 import { useCategory } from '~/composables/useCategory';
+import { useMainCats } from "~/composables/useMainCats";
 
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -25,19 +25,20 @@ const nextButton = ref<HTMLElement | null>(null)
 
 const { link } = useCategory();
 
-const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
+const { mainCats, ensureMainCats } = useMainCats();
+await ensureMainCats();
 
 </script>
 
 <template>
 	<ClientOnly>
-		<div class="relative max-w-[950px]">
+		<div class="relative max-w-[950px]" v-if="mainCats.length">
 			<swiper class="h-8" :modules="[Navigation]" :slides-per-view="'auto'" :space-between="20"
 				:watch-slides-progress="true" :navigation="{
 					prevEl: prevButton,
 					nextEl: nextButton,
 				}">
-				<swiper-slide v-for="(item, i) in mainCatsData" :key="i" class="w-auto! shrink-0! flex! items-center">
+				<swiper-slide v-for="(item, i) in mainCats" :key="i" class="w-auto! shrink-0! flex! items-center">
 					<a :href="link(item)" class="whitespace-nowrap text-gray-600 hover:text-(--Brand-700)">
 						{{ item.name }}
 					</a>

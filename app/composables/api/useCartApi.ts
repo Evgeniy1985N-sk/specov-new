@@ -2,7 +2,7 @@ import { useNuxtApp } from "nuxt/app";
 import type { $Fetch } from "ofetch";
 
 import { cartEndpoints } from '@/api/endpoints/cart';
-import type { CartItem } from "~/types/cart";
+import type { CartItem, Cart } from "~/types/cart";
 
 export function useCartApi() {
 	const api = useNuxtApp().$backendAPI as $Fetch;
@@ -25,6 +25,9 @@ export function useCartApi() {
 				cartEndpoints.clear(),
 					{ method: 'POST', body: {cart_name: cartName} },
 			);
+		},
+		fetchAll(): Promise<Cart[]>{
+			return api<Cart[]>(cartEndpoints.fetchAll());
 		},
 	}
 }

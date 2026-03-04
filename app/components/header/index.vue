@@ -1,4 +1,5 @@
 <script setup lang="ts">
+
 const isShowSearch = ref(false)
 function showSearch() {
   isShowSearch.value = !isShowSearch.value
@@ -7,6 +8,7 @@ provide('search', {
   isShowSearch,
   showSearch
 })
+
 </script>
 
 <template>

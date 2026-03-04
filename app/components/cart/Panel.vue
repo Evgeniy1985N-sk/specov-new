@@ -1,6 +1,14 @@
 <script setup lang="ts">
 
-const check = ref(true)
+const isChecked = ref(false);
+
+const emit = defineEmits<{
+  (e: 'setCheck', check: boolean): void
+  (e: 'remove'): void
+  (e: 'share'): void
+  (e: 'print'): void
+}>();
+
 </script>
 
 <template>
@@ -9,12 +17,15 @@ const check = ref(true)
 
     <div class="flex flex-wrap gap-2.5 sm:gap-4 lg:gap-6">
       <label class="flex gap-2 items-center cursor-pointer">
-        <UCheckbox size="xl" v-model="check" />
+        <UCheckbox size="xl"  
+			v-model="isChecked"
+			@change="() => emit('setCheck', isChecked)"
+		/>
         <span class="text-sm leading-5 font-semibold">
           Выбрать все
         </span>
       </label>
-      <CartButton text="Удалить выбранные">
+      <CartButton text="Удалить выбранные" @click="emit('remove')">
         <WrapIcon>
           <CartIconTrash />
         </WrapIcon>
@@ -22,7 +33,7 @@ const check = ref(true)
     </div>
 
     <div class="hidden md:flex gap-4 lg:gap-6">
-      <CartButton text="Поделиться">
+      <CartButton text="Поделиться" @click="emit('share')">
         <WrapIcon>
           <CartIconShare />
         </WrapIcon>
@@ -32,7 +43,7 @@ const check = ref(true)
           <CartIconDownload />
         </WrapIcon>
       </CartButton>
-      <CartButton text="Распечатать">
+      <CartButton text="Распечатать" @click="emit('print')">
         <WrapIcon>
           <CartIconFax />
         </WrapIcon>

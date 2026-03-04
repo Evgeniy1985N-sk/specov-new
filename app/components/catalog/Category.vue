@@ -8,7 +8,7 @@ const props = defineProps<{
 	data: CategoryCatalog;
 }>();
 
-const FILTER_POPOVER_DELAY = 1000; // ms
+//const FILTER_POPOVER_DELAY = 1000; // ms
 
 const isShowPopover = ref(false);
 const isShoWFilter = ref(false);
@@ -72,8 +72,25 @@ const classAside = computed(() => ({
 	'left-0': isShoWFilter.value
 }));
 
+type FacetChange =
+	| { kind: 'brand'; checked: boolean; id: number }
+	| { kind: 'country'; checked: boolean; id: number }
+	| { kind: 'store'; checked: boolean; id: number }
+	| { kind: 'dyn'; checked: boolean; filterId: number }
+	| { kind: 'price' };
+
+const filterClick = async (change: FacetChange) => {
+	filterTop.value = mousePositionY.value;
+
+	const ok = await fetchProdCountForFilter(change);
+	if (ok) {
+		isShowPopover.value = true;
+	}
+};
+
 //show pop over
 // let filterPopoverTimeoutId: ReturnType<typeof setTimeout> | null = null;
+/*
 const filterClick = async (filter: { id: string }) => {
 
 	filterTop.value = mousePositionY.value;
@@ -98,6 +115,7 @@ const filterClick = async (filter: { id: string }) => {
 	// 	})();
 	// }, FILTER_POPOVER_DELAY);
 }
+*/
 
 const sorterRef = ref();
 const filterRef = ref();
@@ -177,6 +195,47 @@ const showMore = async () => {
 	productVisibleCount.value = newCount;
 };
 
+type FacetKind = 'brand' | 'country' | 'store' | 'dyn' | 'price';
+
+const buildQueryExcluding = (kind: FacetKind, dynFilterId?: number): Record<string, any> => {
+	const q = { ...(filterRef.value?.buildFilterQuery() ?? {}) };
+
+	if (kind === 'brand') {
+		delete q.brands;
+	}
+	if (kind === 'country') {
+		delete q.countries;
+	}
+	if (kind === 'store') {
+		delete q.stores;
+	}
+	if (kind === 'price') {
+		delete q.min_price;
+		delete q.max_price;
+	}
+	if (kind === 'dyn') {
+		// remove only this dynamic filter from query keys
+		// your keys are: filters_hash[ID], filters_list[ID], filters_num[ID][min|max], filters_date[ID]
+		const prefix1 = `filters_hash[${dynFilterId}]`;
+		const prefix2 = `filters_list[${dynFilterId}]`;
+		const prefix3 = `filters_num[${dynFilterId}]`;
+		const prefix4 = `filters_date[${dynFilterId}]`;
+
+		for (const key of Object.keys(q)) {
+			if (
+				key === prefix1 ||
+				key === prefix2 ||
+				key.startsWith(prefix3) ||
+				key === prefix4
+			) {
+				delete q[key];
+			}
+		}
+	}
+
+	return q;
+};
+
 const { 
 	mergeDynFilters,
 	mergeBrandFilters,
@@ -193,8 +252,81 @@ const facetState = ref<CategoryCatalogPrecalc>({
 	min_price: props.data.min_price,
 	max_price: props.data.max_price,
 });
+
 //returns count, filters, brands, countries, stors 
 //for petential products.
+const fetchProdCountForFilter = async (change?: FacetChange): Promise<boolean> => {
+	try {
+		prodCountForFilterIsLoading.value = true;
+
+		// 1) total_count with FULL query
+		const qFull = filterRef.value?.buildFilterQuery() ?? {};
+		const fullParams = <CategoryCatalogParams>{ count: 0, ...qFull };
+
+		// 2) facets for the edited group: query EXCLUDING that group
+		const kind = change?.kind ?? null;
+
+		const qFacet = (() => {
+			if (!change) {
+				return qFull;
+			}
+
+			if (change.kind === 'dyn') {
+				return buildQueryExcluding('dyn', change.filterId);
+			}
+
+			return buildQueryExcluding(change.kind);
+		})();
+
+		const facetParams = <CategoryCatalogParams>{ count: 0, ...qFacet };
+
+		const [fullData, facetData] = await Promise.all([
+			catalogProductCount(props.data.category.id, fullParams),
+			catalogProductCount(props.data.category.id, facetParams),
+		]);
+
+		// base sets
+		const baseDyn = props.data.category.filters ?? [];
+		const baseBrands = props.data.category.brands ?? [];
+		const baseCountries = props.data.category.countries ?? [];
+		const baseStores = props.data.category.stores ?? [];
+
+		// merge defaults: use fullData for everything
+		let nextDyn = mergeDynFilters(baseDyn, fullData.filters ?? []);
+		let nextBrands = mergeBrandFilters(baseBrands, fullData.brands ?? []);
+		let nextCountries = mergeCountryFilters(baseCountries, fullData.countries ?? []);
+		let nextStores = mergeStoreFilters(baseStores, fullData.stores ?? []);
+
+		// override ONLY the edited group facets with facetData (excluding-self)
+		if (kind === 'brand') {
+			nextBrands = mergeBrandFilters(baseBrands, facetData.brands ?? []);
+		} else if (kind === 'country') {
+			nextCountries = mergeCountryFilters(baseCountries, facetData.countries ?? []);
+		} else if (kind === 'store') {
+			nextStores = mergeStoreFilters(baseStores, facetData.stores ?? []);
+		} else if (kind === 'dyn') {
+			nextDyn = mergeDynFilters(baseDyn, facetData.filters ?? []);
+		}
+
+		facetState.value = {
+			total_count: fullData.total_count,
+			filters: nextDyn,
+			brands: nextBrands,
+			countries: nextCountries,
+			stores: nextStores,
+			min_price: fullData.min_price,
+			max_price: fullData.max_price,
+		};
+
+		return true;
+	} catch (error) {
+		console.error('Error fetching product count for filter:', error);
+		return false;
+	} finally {
+		prodCountForFilterIsLoading.value = false;
+	}
+};
+/*
 const fetchProdCountForFilter = async (): Promise<boolean> => {
 	try {
 
@@ -224,6 +356,7 @@ const fetchProdCountForFilter = async (): Promise<boolean> => {
 		prodCountForFilterIsLoading.value = false;
 	}
 };
+*/
 
 onMounted(() => {
 	filterRef.value?.initFromQuery(route.query);
@@ -347,7 +480,7 @@ onMounted(() => {
 						<!-- More Cards  -->
 						<UButton
 							class="w-full min-h-10 mt-6 bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5"
-							v-if="productVisibleCount < maxProductCount && productVisibleCount < props.data.total_count"
+							v-if="productVisibleCount < maxProductCount && productVisibleCount < facetState.total_count"
 							@click="showMore">
 							Показать еще
 						</UButton>

@@ -7,7 +7,6 @@ import { type CategoryCatalogParams } from '~/types/productCat';
 const route = useRoute()
 
 const { catalog } = useProductCatApi();
-const { mainCategories } = useProductCatApi()
 
 const { data, error } = await useAsyncData(
 	() => {
@@ -29,14 +28,12 @@ const { data, error } = await useAsyncData(
 			...route.query,
 		};
 
-		const [pageData, mainCats] = await Promise.all([
+		const [pageData] = await Promise.all([
 			catalog(catSlug, apiParams),
-			mainCategories(),
 		]);
 
 		return {
 			pageData,
-			mainCats
 		}
 	},
 	{ 
@@ -122,7 +119,7 @@ const curCategory = computed(() => {
 const { picturePreview } = useCategory();
 
 //header
-provide('mainCatsData', data.value?.mainCats );
+//provide('mainCatsData', data.value?.mainCats );
 
 watch(curCategory, (cat) => {
 	if (!cat) return;

@@ -71,4 +71,6 @@ export interface CollectionTotCount {
 
 export type AggData = Record<string, number>;
 
-
+export interface CollectionAlterResult {
+	affectedRows: number;
+}
