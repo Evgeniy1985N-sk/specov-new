@@ -40,7 +40,7 @@ const handleNotifications = () => {
       <NuxtLink
         v-if="backTo"
         :to="backTo"
-        class="xl:hidden flex items-center gap-2 rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-(--Base-White) cursor-pointer"
+        class="xl:hidden flex items-center gap-2 rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-white cursor-pointer"
       >
         <img src="/image/cabinet/arrow-right.svg" alt="" class="rotate-180">
         <span v-if="backText" class="text-sm font-medium text-(--Text-950)">{{ backText }}</span>
@@ -48,7 +48,7 @@ const handleNotifications = () => {
       <button
         v-else
         @click="handleBack"
-        class="xl:hidden flex items-center gap-2 rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-(--Base-White) cursor-pointer"
+        class="xl:hidden flex items-center gap-2 rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-white cursor-pointer"
       >
         <img src="/image/cabinet/arrow-right.svg" alt="" class="rotate-180">
         <span v-if="backText" class="text-sm font-medium text-(--Text-950)">{{ backText }}</span>
@@ -78,7 +78,7 @@ const handleNotifications = () => {
       <button
         v-if="showNotifications"
         @click="handleNotifications"
-        class="rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-(--Base-White) cursor-pointer"
+        class="rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-white cursor-pointer"
       >
         <img src="/image/cabinet/bell.svg" alt="">
       </button>

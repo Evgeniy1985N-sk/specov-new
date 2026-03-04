@@ -34,7 +34,7 @@ const handleSave = () => {
 </script>
 
 <template>
-  <div class="bg-(--Base-White) rounded-xl p-5">
+  <div class="bg-white rounded-xl p-5">
     <div class="flex items-center gap-3 mb-5">
       <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
         <img src="/image/cabinet/passcode.svg" alt="">
@@ -48,7 +48,7 @@ const handleSave = () => {
         <input
           v-model="localPasswordData.currentPassword"
           type="password"
-          class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm"
+          class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm"
         >
       </div>
 
@@ -57,7 +57,7 @@ const handleSave = () => {
         <input
           v-model="localPasswordData.newPassword"
           type="password"
-          class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm"
+          class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm"
         >
       </div>
 
@@ -66,7 +66,7 @@ const handleSave = () => {
         <input
           v-model="localPasswordData.confirmPassword"
           type="password"
-          class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm"
+          class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm"
         >
       </div>
 

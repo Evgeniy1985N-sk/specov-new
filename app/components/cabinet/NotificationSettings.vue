@@ -25,7 +25,7 @@ const toggleNotification = (id: string) => {
 
 <template>
   <div class="w-full min-[1280px]:max-w-[590px]">    
-    <div class="bg-(--Base-White) rounded-xl p-5">
+    <div class="bg-white rounded-xl p-5">
       <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div
           v-for="notification in notifications"

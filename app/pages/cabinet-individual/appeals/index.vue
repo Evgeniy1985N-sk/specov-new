@@ -82,7 +82,7 @@ onBeforeUnmount(() => {
               add-button-text="Новое обращение" add-button-icon="/image/sidebar/annotation-dots.svg"
               @add="handleNewAppeal" />
 
-            <div class="bg-(--Base-White) rounded-xl p-5">
+            <div class="bg-white rounded-xl p-5">
               <div
                 class="flex flex-col min-[750px]:flex-row min-[750px]:items-center min-[750px]:justify-between gap-4 mb-6">
                 <div class="flex items-center gap-4">
@@ -99,7 +99,7 @@ onBeforeUnmount(() => {
                           stroke-linejoin="round" />
                       </svg>
                     </summary>
-                    <div class="absolute z-10 mt-1 w-48 bg-(--Base-White) rounded-lg shadow-md py-1">
+                    <div class="absolute z-10 mt-1 w-48 bg-white rounded-lg shadow-md py-1">
                       <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">Все
                         статусы</button>
                       <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">В
@@ -120,7 +120,7 @@ onBeforeUnmount(() => {
                           stroke-linejoin="round" />
                       </svg>
                     </summary>
-                    <div class="absolute z-10 mt-1 w-48 bg-(--Base-White) rounded-lg shadow-md py-1">
+                    <div class="absolute z-10 mt-1 w-48 bg-white rounded-lg shadow-md py-1">
                       <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">За
                         неделю</button>
                       <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">За

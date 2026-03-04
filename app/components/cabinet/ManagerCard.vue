@@ -9,7 +9,7 @@ defineProps<Props>()
 </script>
 
 <template>
-  <div class="bg-(--Base-White) rounded-xl p-5">
+  <div class="bg-white rounded-xl p-5">
     <div class="flex flex-col">
       <div class="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center mb-3">
         <img src="/image/cabinet/user-square.svg" alt="">

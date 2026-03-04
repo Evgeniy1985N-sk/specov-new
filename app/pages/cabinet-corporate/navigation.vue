@@ -21,12 +21,12 @@ const isActive = (path: string) => {
       <div class="flex items-center justify-between mb-6">
         <h1 class="text-2xl font-regular text-(--Text-950) font-['Russo_One']">ООО «Название компании»</h1>
         <button
-          class="rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-(--Base-White) cursor-pointer">
+          class="rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-white cursor-pointer">
           <img src="/image/cabinet/bell.svg" alt="">
         </button>
       </div>
 
-      <nav class="bg-(--Base-White) rounded-xl p-4">
+      <nav class="bg-white rounded-xl p-4">
         <NuxtLink to="/cabinet-corporate"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
           :class="isActive('/cabinet-corporate') && !route.path.includes('/navigation') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">

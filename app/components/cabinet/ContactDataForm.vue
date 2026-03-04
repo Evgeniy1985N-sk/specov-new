@@ -47,7 +47,7 @@ const handleSuccess = () => {
 </script>
 
 <template>
-  <div class="bg-(--Base-White) rounded-xl p-5">
+  <div class="bg-white rounded-xl p-5">
     <div class="flex items-center gap-3 mb-5">
       <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
         <img src="/image/cabinet/user-square.svg" alt="">
@@ -63,7 +63,7 @@ const handleSuccess = () => {
           type="text"
           :value="contactData.contactPerson"
           readonly
-          class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm"
+          class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm"
         >
         <button
             @click=""
@@ -81,7 +81,7 @@ const handleSuccess = () => {
             type="tel"
             :value="contactData.phone"
             readonly
-            class="w-full px-4 py-2.5 pr-12 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm"
+            class="w-full px-4 py-2.5 pr-12 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm"
           >
           <button
             @click="handleEditPhone"
@@ -99,7 +99,7 @@ const handleSuccess = () => {
             type="email"
             :value="contactData.email"
             readonly
-            class="w-full px-4 py-2.5 pr-12 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm"
+            class="w-full px-4 py-2.5 pr-12 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm"
           >
           <button
             @click="handleEditEmail"

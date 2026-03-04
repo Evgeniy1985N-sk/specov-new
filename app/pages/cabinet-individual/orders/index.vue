@@ -41,7 +41,7 @@ onBeforeUnmount(() => {
           <CabinetPageHeader title="Заказы" back-to="/cabinet-individual/navigation" add-button-text="Новый заказ"
             add-button-breakpoint="min-[870px]:inline" add-button-class="p-3 min-[870px]:px-4 min-[870px]:py-3" />
 
-          <div class="bg-(--Base-White) rounded-xl p-4 min-[870px]:p-5 overflow-hidden">
+          <div class="bg-white rounded-xl p-4 min-[870px]:p-5 overflow-hidden">
             <div class="flex items-center gap-2 mb-4">
               <span class="text-sm text-(--Text-600)">Сортировка:</span>
               <details ref="ordersSortDetails" class="relative" :open="ordersSortOpen">
@@ -55,7 +55,7 @@ onBeforeUnmount(() => {
                       stroke-linejoin="round" />
                   </svg>
                 </summary>
-                <div class="absolute z-10 mt-1 w-48 bg-(--Base-White) rounded-lg shadow-md py-1">
+                <div class="absolute z-10 mt-1 w-48 bg-white rounded-lg shadow-md py-1">
                   <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">Все
                     заказы</button>
                   <button class="w-full text-left px-3 py-2.5 text-sm text-[#535862] hover:bg-gray-100">В

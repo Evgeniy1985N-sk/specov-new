@@ -107,7 +107,7 @@ const desktopGridClass = computed(() => {
         </button>
       </div>
       <div class="flex items-center justify-end">
-        <div class="w-9 h-9 rounded-lg border border-(--border) bg-(--Base-White) flex items-center justify-center">
+        <div class="w-9 h-9 rounded-lg border border-(--border) bg-white flex items-center justify-center">
           <svg 
             width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg" 
             class="text-(--Text-600) transition-transform"
@@ -165,7 +165,7 @@ const desktopGridClass = computed(() => {
       leave-from-class="max-h-[2000px]"
       leave-to-class="max-h-0"
     >
-      <div v-if="isExpanded && order.products.length > 0" class="hidden min-[870px]:block bg-(--Base-White) px-4 py-4 overflow-x-auto rounded-b-lg border-(--border)">
+      <div v-if="isExpanded && order.products.length > 0" class="hidden min-[870px]:block bg-white px-4 py-4 overflow-x-auto rounded-b-lg border-(--border)">
         <div class="hidden md:grid grid-cols-[70px_minmax(150px,1fr)_70px_90px_100px_70px_100px] gap-3 py-2 text-sm text-(--Text-600)">
           <div>Артикул</div>
           <div>Наименование</div>
@@ -205,7 +205,7 @@ const desktopGridClass = computed(() => {
       leave-from-class="max-h-[5000px]"
       leave-to-class="max-h-0"
     >
-      <div v-if="isExpanded && order.products.length > 0" class="block min-[870px]:hidden bg-(--Base-White) px-4 py-4 rounded-b-lg border-t border-(--border)">
+      <div v-if="isExpanded && order.products.length > 0" class="block min-[870px]:hidden bg-white px-4 py-4 rounded-b-lg border-t border-(--border)">
         <div class="flex items-center justify-between mb-4">
           <button 
             @click="toggleOrder"

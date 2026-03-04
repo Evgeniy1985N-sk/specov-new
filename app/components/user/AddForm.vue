@@ -62,14 +62,14 @@ onBeforeUnmount(() => {
 
     <h1 class="text-2xl font-regular text-(--Text-950) font-['Russo_One']">Добавить нового пользователя</h1>
 
-    <div class="bg-(--Base-White) rounded-xl p-5">
+    <div class="bg-white rounded-xl p-5">
       <div class="flex flex-col gap-4">
         <div>
           <label class="text-sm text-(--Text-600) font-medium mb-2 block">ФИО</label>
           <input
             v-model="formData.fullName"
             type="text"
-            class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm focus:outline-none focus:border-(--Brand-600)"
+            class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm focus:outline-none focus:border-(--Brand-600)"
           >
         </div>
 
@@ -78,7 +78,7 @@ onBeforeUnmount(() => {
           <input
             ref="phoneInputRef"
             type="tel"
-            class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm focus:outline-none focus:border-(--Brand-600)"
+            class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm focus:outline-none focus:border-(--Brand-600)"
           >
         </div>
 
@@ -88,7 +88,7 @@ onBeforeUnmount(() => {
             v-model="formData.email"
             type="email"
             required
-            class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-(--Base-White) text-(--Text-950) text-sm focus:outline-none focus:border-(--Brand-600)"
+            class="w-full px-4 py-2.5 border border-(--border) rounded-lg bg-white text-(--Text-950) text-sm focus:outline-none focus:border-(--Brand-600)"
           >
         </div>
 

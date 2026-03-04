@@ -28,7 +28,7 @@ const handleNewAppeal = () => {
 
           <div class="flex flex-col xl:flex-row justify-between gap-4 min-[510px]:gap-6">
             <div class="w-full xl:w-[590px] flex flex-col gap-4 min-[510px]:gap-6">
-              <div class="bg-(--Base-White) rounded-xl p-5">
+              <div class="bg-white rounded-xl p-5">
                 <div class="flex items-center gap-3">
                   <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">
                     <img src="/image/cabinet/user-square.svg" alt="">

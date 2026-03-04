@@ -43,7 +43,7 @@ const handleUnblockConfirm = () => {
 </script>
 
 <template>
-  <div class="bg-(--Base-White) rounded-2xl p-4 min-[750px]:flex min-[750px]:gap-6 min-[750px]:items-center min-[1280px]:justify-between">
+  <div class="bg-white rounded-2xl p-4 min-[750px]:flex min-[750px]:gap-6 min-[750px]:items-center min-[1280px]:justify-between">
     <div class="min-[750px]:hidden flex flex-col gap-6">
       <div class="flex flex-col gap-1">
         <div class="text-sm font-medium text-(--Text-600)">ФИО</div>
@@ -63,14 +63,14 @@ const handleUnblockConfirm = () => {
       <div v-if="!user.blocked" class="flex items-center gap-2">
         <button
           @click="handleEdit"
-          class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-(--Base-White) border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) hover:opacity-70 transition-opacity"
+          class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) hover:opacity-70 transition-opacity"
         >
           <img src="/image/cabinet/edit-gray.svg" alt="" class="w-5 h-5 shrink-0">
           Изменить
         </button>
         <button
           @click="handleBlock"
-          class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-(--Base-White) border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) hover:opacity-70 transition-opacity"
+          class="flex-1 flex items-center justify-center gap-2 px-4 py-2.5 bg-white border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) hover:opacity-70 transition-opacity"
         >
           <img src="/image/cabinet/lock-green.svg" alt="" class="w-5 h-5 shrink-0">
           Заблокировать
@@ -137,7 +137,7 @@ const handleUnblockConfirm = () => {
       <div class="hidden min-[1280px]:flex items-center justify-end w-[154px]">
         <button
           @click="handleUnblock"
-          class="px-3.5 py-2 bg-(--Base-White) border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) hover:opacity-70 transition-opacity flex items-center gap-2"
+          class="px-3.5 py-2 bg-white border border-(--border) rounded-lg text-sm font-semibold text-(--Brand-950) hover:opacity-70 transition-opacity flex items-center gap-2"
         >
           <img src="/image/cabinet/reverse-left.svg" alt="Восстановить" class="w-5 h-5 shrink-0">
           Восстановить

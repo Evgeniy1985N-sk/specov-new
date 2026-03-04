@@ -24,12 +24,12 @@ const isActive = (path: string) => {
           <span class="text-sm font-semibold text-(--Text-600)">+7 (999) 999-99-99</span>
         </div>
         <button
-          class="rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-(--Base-White) cursor-pointer">
+          class="rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-white cursor-pointer">
           <img src="/image/cabinet/bell.svg" alt="">
         </button>
       </div>
 
-      <nav class="bg-(--Base-White) rounded-xl p-4">
+      <nav class="bg-white rounded-xl p-4">
         <NuxtLink to="/cabinet-individual"
           class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors"
           :class="isActive('/cabinet-individual') && !route.path.includes('/navigation') ? 'bg-[#E6F4EF] text-(--Brand-700)' : 'text-[#535862] hover:bg-gray-100'">

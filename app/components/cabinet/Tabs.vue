@@ -22,7 +22,7 @@ const activeTab = computed({
 </script>
 
 <template>
-  <div class="flex gap-1 bg-(--Base-White) p-1 rounded-lg w-fit max-[510px]:w-full">
+  <div class="flex gap-1 bg-white p-1 rounded-lg w-fit max-[510px]:w-full">
     <button
       v-for="tab in tabs"
       :key="tab.id"
@@ -31,7 +31,7 @@ const activeTab = computed({
         'px-3.5 py-2.5 rounded-lg text-sm font-medium transition-colors max-[510px]:w-full',
         activeTab === tab.id
           ? 'bg-gray-100 text-(--Brand-700)'
-          : 'bg-(--Base-White) text-(--Text-600)'
+          : 'bg-white text-(--Text-600)'
       ]"
     >
       {{ tab.label }}

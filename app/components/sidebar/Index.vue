@@ -38,7 +38,7 @@ const dataLabel = computed(() => {
 </script>
 
 <template>
-  <aside class="bg-(--Base-White) rounded-xl p-4 w-[280px] shrink-0 h-fit sticky top-[190px]">
+  <aside class="bg-white rounded-xl p-4 w-[280px] shrink-0 h-fit sticky top-[190px]">
     <nav class="flex flex-col">
       <NuxtLink
         :to="makePath('')"

@@ -72,7 +72,7 @@ const isStarActive = (star: number) => {
               <span class="w-2 h-2 rounded-full" :class="getDotColor(appeal.status)"></span>
               {{ appeal.status }}
             </span>
-            <div class=" bg-(--Base-White) rounded-lg p-4">
+            <div class=" bg-white rounded-lg p-4">
               <div class="flex flex-col gap-6">
                 <div v-for="message in appeal.messages" :key="message.id"
                   class="flex flex-col gap-2 bg-gray-100 rounded-lg p-4">
@@ -127,7 +127,7 @@ const isStarActive = (star: number) => {
               </div>
 
               <div v-else-if="!ratingSubmitted"
-                class="flex flex-col min-[600px]:flex-row min-[600px]:items-center min-[600px]:justify-between items-center gap-4 p-1 border border-(--border) rounded-lg bg-(--Base-White) max-[600px]:p-3 mt-6">
+                class="flex flex-col min-[600px]:flex-row min-[600px]:items-center min-[600px]:justify-between items-center gap-4 p-1 border border-(--border) rounded-lg bg-white max-[600px]:p-3 mt-6">
                 <span class="text-lg font-bold text-(--Text-950) pl-2 text-center min-[600px]:text-left">Оцените работу
                   поддержки</span>
 
@@ -148,7 +148,7 @@ const isStarActive = (star: number) => {
               </div>
             </div>
           </div>
-          <div v-else class="bg-(--Base-White) rounded-xl p-5 text-center">
+          <div v-else class="bg-white rounded-xl p-5 text-center">
             <p class="text-sm text-(--Text-600)">Обращение не найдено</p>
             <NuxtLink to="/cabinet-individual/appeals"
               class="inline-block mt-4 text-sm text-(--Brand-600) hover:text-(--Brand-700) transition-colors">

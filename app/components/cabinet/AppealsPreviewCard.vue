@@ -19,7 +19,7 @@ const handleNewAppeal = () => {
 </script>
 
 <template>
-  <div class="bg-(--Base-White) rounded-xl p-5">
+  <div class="bg-white rounded-xl p-5">
     <div class="flex items-start justify-between mb-5">
       <div class="flex items-start gap-3 flex-col">
         <div class="w-10 h-10 bg-gray-100 rounded-lg flex items-center justify-center">

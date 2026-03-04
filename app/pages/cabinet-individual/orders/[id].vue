@@ -82,7 +82,7 @@ const goBack = () => {
         <div class="flex-1 flex flex-col gap-4 min-[510px]:gap-6">
           <div class="flex gap-3">
             <button @click="goBack"
-              class="xl:hidden rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-(--Base-White) cursor-pointer">
+              class="xl:hidden rounded-lg transition-colors border border-(--border) p-3 max-[510px]:p-2 bg-white cursor-pointer">
               <img src="/image/cabinet/arrow-right.svg" alt="" class="rotate-180">
             </button>
             <div>
@@ -91,7 +91,7 @@ const goBack = () => {
             </div>
           </div>
 
-          <div class="flex items-center justify-between bg-(--Base-White) rounded-xl p-4">
+          <div class="flex items-center justify-between bg-white rounded-xl p-4">
             <div class="flex items-center gap-2">
               <img src="/image/sidebar/shopping-bag.svg" alt="" class="w-5 h-5">
               <span class="text-(--Text-950) font-medium">{{ order.productCount }} {{ order.productCount === 1 ? 'товар'
@@ -104,7 +104,7 @@ const goBack = () => {
             <div v-for="(product, index) in order.products" :key="index"
               :class="['py-4', { 'border-t border-(--border)': index !== 0 }]">
               <div class="flex gap-4 mb-4">
-                <div class="w-20 h-20 bg-(--Base-White) rounded-lg flex items-center justify-center">
+                <div class="w-20 h-20 bg-white rounded-lg flex items-center justify-center">
                   <img :src="product.image" :alt="product.name" class="w-16 h-16 object-contain">
                 </div>
                 <div class="flex-1">
