@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ContactData } from '~/types/cabinet'
-import ModalEditContact from '@/components/Modal/EditContact.vue'
+import ModalEditContact from '@/components/modal/EditContact.vue'
 
 interface Props {
   contactData: ContactData
