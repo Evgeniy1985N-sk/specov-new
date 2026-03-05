@@ -4,7 +4,7 @@ import { useCartsStore } from "~/stores/carts";
 import type { ProductForCart } from "~/types/product";
 
 const cartsStore = useCartsStore();
-const { link: productDetailLink } = useProduct();
+const { link: productDetailLink, declineProductWord } = useProduct();
 
 const likeStore = useLikeStore();
 
@@ -19,7 +19,7 @@ const cart = computed(() => cartsStore.carts[cartIndex]);
 const products = computed<ProductForCart[]>(() => cart.value?.products ?? []);
 
 const goodsCount = computed(() => products.value.reduce((sum, p) => sum + p.quant, 0));
-const totalPrice = computed(() => products.value.reduce((sum, p) => sum + p.amount, 0));
+const totalPrice = computed(() => cartsStore.totalAmount(cartIndex) );
 
 const makeKey = (p: ProductForCart): string => {
 	return `${p.id}:${p.char?.id ?? 0}`;
@@ -126,278 +126,327 @@ const removeSelected = async (): Promise<void> => {
 </script>
 
 <template>
-	<Header />
 
-	<main v-if="!isShowThanks">
-		<Section class="mt-6! overflow-visible">
-			<SectionContainer>
-				<div class="flex gap-8">
-					<div class="w-full pb-50 lg:pb-0">
-						<div class="grid gap-6 border-b border-gray-300 lg:border-0 pb-10 lg:pb-0">
-							<div class="flex items-center justify-between">
-								<TitleGoods title="Корзина" :goods="goodsCount" />
+  <Header />
 
-								<div class="flex gap-4 md:hidden">
-									<CartButton>
-										<WrapIcon>
-											<CartIconShare />
-										</WrapIcon>
-									</CartButton>
-									<CartButton>
-										<WrapIcon>
-											<CartIconDownload />
-										</WrapIcon>
-									</CartButton>
-									<CartButton>
-										<WrapIcon>
-											<CartIconFax />
-										</WrapIcon>
-									</CartButton>
-								</div>
-							</div>
+  <main v-if="!isShowThanks">
 
-							<CartPanel 
-								@print="printCart"
-								@share="shareCart"
-								@remove="removeSelected"
-								@set-check="setChecked"
+    <Section class="mt-6! overflow-visible">
+      <SectionContainer>
+
+        <div class="flex gap-8">
+
+          <div class="w-full pb-50 lg:pb-0">
+
+            <div class="grid gap-6 border-b border-gray-300 lg:border-0 pb-10 lg:pb-0">
+
+              <div class="flex items-center justify-between">
+                <TitleGoods title="Корзина" :goods="1" />
+
+                <div class="flex gap-4 md:hidden">
+                  <CartButton>
+                    <WrapIcon>
+                      <CartIconShare />
+                    </WrapIcon>
+                  </CartButton>
+                  <CartButton>
+                    <WrapIcon>
+                      <CartIconDownload />
+                    </WrapIcon>
+                  </CartButton>
+                  <CartButton>
+                    <WrapIcon>
+                      <CartIconFax />
+                    </WrapIcon>
+                  </CartButton>
+                </div>
+              </div>
+
+
+              <CartPanel 
+				@print="printCart"
+				@share="shareCart"
+				@remove="removeSelected"
+				@set-check="setChecked"
+			/>
+
+              <!-- card -->
+              <div v-for="(product, i) in products" class="w-full sm:p-4 bg-white transition" :key="i">
+
+                <div class="flex justify-between items-center gap-6 flex-wrap">
+
+                  <div class="flex sm:items-center gap-4 lg:max-w-[520px] w-full">
+
+                    <UCheckbox size="xl" 
+						:model-value="isSelected(product)"
+						@update:model-value="(v: boolean | 'indeterminate') => setSelected(product, v===true)"
+					/>
+
+                    <img class="w-20 h-20 object-contain" 
+						:src="product.picture ? picturePreview(product.picture) : undefined"
+						alt="фото"
+					/>
+
+                    <div class="lg:max-w-[392px] w-full">
+                      <div class="grid gap-1 sm:gap-0">
+                        <div class="flex flex-col-reverse sm:flex-row gap-2 sm:gap-6">
+                          <span class="text-[12px] leading-[18px] sm:text-sm sm:leading-5 font-medium">
+							Код товара: {{ product.code_1c }}
+                          </span>
+                          <CartMark />
+                        </div>
+                        <NuxtLink 
+							:to="productDetailLink(product)"
+							class="text-[12px] leading-[18px] sm:text-base sm:leading-6 text-gray-950 font-semibold transition-colors hover:text-(--Brand-700) lg:max-w-[308px] sm:line-clamp-2 sm:overflow-hidden">
+							{{ product.name }}
+                        </NuxtLink>
+                      </div>
+
+                      <div class="flex justify-between flex-wrap gap-2 lg:hidden mt-4">
+                        <div class="max-w-[92px] sm:max-w-[116px]">
+                          <UInputNumber 
+							:model-value="product.quant"
+							@update:model-value="(v: number | null) => onSetQuantity(product, v ?? 0)"
+							:min="0" size="md" color="neutral" :ui="{ root: 'h-[28px] sm:h-[36px]', base: 'text-[12px] leading-[18px] sm:text-sm leading-5' }"
+                            :increment="{
+                              class: 'bg-transparen',
+                              color: 'neutral',
+                              variant: 'ghost',
+                              size: 'md',
+                            }"
+							:decrement="{
+                              color: 'neutral',
+                              variant: 'ghost',
+                              size: 'md'
+                            }" 
+							@increment="() => onIncrement(product)"
+							@decrement="() => onDecrement(product)"
 							/>
+                        </div>
 
-							<!-- card -->
-							<div v-for="product in products" class="w-full sm:p-4 bg-white transition" :key="`${product.id}:${product.char?.id ?? 0}`">
-								<div class="flex justify-between items-center gap-6 flex-wrap">
-									<div class="flex sm:items-center gap-4 lg:max-w-[520px] w-full">
-										<!-- per-row checkbox: keep local UI if you need selection later -->
-										<UCheckbox size="xl" 
-											:model-value="isSelected(product)"
-											@update:model-value="(v: boolean | 'indeterminate') => setSelected(product, v===true)"
-										/>
+                        <div class="flex items-center justify-between sm:max-w-[150px] w-full">
+                          <p class="text-[18px] leading-7 font-semibold text-gray-950">
+							{{ product.price.toLocaleString("ru-RU") }} ₽
+                          </p>
+                          <CartButton class="ml-auto sm:ml-0" @click="likeStore.toggle(product)">
+                            <WrapIcon class="w-9 h-9">
+								<CartIconFavorite :selected="likeStore.isLiked(product)" />
+                            </WrapIcon>
+                          </CartButton>
+						  <CartButton @click="onRemove(product)">
+                            <WrapIcon class="w-9 h-9">
+                              <CartIconTrash />
+                            </WrapIcon>
+                          </CartButton>
+                        </div>
 
-										<img
-											class="w-20 h-20 object-contain"
-											:src="product.picture ? picturePreview(product.picture) : undefined"
-											alt="prod-image"
-										/>
+                      </div>
 
-										<div class="lg:max-w-[392px] w-full">
-											<div class="grid gap-1 sm:gap-0">
-												<div class="flex flex-col-reverse sm:flex-row gap-2 sm:gap-6">
-													<span class="text-[12px] leading-[18px] sm:text-sm sm:leading-5 font-medium">
-														Код товара: {{ product.code_1c }}
-													</span>
-													<CartMark />
-												</div>
+                    </div>
+                  </div>
 
-												<NuxtLink
-													:to="productDetailLink(product)"
-													class="text-[12px] leading-[18px] sm:text-base sm:leading-6 text-gray-950 font-semibold transition-colors hover:text-(--Brand-700) lg:max-w-[308px] sm:line-clamp-2 sm:overflow-hidden"
-												>
-													{{ product.name }}
-												</NuxtLink>
-											</div>
+                  <div class="hidden lg:block max-w-[116px]">
+                    <UInputNumber 
+						:model-value="product.quant"
+						:min="0" size="md" color="neutral" :ui="{ root: 'h-[36px]' }"
+						@update:model-value="(v: number | null) => onSetQuantity(product, v ?? 0)"
+                      :increment="{
+                        color: 'neutral',
+                        variant: 'ghost',
+                        size: 'md',
+                      }" :decrement="{
+                        color: 'neutral',
+                        variant: 'ghost',
+                        size: 'md'
+                      }" 
+						@increment="() => onIncrement(product)"
+						@decrement="() => onDecrement(product)"
+					  />
+                  </div>
 
-											<!-- Mobile row controls -->
-											<div class="flex justify-between flex-wrap gap-2 lg:hidden mt-4">
-												<div class="max-w-[92px] sm:max-w-[116px]">
-													<UInputNumber
-														:model-value="product.quant"
-														:min="0"
-														size="md"
-														color="neutral"
-														:ui="{ root: 'h-[28px] sm:h-[36px]', base: 'text-[12px] leading-[18px] sm:text-sm leading-5' }"
-														@update:model-value="(v: number | null) => onSetQuantity(product, v ?? 0)"
-														:increment="{
-															class: 'bg-transparen',
-															color: 'neutral',
-															variant: 'ghost',
-															size: 'md',
-														}"
-														:decrement="{
-															color: 'neutral',
-															variant: 'ghost',
-															size: 'md',
-														}"
-														@increment="() => onIncrement(product)"
-														@decrement="() => onDecrement(product)"
-													/>
-												</div>
+                  <div class="hidden lg:flex items-center justify-end max-w-[180px] w-full">
+                    <p class="mr-1 text-[20px] leading-[30px] font-semibold text-gray-950">
+                      {{ product.price.toLocaleString('ru-RU') }} ₽
+                    </p>
+                    <CartButton @click="likeStore.toggle(product)">
+                      <WrapIcon class="w-9 h-9">
+						<CartIconFavorite :selected="likeStore.isLiked(product)" />
+                      </WrapIcon>
+                    </CartButton>
+                    <CartButton @click="onRemove(product)">
+                      <WrapIcon class="w-9 h-9">
+                        <CartIconTrash />
+                      </WrapIcon>
+                    </CartButton>
+                  </div>
 
-												<div class="flex items-center justify-between sm:max-w-[150px] w-full">
-													<p class="text-[18px] leading-7 font-semibold text-gray-950">
-														{{ product.price.toLocaleString("ru-RU") }} ₽
-													</p>
-													<CartButton class="ml-auto sm:ml-0" @click="likeStore.toggle(product)">
-														<WrapIcon class="w-9 h-9">
-															<CartIconFavorite 
-																  :selected="likeStore.isLiked(product)"
-															/>
-														</WrapIcon>
-													</CartButton>
-													<CartButton @click="onRemove(product)">
-														<WrapIcon class="w-9 h-9">
-															<CartIconTrash />
-														</WrapIcon>
-													</CartButton>
-												</div>
-											</div>
-										</div>
-									</div>
+                </div>
 
-									<!-- Desktop quantity -->
-									<div class="hidden lg:block max-w-[116px]">
-										<UInputNumber
-											:model-value="product.quant"
-											:min="0"
-											size="md"
-											color="neutral"
-											:ui="{ root: 'h-[36px]' }"
-											@update:model-value="(v: number | null) => onSetQuantity(product, v ?? 0)"
-											:increment="{
-												color: 'neutral',
-												variant: 'ghost',
-												size: 'md',
-											}"
-											:decrement="{
-												color: 'neutral',
-												variant: 'ghost',
-												size: 'md',
-											}"
-											@increment="() => onIncrement(product)"
-											@decrement="() => onDecrement(product)"
-										/>
-									</div>
+              </div>
 
-									<!-- Desktop actions -->
-									<div class="hidden lg:flex items-center justify-end max-w-[180px] w-full">
-										<p class="mr-1 text-[20px] leading-[30px] font-semibold text-gray-950">
-											{{ product.price.toLocaleString("ru-RU") }} ₽
-										</p>
-										<CartButton @click="likeStore.toggle(product)">
-											<WrapIcon class="w-9 h-9">
-												<CartIconFavorite 
-													  :selected="likeStore.isLiked(product)"
-												/>
-											</WrapIcon>
-										</CartButton>
-										<CartButton @click="onRemove(product)">
-											<WrapIcon class="w-9 h-9">
-												<CartIconTrash />
-											</WrapIcon>
-										</CartButton>
-									</div>
-								</div>
-							</div>
+            </div>
 
-							<!-- /card -->
-						</div>
+            <!-- Mobile -->
+            <div class="grid gap-4 pt-6 pb-9 lg:hidden">
 
-						<!-- Mobile -->
-						<div class="grid gap-4 pt-6 pb-9 lg:hidden">
-							<p class="text-black font-bold">Промокод</p>
+              <p class="text-black font-bold">
+                Промокод
+              </p>
 
-							<div class="flex items-center gap-4">
-								<UInput color="neutral" size="xl" placeholder="Введите промокод" />
-								<UButton class="flex w-fit items-center justify-center h-10 cursor-pointer rounded-lg bg-white! text-(--Brand-950) px-4" color="neutral">
-									Применить
-								</UButton>
-							</div>
-						</div>
-						<!-- Mobile -->
+              <div class="flex items-center gap-4">
 
-						<div id="tabs" class="hidden lg:grid gap-6 pt-20">
-							<h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">Выберите способ получения</h2>
-							<CartTabs />
-						</div>
+                <UInput color="neutral" size="xl" placeholder="Введите промокод" />
 
-						<div id="pay" class="hidden lg:grid gap-6 pt-20">
-							<h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">Выберите способ оплаты</h2>
-							<CartTabs2 />
-						</div>
-					</div>
+                <UButton
+                  class="flex w-fit items-center justify-center h-10 cursor-pointer rounded-lg bg-white! text-(--Brand-950) px-4"
+                  color="neutral">Применить
+                </UButton>
+              </div>
 
-					<!-- ASIDE -->
-					<aside class="hidden lg:flex items-start w-full max-w-[280px]">
-						<div class="sticky top-0 grid gap-4 p-6 bg-gray-100 rounded-lg w-full">
-							<div class="font-bold text-black">Детали заказа</div>
+            </div>
+            <!-- Mobile -->
 
-							<div class="grid gap-3">
-								<div class="grid gap-1">
-									<p class="flex text-gray-950 font-semibold gap-1.5 items-center">
-										<WrapIcon><CartIconShop /></WrapIcon>
-										<span class="text-sm font-medium leading-5">Самовывоз</span>
-									</p>
-									<span class="text-sm font-medium leading-5">ул. 50 лет Октября, 118А</span>
-									<a href="#tabs" class="text-(--Brand-700) cursor-pointer text-sm leading-5 text-left">Изменить</a>
-								</div>
+            <div id="tabs" class="hidden lg:grid gap-6 pt-20">
+              <h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">
+                Выберите способ получения
+              </h2>
+              <CartTabs />
+            </div>
 
-								<div class="grid gap-1">
-									<p class="flex text-gray-950 font-semibold gap-1.5 items-center">
-										<WrapIcon><CartIconUser /></WrapIcon>
-										<span class="text-sm font-medium leading-5">Покупатель</span>
-									</p>
-									<HeaderLogin>
-										<button class="text-(--Brand-700) cursor-pointer text-sm leading-5 text-left">Указать данные</button>
-									</HeaderLogin>
-								</div>
+            <div id="pay" class="hidden lg:grid gap-6 pt-20">
+              <h2 class="text-[24px] leading-8 text-gray-950 font-['Russo_One']">
+                Выберите способ оплаты
+              </h2>
+              <CartTabs2 />
+            </div>
 
-								<div class="grid gap-1">
-									<p class="flex text-gray-950 font-semibold gap-1.5 items-center">
-										<WrapIcon><CartIconCurrency /></WrapIcon>
-										<span class="text-sm font-medium leading-5">Способ оплаты</span>
-									</p>
-									<span class="text-sm font-medium leading-5">СБП</span>
-									<a href="#pay" class="text-(--Brand-700) cursor-pointer text-sm leading-5 text-left">Изменить</a>
-								</div>
-							</div>
+          </div>
 
-							<div class="grid gap-4">
-								<CartTotal :item-count="products.length" :total-amount="cartsStore.totalAmount(cartIndex)"/>
+          <!-- ASIDE -->
+          <aside class="hidden lg:flex items-start w-full max-w-[280px]">
+            <div class="sticky top-0 grid gap-4 p-6 bg-gray-100 rounded-xl w-full">
 
-								<UButton @click="isShowThanks = true" size="xl" type="submit" :disabled="goodsCount === 0">
-									Оформить заказ
-								</UButton>
-							</div>
-						</div>
-					</aside>
-					<!-- ASIDE -->
-				</div>
-			</SectionContainer>
+              <div class="font-bold text-black">
+                Детали заказа
+              </div>
 
-			<!-- Panel Mobile -->
-			<div class="fixed bottom-[71px] sm:bottom-20 left-0 w-full py-6 bg-gray-100 lg:hidden">
-				<SectionContainer>
-					<div class="grid gap-4">
-						<p class="flex items-baseline text-sm leading-5 text-gray-950 font-semibold">
-							<span class="max-w-[500px] whitespace-nowrap pr-2">
-								{{ goodsCount }} товар(ов)
-							</span>
-							<span class="flex-1 border-b border-dotted border-gray-300 border-opacity-0 relative h-0 mx-2"></span>
-							<b class="font-semibold text-gray-950 whitespace-nowrap">
-								{{ totalPrice.toLocaleString("ru-RU") }} ₽
-							</b>
-						</p>
-						<UButton @click="isShowMenu = true" class="min-h-9 sm:min-h-11" :disabled="goodsCount === 0">
-							Оформить заказ
-						</UButton>
-					</div>
-				</SectionContainer>
-			</div>
-			<!-- Panel Mobile -->
+              <div class="grid gap-3">
 
-			<!-- Menu -->
-			<CartMenu :is-show="isShowMenu" @close="isShowMenu = false" @open-thanks="isShowThanks = true" />
-			<!-- Menu -->
-		</Section>
+                <div class="grid gap-1">
+                  <p class="flex text-gray-950 font-semibold gap-1.5 items-center">
+                    <WrapIcon>
+                      <CartIconShop />
+                    </WrapIcon>
+                    <span class="text-sm font-medium leading-5">
+                      Самовывоз
+                    </span>
+                  </p>
+                  <span class="text-sm font-medium leading-5">
+                    ул. 50 лет Октября, 118А
+                  </span>
+                  <a href="#tabs" class="text-(--Brand-700) cursor-pointer text-sm leading-5 text-left">
+                    Изменить
+                  </a>
+                </div>
 
-		<Feedback class="hidden lg:block" />
+                <div class="grid gap-1">
+                  <p class="flex text-gray-950 font-semibold gap-1.5 items-center">
+                    <WrapIcon>
+                      <CartIconUser />
+                    </WrapIcon>
+                    <span class="text-sm font-medium leading-5">
+                      Покупатель
+                    </span>
+                  </p>
+                  <HeaderLogin>
+                    <button class="text-(--Brand-700) cursor-pointer text-sm leading-5 text-left">
+                      Указать данные
+                    </button>
+                  </HeaderLogin>
+                </div>
 
-		<Section class="hidden lg:block">
-			<SectionContainer>
-				<Stores />
-			</SectionContainer>
-		</Section>
-	</main>
+                <div class="grid gap-1">
+                  <p class="flex text-gray-950 font-semibold gap-1.5 items-center">
+                    <WrapIcon>
+                      <CartIconCurrency />
+                    </WrapIcon>
+                    <span class="text-sm font-medium leading-5">
+                      Способ оплаты
+                    </span>
+                  </p>
+                  <span class="text-sm font-medium leading-5">
+                    СБП
+                  </span>
+                  <a href="#pay" class="text-(--Brand-700) cursor-pointer text-sm leading-5 text-left">
+                    Изменить
+                  </a>
+                </div>
 
-	<CartThanks v-if="isShowThanks" @close-thanks="isShowThanks = false" />
-	<Footer class="hidden lg:block" />
+              </div>
+
+
+              <div class="grid gap-4">
+
+                <UInput color="neutral" size="lg" placeholder="Введите промокод" :ui="{base: 'min-h-9!'}" />
+
+				<CartTotal :item-count="products.length" :total-amount="totalPrice" />
+
+                <UButton @click="isShowThanks = true" size="xl" type="submit" :ui="{base: 'min-h-11!'}">
+                  Оформить заказ
+                </UButton>
+
+              </div>
+
+            </div>
+          </aside>
+          <!-- ASIDE -->
+
+        </div>
+
+      </SectionContainer>
+
+      <!-- Panel Mobile -->
+      <div class="fixed bottom-[71px] sm:bottom-20 left-0 w-full py-6 bg-gray-100 lg:hidden">
+        <SectionContainer>
+          <div class="grid gap-4">
+            <p class="flex items-baseline text-sm leading-5 text-gray-950 font-semibold">
+              <span class="max-w-[500px] whitespace-nowrap pr-2">
+				  {{ declineProductWord(goodsCount) }}
+              </span>
+              <span class="flex-1 border-b border-dotted border-gray-300 border-opacity-0 relative h-0 mx-2"></span>
+              <b class="font-semibold text-gray-950 whitespace-nowrap">
+				{{ totalPrice.toLocaleString("ru-RU") }} ₽
+              </b>
+            </p>
+            <UButton @click="isShowMenu = true" class="min-h-9 sm:min-h-11">
+              Оформить заказ
+            </UButton>
+          </div>
+        </SectionContainer>
+      </div>
+      <!-- Panel Mobile -->
+
+      <!-- Menu -->
+      <CartMenu :is-show="isShowMenu" @close="isShowMenu = false" @open-thanks="isShowThanks = true" />
+      <!-- Menu -->
+
+    </Section>
+
+
+    <Feedback class="hidden lg:block" />
+
+    <Section class="hidden lg:block">
+      <SectionContainer>
+        <Stores />
+      </SectionContainer>
+    </Section>
+
+  </main>
+
+  <!-- Window Thanks -->
+  <CartThanks v-if="isShowThanks" @close-thanks="isShowThanks = false" />
+  <!-- Window Thanks -->
+
+  <Footer class="hidden lg:block" />
+
 </template>

@@ -1,19 +1,37 @@
 <script setup lang="ts">
 
+import type { UiState } from '~/types/uiState'
+
 const isShowSearch = ref(false)
+const isShowCatalogMenu = ref(false)
+
 function showSearch() {
-  isShowSearch.value = !isShowSearch.value
+  isShowSearch.value = true
 }
-provide('search', {
+function closeSearch() {
+  isShowSearch.value = false
+}
+function toggleShowCatalogMenu() {
+  isShowCatalogMenu.value = !isShowCatalogMenu.value
+}
+function closeCatalogMenu() {
+  isShowCatalogMenu.value = false
+}
+
+provide<UiState>('UiState', {
   isShowSearch,
-  showSearch
+  isShowCatalogMenu,
+  showSearch,
+  closeSearch,
+  toggleShowCatalogMenu,
+  closeCatalogMenu,
 })
 
 </script>
 
 <template>
-  <header :class="{ 'popup': isShowSearch }"
-    class="relative z-100 w-full left-0 py-3 sm:pt-4 lg:pt-0 flex flex-col items-center gap-2 sm:gap-6 self-stretch border-b border-gray-300 bg-white">
+  <header @click.self="closeSearch" :class="{ 'popup': isShowSearch }"
+    class="relative z-100 w-full left-0 py-3 sm:pt-4 lg:pt-0 flex flex-col items-center gap-2 sm:gap-3 self-stretch bg-white shadow-[0px_4px_6px_-1px_#0A0D120D]">
 
     <!-- TOP -->
     <HeaderTop :class="isShowSearch ? 'hidden lg:block' : '' " />
@@ -30,7 +48,7 @@ provide('search', {
   </header>
 </template>
 
-<style>
+<style scoped>
 .popup::after {
   content: '';
   position: fixed;

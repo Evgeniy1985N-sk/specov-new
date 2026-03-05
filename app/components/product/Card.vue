@@ -137,15 +137,15 @@ const classMedia = computed(() => ({
     </div>
     <!-- Media -->
 
-    <!-- isRow -->
+    <!-- IS ROW -->
     <div v-if="isRow" class="max-w-[280px]">
       <span class="text-sm leading-5">
         Код товара: {{ props.item.code_1c }}
       </span>
-      <nuxt-link :to="productDetailLink(props.item)">
-        <p class="mb-4 sm:mb-[46px] text-sm leading-5 text-gray-950 font-bold">
+      <nuxt-link :to="productDetailLink(props.item)" class="inline-block mb-4">
+        <span class="text-gray-950 font-bold">
           {{ props.item.name }}
-        </p>
+        </span>
       </nuxt-link>
       <div class="hidden sm:grid gap-4">
         <p v-for="(filter, i) in item.filters_display" :key="filter.id" class="flex gap-1 text-sm leading-5">
@@ -158,7 +158,7 @@ const classMedia = computed(() => ({
         </p>
       </div>
     </div>
-    <!-- isRow -->
+    <!-- IS ROW -->
 
     <!-- Content -->
     <div :class="classContent" class="flex flex-col items-start self-stretch">

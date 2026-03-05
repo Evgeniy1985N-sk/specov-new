@@ -20,17 +20,17 @@ const { declineProductWord } = useProduct();
 <template>
   <ClientOnly>
 
-    <swiper :slides-per-view="1" :space-between="8" :class="props.class">
+    <swiper :slides-per-view="'auto'" :space-between="8" :class="props.class">
 
       <swiper-slide v-for="(item, i) in props.items" :key="item.id">
 
         <NuxtLink :to="categoryLink(item)"
-          class="flex items-center gap-4 p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-100 transition">
-          <span class="flex items-center shrink-0 w-10 h-10 rounded-lg bg-white">
-            <img :src="imgSrc(item)" alt="фото">
+          class="flex items-center gap-4 h-full lg:min-h-20 p-2 rounded-lg bg-white border border-gray-200 hover:bg-gray-100 transition">
+          <span class="flex items-center shrink-0 w-10 h-10 lg:w-16 lg:h-16 rounded-lg bg-white">
+            <img :src="imgSrc(item)" class="w-full h-full" alt="фото">
           </span>
           <div class="grid gap-.5">
-            <p class="line-clamp-1 text-sm leading-5 text-gray-950 font-semibold">
+            <p class="max-w-[200px] line-clamp-2 text-sm leading-5 text-gray-950 font-semibold">
               {{ item.name }}
             </p>
             <span class="text-[12px] leading-[18px] font-medium">
@@ -49,9 +49,12 @@ const { declineProductWord } = useProduct();
 <style scoped>
 @media (max-width: 767px) {
   .swiper {
-    max-width: 160px;
-    margin: 0;
+    margin-left: 0;
     overflow: visible;
+  }
+  .swiper:deep(.swiper-slide) {
+    width: auto !important;
+    height: auto;
   }
 }
 
@@ -65,7 +68,6 @@ const { declineProductWord } = useProduct();
   }
 
   .swiper:deep(.swiper-slide) {
-    width: auto !important;
     margin: 0 !important;
   }
 
@@ -74,7 +76,7 @@ const { declineProductWord } = useProduct();
 @media (min-width: 1023px) {
 
   .swiper:deep(.swiper-wrapper) {
-    grid-template-columns: repeat(5, 1fr);
+    grid-template-columns: repeat(4, 1fr);
   }
 
 }

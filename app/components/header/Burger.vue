@@ -1,13 +1,12 @@
 <script setup lang="ts">
+import type { UiState } from '~/types/uiState';
+
 interface Props {
   isActive: boolean
   class?: string
 }
 const props = defineProps<Props>()
-interface Search {
-  isShowSearch: boolean
-}
-const { isShowSearch } = inject<Search>('search')!
+const { isShowSearch } = inject<UiState>('UiState')!
 </script>
 
 <template>

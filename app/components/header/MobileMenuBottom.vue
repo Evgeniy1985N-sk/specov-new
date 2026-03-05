@@ -4,6 +4,7 @@ import IconBurger from '@/components/header/icon/Burger.vue'
 import IconCart from '@/components/header/icon/Cart.vue'
 import IconFavorite from '@/components/header/icon/Favorite.vue'
 import IconCabinet from '@/components/header/icon/Cabinet.vue'
+import type { UiState } from '~/types/uiState'
 
 const emit = defineEmits(['toggle-catalog', 'toggle-profile'])
 const route = useRoute()
@@ -82,10 +83,8 @@ function updateActive() {
     toggleActive(3)
   }
 }
-interface Search {
-  isShowSearch: boolean
-}
-const { isShowSearch } = inject<Search>('search')!
+
+const { isShowSearch } = inject<UiState>('UiState')!
 
 </script>
 

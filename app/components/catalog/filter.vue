@@ -21,6 +21,7 @@ interface Props {
 	stores: StoreFilter[];
 	minPrice: number;
 	maxPrice: number;
+	totalCount: number;
 }
 
 const DEBOUNCE_TIME = 400;
@@ -58,6 +59,16 @@ watch(
 );
 */
 
+const shouldDisable = (checked: boolean, disabledFromServer: boolean | undefined): boolean => {
+	if (checked) return false;
+	if (props.totalCount === 0) return false;
+	return Boolean(disabledFromServer);
+};
+
+const isDynNumberActive = (filterId: number): boolean => {
+	const st = filterState[filterId];
+	return st != null && (st.min != null || st.max != null);
+};
 const isDynItemDisabled = (filterId: number, itemDisabledFromProps: boolean): boolean => {
 	if (ignoreDynDisabledByFilterId.value[filterId]) return false;
 	return itemDisabledFromProps;
@@ -153,8 +164,8 @@ const emitPriceDebounced = debounce(() => {
 	emit('handleClick', { kind: 'price' });
 }, DEBOUNCE_TIME);
 
-const formatPrice = (price?: number): string => 
-	price!==undefined ? String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : '';
+const formatPrice = (price?: number): string =>
+	price !== undefined ? String(price).replace(/\B(?=(\d{3})+(?!\d))/g, ' ') : '';
 
 const formattedMinPrice = computed({
 	get() {
@@ -178,7 +189,7 @@ const formattedMaxPrice = computed({
 	}
 });
 const formatDynNumVal = (val?: number): string => {
-	return val!==undefined ? val.toString() : "";
+	return val !== undefined ? val.toString() : "";
 }
 
 //list options
@@ -478,10 +489,13 @@ defineExpose({
 
 		<template #availability="{ item }">
 
-			<div class="grid grid-cols-2 lg:grid-cols-1 gap-4">
-				<label v-for="st in stores" :key="st.id" class="flex gap-2 items-center cursor-pointer">
-					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)" 
-						:disabled="(ignoreStoresDisabled === true) ? false : st.disabled"
+			<div class="custom-scrollbar lg:overflow-auto lg:max-h-[244px] flex flex-wrap lg:grid lg:grid-cols-1 gap-4">
+				<label v-for="st in stores" :key="st.id" 
+					:class="shouldDisable(selectedStores.includes(st.id), st.disabled) ? 'opacity-40 pointer-events-none' : ''"
+					>
+
+					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)"
+						:disabled="shouldDisable(selectedStores.includes(st.id), st.disabled)"
 						@update:model-value="
 							updateStoreSelection(st.id, $event as boolean);
 							emit('handleClick', { kind: 'store', id: st.id, checked: $event as boolean });
@@ -492,6 +506,10 @@ defineExpose({
 				</label>
 			</div>
 
+			<button class="mt-4 text-xs font-medium text-(--Brand-700) cursor-pointer">
+				Показать еще
+			</button>
+
 		</template>
 
 		<template #price="{ item }">
@@ -499,6 +517,7 @@ defineExpose({
 			<div class="flex gap-2">
 
 				<UInput color="neutral" v-model="formattedMinPrice" 
+					:disabled="props.minPrice===props.maxPrice"
 					:placeholder="`от ${formatPrice(props.minPrice)}`"
 					:ui="{ base: 'font-medium text-gray-950 ring-gray-900', trailing: 'pe-1' }"
 					@update:model-value="() => { emitPriceDebounced(); }"
@@ -510,6 +529,7 @@ defineExpose({
 				</UInput>
 
 				<UInput color="neutral" v-model="formattedMaxPrice" 
+					:disabled="props.minPrice===props.maxPrice"
 					:placeholder="`до ${formatPrice(props.maxPrice)}`"
 					:ui="{ base: 'font-medium text-gray-950', trailing: 'pe-1' }"
 					@update:model-value="() => { emitPriceDebounced(); }"
@@ -523,10 +543,12 @@ defineExpose({
 			</div>
 
 			<CatalogInputRange 
-				:max-range="props.maxPrice" 
-				:min-range="props.minPrice" 
-				@update:min-value="() => { emitPriceDebounced(); }"
-				@update:max-value="() => { emitPriceDebounced(); }"
+				:disabled="props.minPrice === props.maxPrice"
+				:min-range="props.minPrice"
+				:max-range="props.maxPrice"
+				v-model:min-value="minPrice"
+				v-model:max-value="maxPrice"
+				@change="() => { emitPriceDebounced(); }"
 			/>
 
 		</template>
@@ -538,7 +560,7 @@ defineExpose({
 					:class="(ind < visBrandCount || isBrandHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
 					<UCheckbox size="xl" :model-value="selectedBrands.includes(br.id)"
-						:disabled="(ignoreBrandDisabled === true) ? false : br.disabled"
+						:disabled="shouldDisable(selectedBrands.includes(br.id), br.disabled)"
 						@update:model-value="
 							updateBrandSelection(br.id, $event as boolean);
 							emit('handleClick', { kind: 'brand', id: br.id, checked: $event as boolean });
@@ -562,8 +584,8 @@ defineExpose({
 				<label v-for="(c, ind) in props.countries" :key="c.id"
 					:class="(ind < visCountryCount || isCountryHidden === false) ? 'flex' : 'hidden'"
 					class="gap-2 items-center cursor-pointer">
-					<UCheckbox size="xl" :model-value="selectedCountries.includes(c.id)" 
-						:disabled="(ignoreCountriesDisabled === true) ? false : c.disabled"
+					<UCheckbox size="xl" :model-value="selectedCountries.includes(c.id)"
+						:disabled="shouldDisable(selectedCountries.includes(c.id), c.disabled)"
 						@update:model-value="
 							updateCountrySelection(c.id, $event as boolean);
 							emit('handleClick', { kind: 'country', id: c.id, checked: $event as boolean });
@@ -587,9 +609,8 @@ defineExpose({
 				<!-- TEXT / LIST → CHECKBOXES -->
 				<template v-if="filter.data_type === 't_text'">
 					<label v-for="item in filter.items" :key="item.hash" class="flex gap-2 items-center cursor-pointer">
-						<UCheckbox size="xl" 
-							:model-value="filterState[filter.id][item.hash]" 
-							:disabled="isDynItemDisabled(filter.id, item.disabled)"
+						<UCheckbox size="xl" :model-value="filterState[filter.id][item.hash]"
+							:disabled="shouldDisable(Boolean(filterState[filter.id]?.[item.hash]), item.disabled)"
 							@update:model-value="
 								updateDynSelection(filter.id, item.hash, $event as boolean);
 								emit('handleClick', { kind: 'dyn', filterId: filter.id, checked: $event as boolean });
@@ -610,7 +631,7 @@ defineExpose({
 						<UCheckbox
 							size="xl"
 							:model-value="Boolean(filterState[filter.id]?.[opt.id])"
-							:disabled="isDynItemDisabled(filter.id, filter.disabled ?? false)"
+							:disabled="shouldDisable(Boolean(filterState[filter.id]?.[opt.id]), filter.disabled)"
 							@update:model-value="(v) => {
 								const checked = v as boolean;
 								filterState[filter.id][opt.id] = checked;
@@ -629,7 +650,7 @@ defineExpose({
 						size="xl"
 						:model-value="Boolean(filterState[filter.id])"
 						:label="filter.name"
-						:disabled="isDynItemDisabled(filter.id, filter.disabled ?? false)"
+						:disabled="shouldDisable(Boolean(filterState[filter.id]), filter.disabled)"
 						@update:model-value="(v) => {
 							const checked = v as boolean;
 							filterState[filter.id] = checked;
@@ -641,16 +662,14 @@ defineExpose({
 				<!-- NUMBER -->
 				<template v-else-if="filter.data_type === 't_number'">
 					<div class="flex gap-2">
-						<UInput 
-							v-model="filterState[filter.id].min" type="number" :placeholder="`От ${formatDynNumVal(filter.items[0]?.min)}`"
-							:disabled="filter.disabled" 
-							@input="emitDynDebounced(filter.id)"
-						/>
-						<UInput 
-							v-model="filterState[filter.id].max" type="number" :placeholder="`До ${formatDynNumVal(filter.items[0]?.max)}`"
-							:disabled="filter.disabled" 
-							@input="emitDynDebounced(filter.id)"
-						/>
+						<UInput v-model="filterState[filter.id].min" type="number"
+							:placeholder="`От ${formatDynNumVal(filter.items[0]?.min)}`" 
+							:disabled="shouldDisable(isDynNumberActive(filter.id), filter.disabled)"
+							@input="emitDynDebounced(filter.id)" />
+						<UInput v-model="filterState[filter.id].max" type="number"
+							:placeholder="`До ${formatDynNumVal(filter.items[0]?.max)}`" 
+							:disabled="shouldDisable(isDynNumberActive(filter.id), filter.disabled)"
+							@input="emitDynDebounced(filter.id)" />
 					</div>
 
 					<!--
@@ -677,4 +696,28 @@ defineExpose({
 	</UAccordion>
 </template>
 
-<style scoped></style>
+<style scoped>
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #0C8F61 #D5D7DA;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #D5D7DA;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #0C8F61;
+  border-radius: 4px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #0C8F61;
+}
+</style>

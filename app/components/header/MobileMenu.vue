@@ -1,12 +1,14 @@
 <script setup lang="ts">
 import IconCompare from '@/components/header/icon/Compare.vue'
 import IconFavorite from '@/components/header/icon/Favorite.vue'
+import type { UiState } from '~/types/uiState'
 
 interface Props {
   isShow: boolean
 }
-
 const props = defineProps<Props>()
+
+const { isShowSearch } = inject<UiState>('UiState')!
 
 const buttons = [
   {
@@ -40,12 +42,11 @@ const menu = [
   },
 ]
 
-
 </script>
 
 <template>
 
-  <div v-if="props.isShow" class="lg:hidden fixed bg-gray-100 inset-0 z-100 top-[117px] sm:top-[73px]">
+  <div v-if="props.isShow && !isShowSearch" class="lg:hidden fixed bg-gray-100 inset-0 z-100 top-[117px] sm:top-[73px]">
     <SectionContainer>
       <div class="grid gap-6 py-6">
 

@@ -109,7 +109,9 @@ await ensureMainCats();
 	}
 
 	.swiper-slide img {
-		right: 10px;
+		left: 50%;
+		transform: translateX(-50%);
+		/* right: 10px; */
 		max-width: 90px;
 	}
 

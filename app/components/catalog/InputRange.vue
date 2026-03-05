@@ -1,7 +1,8 @@
 <script setup lang="ts">
-import { computed, ref, watch } from 'vue';
+import { computed, ref, watch } from "vue";
 
 interface RangeSliderProps {
+	disabled?: boolean;
 	minValue?: number;
 	maxValue?: number;
 	minRange?: number;
@@ -10,18 +11,19 @@ interface RangeSliderProps {
 }
 
 const props = withDefaults(defineProps<RangeSliderProps>(), {
+	disabled: false,
 	minRange: 10,
 	maxRange: 100,
 	step: 5,
 });
 
 const emit = defineEmits<{
-	'update:minValue': [value: number];
-	'update:maxValue': [value: number];
-	'change': [min: number, max: number];
+	"update:minValue": [value: number];
+	"update:maxValue": [value: number];
+	"change": [min: number, max: number];
 }>();
 
-const clamp = (v: number, lo: number, hi: number) => Math.min(hi, Math.max(lo, v));
+const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
 
 const min = ref<number>(props.minValue ?? props.minRange);
 const max = ref<number>(props.maxValue ?? props.maxRange);
@@ -38,7 +40,6 @@ watch(
 			return;
 		}
 
-		// If parent doesn't control the value, follow the range edges.
 		const nextMin = props.minValue === undefined ? lo : clamp(props.minValue, lo, hi);
 		const nextMax = props.maxValue === undefined ? hi : clamp(props.maxValue, lo, hi);
 
@@ -50,7 +51,7 @@ watch(
 
 const span = computed(() => Math.max(1, props.maxRange - props.minRange));
 
-const toPercent = (value: number) => {
+const toPercent = (value: number): number => {
 	const v = clamp(value, props.minRange, props.maxRange);
 	return ((v - props.minRange) / span.value) * 100;
 };
@@ -63,22 +64,26 @@ const lineStyle = computed(() => ({
 	right: `${100 - toPercent(max.value)}%`,
 }));
 
-const handleMinChange = (e: Event) => {
+// Important when thumbs overlap: bring the active one on top.
+const minInputZ = computed(() => (min.value >= max.value - props.step ? 6 : 4));
+const maxInputZ = computed(() => (min.value >= max.value - props.step ? 5 : 6));
+
+const handleMinChange = (e: Event): void => {
 	const next = clamp(Number((e.target as HTMLInputElement).value), props.minRange, props.maxRange);
 	if (next > max.value) return;
 
 	min.value = next;
-	emit('update:minValue', next);
-	emit('change', min.value, max.value);
+	emit("update:minValue", next);
+	emit("change", min.value, max.value);
 };
 
-const handleMaxChange = (e: Event) => {
+const handleMaxChange = (e: Event): void => {
 	const next = clamp(Number((e.target as HTMLInputElement).value), props.minRange, props.maxRange);
 	if (next < min.value) return;
 
 	max.value = next;
-	emit('update:maxValue', next);
-	emit('change', min.value, max.value);
+	emit("update:maxValue", next);
+	emit("change", min.value, max.value);
 };
 </script>
 
@@ -97,6 +102,8 @@ const handleMaxChange = (e: Event) => {
 			:max="maxRange"
 			:step="step"
 			:value="min"
+			:disabled="disabled"
+			:style="{ zIndex: minInputZ }"
 			@input="handleMinChange"
 		/>
 
@@ -107,6 +114,8 @@ const handleMaxChange = (e: Event) => {
 			:max="maxRange"
 			:step="step"
 			:value="max"
+			:disabled="disabled"
+			:style="{ zIndex: maxInputZ }"
 			@input="handleMaxChange"
 		/>
 	</div>
@@ -165,7 +174,7 @@ input {
 
 	/* IMPORTANT: we hide the native track, not your .slide */
 	opacity: 0;
-	pointer-events: none;
+	/*pointer-events: none;*/
 	z-index: 3;
 }
 
