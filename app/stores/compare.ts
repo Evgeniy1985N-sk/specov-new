@@ -3,31 +3,33 @@ import type { Compare } from "~/types/product";
 
 
 export const useCompareStore = defineStore("compare", () => {
-  const items = ref<Compare[]>([]);
+	const items = ref<Compare[]>([]);
 
-  function toggleItems(idItem: string) {
-    const existItem = items.value.find(item => item.id === idItem)
-    if (existItem) {
-      items.value = items.value.filter(item => item.id !== idItem )
-    } else {
-      items.value.push({
-        id: idItem
-      })
-    }
-  }
+	function toggleItem(id: number) {
+		const existItem = items.value.find(item => item.id === id)
+		if (existItem) {
+			items.value = items.value.filter(item => item.id !== id)
+		} else {
+			items.value.push({
+				id: id
+			})
+		}
+	}
 
-  function deleteItems(idItem: string) {
-    items.value = items.value.filter(item => item.id !== idItem)
-  }
+	function deleteItem(id: number) {
+		items.value = items.value.filter(item => item.id !== id)
+	}
 
-  // watch(items, () => {
-  //   console.log(items.value)
-  // }, {deep: true})
+	const hasProducts = computed(() => items.value.length > 0 );
 
-  return {
-    items,
-    toggleItems,
-    deleteItems,
-  };
+	const isInCompare = (id: number): boolean => items.value.find(item => item.id == id) != undefined;
+
+	return {
+		items,
+		hasProducts,
+		isInCompare,
+		toggleItem,
+		deleteItem,
+	};
 });
 

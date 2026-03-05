@@ -1,312 +1,408 @@
 import { defineStore } from "pinia";
-import { ref } from "vue";
-import type { ProductForCart, ProductDetailStatic, StockDetail, ProductChar } from "@/types/product";
+import { computed, ref } from "vue";
+import type { ProductChar } from "@/types/product";
 import type { Picture } from "~/types/picture";
+import type { Cart, CartItem } from "~/types/cart";
+import type { ProductForCart } from "~/types/product";
+import { useCartApi } from "~/composables/api/useCartApi";
 
-export interface ShopCart {
-	id: string;
+type AddProductInput = {
+	id: number;
 	name: string;
-	createdAt: Date;
-	products: ProductForCart[];
-}
+	name_lat: string;
+};
 
-//multiple carts
-export const useCartsStore = defineStore('carts', () => {
-		// JSON.parse(localStorage.getItem('carts') || '[]'),
+type AddStockInput = {
+	char?: ProductChar;
+	price: number;
+};
+
+export const useCartsStore = defineStore("carts", () => {
 	const carts = ref<Cart[]>([]);
+	const isFetched = ref(false);
+	const isFetching = ref(false);
 
-	const saveCarts = () => {
-		//sabe to db
-		// localStorage.setItem('carts', JSON.stringify(carts.value));
-	};
+	const api = useCartApi();
 
-	const createCart = () => {
+	const createCart = (): number => {
 		const newIndex = carts.value.length + 1;
 		const newCart: Cart = {
-			id: crypto.randomUUID(),
 			name: `Корзина ${newIndex}`,
-			createdAt: new Date(),
+			created_at: new Date(),
 			products: [],
 		};
 		carts.value.push(newCart);
-		saveCarts();
+		return carts.value.length - 1;
 	};
 
-	const productInCart = (
-		id: number,
-		charId?: number,
-	): ProductForCart | undefined => {
+	const ensureCartIndex = (cartIndex: number): number => {
+		if (carts.value[cartIndex]) {
+			return cartIndex;
+		}
+		return createCart();
+	};
+
+	const findCartWithProduct = (
+		productId: number,
+		productCharId?: number,
+	): {
+		cart: Cart;
+		cartIndex: number;
+		product: ProductForCart;
+		productIndex: number;
+	} | null => {
+		for (let ci = 0; ci < carts.value.length; ci++) {
+			const cart = carts.value[ci];
+			if (!cart) continue;
+
+			const pi = cart.products.findIndex((p) => {
+				if (p.id !== productId) return false;
+				if (productCharId === undefined) return true;
+				return p.char?.id === productCharId;
+			});
+
+			if (pi !== -1) {
+				return { cart, cartIndex: ci, product: cart.products[pi]!, productIndex: pi };
+			}
+		}
+		return null;
+	};
+
+	//does not use charId for now.
+	const productInCart = (id: number, charId?: number): ProductForCart | undefined => {
+		// return carts.value
+		// 	.flatMap((cart) => cart.products)
+		// 	.find((product) => product.id === id && (charId === undefined || product.char?.id === charId));
 		return carts.value
-			.flatMap((cart:ShopCart) => cart.products)
-			.find(
-				(product:ProductForCart) =>
-					product.id === id &&
-					(charId === undefined ||
-						product.char?.id === charId),
-			);
+			.flatMap((cart) => cart.products)
+			.find((product) => product.id === id);
 	};
 
-	const isProductsInCart = computed(() =>
-		carts.value.some((cart:ShopCart) => cart.products.length > 0),
-	);
+	const hasProducts = computed(() => carts.value.some((cart) => cart.products?.length > 0));
 
-	const totalAmount = (cartIndex: number) => {
-		return (
-			carts.value[cartIndex]?.products.reduce(
-				(amount:number, product: ProductForCart) =>
-					amount + product.amount,
-				0,
-			) ?? 0
-		);
+	const totalAmount = (cartIndex: number): number => {
+		const cart = carts.value[cartIndex];
+		if (!cart) return 0;
+		return cart.products.reduce((amount, product) => amount + product.amount, 0);
 	};
 
-	//total quantity of producs in all carts
-	const totalProductsAddedToCart = computed(() => {
-		return carts.value.reduce((totalQuantity: number, cart: ShopCart) => {
-			return (
-				totalQuantity +
-				cart.products.reduce(
-					(cartTotal:number, product: ProductForCart) => cartTotal + product.quant,
-					0,
-				)
-			);
+	const totalProductsAddedToCart = computed((): number => {
+		return carts.value.reduce((totalQuantity, cart) => {
+			return totalQuantity + cart.products.reduce((cartTotal, product) => cartTotal + product.quant, 0);
 		}, 0);
 	});
 
-	const addToCart = (
-		cartIndex: number, 
-		product: {
-			id: number, 
-			name: string,
-			name_lat: string,
-		}, 
-		stock: {
-			char?: ProductChar,
-			price: number,
-		},
-		img?: Picture
-	) => {
-		const prodForCart = <ProductForCart>{
+	const toCartItem = (cartName: string, p: ProductForCart): CartItem => {
+		return {
+			cart_name: cartName,
+			product_id: p.id,
+			char_id: p.char?.id,
+			quantity: p.quant,
+			price: p.price,
+		};
+	};
+
+	const fetchAll = async (): Promise<void> => {
+		if (isFetching.value) return;
+
+		isFetching.value = true;
+		try {
+			const data = await api.fetchAll();
+			carts.value = Array.isArray(data) ? data : [];
+			isFetched.value = true;
+		} finally {
+			isFetching.value = false;
+		}
+	};
+
+	const ensureInitialized = async (): Promise<void> => {
+		if (isFetched.value) return;
+		await fetchAll();
+	};
+
+	const addToCart = async (
+		cartIndex: number,
+		product: AddProductInput,
+		stock: AddStockInput,
+		img?: Picture,
+	): Promise<void> => {
+		const ci = ensureCartIndex(cartIndex);
+		const cart = carts.value[ci]!;
+		const charId = stock.char?.id;
+
+		const existingIndex = cart.products.findIndex((p) => {
+			if (p.id !== product.id) return false;
+			if (charId === undefined) return true;
+			return p.char?.id === charId;
+		});
+
+		if (existingIndex !== -1) {
+			const p = cart.products[existingIndex]!;
+			p.quant += 1;
+			p.amount = p.price * p.quant;
+
+			await api.add(toCartItem(cart.name, p));
+			return;
+		}
+
+		const prodForCart: ProductForCart = {
 			id: product.id,
 			name: product.name,
 			name_lat: product.name_lat,
-			char: stock?.char,
+			char: stock.char,
 			quant: 1,
-			price: stock?.price ?? 0,
-			amount: (stock?.price ?? 0) * 1,
+			price: stock.price ?? 0,
+			amount: (stock.price ?? 0) * 1,
 			picture: img,
 		};
-		carts.value[cartIndex]?.products.push(prodForCart);
-		saveCarts();
+
+		cart.products.push(prodForCart);
+		await api.add(toCartItem(cart.name, prodForCart));
 	};
 
-	const incrementQuantityInFirst = (
-		productId: number,
-		productCharId?: number,
-	) => {
-		const cart = carts.value.find((cart: ShopCart) =>
-			cart.products.some(
-				(p) =>
-					p.id === productId &&
-					(productCharId === undefined ||
-						p.char?.id === productCharId),
-			),
-		);
-		if (!cart) return;
+	const incrementQuantityInFirst = async (productId: number, productCharId?: number): Promise<void> => {
+		const found = findCartWithProduct(productId, productCharId);
+		if (!found) return;
 
-		const product = cart.products.find(
-			(p: ProductForCart) =>
-				p.id === productId &&
-				(productCharId === undefined ||
-					p.char?.id === productCharId),
-		);
-		if (product) product.quant++;
-		saveCarts();
+		found.product.quant += 1;
+		found.product.amount = found.product.price * found.product.quant;
+
+		await api.add(toCartItem(found.cart.name, found.product));
 	};
 
-	const incrementQuantity = (
+	const incrementQuantity = async (
 		cartIndex: number,
 		productId: number,
 		productCharId?: number,
-	) => {
-		const product = carts.value[cartIndex]?.products.find(
-			(p: ProductForCart) =>
-				p.id === productId &&
-				(productCharId === undefined ||
-					p.char?.id === productCharId),
-		);
-		if (product) product.quant++;
-		saveCarts();
-	};
-
-	const decrementQuantityInFirst = (
-		productId: number,
-		productCharId?: number,
-	) => {
-		const cart = carts.value.find((cart: ShopCart) =>
-			cart.products.some(
-				(p: ProductForCart) =>
-					p.id === productId &&
-					(productCharId === undefined ||
-						p.char?.id === productCharId),
-			),
-		);
-		if (!cart) return;
-
-		const productIndex = cart.products.findIndex(
-			(p: ProductForCart) =>
-				p.id === productId &&
-				(productCharId === undefined ||
-					p.char?.id === productCharId),
-		);
-		if (productIndex === -1) return;
-
-		if (cart.products[productIndex].quant> 1) {
-			cart.products[productIndex].quant--;
-		} else {
-			cart.products.splice(productIndex, 1);
-		}
-		saveCarts();
-	};
-
-	const decrementQuantity = (
-		cartIndex: number,
-		productId: number,
-		productCharId?: number,
-	) => {
+	): Promise<void> => {
 		const cart = carts.value[cartIndex];
 		if (!cart) return;
 
-		const productIndex = cart.products.findIndex(
-			(p: ProductForCart) =>
-				p.id === productId &&
-				(productCharId === undefined ||
-					p.char?.id === productCharId),
-		);
-		if (productIndex === -1) return;
+		const product = cart.products.find((p) => {
+			if (p.id !== productId) return false;
+			if (productCharId === undefined) return true;
+			return p.char?.id === productCharId;
+		});
+		if (!product) return;
 
-		if (cart.products[productIndex].quant> 1) {
-			cart.products[productIndex].quant--;
-		} else {
-			cart.products.splice(productIndex, 1);
-		}
-		saveCarts();
+		product.quant += 1;
+		product.amount = product.price * product.quant;
+
+		await api.add(toCartItem(cart.name, product));
 	};
 
-	const removeProductFromCart = (
+	const decrementQuantityInFirst = async (productId: number, productCharId?: number): Promise<void> => {
+		const found = findCartWithProduct(productId, productCharId);
+		if (!found) return;
+
+		if (found.product.quant > 1) {
+			found.product.quant -= 1;
+			found.product.amount = found.product.price * found.product.quant;
+
+			// FIX: this must be remove (or a dedicated decrement endpoint). You currently have remove().
+			await api.remove({
+				cart_name: found.cart.name,
+				product_id: found.product.id,
+				char_id: found.product.char?.id,
+				quantity: 1,
+				price: found.product.price,
+			});
+			return;
+		}
+
+		const removed = found.product;
+		found.cart.products.splice(found.productIndex, 1);
+
+		await api.remove({
+			cart_name: found.cart.name,
+			product_id: removed.id,
+			char_id: removed.char?.id,
+			quantity: 0,
+			price: removed.price,
+		});
+	};
+
+	const decrementQuantity = async (
 		cartIndex: number,
 		productId: number,
 		productCharId?: number,
-	) => {
-		carts.value[cartIndex].products = carts.value[
-			cartIndex
-		].products.filter(
-			(product: ProductForCart) =>
-				product.id !== productId ||
-				(productCharId !== undefined &&
-					product.char?.id !== productCharId),
-		);
-		saveCarts();
+	): Promise<void> => {
+		const cart = carts.value[cartIndex];
+		if (!cart) return;
+
+		const productIndex = cart.products.findIndex((p) => {
+			if (p.id !== productId) return false;
+			if (productCharId === undefined) return true;
+			return p.char?.id === productCharId;
+		});
+		if (productIndex === -1) return;
+
+		const p = cart.products[productIndex]!;
+		if (p.quant > 1) {
+			p.quant -= 1;
+			p.amount = p.price * p.quant;
+
+			await api.remove({
+				cart_name: cart.name,
+				product_id: p.id,
+				char_id: p.char?.id,
+				quantity: 1,
+				price: p.price,
+			});
+			return;
+		}
+
+		cart.products.splice(productIndex, 1);
+
+		await api.remove({
+			cart_name: cart.name,
+			product_id: p.id,
+			char_id: p.char?.id,
+			quantity: 0,
+			price: p.price,
+		});
 	};
 
-	const clearCart = (cartIndex: number) => {
-		carts.value[cartIndex].products = [];
-		saveCarts();
-	};
-
-	const productCartQuantity = (
+	const removeProductFromCart = async (
+		cartIndex: number,
 		productId: number,
 		productCharId?: number,
-	): number => {
-		return carts.value.reduce((total: number, cart: ShopCart) => {
+	): Promise<void> => {
+		const cart = carts.value[cartIndex];
+		if (!cart) return;
+
+		const idx = cart.products.findIndex((p) => {
+			if (p.id !== productId) return false;
+			if (productCharId === undefined) return true;
+			return p.char?.id === productCharId;
+		});
+		if (idx === -1) return;
+
+		const removed = cart.products[idx]!;
+		cart.products.splice(idx, 1);
+
+		await api.remove({
+			cart_name: cart.name,
+			product_id: removed.id,
+			char_id: removed.char?.id,
+			quantity: 0,
+			price: removed.price,
+		});
+	};
+
+	const clearCart = async (cartIndex: number): Promise<void> => {
+		const cart = carts.value[cartIndex];
+		if (!cart) return;
+
+		cart.products = [];
+		await api.clear(cart.name);
+	};
+
+	const productCartQuantity = (productId: number, productCharId?: number): number => {
+		// && (productCharId === undefined || p.char?.id === productCharId)
+		return carts.value.reduce((total, cart) => {
 			return (
 				total +
 				cart.products
-					.filter(
-						(p) =>
-							p.id === productId &&
-							(productCharId === undefined ||
-								p.char?.id === productCharId),
-					)
+					.filter((p) => p.id === productId)
 					.reduce((sum, p) => sum + p.quant, 0)
 			);
 		}, 0);
 	};
 
-	const setQuantityInFirst = (
-		product: {
-			id: number;
-			name: string;
-			name_lat: string;
-		},
+	const setQuantityInFirst = async (
+		product: AddProductInput,
 		quant: number,
-		stock?: {
-			char?: ProductChar;
-			price: number;
-		},
+		stock?: AddStockInput,
 		img?: Picture,
-	) => {
-		let cart = carts.value.find((cart: ShopCart) =>
-			cart.products.some(
-				(p: ProductForCart) =>
-					p.id === product.id &&
-					(stock?.char?.id === undefined ||
-						p.char?.id === stock.char.id),
-			),
-		);
+	): Promise<void> => {
+		const charId = stock?.char?.id;
+		let cart = carts.value[0];
 
 		if (!cart) {
-			if (quant<= 0) return;
-			if (carts.value.length === 0) createCart();
-			cart = carts.value[0];
+			if (quant <= 0) return;
+			createCart();
+			cart = carts.value[0]!;
 		}
 
-		const productIndex = cart.products.findIndex(
-			(p: ProductForCart) =>
-				p.id === product.id &&
-				(stock?.char?.id === undefined ||
-					p.char?.id === stock.char.id),
-		);
+		const idx = cart.products.findIndex((p) => {
+			if (p.id !== product.id) return false;
+			if (charId === undefined) return true;
+			return p.char?.id === charId;
+		});
 
-		if (productIndex !== -1) {
-			if (quant<= 0) {
-				cart.products.splice(productIndex, 1);
-			} else {
-				const p = cart.products[productIndex];
-				p.quant = quant;
-				p.amount = p.price * quant;
+		if (idx !== -1) {
+			const p = cart.products[idx]!;
+			if (quant <= 0) {
+				cart.products.splice(idx, 1);
+
+				await api.remove({
+					cart_name: cart.name,
+					product_id: p.id,
+					char_id: p.char?.id,
+					quantity: 0,
+					price: p.price,
+				});
+				return;
 			}
-		} else if (quant> 0) {
-			cart.products.push({
-				id: product.id,
-				name: product.name,
-				name_lat: product.name_lat,
-				char: stock?.char,
-				quant: quant,
-				price: stock?.price ?? 0,
-				amount: (stock?.price ?? 0) * quant,
-				picture: img,
-			} as ProductForCart);
+
+			if (quant > p.quant) {
+				p.quant = quant;
+				p.amount = p.price * p.quant;
+				await api.add(toCartItem(cart.name, p));
+				return;
+			}
+
+			if (quant < p.quant) {
+				const delta = p.quant - quant;
+				p.quant = quant;
+				p.amount = p.price * p.quant;
+
+				await api.remove({
+					cart_name: cart.name,
+					product_id: p.id,
+					char_id: p.char?.id,
+					quantity: delta,
+					price: p.price,
+				});
+				return;
+			}
+
+			return;
 		}
 
-		saveCarts();
-	};
+		if (quant <= 0) return;
 
-	watch(
-		carts,
-		() => {
-			saveCarts();
-		},
-		{ deep: true },
-	);
+		const price = stock?.price ?? 0;
+		const p: ProductForCart = {
+			id: product.id,
+			name: product.name,
+			name_lat: product.name_lat,
+			char: stock?.char,
+			quant,
+			price,
+			amount: price * quant,
+			picture: img,
+		};
+
+		cart.products.push(p);
+		await api.add(toCartItem(cart.name, p));
+	};
 
 	return {
 		carts,
+		isFetched,
+		isFetching,
+
+		fetchAll,
+		ensureInitialized,
+
 		createCart,
 		productInCart,
-		isProductsInCart,
+		hasProducts,
 		totalAmount,
 		totalProductsAddedToCart,
+
 		addToCart,
 		incrementQuantity,
 		incrementQuantityInFirst,

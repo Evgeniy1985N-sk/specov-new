@@ -1,26 +1,80 @@
 <script setup lang="ts">
-import type { CategoryCatalog, CategoryCatalogParams, CategoryCatalogSortCol, CategoryCatalogSortDir } from '~/types/productCat';
+import type { CategoryCatalog, CategoryCatalogParams, CategoryCatalogPrecalc, CategoryCatalogSortCol, CategoryCatalogSortDir } from '~/types/productCat';
 import type { ProductCard } from '~/types/product';
 import { useProductCatApi } from '~/composables/api/useProductCatApi';
+import { useCategory } from '~/composables/useCategory';
 
 const props = defineProps<{
 	data: CategoryCatalog;
 }>();
 
-const FILTER_POPOVER_DELAY = 1000; // ms
+//const FILTER_POPOVER_DELAY = 1000; // ms
 
 const isShowPopover = ref(false);
 const isShoWFilter = ref(false);
 const isList = ref(false);
 
 const { y: mousePositionY } = useMousePosition();
-const filterTop = ref(0);
+const aside = ref<HTMLElement | null>(null);
+const popoverPos = ref({
+	top: 0,
+	left: 0,
+});
+const mouseClientY = computed(() => {
+	if (!import.meta.client) return 0;
+	return mousePositionY.value;
+});
+const updatePopoverPos = () => {
+	if (!import.meta.client) return;
+
+	const rect = aside.value?.getBoundingClientRect();
+	const left = (rect?.right ?? 0) + 16; // 16px gap from sidebar
+
+	popoverPos.value = {
+		top: mouseClientY.value,
+		left,
+	};
+};
 
 const maxProductCount = 500; //absolute maximum
 const productIncCount = 20; //increment for "show more"
 const productVisibleInitCount = 20;
 
 const route = useRoute();
+
+//to be able to track page refreshing
+const isRefreshing = ref(false);
+const pendingTotalCount = ref<number | null>(null);
+watch(
+	() => props.data,
+	() => {
+		isRefreshing.value = false;
+	},
+	{ deep: false }
+);
+const skeletonCount = computed(() => {
+	if (!isRefreshing.value) return 0;
+
+	if (pendingTotalCount.value == null) {
+		return productVisibleInitCount;
+	}
+
+	// When we know next total, show exact number
+	return Math.max(0, Math.min(pendingTotalCount.value, productVisibleCount.value));
+});
+/*
+const skeletonCount = computed(() => {
+	const total = facetState.value.total_count ?? 0;
+	const visible = productVisibleCount.value;
+	return Math.max(0, Math.min(total, visible));
+});
+*/
+const skeletonItems = computed(() => Array.from({ length: skeletonCount.value }));
+
+const scrollToTop = (): void => {
+	if (!import.meta.client) return;
+	window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+};
 
 const productVisibleCount = ref(Number(route.query.count) || productVisibleInitCount);
 
@@ -42,6 +96,7 @@ const displayedItems = computed(() =>
 const childCategories = computed(() =>
 	props.data.category.children
 );
+
 const breadcrumbCategories = computed(() => {
 	if (!props.data.category.parents) {
 		return [];
@@ -50,10 +105,6 @@ const breadcrumbCategories = computed(() => {
 	cats.push(props.data.category);
 	return cats;
 });
-
-const isCardVisible = computed(() =>
-	(productsBuffer.value?.length ?? 0) > 0
-);
 
 // Loading state for fetching
 const isLoading = ref(false);
@@ -71,47 +122,43 @@ const classAside = computed(() => ({
 	'left-0': isShoWFilter.value
 }));
 
-//show pop over
-// let filterPopoverTimeoutId: ReturnType<typeof setTimeout> | null = null;
-const filterClick = async (filter: { id: string }) => {
+type FacetChange =
+	| { kind: 'brand'; checked: boolean; id: number }
+	| { kind: 'country'; checked: boolean; id: number }
+	| { kind: 'store'; checked: boolean; id: number }
+	| { kind: 'dyn'; checked: boolean; filterId: number }
+	| { kind: 'price' };
 
-	filterTop.value = mousePositionY.value;
-	console.log("filter click, mousePositionY:", mousePositionY.value)
-	const res = await fetchProdCountForFilter();
-	if (res) {
+const filterClick = async (change: FacetChange) => {
+	updatePopoverPos();
+
+	const ok = await fetchProdCountForFilter(change);
+	if (ok) {
 		isShowPopover.value = true;
 	}
-
-	// If a timeout already exists, reset it
-	// if (filterPopoverTimeoutId) {
-	// 	clearTimeout(filterPopoverTimeoutId);
-	//
-	// }
-	// filterPopoverTimeoutId = setTimeout(() => {
-	// 	(async () => {
-	// 		const res = await fetchProdCountForFilter();
-	// 		if (res) {
-	// 			isShowPopover.value = true;
-	// 		}
-	// 		filterPopoverTimeoutId = null;
-	// 	})();
-	// }, FILTER_POPOVER_DELAY);
-}
+};
 
 const sorterRef = ref();
 const filterRef = ref();
 
-const resetAllFilters = () => {
+const resetAllFilters = async () => {
+	isShowPopover.value = false;
 	filterRef.value?.resetFilters();
 	productVisibleCount.value = productVisibleInitCount;
-	refreshPage();
+	isRefreshing.value = true;
+	pendingTotalCount.value = null; // unknown -> use max skeletons (init count)
+	await refreshPage();
+	scrollToTop();
 }
 
 // applyProductSettings fetches products with current settings (filters, sorting, from, count).
-const applyProductSettings = () => {
+const applyProductSettings = async () => {
 	productVisibleCount.value = productVisibleInitCount;
 	isShowPopover.value = false;
-	refreshPage();
+	isRefreshing.value = true;
+	pendingTotalCount.value = facetState.value.total_count; // known beforehand
+	await refreshPage();
+	scrollToTop();
 }
 
 const refreshPage = async () => {
@@ -138,9 +185,9 @@ const fetchMoreProducts = async (): Promise<boolean> => {
 		console.log(`Fetching ${productIncCount} more products from position ${productsBuffer.value.length}`);
 
 		const apiParams = <CategoryCatalogParams>{
+			...route.query,
 			from: productsBuffer.value.length,
 			count: productIncCount,
-			...route.query,
 		};
 		const catalogData = await catalog(props.data.category.id, apiParams);
 		productsBuffer.value = [...productsBuffer.value, ...catalogData.products];
@@ -176,20 +223,145 @@ const showMore = async () => {
 	productVisibleCount.value = newCount;
 };
 
-const foundProdCountForFilter = ref(0);
+type FacetKind = 'brand' | 'country' | 'store' | 'dyn' | 'price';
+
+const buildQueryExcluding = (kind: FacetKind, dynFilterId?: number): Record<string, any> => {
+	const q = { ...(filterRef.value?.buildFilterQuery() ?? {}) };
+
+	if (kind === 'brand') {
+		delete q.brands;
+	}
+	if (kind === 'country') {
+		delete q.countries;
+	}
+	if (kind === 'store') {
+		delete q.stores;
+	}
+	if (kind === 'price') {
+		delete q.min_price;
+		delete q.max_price;
+	}
+	if (kind === 'dyn') {
+		// remove only this dynamic filter from query keys
+		// your keys are: filters_hash[ID], filters_list[ID], filters_num[ID][min|max], filters_date[ID]
+		const prefix1 = `filters_hash[${dynFilterId}]`;
+		const prefix2 = `filters_list[${dynFilterId}]`;
+		const prefix3 = `filters_num[${dynFilterId}]`;
+		const prefix4 = `filters_date[${dynFilterId}]`;
+
+		for (const key of Object.keys(q)) {
+			if (
+				key === prefix1 ||
+				key === prefix2 ||
+				key.startsWith(prefix3) ||
+				key === prefix4
+			) {
+				delete q[key];
+			}
+		}
+	}
+
+	return q;
+};
+
+const { 
+	mergeDynFilters,
+	mergeBrandFilters,
+	mergeCountryFilters,
+	mergeStoreFilters,
+} = useCategory();
 const prodCountForFilterIsLoading = ref(false);
-const fetchProdCountForFilter = async (): Promise<boolean> => {
-	try {
+const facetState = ref<CategoryCatalogPrecalc>({
+	total_count: props.data.total_count,
+	filters: mergeDynFilters(props.data.category.filters ?? [], props.data.filters ?? []),
+	brands: mergeBrandFilters(props.data.category.brands ?? [], props.data.brands ?? []),
+	countries: mergeCountryFilters(props.data.category.countries ?? [], props.data.countries ?? []),
+	stores: mergeStoreFilters(props.data.category.stores ?? [], props.data.stores ?? []),
+	min_price: props.data.min_price,
+	max_price: props.data.max_price,
+});
 
-		const filters = filterRef.value?.buildFilterQuery();
-
-		const apiParams = <CategoryCatalogParams>{
-			count: 0,
-			...filters,
+watch(
+	() => props.data,
+	(next) => {
+		// keep facetState aligned with server result after navigateTo()
+		facetState.value = {
+			total_count: next.total_count,
+			filters: mergeDynFilters(next.category.filters ?? [], next.filters ?? []),
+			brands: mergeBrandFilters(next.category.brands ?? [], next.brands ?? []),
+			countries: mergeCountryFilters(next.category.countries ?? [], next.countries ?? []),
+			stores: mergeStoreFilters(next.category.stores ?? [], next.stores ?? []),
+			min_price: next.min_price,
+			max_price: next.max_price,
 		};
+	},
+	{ immediate: true }
+);
+
+//returns count, filters, brands, countries, stors 
+//for petential products.
+const fetchProdCountForFilter = async (change?: FacetChange): Promise<boolean> => {
+	try {
 		prodCountForFilterIsLoading.value = true;
-		const catalogData = await catalogProductCount(props.data.category.id, apiParams);
-		foundProdCountForFilter.value = catalogData.total_count;
+
+		// 1) total_count with FULL query
+		const qFull = filterRef.value?.buildFilterQuery() ?? {};
+		const fullParams = <CategoryCatalogParams>{ count: 0, ...qFull };
+
+		// 2) facets for the edited group: query EXCLUDING that group
+		const kind = change?.kind ?? null;
+
+		const qFacet = (() => {
+			if (!change) {
+				return qFull;
+			}
+
+			if (change.kind === 'dyn') {
+				return buildQueryExcluding('dyn', change.filterId);
+			}
+
+			return buildQueryExcluding(change.kind);
+		})();
+
+		const facetParams = <CategoryCatalogParams>{ count: 0, ...qFacet };
+
+		const [fullData, facetData] = await Promise.all([
+			catalogProductCount(props.data.category.id, fullParams),
+			catalogProductCount(props.data.category.id, facetParams),
+		]);
+
+		// base sets
+		const baseDyn = props.data.category.filters ?? [];
+		const baseBrands = props.data.category.brands ?? [];
+		const baseCountries = props.data.category.countries ?? [];
+		const baseStores = props.data.category.stores ?? [];
+
+		// merge defaults: use fullData for everything
+		let nextDyn = mergeDynFilters(baseDyn, fullData.filters ?? []);
+		let nextBrands = mergeBrandFilters(baseBrands, fullData.brands ?? []);
+		let nextCountries = mergeCountryFilters(baseCountries, fullData.countries ?? []);
+		let nextStores = mergeStoreFilters(baseStores, fullData.stores ?? []);
+
+		// override ONLY the edited group facets with facetData (excluding-self)
+		if (kind === 'brand') {
+			nextBrands = mergeBrandFilters(baseBrands, facetData.brands ?? []);
+		} else if (kind === 'country') {
+			nextCountries = mergeCountryFilters(baseCountries, facetData.countries ?? []);
+		} else if (kind === 'store') {
+			nextStores = mergeStoreFilters(baseStores, facetData.stores ?? []);
+		} else if (kind === 'dyn') {
+			nextDyn = mergeDynFilters(baseDyn, facetData.filters ?? []);
+		}
+
+		facetState.value = {
+			total_count: fullData.total_count,
+			filters: nextDyn,
+			brands: nextBrands,
+			countries: nextCountries,
+			stores: nextStores,
+			min_price: fullData.min_price,
+			max_price: fullData.max_price,
+		};
 
 		return true;
 	} catch (error) {
@@ -204,48 +376,7 @@ onMounted(() => {
 	filterRef.value?.initFromQuery(route.query);
 	sorterRef.value?.initFromQuery(route.query);
 });
-const cards = ref([
-	{
-		name: 'Столярные Столярные',
-		quantity: 698,
-		image: '/image/example/img-1.jpg'
-	},
-	{
-		name: 'Специальные Столярные Столярные',
-		quantity: 418,
-		image: '/image/example/img-2.jpg'
-	},
-	{
-		name: 'Искробезопасные Искробезопасные Искробезопасные',
-		quantity: 698,
-		image: '/image/example/img-3.jpg'
-	},
-	{
-		name: 'Безынерционные Искробезопасные Искробезопасные',
-		quantity: 698,
-		image: '/image/example/img-4.jpg'
-	},
-	{
-		name: 'С медным бойком Искробезопасные Искробезопасные Искробезопасные',
-		quantity: 35,
-		image: '/image/example/img-5.jpg'
-	},
-	{
-		name: 'Молотки плиточника',
-		quantity: 8,
-		image: '/image/example/img-6.jpg'
-	},
-	{
-		name: 'Кровельщика',
-		quantity: 110,
-		image: '/image/example/img-7.jpg'
-	},
-	{
-		name: 'Молотки-топоры',
-		quantity: 12,
-		image: '/image/example/img-8.jpg'
-	},
-])
+
 </script>
 
 <template>
@@ -260,14 +391,15 @@ const cards = ref([
 			<SectionContainer>
 				<TitleGoods class="mb-6" :goods="data.total_count" :title="data.category.name" />
 
-				<!-- <CatalogCardSlider v-if="childCategories" :items="childCategories" class="mb-8 hidden! md:block!" /> -->
-
-				<CatalogCardSlider :items="cards" class="mb-6 hidden! md:block!" />
+				<CatalogCardSlider v-if="childCategories"
+					:items="childCategories" 
+					class="mb-6 hidden! md:block!" 
+				/>
 
 				<div class="flex gap-8">
 
 					<!-- ASIDE -->
-					<aside ref="aside" :class="classAside" v-if="isCardVisible">
+					<aside ref="aside" :class="classAside" >
 						<div class="grid gap-6 pb-36 sm:pb-40 lg:p-4 bg-white lg:bg-gray-100 rounded-xl w-full h-auto">
 
 							<!-- HEADER -->
@@ -291,9 +423,16 @@ const cards = ref([
 							<!-- HEADER -->
 
 							<!-- FILTER -->
-							<CatalogFilter ref="filterRef" :brands="props.data.brands" :countries="props.data.countries"
-								:filters="props.data.filters" :stores="props.data.stores" :minPrice="props.data.min_price"
-								:maxPrice="props.data.max_price" class="px-4 sm:px-6 lg:px-0" @handle-click="filterClick" />
+							<CatalogFilter ref="filterRef" 
+								class="px-4 sm:px-6 lg:px-0" 
+								:brands="facetState.brands" 
+								:countries="facetState.countries"
+								:filters="facetState.filters" 
+								:stores="facetState.stores"
+								:minPrice="facetState.min_price" :maxPrice="facetState.max_price"
+								:total-count="facetState.total_count"
+								@handle-click="filterClick" 
+							/>
 							<!-- FILTER -->
 
 							<!-- BUTTONS -->
@@ -313,16 +452,21 @@ const cards = ref([
 						</div>
 
 						<!-- POPOVER -->
-						<CatalogPopover v-if="isShowPopover" :goods="foundProdCountForFilter" @handle-click="applyProductSettings"
-							class="hidden! lg:inline-block!" :top="filterTop" />
+						<Teleport to="body">
+						<CatalogPopover v-if="isShowPopover" :goods="facetState.total_count"
+							@handle-click="applyProductSettings"
+							class="hidden! lg:inline-block!" 
+							:top="popoverPos.top"
+							:left="popoverPos.left"
+						/>
+						</Teleport>
 						<!-- POPOVER -->
-
 
 					</aside>
 					<!-- ASIDE -->
 
 
-					<div class="w-full" v-if="isCardVisible">
+					<div class="w-full">
 
 						<!-- Top -->
 						<div class="grid grid-cols-[auto_auto] sm:flex justify-between items-center flex-wrap gap-x-2 gap-y-4 pb-6">
@@ -339,23 +483,72 @@ const cards = ref([
 						</div>
 						<!-- Top -->
 
+						<CatalogCardSlider v-if="childCategories"
+							:items="childCategories" 
+							class="mb-6 md:hidden!" 
+						/>
 
-						<!-- <CatalogCardSlider v-if="childCategories" :items="childCategories" class="mb-6! md:hidden!" /> -->
-						<CatalogCardSlider :items="cards" class="mb-6 md:hidden!" />
-
-						<!-- Cards -->
+						<!-- Cards
 						<div
 							:class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6'"
 							class="grid lg:gap-8">
 							<ProductCard :is-row="isList" :is-list="!isList" v-for="item in displayedItems" :item="item"
 								:key="item.id" />
 						</div>
-						<!-- Cards -->
+						-->
 
+						<!-- Cards -->
+						<div v-if="isRefreshing">
+							<div
+								:class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6'"
+								class="grid lg:gap-8"
+							>
+								<div
+									v-for="(_, i) in skeletonItems"
+									:key="`sk-${i}`"
+									:class="isList ? 'flex gap-4' : 'grid gap-3'"
+									class="animate-pulse bg-white rounded-xl border border-gray-200 p-3"
+								>
+									<!-- Image -->
+									<div
+										:class="isList ? 'w-[140px] h-[140px] shrink-0' : 'w-full aspect-square'"
+										class="rounded-lg bg-gray-200"
+									></div>
+
+									<!-- Text blocks -->
+									<div class="flex-1 grid gap-2">
+										<div class="h-4 w-3/4 rounded bg-gray-200"></div>
+										<div class="h-4 w-2/3 rounded bg-gray-200"></div>
+										<div class="h-3 w-1/2 rounded bg-gray-200 mt-1"></div>
+
+										<div class="flex items-center justify-between mt-3">
+											<div class="h-6 w-24 rounded bg-gray-200"></div>
+											<div class="h-10 w-28 rounded-lg bg-gray-200"></div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+
+						<div v-else>
+							<div
+								:class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6'"
+								class="grid lg:gap-8"
+							>
+								<ProductCard
+									:is-row="isList"
+									:is-list="!isList"
+									v-for="item in displayedItems"
+									:item="item"
+									:key="item.id"
+								/>
+							</div>
+						</div>
+						<!-- Cards -->
 						<!-- More Cards  -->
 						<UButton
 							class="w-full min-h-10 mt-6 bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5"
-							v-if="productVisibleCount < maxProductCount && productVisibleCount < props.data.total_count"
+							v-if="productVisibleCount < maxProductCount && productVisibleCount < facetState.total_count"
 							@click="showMore">
 							Показать еще
 						</UButton>

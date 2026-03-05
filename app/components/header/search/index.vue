@@ -21,11 +21,11 @@ const { search: searchAPICall } = useProductApi();
 
 const { picturePreview: productPicturePreview, link: productLink } = useProduct();
 const prodImageSrc = (item: ProductCard) => {
-  const img = item.imgs.find(p => p.main) ?? undefined;
-  if (!img) {
-    return undefined;
-  }
-  return productPicturePreview(img);
+  const img = item.imgs?.find(p => p.main) ?? undefined;
+	if(!img){
+		return undefined;
+	}
+	return productPicturePreview(img);
 }
 
 const { link: catLink, imgSrc: catImgSrc } = useCategory();
@@ -95,7 +95,6 @@ const performSearch = async (searchTerm: string) => {
   }
 }
 
-// Optional: Clear search function
 const clearSearch = () => {
   input.value = ''
   searchResults.value = []
@@ -106,11 +105,9 @@ const clearSearch = () => {
   }
 }
 
-// Optional: Handle form submit
 const handleSubmit = (e: Event) => {
   e.preventDefault()
   if (input.value.trim()) {
-    // If you want to trigger search immediately on submit
     if (searchTimeout.value) {
       clearTimeout(searchTimeout.value)
     }

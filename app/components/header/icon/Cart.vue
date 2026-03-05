@@ -1,5 +1,6 @@
 <template>
   <svg width="100%" height="100%" style="overflow: visible;" preserveAspectRatio="none" viewBox="0 0 20 20" fill="none"
+	:class="svgClass"
     xmlns="http://www.w3.org/2000/svg">
     <g clip-path="url(#clip0_14880_12608)" data-v-inspector="src/components/assets/ShoppingCart.vue:14:4">
       <path
@@ -8,3 +9,15 @@
     </g>
   </svg>
 </template>
+
+
+<script setup lang="ts">
+interface Props {
+	selected?: boolean;
+}
+const props = defineProps<Props>();
+
+const svgClass = computed((): string => {
+	return props.selected ? "text-[#FF0000]" : "";
+});
+</script>

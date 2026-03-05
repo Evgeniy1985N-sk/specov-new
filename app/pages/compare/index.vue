@@ -3,8 +3,7 @@ import type { ProductCard } from "~/types/product";
 import { useScroll } from '~/composables/useScroll'
 
 
-const compareStore = useCompareStore()
-const deleteItemsStore = useCompareStore().deleteItems
+const compareStore = useCompareStore();
 const allProducts = useProductsStore().allProducts
 const compareProducts = ref<ProductCard[]>([])
 const activeIndex = ref<number | null>(0);
@@ -69,14 +68,14 @@ function getActiveProducts() {
 
 function deleteProducts() {
   activeProducts.value?.forEach((item) => {
-    deleteItemsStore(item.id)
+    compareStore.deleteItem(item.id)
   })
   activeIndex.value = 0
 }
 
 function deleteAllCompare() {
   compareProducts.value?.forEach((item) => {
-    deleteItemsStore(item.id)
+    compareStore.deleteItem(item.id)
   })
 }
 

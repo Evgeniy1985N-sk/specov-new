@@ -26,6 +26,9 @@ const props = defineProps<Props>();
 
 const positionTabs = ref(0)
 
+const compareStore = useCompareStore();
+const likeStore = useLikeStore();
+
 const { calcRating, declineReviewWord } = useProduct();
 
 const { live: productLive } = useProductApi();
@@ -202,11 +205,16 @@ const productDescription = computed(() => {
             </div>
 
             <div class="flex gap-6">
-              <ProductButtonIcon text="Сравнить">
-                <ProductIconCompare />
+              <ProductButtonIcon text="Сравнить"
+				@handle-click="compareStore.toggleItem(props.detailPage.product.id)" 
+			  >
+                <ProductIconCompare :selected="compareStore.isInCompare(props.detailPage.product.id)"/>
               </ProductButtonIcon>
-              <ProductButtonIcon text="В избранное">
-                <ProductIconFavorite />
+
+              <ProductButtonIcon text="В избранное"
+				@handle-click="likeStore.toggle(props.detailPage.product)" 
+			  >
+                <ProductIconFavorite :selected="likeStore.isLiked(props.detailPage.product)"/>
               </ProductButtonIcon>
             </div>
 
@@ -231,7 +239,7 @@ const productDescription = computed(() => {
                   Характеристики
                 </div>
                 <div class="grid gap-4">
-                  <p v-for="item in product.filters.slice(0, 5)" :key="item.id" class="text-sm leading-5 line-clamp-2">
+                  <p v-for="item in product?.filters?.slice(0, 5)" :key="item.id" class="text-sm leading-5 line-clamp-2">
                     <span class="mr-1 font-medium text-gray-600">
                       {{ item.label }}:
                     </span>

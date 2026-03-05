@@ -4,123 +4,38 @@ import IconFavorite from '@/components/header/icon/Favorite.vue'
 import IconCart from '@/components/header/icon/Cart.vue'
 import type { UiState } from '~/types/uiState';
 
+import { useLikeStore } from '@/stores/likes';
+import { useCartsStore } from '@/stores/carts';
+
 const likesStore = useLikeStore();
-const likesSelected = computed(() => (likesStore.totalLikes > 0));
+const cartsStore = useCartsStore();
 const comparesStore = useCompareStore();
-const comparesSelected = computed(() => (comparesStore.totalCompares > 0));
+
+const { hasProducts: likesHas } = storeToRefs(likesStore);
+const { hasProducts: cartsHas } = storeToRefs(cartsStore);
+const { hasProducts: comparesHas } = storeToRefs(comparesStore);
 
 const isMenu = ref(false)
 const { isShowSearch, isShowCatalogMenu, toggleShowCatalogMenu, closeCatalogMenu } = inject<UiState>('UiState')!
 
 const isProfile = ref(false)
-const buttons = [
+const buttons = computed(() => [
   {
     src: '/compare',
     icon: IconCompare,
-    selected: comparesSelected.value
+	selected: comparesHas,
   },
   {
     src: '/favorite',
     icon: IconFavorite,
-    selected: likesSelected.value
+	selected: likesHas,
   },
   {
     src: '/cart',
-    icon: IconCart
-  },
-];
-
-const items = ref([
-  {
-    id: '1',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки',
-    price: 17100,
-    oldPrice: 13400,
-    discont: 20,
-    dsc: 'Ручной инструмент',
-    link: '/catalog',
-  },
-  {
-    id: '2',
-    image: '/image/example/img-2.jpg',
-    title: 'Молотки слесарные',
-    price: 17100,
-    oldPrice: 13400,
-    discont: 20,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '3',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки Gigant',
-    price: 17100,
-    oldPrice: 13400,
-    discont: 20,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '4',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки Matrix',
-    price: 17100,
-    oldPrice: 13400,
-    discont: 20,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '5',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки Волат',
-    price: 17100,
-    oldPrice: 13400,
-    discont: 20,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '6',
-    image: '/image/example/img-1.jpg',
-    title: 'Молотки Sparta',
-    price: 17100,
-    oldPrice: 13400,
-    discont: 20,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '7',
-    image: '/image/example/img-3.jpg',
-    title: 'Молоток Atlantis D1033',
-    price: 17100,
-    oldPrice: 13400,
-    discont: 20,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '8',
-    image: '/image/example/img-4.jpg',
-    title: 'Молоток Rexant ',
-    price: 17100,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
-  },
-  {
-    id: '9',
-    image: '/image/example/img-5.jpg',
-    title: 'Молоток Atlantis Touch',
-    price: 17100,
-    dsc: 'Ручной инструмент / Ударно-рычажный',
-    link: '/catalog',
+    icon: IconCart,
+	selected: cartsHas,
   },
 ]);
-
-const itemsPart = computed(() => items.value.slice(0, 6))
-const itemsPart2 = computed(() => items.value.slice(6, 9))
 
 watch(() => isShowSearch, () => {
   if (isShowCatalogMenu.value) closeCatalogMenu()
@@ -136,13 +51,14 @@ watch(() => isShowSearch, () => {
 
     <HeaderCatalogButton @toggle-catalog="toggleShowCatalogMenu" :is-active="isShowCatalogMenu" />
 
-    <HeaderSearch :items-part="itemsPart" :items-part2="itemsPart2" class="w-full order-1 sm:order-0" />
+    <HeaderSearch class="w-full order-1 sm:order-0" />
 
     <!-- buttons -->
     <NuxtLink v-for="item in buttons" :to="item.src"
+		:key="item.src"
       class="text-(--Brand-950) hidden lg:flex border-zinc-300 p-[11px] justify-spacse-between h-11 w-11 flex-col bg-white hover:bg-gray-300 transition items-center border border-solid rounded-lg">
       <span class="h-5 w-5">
-        <component :is="item.icon" :selected="item.selected" />
+        <component :is="item.icon" :selected="item.selected.value" />
       </span>
     </NuxtLink>
     <!-- buttons -->

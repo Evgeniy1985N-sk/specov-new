@@ -2,43 +2,32 @@
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Navigation } from 'swiper/modules'
 
-import type { ProductCatPublicList } from '~/types/productCat';
 import { useCategory } from '~/composables/useCategory';
+import { useMainCats } from "~/composables/useMainCats";
 
 import 'swiper/css'
 import 'swiper/css/navigation'
-
-// const slides = [
-// 	{ name: 'Спецодежда', src: '/spetsodezhda' },
-// 	{ name: 'Инструменты', src: '/instrumenty' },
-// 	{ name: 'СИЗ', src: '/siz' },
-// 	{ name: 'Строительное оборудование', src: '/stroitelnoe-oborudovanie' },
-// 	{ name: 'Электроинструмент', src: '/elektroinstrument' },
-// 	{ name: 'Текстиль', src: '/tekstil' },
-// 	{ name: 'Всё для сада', src: '/vsyo-dlya-sada' },
-// 	{ name: 'Текст-1', src: '/tekstil' },
-// 	{ name: 'Текст-2', src: '/vsyo-dlya-sada' },
-// ]
 
 const prevButton = ref<HTMLElement | null>(null)
 const nextButton = ref<HTMLElement | null>(null)
 
 const { link } = useCategory();
 
-const mainCatsData = inject('mainCatsData') as ProductCatPublicList[];
+const { mainCats, ensureMainCats } = useMainCats();
+await ensureMainCats();
 
 </script>
 
 <template>
 
 	<ClientOnly>
-		<div class="slider-wrapper relative max-w-[950px]">
+		<div class="slider-wrapper relative max-w-[950px]" v-if="mainCats.length">
 			<swiper class="h-7" :modules="[Navigation]" :slides-per-view="'auto'" :space-between="20"
 				:watch-slides-progress="true" :navigation="{
 					prevEl: prevButton,
 					nextEl: nextButton,
 				}">
-				<swiper-slide v-for="(item, i) in mainCatsData" :key="i" class="w-auto! shrink-0! flex! items-center">
+				<swiper-slide v-for="(item, i) in mainCats" :key="i" class="w-auto! shrink-0! flex! items-center">
 					<a :href="link(item)" class="text-sm whitespace-nowrap text-gray-600 hover:text-(--Brand-700)">
 						{{ item.name }}
 					</a>

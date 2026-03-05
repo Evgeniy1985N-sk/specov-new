@@ -1,10 +1,15 @@
 <script setup lang="ts">
 import type { ProductCard } from '~/types/product';
 import { useCartsStore } from '@/stores/carts';
+import { useLikeStore } from '@/stores/likes';
 import { useCompareStore } from '@/stores/compare';
+import type { Picture } from '~/types/picture';
+import type { ProductForLike } from '~/types/productLike';
 
-const { addToCart } = useCartsStore();
-const { addToCompare } = useCompareStore();
+const cartsStore = useCartsStore();
+const { link: productDetailLink } = useProduct();
+
+const likeStore = useLikeStore();
 
 interface Props {
   item: ProductCard
@@ -16,22 +21,51 @@ interface Props {
   isCol?: boolean
 }
 
-const date = ref('12.01.2026 в 17.00');
+const date = computed( () => likeStore.getAnonExpiryDate()?.toLocaleDateString('ru-RU') );
 const props = defineProps<Props>();
 const route = useRoute();
 const isCatalogPage = computed(() => route.path === '/catalog');
-const counter = ref(0);
-const cart = useCartStore().cart
 const compareStore = useCompareStore()
-const toggleCompare = useCompareStore().toggleItems
-const compareIds = ref<string[]>([])
+
+const likeProd = computed( () => {
+	return <ProductForLike>{
+		id: props.item.id,
+		name: props.item.name,
+		name_lat: props.item.name_lat,
+		code_1c: props.item.code_1c,
+		char: props.item.char,
+		//price: props.item.price,
+		//picture: props.item.imgs?.find((p) => p.main ),
+	}
+});
+const isProductLiked = computed( () => likeStore.isLiked(likeProd.value) );
+
+const counter = computed<number>({
+	get: () => {
+		return cartsStore.productCartQuantity(props.item.id, props.item.char?.id);
+	},
+	set: (val) => {
+		const quant = Math.max(0, Number(val) || 0);
+
+		void cartsStore.setQuantityInFirst(
+			{
+				id: props.item.id,
+				name: props.item.name,
+				name_lat: props.item.name_lat,
+			},
+			quant,
+			{ char: props.item.char, price: props.item.price },
+			productImg.value as Picture | undefined,
+		);
+	},
+});
 
 const productImg = computed(() => {
-  return props.item.imgs.find(p => p.main) ?? undefined;
+  return props.item.imgs?.find(p => p.main) ?? undefined;
 });
 
 const addProductToCart = () => {
-  addToCart(
+  cartsStore.addToCart(
     0,
     {
       id: props.item.id,
@@ -41,26 +75,6 @@ const addProductToCart = () => {
     { char: props.item.char, price: props.item.price },
     productImg.value
   );
-}
-
-const productDetailLink = (item: ProductCard) => {
-  if (!item.char || !item.char.id) {
-    return `/products/${encodeURIComponent(item.name_lat)}`;
-  }
-  return `/products/${encodeURIComponent(item.name_lat)}/${encodeURIComponent(item.char.name_lat)}`;
-}
-
-const compareItems = computed(() => {
-  return compareStore.items
-})
-
-watch((compareItems), () => {
-  getCompareIds()
-}, { deep: true })
-
-getCompareIds()
-function getCompareIds() {
-  compareIds.value = compareItems.value.map((item) => item.id)
 }
 
 const classContent = computed(() => ({
@@ -103,17 +117,20 @@ const classMedia = computed(() => ({
       <div :class="isRow ? 'hidden sm:flex' : 'flex'"
         class="absolute top-1 right-1 z-10 sm:top-3 sm:right-3 flex-row gap-1 sm:gap-2">
 
-        <ProductButtonFavorite :date="date" />
+        <ProductButtonFavorite :date="date" 
+			:is-active="isProductLiked"
+			@handle-click="likeStore.toggle(likeProd)"
+		/>
 
-        <ProductButtonCompare :is-active="compareIds.includes(props.item.id.toString())"
-          @handle-click="addToCompare(props.item)" />
+        <ProductButtonCompare :is-active="compareStore.isInCompare(props.item.id)"
+          @handle-click="compareStore.toggleItem(props.item.id)" />
 
       </div>
       <!-- BUTTONS -->
 
       <!-- SLIDER -->
       <div class="flex items-center justify-center w-full h-fit">
-        <ProductSliderImgs :imgs="props.item.imgs" :link="productDetailLink(item)" />
+        <ProductSliderImgs :imgs="props.item.imgs ?? []" :link="productDetailLink(item)" />
       </div>
       <!-- SLIDER -->
 
@@ -123,7 +140,7 @@ const classMedia = computed(() => ({
     <!-- IS ROW -->
     <div v-if="isRow" class="max-w-[280px]">
       <span class="text-sm leading-5">
-        Код товара: {{ props.item.id }}
+        Код товара: {{ props.item.code_1c }}
       </span>
       <nuxt-link :to="productDetailLink(props.item)" class="inline-block mb-4">
         <span class="text-gray-950 font-bold">
@@ -131,12 +148,12 @@ const classMedia = computed(() => ({
         </span>
       </nuxt-link>
       <div class="hidden sm:grid gap-4">
-        <p v-for="(filter, i) in item.filters" :key="filter.id" class="flex gap-1 text-sm leading-5">
+        <p v-for="(filter, i) in item.filters_display" :key="filter.id" class="flex gap-1 text-sm leading-5">
           <span class="font-medium text-gray-600">
-            {{ filter.name }}
+            {{ filter.label }}
           </span>
           <b class="min-w-16 font-bold text-gray-950">
-            {{ filter.val }}
+            {{ filter.value }}
           </b>
         </p>
       </div>
@@ -167,10 +184,14 @@ const classMedia = computed(() => ({
           <!-- IF ROW -->
           <div v-if="isRow" class="sm:hidden flex">
 
-            <ProductButtonFavorite class="py-0! shadow-none text-gray-600" :date="date" />
+            <ProductButtonFavorite 
+				class="py-0! shadow-none text-gray-600" :date="date" 
+				:is-active="isProductLiked"
+				@handle-click="likeStore.toggle(likeProd)"
+			/>
 
-            <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
-              :is-active="compareIds.includes(props.item.id.toString())" />
+            <ProductButtonCompare @handle-click="compareStore.toggleItem(props.item.id)"
+              :is-active="compareStore.isInCompare(props.item.id)" />
 
           </div>
           <!-- IF ROW -->

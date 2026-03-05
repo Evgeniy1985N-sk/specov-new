@@ -73,9 +73,9 @@ export const useProduct = () => {
 
 	const link = (item: { name_lat: string, char?: { id?: number, name_lat: string } }) => {
 		if (!item.char || !item.char.id) {
-			return `/products/${item.name_lat}`;
+			return `/products/${encodeURIComponent(item.name_lat)}`;
 		}
-		return `/products/${item.name_lat}/${item.char.name_lat}`;
+		return `/products/${encodeURIComponent(item.name_lat)}/${encodeURIComponent(item.char.name_lat)}`;
 	}
 
 	return {

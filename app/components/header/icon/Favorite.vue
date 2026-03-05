@@ -1,5 +1,6 @@
 <template>
   <svg width="100%" height="100%" style="overflow: visible;" preserveAspectRatio="none" viewBox="0 0 20 20" fill="none"
+	:class="svgClass"
     xmlns="http://www.w3.org/2000/svg">
     <path
       d="M13.426 2.5C16.3612 2.5 18.3334 5.29375 18.3334 7.9C18.3334 13.1781 10.1482 17.5 10.0001 17.5C9.85193 17.5 1.66675 13.1781 1.66675 7.9C1.66675 5.29375 3.63897 2.5 6.57416 2.5C8.25934 2.5 9.36119 3.35312 10.0001 4.10312C10.639 3.35312 11.7408 2.5 13.426 2.5Z"
@@ -15,10 +16,7 @@ interface Props {
 }
 const props = defineProps<Props>();
 
-// 1. Сначала объявляем цвета
-const colorSelected = "#FF0000";
-const colorNotSelected = "#FFFF00"; // Исправлен код цвета
-
-// 2. Присваиваем значение сразу, без стрелочной функции () =>
-const fillColor = props.selected ? colorSelected : colorNotSelected;
+const svgClass = computed((): string => {
+	return props.selected ? "text-[#FF0000]" : "";
+});
 </script>
