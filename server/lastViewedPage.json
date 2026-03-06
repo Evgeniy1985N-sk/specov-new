@@ -1,0 +1,683 @@
+{
+  "products": [
+    {
+      "id": 57126,
+      "name": "Мешок для строительного мусора 55х107см полипропилен (БЕЛЫЙ)  (упак 100)",
+      "name_lat": "meshok-dlia-stroitel-nogo-musora-55kh107sm-polipropilen-belyi-upak-100",
+      "price": 25,
+      "code_1c": "П-00041921 ",
+      "old_price": 28,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 692,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "e858c1b5-6b3b-11ef-a2a5-00155d327e58",
+          "size": 31327,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 53289,
+      "name": "Насос поверхностный центробежный GP1000X DENZEL 97202",
+      "name_lat": "nasos-poverkhnostnyi-tsentrobezhnyi-gp1000x-denzel-97202",
+      "price": 5452,
+      "code_1c": "П-00053791 ",
+      "old_price": 6058,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "dc2ec6ca-2c93-11ef-a2a2-00155d327e58",
+          "size": 50847,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "3853048ef8ebdf28254962bf48a6b3ca",
+          "size": 787025,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "0eb5e0b0f70372a7bd03b0811912aa83",
+          "size": 872576,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "1677616fd20dd2a66ae76ebb9f41d671",
+          "size": 738762,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "4fcdc92f8a703c2c9bd610d9ad878021",
+          "size": 725286,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "578d6dcc6b820357b8fb1be46e0c46fe",
+          "size": 773708,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "c6e0efd54b04631a843dd76a70b3a220",
+          "size": 1294548,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "cdba5f6c78feddfe986d0f12c624529a",
+          "size": 1474838,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "81a9bb9c3319abf3e784025a62c51c83",
+          "size": 1187392,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "df711f1bf38d78d7c2fb9b848de0d3ca",
+          "size": 1977364,
+          "ext": "JPG",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "d7076f17e71a860a516760b0e4b3ff35",
+          "size": 1797712,
+          "ext": "JPG",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "786eb87516abefc140d6dd146ebfa5cf",
+          "size": 1677618,
+          "ext": "JPG",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "2485ee4327d94613af7d88e02636b2db",
+          "size": 2331751,
+          "ext": "JPG",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "74090c333a1847b313cbbbcdf544183c",
+          "size": 2368452,
+          "ext": "JPG",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "1241f173c45cfbd6c7e2eaaa62bc2755",
+          "size": 146472,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "9c96fbadabc639d4694250759e87da88",
+          "size": 186014,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "a840043cc451082c11c3c78d889a9f05",
+          "size": 355928,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "8917b7a2dd0bc2c170ee4d281eaf008f",
+          "size": 374118,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "198e46306652a8cde2fb2ec33d354cab",
+          "size": 316145,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "4a90d11067d149d756d1cf4df99d805b",
+          "size": 268137,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "0a5822bd894a28dec877ef356afdbe29",
+          "size": 448528,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "fa8a321197aa0c23e52f33a4d506a56f",
+          "size": 463002,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "cb772f7d743d827b1c0a3471901934c4",
+          "size": 140530,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "8d428cdc8009d50d7399072e40e79f69",
+          "size": 114240,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "55a65f4bafe19653e8f2db262a59de57",
+          "size": 115589,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "34cb75115aedfad2f9199979dd076645",
+          "size": 142948,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "ab6dda89095ac5b9034853ce08c74f1b",
+          "size": 180774,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "e8dd40738e4d35fe3ebbe8602e6e9f48",
+          "size": 72062,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "3310121cb270370128bfdc4ec27f6343",
+          "size": 315063,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "cbf1efe7952e4375d2402876f05d6b26",
+          "size": 177806,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 81421,
+      "name": "Бейсболка плотность 190 гр/м2",
+      "name_lat": "beisbolka-plotnost-190-gr-m2",
+      "price": 255,
+      "code_1c": "00-00024620",
+      "old_price": 284,
+      "discount": 10,
+      "char": {
+        "id": 26976,
+        "name": " серая (СВЕТЛАЯ)  157065",
+        "name_lat": "seraia-svetlaia-157065"
+      },
+      "available": true,
+      "quant": 81,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "abac6084-c72e-4a95-8a6c-e2a35fca8d3f",
+          "size": 1136594,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "135ea350-f766-4f53-a29d-226d2cf69be8",
+          "size": 1232507,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 53533,
+      "name": "Лазерный нивелир CONDTROL GFX300",
+      "name_lat": "lazernyi-nivelir-condtrol-gfx300",
+      "price": 7191,
+      "code_1c": "П-00047972 ",
+      "old_price": 7990,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 2,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "5b24ac51-3a9c-11ef-a2a2-00155d327e58",
+          "size": 36852,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 57515,
+      "name": "Насадка (ролик) 180мм, микрофибра d-42мм, ворс 11мм, бюгель 8мм, PROFI DECOR",
+      "name_lat": "nasadka-rolik-180mm-mikrofibra-d-42mm-vors-11mm-biugel-8mm-profi-decor",
+      "price": 96,
+      "code_1c": "П-00072381 ",
+      "old_price": 107,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 48,
+      "quant_descr": "many",
+      "imgs": null,
+      "filters_display": null
+    },
+    {
+      "id": 45056,
+      "name": "Жилет сигнальный со СОП(тк\"ГАБАРИТ\",цв.оранж) пуговицы",
+      "name_lat": "zhilet-signal-nyi-so-sop-tkgabarit-tsv-oranzh-pugovitsy",
+      "price": 276,
+      "code_1c": "П-00031109 ",
+      "old_price": 307,
+      "discount": 10,
+      "char": {
+        "id": 3609,
+        "name": "52-54",
+        "name_lat": "52-54"
+      },
+      "available": true,
+      "quant": 3,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "f0a749dd-217a-4826-acf3-6cdc7add075e",
+          "size": 71561,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 45440,
+      "name": "Аккумуляторная батарея Makita BL1820G (G-серия,Li-Ion, 18В, 2.0Aч)",
+      "name_lat": "akkumuliatornaia-batareia-makita-bl1820g-g-seriia-li-ion-18v-2-0ach",
+      "price": 4291,
+      "code_1c": "00-00023672",
+      "old_price": 4768,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 2,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "4d918448-7920-42f9-8d2e-187b5f60a380",
+          "size": 78137,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 61528,
+      "name": "Костюм \"Скорая помощь\" зимний мужской",
+      "name_lat": "kostium-skoraia-pomoshch-zimnii-muzhskoi",
+      "price": 7956,
+      "code_1c": "П-00073364 ",
+      "old_price": 8841,
+      "discount": 10,
+      "char": {
+        "id": 14234,
+        "name": "52-54/170-176",
+        "name_lat": "52-54-170-176"
+      },
+      "available": true,
+      "quant": 1,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "b10b3947-01fa-4be0-bd3f-9266da2a99fc",
+          "size": 100056,
+          "ext": "jpeg",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "cc3331d6-19fa-4089-afb0-517d43f5a076",
+          "size": 98255,
+          "ext": "jpeg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "f3702a26-497f-4d7f-91bc-3117dfaf7187",
+          "size": 99921,
+          "ext": "jpeg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "e4337cfe-e474-447f-8c88-297d8a278637",
+          "size": 93903,
+          "ext": "jpeg",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 60434,
+      "name": "Куртка муж. \"Бригадир\" утепл.  цв. синий, тк. смесовая 210 гр./м²",
+      "name_lat": "kurtka-muzh-brigadir-utepl-tsv-sinii-tk-smesovaia-210-gr-m2",
+      "price": 3185,
+      "code_1c": "П-00058409 ",
+      "old_price": 3539,
+      "discount": 10,
+      "char": {
+        "id": 9575,
+        "name": "68-70/170-176",
+        "name_lat": "68-70-170-176"
+      },
+      "available": true,
+      "quant": 6,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "286a086c-e3ef-43de-a8cf-a4393f25f17c",
+          "size": 4753029,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "e10db621-5c59-4dd7-b66d-b0a89ba29ef3",
+          "size": 2398981,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "df8d6967-1805-4514-90df-afc432b1e41d",
+          "size": 3230704,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "82e84b61-9b26-406f-8e5e-8e9ecf643c0b",
+          "size": 1298836,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 51709,
+      "name": "Набор инстр АВТО 95пр  BERGER«МАГДЕБУРГ» BG095-1214",
+      "name_lat": "nabor-instr-avto-95pr-berger-magdeburg-bg095-1214",
+      "price": 16891,
+      "code_1c": "П-00027663 ",
+      "old_price": 18768,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 4,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "7508dc5c-953f-4e9a-a551-1655b9d13a11",
+          "size": 115096,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 60436,
+      "name": "Костюм муж. \"Формула\" с СОП утепл.  цв. серый/красный, тк. Орион 210 гр./м²",
+      "name_lat": "kostium-muzh-formula-s-sop-utepl-tsv-seryi-krasnyi-tk-orion-210-gr-m2",
+      "price": 7498,
+      "code_1c": "П-00058421 ",
+      "old_price": 8332,
+      "discount": 10,
+      "char": {
+        "id": 9592,
+        "name": "44-46/170-176",
+        "name_lat": "44-46-170-176"
+      },
+      "available": true,
+      "quant": 4,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "8b06ea40-a084-4cbc-a27a-d341329a472a",
+          "size": 14909,
+          "ext": "JPG",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "636bc8d5-bfcf-4779-bcf9-fa7863950103",
+          "size": 21177,
+          "ext": "JPG",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 60349,
+      "name": "Костюм сварщика со спилком 2,3 утеплённый  РФ",
+      "name_lat": "kostium-svarshchika-so-spilkom-2-3-uteplionnyi-rf",
+      "price": 9058,
+      "code_1c": "П-00004471 ",
+      "old_price": 10065,
+      "discount": 10,
+      "char": {
+        "id": 5431,
+        "name": "44-46/170-176",
+        "name_lat": "44-46-170-176"
+      },
+      "available": true,
+      "quant": 17,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "c26f6f94-0950-11f0-a2c2-00155d327e58",
+          "size": 1143097,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 57879,
+      "name": "Круг абр на ворс осн под \"лип\" 225мм Р220 STURM! (20) DWS6010SL-9220",
+      "name_lat": "krug-abr-na-vors-osn-pod-lip-225mm-r220-sturm-20-dws6010sl-9220",
+      "price": 58,
+      "code_1c": "П-00063356 ",
+      "old_price": 65,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 6,
+      "quant_descr": "many",
+      "imgs": null,
+      "filters_display": null
+    },
+    {
+      "id": 57881,
+      "name": "Круг абр на ворс осн под \"лип\" 225мм Р400 STURM! (20)",
+      "name_lat": "krug-abr-na-vors-osn-pod-lip-225mm-r400-sturm-20",
+      "price": 1316,
+      "code_1c": "П-00068294 ",
+      "old_price": 1463,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 7,
+      "quant_descr": "many",
+      "imgs": null,
+      "filters_display": null
+    },
+    {
+      "id": 60021,
+      "name": "Жилет муж. \"Беркут\" утепл.  цв. коричневый, тк. Дюспо 100% пэ ВО",
+      "name_lat": "zhilet-muzh-berkut-utepl-tsv-korichnevyi-tk-diuspo-100-pe-vo",
+      "price": 1989,
+      "code_1c": "П-00062864 ",
+      "old_price": 2211,
+      "discount": 10,
+      "char": {
+        "id": 960,
+        "name": "44-46",
+        "name_lat": "44-46"
+      },
+      "available": true,
+      "quant": 7,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "b4938742-ae0d-4c3c-b2c4-0776dcc9c185",
+          "size": 133880,
+          "ext": "webp",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "edc265d0-8558-462e-b7df-31cfc180e26d",
+          "size": 108738,
+          "ext": "webp",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 45388,
+      "name": "Перфоратор аккумуляторный Кратон BRH18DC26-OFA (БЕЗ АКБ И ЗУ)",
+      "name_lat": "perforator-akkumuliatornyi-kraton-brh18dc26-ofa-bez-akb-i-zu",
+      "price": 7191,
+      "code_1c": "П-00066767 ",
+      "old_price": 7990,
+      "discount": 10,
+      "char": null,
+      "available": true,
+      "quant": 3,
+      "quant_descr": "few",
+      "imgs": [
+        {
+          "ref_1c": "31bc940b-01b7-4e79-b655-c40128e22603",
+          "size": 56662,
+          "ext": "webp",
+          "preview_ext": "png",
+          "main": true
+        }
+      ],
+      "filters_display": null
+    },
+    {
+      "id": 60417,
+      "name": "Куртка жен. \"Ангара\" утепл.  цв. васильковый, тк. Дюспо 100% пэ ВО",
+      "name_lat": "kurtka-zhen-angara-utepl-tsv-vasil-kovyi-tk-diuspo-100-pe-vo",
+      "price": 4068,
+      "code_1c": "П-00029726 ",
+      "old_price": 4521,
+      "discount": 10,
+      "char": {
+        "id": 8133,
+        "name": "40-42/158-164",
+        "name_lat": "40-42-158-164"
+      },
+      "available": true,
+      "quant": 7,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "400b762a-2f28-48e8-b7f6-b434fbb5c38d",
+          "size": 71967,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "d97a7723-8498-4348-956a-3067a223c1ed",
+          "size": 64980,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "a8805756-3edc-4850-8655-590c3b5c71e3",
+          "size": 373506,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": null
+    }
+  ]
+}

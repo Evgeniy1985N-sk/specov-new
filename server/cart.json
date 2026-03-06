@@ -1,0 +1,45 @@
+[
+  {
+    "name": "Корзина 1",
+    "products": [
+      {
+        "amount": 7191,
+        "char": null,
+        "code_1c": "П-00066767 ",
+        "id": 45388,
+        "name": "Перфоратор аккумуляторный Кратон BRH18DC26-OFA (БЕЗ АКБ И ЗУ)",
+        "name_lat": "perforator-akkumuliatornyi-kraton-brh18dc26-ofa-bez-akb-i-zu",
+        "picture": {
+          "ext": "webp",
+          "main": true,
+          "size": 56662,
+          "ref_1c": "31bc940b-01b7-4e79-b655-c40128e22603",
+          "preview_ext": "png"
+        },
+        "price": 7191,
+        "quant": 1
+      },
+      {
+        "amount": 4068,
+        "char": {
+          "id": 8133,
+          "name": "40-42/158-164",
+          "name_lat": "40-42-158-164"
+        },
+        "code_1c": "П-00029726 ",
+        "id": 60417,
+        "name": "Куртка жен. \"Ангара\" утепл.  цв. васильковый, тк. Дюспо 100% пэ ВО",
+        "name_lat": "kurtka-zhen-angara-utepl-tsv-vasil-kovyi-tk-diuspo-100-pe-vo",
+        "picture": {
+          "ext": "jpg",
+          "main": false,
+          "size": 373506,
+          "ref_1c": "a8805756-3edc-4850-8655-590c3b5c71e3",
+          "preview_ext": "png"
+        },
+        "price": 4068,
+        "quant": 1
+      }
+    ]
+  }
+]
