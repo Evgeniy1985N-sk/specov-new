@@ -5,7 +5,7 @@
   "scripts": {
     "build": "nuxt build",
     "dev": "nuxt dev",
-    "mock": "json-server ./server/index.cjs --routes ./server/routes.json --port 59001",
+    "mock": "json-server ./server/index.cjs --routes ./server/routes.json --port 59001 --middlewares ./server/middleware.cjs",
     "generate": "nuxt generate",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"

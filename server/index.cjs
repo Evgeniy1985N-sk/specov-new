@@ -9,28 +9,36 @@ const productGroups = require("./productGroups.json");
 const productSimilar = require("./productSimilar.json");
 const productRelated = require("./productRelated.json");
 const lastViewed = require("./lastViewed.json");
+const lastViewedPage = require("./lastViewedPage.json");
 const catalog = require("./catalog.json");
 const catalogProdCount = require("./catalogProdCount.json");
 const mainCategories = require("./mainCategories.json");
 const productReview = require("./productReview.json");
 const search = require("./search.json");
+const productLike = require("./productLike.json");
+const productLikePage = require("./productLikePage.json");
+const cart = require("./cart.json");
 
 module.exports = () => ({
-  stores,
-  categories,
-  category1,
-  product1,
-  productPage1,
-  productLive1,
-  productLiveChar1,
-  productGroups,
-  productSimilar,
-  productRelated,
-  lastViewed,
-  catalog,
-  catalogProdCount,
-  mainCategories,
-  productReview,
-  search,
+	stores,
+	categories,
+	category1,
+	product1,
+	productPage1,
+	productLive1,
+	productLiveChar1,
+	productGroups,
+	productSimilar,
+	productRelated,
+	lastViewed,
+	lastViewedPage,
+	catalog,
+	catalogProdCount,
+	mainCategories,
+	productReview,
+	search,
+	productLike,
+	productLikePage,
+	cart,
 });
 
