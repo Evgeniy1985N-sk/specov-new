@@ -116,7 +116,7 @@ function startCountDown() {
           </UFormField>
 
           <UButton v-if="!isCode" @click="isCode = true, startCountDown()" color="neutral" solid
-            class="shrink-0 max-w-[136px] min-h-10 gap-2 px-5 text-sm" size="xl">
+            class="shrink-0 max-w-[136px] min-h-10 gap-2 px-5 text-sm text-gray-950" size="xl">
             Получить код
           </UButton>
 

@@ -21,18 +21,6 @@
           <BusinessRegist class="shrink-0" />
         </div>
 
-
-
-        <!-- !!!!! REMOVE FOR EXAMPLE !!!!! -->
-        <div class="flex flex-col items-end gap-6">
-          <!-- <BusinessRegist2 />
-          <BusinessRegist3 />
-          <BusinessRegist4 /> -->
-        </div>
-        <!-- !!!!! REMOVE FOR EXAMPLE !!!!! -->
-
-        
-
         <Cards />
 
       </SectionContainer>

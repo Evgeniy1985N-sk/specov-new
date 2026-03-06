@@ -124,7 +124,7 @@ const handleMaxChange = (e: Event): void => {
 <style scoped>
 .range-slide {
 	position: relative;
-	margin: 20px 0;
+	margin: 20px 0 0;
 	height: 4px;
 }
 

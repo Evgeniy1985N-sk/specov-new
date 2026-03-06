@@ -168,7 +168,7 @@ watch(isShowCatalogMenu, (newVal) => {
 
 								<!-- SUB MENU ITEM -->
 								<NuxtLink :to="categoryLink(group)"
-									class="flex items-center gap-2 text-[20px] leading-[30px] text-gray-950 font-semibold">
+									class="flex items-center gap-2 text-[20px] leading-[30px] text-gray-950 font-semibold hover:text-(--Brand-700) transition-colors">
 									{{ group.title }}
 									<WrapIcon class="w-6! h-6!">
 										<HeaderCatalogMenuIconAng />
@@ -181,9 +181,9 @@ watch(isShowCatalogMenu, (newVal) => {
 
 									<li v-for="category in group.items.slice(0, !isShowAllSubItems ? 9 : group.items.length)">
 										<NuxtLink
-											class="custom-item flex items-center justify-between gap-2 hover:text-(--Brand-700) text-gray-950 transition"
+											class="custom-item flex items-center justify-between gap-2 text-gray-950 hover:text-(--Brand-700) transition-colors"
 											:to="categoryLink(category)">
-											<p class="w-full max-w-[190px] text-sm leading-5 font-medium text-gray-950">
+											<p class="w-full max-w-[190px] text-sm leading-5 font-medium">
 												{{ category.name }}
 											</p>
 											<span class="shrink-0 text-sm leading-5 font-medium text-gray-600">

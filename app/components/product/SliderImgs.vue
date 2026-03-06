@@ -33,6 +33,8 @@ const onSwiperInit = (swiper: SwiperClass) => {
 <template>
 	<ClientOnly>
 		<swiper :key="imgs.length" ref="swiperRef" :slides-per-view="1" :loop="false" :space-between="0" :pagination="{
+			dynamicBullets: true,
+			dynamicMainBullets: 6,
 			clickable: true,
 		}" :modules="[Pagination]" :navigation="false" @swiper="onSwiperInit">
 			<swiper-slide v-for="(item, i) in props.imgs" :key="i">
