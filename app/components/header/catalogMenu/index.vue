@@ -5,6 +5,7 @@ import { useProductCatApi } from '@/composables/api/useProductCatApi';
 import { type ProductCatPublicList } from "@/types/productCat";
 import { categoryLink } from "@/utils/categoryLink";
 import type { UiState } from '~/types/uiState';
+const { lock, unlock } = useScrollLock()
 
 const { isShowCatalogMenu, closeCatalogMenu } = inject<UiState>('UiState')!
 const emit = defineEmits(['hideCatalog'])
@@ -80,24 +81,9 @@ const goBack = () => {
 	}
 };
 
-onMounted(() => {
-	const html = document.querySelector('html')
-	if (html) {
-		html.classList.remove('xl:overflow-hidden', 'xl:mr-[17px]')
-	}
-})
-
-watch(isShowCatalogMenu, (newVal) => {
-	const html = document.querySelector('html')
-	if (newVal) {
-		if (html) {
-			html.classList = 'xl:overflow-hidden xl:mr-[17px]'
-		}
-	} else {
-		if (html) {
-			html.classList.remove('xl:overflow-hidden', 'xl:mr-[17px]')
-		}
-	}
+watch(isShowCatalogMenu, (val) => {
+  if (val) lock()
+  else unlock()
 })
 
 </script>
