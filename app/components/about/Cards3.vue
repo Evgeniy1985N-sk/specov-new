@@ -19,7 +19,7 @@ const items = ref([
   <div class="grid sm:grid-cols-2 lg:flex lg:flex-row gap-2 sm:gap-6">
 
     <div v-for="item in items"
-      class="flex flex-col gap-6 w-full p-6 border border-gray-200 rounded-xl bg-white">
+      class="flex flex-col gap-6 w-full xl:min-h-[166px] p-6 border border-gray-200 rounded-xl bg-white">
       <WrapIcon class="w-11 h-11 bg-gray-100 rounded-xl">
         <component :is="item.icon" />
       </WrapIcon>
