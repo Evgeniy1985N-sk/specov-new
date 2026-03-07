@@ -2,11 +2,17 @@
 
 const isChecked = ref(false);
 
+const props = defineProps<{
+	isDownload: boolean;
+	isShareLoading: boolean;
+}>();
+
 const emit = defineEmits<{
   (e: 'setCheck', check: boolean): void
   (e: 'remove'): void
   (e: 'share'): void
   (e: 'print'): void
+  (e: 'download'): void
 }>();
 
 </script>
@@ -33,14 +39,14 @@ const emit = defineEmits<{
     </div>
 
     <div class="hidden md:flex gap-4 lg:gap-6">
-      <CartButton text="Поделиться" @click="emit('share')">
+      <CartButton text="Поделиться" @click="emit('share')" :disabled="props.isShareLoading">
         <WrapIcon>
-          <CartIconShare />
+          <CartIconShare :loading="props.isShareLoading"/>
         </WrapIcon>
       </CartButton>
-      <CartButton text="Скачать">
+      <CartButton text="Скачать" @click="emit('download')" :disabled="props.isDownload">
         <WrapIcon>
-          <CartIconDownload />
+          <CartIconDownload :loading="props.isDownload"/>
         </WrapIcon>
       </CartButton>
       <CartButton text="Распечатать" @click="emit('print')">

@@ -10,6 +10,7 @@ type AddProductInput = {
 	id: number;
 	name: string;
 	name_lat: string;
+	code_1c: string;
 };
 
 type AddStockInput = {
@@ -149,6 +150,7 @@ export const useCartsStore = defineStore("carts", () => {
 			id: product.id,
 			name: product.name,
 			name_lat: product.name_lat,
+			code_1c: product.code_1c,
 			char: stock.char,
 			quant: 1,
 			price: stock.price ?? 0,
@@ -378,6 +380,7 @@ export const useCartsStore = defineStore("carts", () => {
 			id: product.id,
 			name: product.name,
 			name_lat: product.name_lat,
+			code_1c: product.code_1c,
 			char: stock?.char,
 			quant,
 			price,

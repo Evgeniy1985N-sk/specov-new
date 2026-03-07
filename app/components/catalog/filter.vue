@@ -198,6 +198,54 @@ const getListOptions = (filter: CategoryFilter): CategoryFilterListOption[] => {
 	return Array.isArray(opts) ? opts : [];
 };
 
+//price bunds
+const getNormalizedPriceSelection = (): { min?: number; max?: number } => {
+	const lo = props.minPrice;
+	const hi = props.maxPrice;
+
+	let nextMin = minPrice.value;
+	let nextMax = maxPrice.value;
+
+	if (nextMin != null) {
+		nextMin = Math.max(lo, Math.min(nextMin, hi));
+	}
+
+	if (nextMax != null) {
+		nextMax = Math.max(lo, Math.min(nextMax, hi));
+	}
+
+	if (nextMin != null && nextMax != null && nextMin > nextMax) {
+		[nextMin, nextMax] = [nextMax, nextMin];
+	}
+
+	if (nextMin === lo) {
+		nextMin = undefined;
+	}
+
+	if (nextMax === hi) {
+		nextMax = undefined;
+	}
+
+	return {
+		min: nextMin,
+		max: nextMax,
+	};
+};
+
+const syncPriceSelectionToBounds = (): void => {
+	const next = getNormalizedPriceSelection();
+	minPrice.value = next.min;
+	maxPrice.value = next.max;
+};
+
+watch(
+	() => [props.minPrice, props.maxPrice],
+	() => {
+		syncPriceSelectionToBounds();
+	},
+	{ immediate: true },
+);
+
 const ensureListStateShape = (filter: CategoryFilter) => {
 	if (filter.data_type !== 't_list') return;
 
@@ -283,8 +331,10 @@ const buildFilterQuery = (): Record<string, any> => {
 	if (selectedCountries.value.length) query.countries = selectedCountries.value.join(',');
 	if (selectedStores.value.length) query.stores = selectedStores.value.join(',');
 
-	if (minPrice.value != null && minPrice.value !== props.minPrice) query.min_price = minPrice.value;
-	if (maxPrice.value != null && maxPrice.value !== props.maxPrice) query.max_price = maxPrice.value;
+	const price = getNormalizedPriceSelection();
+
+	if (price.min != null) query.min_price = price.min;
+	if (price.max != null) query.max_price = price.max;
 
 	// Dynamic typed
 	for (const [filterIdStr, state] of Object.entries(filterState)) {
@@ -330,7 +380,7 @@ const buildFilterQuery = (): Record<string, any> => {
 		}
 
 		if (filter.data_type === 't_bool') {
-			if (state === true) query[`filters_hash[${filterId}]`] = '1';
+			if (state === true) query[`filters_bool[${filterId}]`] = '1';
 			continue;
 		}
 
@@ -521,7 +571,9 @@ defineExpose({
 					@update:model-value="() => { emitPriceDebounced(); }">
 					<template v-if="formattedMinPrice?.length" #trailing>
 						<UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
-							class="text-gray-500 hover:text-gray-600" @click="formattedMinPrice = ''" />
+							class="text-gray-500 hover:text-gray-600" 
+							@click="() => { formattedMinPrice = ''; emitPriceDebounced(); }"
+							/>
 					</template>
 				</UInput>
 
@@ -531,7 +583,9 @@ defineExpose({
 					@update:model-value="() => { emitPriceDebounced(); }">
 					<template v-if="formattedMaxPrice?.length" #trailing>
 						<UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
-							class="text-gray-500 hover:text-gray-600" @click="formattedMaxPrice = ''" />
+							class="text-gray-500 hover:text-gray-600" 
+							@click="() => { formattedMaxPrice = ''; emitPriceDebounced(); }"
+							/>
 					</template>
 				</UInput>
 

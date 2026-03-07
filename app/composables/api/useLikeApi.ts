@@ -1,7 +1,8 @@
 import { useNuxtApp } from "nuxt/app";
 import type { $Fetch } from "ofetch";
 import { likeEndpoints } from "~/api/endpoints/like";
-import type { ProductFavoritePage, ProductFavoritePageAnonUserProducts, ProductForLike, ProductUpdateLike } from "~/types/productLike";
+import type { ProductLikePage, ProductForLike, ProductUpdateLike } from "~/types/productLike";
+import type { PageAnonUserProducts } from "~/types/product";
 
 export function useLikeApi() {
 	const api = useNuxtApp().$backendAPI as $Fetch;
@@ -31,8 +32,8 @@ export function useLikeApi() {
 					{ method: 'GET' },
 			);
 		},
-		page(products: ProductFavoritePageAnonUserProducts[]): Promise<ProductFavoritePage>{
-			return api<ProductFavoritePage>(
+		page(products: PageAnonUserProducts[]): Promise<ProductLikePage>{
+			return api<ProductLikePage>(
 				likeEndpoints.page(products),
 					{ method: 'GET' },
 			);

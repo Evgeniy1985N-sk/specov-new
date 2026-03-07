@@ -21,7 +21,6 @@ interface Props {
   isCol?: boolean
 }
 
-const date = computed( () => likeStore.getAnonExpiryDate()?.toLocaleDateString('ru-RU') );
 const props = defineProps<Props>();
 const route = useRoute();
 const isCatalogPage = computed(() => route.path === '/catalog');
@@ -52,6 +51,7 @@ const counter = computed<number>({
 				id: props.item.id,
 				name: props.item.name,
 				name_lat: props.item.name_lat,
+				code_1c: props.item.code_1c,
 			},
 			quant,
 			{ char: props.item.char, price: props.item.price },
@@ -70,7 +70,8 @@ const addProductToCart = () => {
     {
       id: props.item.id,
       name: props.item.name,
-      name_lat: props.item.name_lat
+      name_lat: props.item.name_lat,
+      code_1c: props.item.code_1c
     },
     { char: props.item.char, price: props.item.price },
     productImg.value
@@ -117,13 +118,13 @@ const classMedia = computed(() => ({
       <div :class="isRow ? 'hidden sm:flex' : 'flex'"
         class="absolute top-1 right-1 z-10 sm:top-3 sm:right-3 flex-row gap-1 sm:gap-2">
 
-        <ProductButtonFavorite :date="date" 
+        <ProductButtonFavorite 
 			:is-active="isProductLiked"
 			@handle-click="likeStore.toggle(likeProd)"
 		/>
 
-        <ProductButtonCompare :is-active="compareStore.isInCompare(props.item.id)"
-          @handle-click="compareStore.toggleItem(props.item.id)" />
+        <ProductButtonCompare :is-active="compareStore.isInCompare(props.item)"
+          @handle-click="compareStore.toggleItem(props.item)" />
 
       </div>
       <!-- BUTTONS -->
@@ -185,13 +186,13 @@ const classMedia = computed(() => ({
           <div v-if="isRow" class="sm:hidden flex">
 
             <ProductButtonFavorite 
-				class="py-0! shadow-none text-gray-600" :date="date" 
+				class="py-0! shadow-none text-gray-600"
 				:is-active="isProductLiked"
 				@handle-click="likeStore.toggle(likeProd)"
 			/>
 
-            <ProductButtonCompare @handle-click="compareStore.toggleItem(props.item.id)"
-              :is-active="compareStore.isInCompare(props.item.id)" />
+            <ProductButtonCompare @handle-click="compareStore.toggleItem(props.item)"
+              :is-active="compareStore.isInCompare(props.item)" />
 
           </div>
           <!-- IF ROW -->

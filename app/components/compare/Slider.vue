@@ -8,10 +8,12 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 
 import type { ProductCard } from '~/types/product'
+import SkeletonCard from '../product/SkeletonCard.vue'
 
 
 interface Props {
-	items?: ProductCard[]
+	items: ProductCard[];
+	pending: boolean;
 }
 const props = defineProps<Props>()
 
@@ -55,7 +57,11 @@ const showNavigation = computed(() => {
 	<ClientOnly>
 
 		<div class="relative max-w-(--container) m-auto w-full min-w-0 sm:min-w-auto">
+			<template v-if="props.pending">
+				<SkeletonCard :skeleton-count="3" :is-list="false"/>
+			</template>
 
+			<template v-else>
 			<swiper @swiper="onSwiper" :modules="[Navigation]" :slides-per-view="1" :loop="true" :space-between="12"
 				:allowTouchMove="true" :breakpoints="{
 					640: { slidesPerView: 2, spaceBetween: 24 },
@@ -98,6 +104,7 @@ const showNavigation = computed(() => {
 					</svg>
 				</button>
 			</div>
+			</template>
 
 		</div>
 

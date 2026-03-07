@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useAuthStore } from "@/stores/auth";
+import { useLikeStore } from "@/stores/likes";
 
 interface Props {
 	class?: string;
-	date?: string;
 	isActive: boolean;
 }
 
@@ -15,6 +15,10 @@ const emit = defineEmits<{
 }>();
 
 const authStore = useAuthStore();
+
+const likeStore = useLikeStore();
+const expirDate = computed( () => likeStore.getAnonExpiryDate()?.toLocaleDateString('ru-RU') );
+
 const isModalOpen = ref(false);
 
 const LS_COUNT_KEY = "favorite_login_modal_clicks:v1";
@@ -83,7 +87,7 @@ const onClick = (): void => {
 				<div class="grid gap-2">
 					<div class="text-[18px] leading-7 text-black font-bold">Список избранного</div>
 					<p class="font-medium">
-						Войдите в профиль, чтобы сохранить список. Если этого не сделать, он удалится {{ props.date }}
+						Войдите в профиль, чтобы сохранить список. Если этого не сделать, он удалится {{ expirDate }}
 					</p>
 				</div>
 

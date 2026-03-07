@@ -17,6 +17,8 @@ const productReview = require("./productReview.json");
 const search = require("./search.json");
 const productLike = require("./productLike.json");
 const productLikePage = require("./productLikePage.json");
+const productCompare = require("./productCompare.json");
+const productComparePage = require("./productComparePage.json");
 const cart = require("./cart.json");
 
 module.exports = () => ({
@@ -39,6 +41,8 @@ module.exports = () => ({
 	search,
 	productLike,
 	productLikePage,
+	productCompare,
+	productComparePage,
 	cart,
 });
 

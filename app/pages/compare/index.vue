@@ -1,153 +1,193 @@
 <script setup lang="ts">
+import { computed, ref, watch } from "vue";
 import type { ProductCard } from "~/types/product";
-import { useScroll } from '~/composables/useScroll'
-
+import { useScroll } from "~/composables/useScroll";
+import { useCompareApi } from "~/composables/api/useCompareApi";
+import { useCompareStore } from "@/stores/compare";
+import type { CompareGroup, ProductComparePage, ProductCompareSet } from "~/types/productCompare";
 
 const compareStore = useCompareStore();
-const allProducts = useProductsStore().allProducts
-const compareProducts = ref<ProductCard[]>([])
-const activeIndex = ref<number | null>(0);
-const activeProducts = ref<ProductCard[]>()
-const isDifference = ref(false)
-const { scrollPosition } = useScroll()
+const activeIndex = ref(0);
+const isDifference = ref(false);
+const { scrollPosition } = useScroll();
 
-const compareIds = computed(() => {
-  return compareStore.items
-})
+const { page: comparePage } = useCompareApi();
 
-watch(compareIds, () => {
-  compareProducts.value = []
-  getCompareProducts()
-}, { deep: true })
-
-getCompareProducts()
-function getCompareProducts() {
-  compareIds.value.forEach((c) => {
-    const foundProduct = allProducts.find((item) => item.id == c.id);
-    if (foundProduct) {
-      compareProducts.value.push(foundProduct)
-    }
-  })
-}
-
-const groupedItems = computed(() => {
-  return compareProducts.value.reduce((acc, item) => {
-    const category = item.category as string;
-    if (!acc[category]) {
-      acc[category] = [];
-    }
-    acc[category].push(item);
-    return acc;
-  }, {} as { [key: string]: typeof compareProducts.value[number][] });
+const compareRequestProducts = computed(() => {
+	return compareToAnonProducts(compareStore.items);
 });
+
+const compareRequestSignature = computed(() => {
+	return compareRequestProducts.value
+		.map((item) => `${item.id}:${item.char_id ?? ""}`)
+		.join("|");
+});
+
+const { data, error, refresh, pending } = await useAsyncData<ProductComparePage>(
+	"compare",
+	async () => {
+		return await comparePage(compareRequestProducts.value);
+	},
+	{
+		server: false,
+		default: () => ({
+			products: [],
+		}),
+		watch: [compareRequestSignature],
+	}
+);
+
+const compareProducts = computed<ProductCompareSet[]>(() => data.value.products ?? []);
+
+const groupedItems = computed<CompareGroup[]>(() => {
+	const groups: CompareGroup[] = [];
+	const groupsById = new Map<number, CompareGroup>();
+
+	for (const item of compareProducts.value) {
+		const category = item.categories?.[0];
+
+		if (!category) {
+			continue;
+		}
+
+		let group = groupsById.get(category.id);
+
+		if (!group) {
+			group = {
+				categoryId: category.id,
+				category: category.name,
+				items: [],
+			};
+			groupsById.set(category.id, group);
+			groups.push(group);
+		}
+
+		group.items.push(item);
+	}
+
+	return groups;
+});
+
+watch(
+	groupedItems,
+	(items) => {
+		if (!items.length) {
+			activeIndex.value = 0;
+			return;
+		}
+
+		if (activeIndex.value >= items.length) {
+			activeIndex.value = 0;
+		}
+	},
+	{ immediate: true }
+);
 
 const categoryProducts = computed(() => {
-  return Object.entries(groupedItems.value).map(([category, items], i) => ({
-    category,
-    count: items.length,
-    isActive: i === activeIndex.value
-  }));
+	return groupedItems.value.map((group, index) => ({
+		category: group.category,
+		count: group.items.length,
+		isActive: index === activeIndex.value,
+	}));
 });
 
-function toggleActive(index: number) {
-  activeIndex.value = index;
-}
+const activeProducts = computed<ProductCard[]>(() => {
+	return groupedItems.value[activeIndex.value]?.items ?? [];
+});
 
-watch(categoryProducts, () => {
-  getActiveProducts()
-})
+const toggleActive = (index: number): void => {
+	activeIndex.value = index;
+};
 
-onMounted(() => {
-  getActiveProducts()
-})
+const deleteProducts = async (): Promise<void> => {
+	for (const item of activeProducts.value) {
+		compareStore.deleteItem(item);
+	}
 
-function getActiveProducts() {
-  const activeCategory = categoryProducts.value?.find(item => item.isActive)?.category
-  activeProducts.value = compareProducts.value.filter(item => item.category == activeCategory)
-}
+	activeIndex.value = 0;
+	await refresh();
+};
 
-function deleteProducts() {
-  activeProducts.value?.forEach((item) => {
-    compareStore.deleteItem(item.id)
-  })
-  activeIndex.value = 0
-}
-
-function deleteAllCompare() {
-  compareProducts.value?.forEach((item) => {
-    compareStore.deleteItem(item.id)
-  })
-}
+const deleteAllCompare = async (): Promise<void> => {
+	compareStore.clear();
+	activeIndex.value = 0;
+	await refresh();
+};
 
 </script>
-
 <template>
 
-  <Header />
+	<Header />
 
-  <Breadcrumbs />
+	<Breadcrumbs />
 
-  <main>
+	<main>
 
-    <Section>
-      <SectionContainer>
+		<Section>
+			<SectionContainer>
 
-        <div class="flex items-center justify-between mb-6">
+				<div class="flex items-center justify-between mb-6">
 
-          <TitleGoods title="Сравнение товаров" />
+					<TitleGoods title="Сравнение товаров" />
 
-          <div class="flex gap-4 sm:gap-0 sm:bg-gray-100 rounded-lg">
-            <button @click="deleteAllCompare"
-              class="flex gap-2.5 items-center p-2 sm:p-4 pr-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
-              <WrapIcon>
-                <CompareIconTrash />
-              </WrapIcon>
-              <span class="hidden sm:block text-sm leading-5 font-semibold">
-                Удалить все
-              </span>
-            </button>
-            <button
-              class="flex gap-2.5 items-center p-2 sm:p-4 pl-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
-              <WrapIcon>
-                <CompareIconShare />
-              </WrapIcon>
-              <span class="hidden sm:block text-sm leading-5 font-semibold">
-                Поделиться
-              </span>
-            </button>
-          </div>
+					<div class="flex gap-4 sm:gap-0 sm:bg-gray-100 rounded-lg">
+						<button @click="deleteAllCompare"
+							class="flex gap-2.5 items-center p-2 sm:p-4 pr-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
+							<WrapIcon>
+								<CompareIconTrash />
+							</WrapIcon>
+							<span class="hidden sm:block text-sm leading-5 font-semibold">
+								Удалить все
+							</span>
+						</button>
+						<!-- temporarily removed  
+						<button
+							class="flex gap-2.5 items-center p-2 sm:p-4 pl-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
+							<WrapIcon>
+								<CompareIconShare />
+							</WrapIcon>
+							<span class="hidden sm:block text-sm leading-5 font-semibold">
+								Поделиться
+							</span>
+						</button>
+						-->
+					</div>
 
-        </div>
+				</div>
 
-        <CompareTabs v-if="compareProducts.length" @handle-click="(i) => toggleActive(i)" @click-on-cross="deleteProducts" :items="categoryProducts"
-          class="mb-6" />
+				<CompareTabs v-if="compareProducts.length" @handle-click="(i) => toggleActive(i)"
+					@click-on-cross="deleteProducts" :items="categoryProducts" class="mb-6" />
 
-        <div class="flex gap-4">
-          <CompareSlider :items="activeProducts" />
-          <CompareSlider class="sm:hidden" :items="activeProducts" />
-        </div>
+				<div class="flex gap-4">
+					<CompareSlider :items="activeProducts" :pending />
+					<!-- <CompareSlider class="sm:hidden" :items="activeProducts" /> -->
+				</div>
 
-        <CompareSliderScroll v-if="scrollPosition > 800" :items="activeProducts" />
+				<CompareSliderScroll v-if="scrollPosition > 800" :items="activeProducts" />
 
-      </SectionContainer>
-    </Section>
+			</SectionContainer>
+		</Section>
 
-    <Section class="pt-10">
-      <SectionContainer>
+		<Section class="pt-10">
+			<SectionContainer v-if="compareProducts.length">
 
-        <div class="flex flex-wrap gap-2.5 justify-between items-center mb-5 sm:mb-8">
-          <h2 class="text-[20px] leading-8 sm:text-[24px] sm:leading-8 text-gray-950 font-['Russo_One']">
-            Сравнение характеристик
-          </h2>
-          <USwitch v-model="isDifference" label="Показать различия" />
-        </div>
+				<div class="flex flex-wrap gap-2.5 justify-between items-center mb-5 sm:mb-8">
+					<h2 class="text-[20px] leading-8 sm:text-[24px] sm:leading-8 text-gray-950 font-['Russo_One']">
+						Сравнение характеристик
+					</h2>
+					<USwitch v-model="isDifference" label="Показать различия" />
+				</div>
 
-        <CompareAccordion v-if="isDifference" />
-      </SectionContainer>
-    </Section>
+				<CompareAccordion 
+					v-if="groupedItems"
+					:show-differences="isDifference" 
+					:group="groupedItems[activeIndex]"
+				/>
+			</SectionContainer>
+		</Section>
 
-  </main>
+	</main>
 
-  <Footer />
+	<Footer />
 
 </template>
