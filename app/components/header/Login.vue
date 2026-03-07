@@ -2,49 +2,35 @@
 import * as v from 'valibot'
 import type { FormSubmitEvent } from '@nuxt/ui'
 
-
 const isButtonLoading = ref(false)
-const isEmail = ref(false)
 const isPhone = ref(false)
 const isShowModalEmail = ref(false)
 const isShowModalPhone = ref(false)
+const inputRefEmail = useTemplateRef<HTMLInputElement | null>('inputRefEmail')
+const inputRefPhone = useTemplateRef<HTMLInputElement | null>('inputRefPhone')
 
-const emailOrPhone = v.pipe(
-  v.string(),
-  v.nonEmpty('Email или телефон обязателен'),
-  v.custom((value) => {
-    const s = value as string
-    const trimmed = s.trim()
-
-    // Email
-    if (/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmed)) {
-      isEmail.value = true
-      return true
-    }
-
-    // Телефон: оставляем только цифры
-    const digits = trimmed.replace(/\D/g, '')
-
-    // Поддерживаем:
-    // - 10 цифр: 9261234567
-    // - 11 цифр, начинающихся с 7 или 8: 7926..., 8926...
-    if (digits.length === 10) return true
-    if (digits.length === 11 && (digits.startsWith('7') || digits.startsWith('8'))) {
-      isPhone.value = true
-      return true
-    }
-
-    return false
-  }, 'Неверный формат: укажите email или телефон (например, +79261234567)')
-)
 const schema = v.object({
-  emailphone: emailOrPhone,
+  emailOrPhone: v.optional(
+    v.union(
+      [
+        v.pipe(
+          v.string(),
+          v.email('Неверный формат email')
+        ),
+        v.pipe(
+          v.string(),
+          v.regex(/^[78]\d{10}$/, 'Неверный формат телефона')
+        )
+      ],
+      'Введите корректный Email или телефон'
+    )
+  )
 })
 
 type Schema = v.InferOutput<typeof schema>
 
 const state = reactive({
-  emailphone: '',
+  emailOrPhone: '',
 })
 
 const toast = useToast()
@@ -52,7 +38,7 @@ const form = ref()
 
 const isFormValid = computed(() => {
   if (!form.value) return false
-  const errors = form.value.errors as Record<string, string> | null
+  const errors = form.value.errors
   return !errors || Object.keys(errors).length === 0
 })
 
@@ -61,31 +47,51 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
     toast.add({
       title: 'Ошибка',
       description: 'Пожалуйста, исправьте ошибки в форме',
-      color: 'error',
     })
     return
   }
 
   toast.add({
-    title: 'Успех',
-    description: 'Форма успешно отправлена',
-    color: 'success',
+    title: 'Success',
+    description: 'The form has been submitted.',
+    color: 'success'
   })
-  console.log('Данные:', event.data)
-
+  console.log(event.data)
   isButtonLoading.value = true
 
-  setTimeout(() => {
-    if (isEmail.value) {
-      isShowModalEmail.value = true
-    }
-    if (isPhone.value) {
-      isShowModalPhone.value = true
-    }
-  }, 500)
-
+  if (isPhone.value) {
+    isShowModalPhone.value = true
+  } else {
+    isShowModalEmail.value = true
+  }
 }
 
+const phoneError = computed(() => {
+  const errors = form.value?.errors
+  if (!Array.isArray(errors)) return ''
+  const err = errors.find(e => e.name === 'emailOrPhone')
+  return err?.message || ''
+})
+
+watch(() => state.emailOrPhone, async (newVal) => {
+  const isNumberFormat = /^\d+$/.test(newVal)
+
+  if (isNumberFormat) {
+    if (form.value) {
+      form.value.clear('emailOrPhone')
+    }
+    isPhone.value = true;
+    await nextTick();
+    (inputRefPhone.value as any)?.$el?.focus?.()
+
+  } else {
+    console.log('Empty', newVal)
+    isPhone.value = false
+    await nextTick();
+    const el = (inputRefEmail.value as any)?.input || (inputRefEmail.value as any)?.$el
+    el?.focus()
+  }
+})
 
 </script>
 
@@ -104,9 +110,16 @@ async function onSubmit(event: FormSubmitEvent<Schema>) {
 
     <template #body>
       <UForm ref="form" :schema="schema" :state="state" @submit="onSubmit">
-        <UFormField label="Email или телефон" name="emailphone">
-          <UInput v-model="state.emailphone" color="neutral" size="xl" :ui="{ base: 'text-gray-900' }"
-            :class="{ 'filled bg-gray-100': state.emailphone?.trim() }" />
+
+        <UFormField v-if="!isPhone" label="Email или телефон" name="emailOrPhone">
+          <UInput ref="inputRefEmail" v-model="state.emailOrPhone" color="neutral" size="xl" name="email"
+            :ui="{ base: 'text-gray-900' }" :class="{ 'filled bg-gray-100': state.emailOrPhone?.trim() }" />
+        </UFormField>
+
+        <UFormField v-else class="w-full" :ui="{ label: 'text-gray-700' }" label="Email или телефон" name="emailOrPhone"
+          :error="phoneError">
+          <ModalPhoneInput ref="inputRefPhone" v-model="state.emailOrPhone" :has-error="Boolean(phoneError)"
+            :class="{ 'filled bg-gray-100': state.emailOrPhone?.trim() }" />
         </UFormField>
 
         <UButton v-if="!isButtonLoading" size="xl" type="submit" class="w-full mt-4">
