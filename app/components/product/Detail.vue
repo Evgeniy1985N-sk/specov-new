@@ -206,9 +206,9 @@ const productDescription = computed(() => {
 
             <div class="flex gap-6">
               <ProductButtonIcon text="Сравнить"
-				@handle-click="compareStore.toggleItem(props.detailPage.product.id)" 
+				@handle-click="compareStore.toggleItem(props.detailPage.product)" 
 			  >
-                <ProductIconCompare :selected="compareStore.isInCompare(props.detailPage.product.id)"/>
+                <ProductIconCompare :selected="compareStore.isInCompare(props.detailPage.product)"/>
               </ProductButtonIcon>
 
               <ProductButtonIcon text="В избранное"

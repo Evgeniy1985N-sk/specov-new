@@ -11,7 +11,7 @@ import type { ProductCard } from '~/types/product'
 
 
 interface Props {
-	items?: ProductCard[]
+	items: ProductCard[]
 }
 const props = defineProps<Props>()
 

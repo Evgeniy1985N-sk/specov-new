@@ -26,26 +26,26 @@ const gardenProducts = computed( () => (data.value as ProductGroupPublicList[])?
       <CategoryCards />
       <Banner />
 
-      <Section v-if="!pending && !error && popularProducts">
+      <Section >
         <SectionContainer>
           <SectionHeader>
             <SectionTitle text="Популярные товары" />
             <SectionButton text="Смотреть всё" path="/" />
           </SectionHeader>
 
-          <ProductSlider :items="popularProducts.products" />
+          <ProductSlider :items="popularProducts?.products" :loading="pending"/>
 
         </SectionContainer>
       </Section>
 
-      <Section v-if="!pending && !error && buildingProducts">
+      <Section >
         <SectionContainer>
           <SectionHeader>
             <SectionTitle text="Для стройки" />
             <SectionButton text="Смотреть всё" path="/" />
           </SectionHeader>
 
-          <ProductSlider :items="buildingProducts.products" />
+          <ProductSlider :items="buildingProducts?.products" :loading="pending"/>
 
         </SectionContainer>
       </Section>
@@ -62,14 +62,14 @@ const gardenProducts = computed( () => (data.value as ProductGroupPublicList[])?
         </SectionContainer>
       </Section>
 
-      <Section v-if="!pending && !error && gardenProducts">
+      <Section>
         <SectionContainer>
           <SectionHeader>
             <SectionTitle text="Для сада" />
             <SectionButton text="Смотреть всё" path="/" />
           </SectionHeader>
 
-          <ProductSlider :items="gardenProducts.products" />
+          <ProductSlider :items="gardenProducts?.products" :loading="pending"/>
 
         </SectionContainer>
       </Section>

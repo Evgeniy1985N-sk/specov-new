@@ -5,8 +5,7 @@ import { useAsyncData } from "#app";
 import { useLikeStore } from "@/stores/likes";
 import { useLikeApi } from "@/composables/api/useLikeApi";
 
-import type { ProductForLike } from "@/types/productLike";
-import type { ProductFavoritePageAnonUserProducts, ProductFavoritePage } from "@/types/productLike";
+import type { ProductLikePage, } from "@/types/productLike";
 
 const isShowPopup = ref(true);
 
@@ -21,25 +20,10 @@ interface Item {
 	counter: number;
 }
 
-const toAnonProducts = (list: ProductForLike[]): ProductFavoritePageAnonUserProducts[] => {
-	return list
-		.map((p) => {
-			const charId = (p.char as any)?.id as number | undefined;
-			if (!Number.isFinite(p.id)) {
-				return null;
-			}
-			return {
-				id: p.id,
-				char_id: charId,
-			};
-		})
-		.filter((x): x is ProductFavoritePageAnonUserProducts => x !== null);
-};
-
-const { data, error, refresh } = await useAsyncData<ProductFavoritePage>(
+const { data, error, refresh } = await useAsyncData<ProductLikePage>(
 	"favorite",
 	async () => {
-		const products = toAnonProducts(likeStore.activeList);
+		const products = likeToAnonProducts(likeStore.activeList);
 		return await favoritePage(products);
 	},
 	{ server: false }

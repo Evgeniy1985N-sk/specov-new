@@ -71,9 +71,11 @@ const skeletonCount = computed(() => {
 */
 const skeletonItems = computed(() => Array.from({ length: skeletonCount.value }));
 
+const { scrollToSection } = useScrollTo();
 const scrollToTop = (): void => {
-	if (!import.meta.client) return;
-	window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+	scrollToSection("prod-container");
+	//if (!import.meta.client) return;
+	//window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
 };
 
 const productVisibleCount = ref(Number(route.query.count) || productVisibleInitCount);
@@ -304,24 +306,35 @@ const fetchProdCountForFilter = async (change?: FacetChange): Promise<boolean> =
 	try {
 		prodCountForFilterIsLoading.value = true;
 
-		// 1) total_count with FULL query
 		const qFull = filterRef.value?.buildFilterQuery() ?? {};
 		const fullParams = <CategoryCatalogParams>{ count: 0, ...qFull };
 
-		// 2) facets for the edited group: query EXCLUDING that group
 		const kind = change?.kind ?? null;
 
-		const qFacet = (() => {
-			if (!change) {
-				return qFull;
-			}
+		if (kind === 'price' || !change) {
+			const fullData = await catalogProductCount(props.data.category.id, fullParams);
 
-			if (change.kind === 'dyn') {
-				return buildQueryExcluding('dyn', change.filterId);
-			}
+			const baseDyn = props.data.category.filters ?? [];
+			const baseBrands = props.data.category.brands ?? [];
+			const baseCountries = props.data.category.countries ?? [];
+			const baseStores = props.data.category.stores ?? [];
 
-			return buildQueryExcluding(change.kind);
-		})();
+			facetState.value = {
+				total_count: fullData.total_count,
+				filters: mergeDynFilters(baseDyn, fullData.filters ?? []),
+				brands: mergeBrandFilters(baseBrands, fullData.brands ?? []),
+				countries: mergeCountryFilters(baseCountries, fullData.countries ?? []),
+				stores: mergeStoreFilters(baseStores, fullData.stores ?? []),
+				min_price: fullData.min_price,
+				max_price: fullData.max_price,
+			};
+
+			return true;
+		}
+
+		const qFacet = change.kind === "dyn"
+			? buildQueryExcluding("dyn", change.filterId)
+			: buildQueryExcluding(change.kind);
 
 		const facetParams = <CategoryCatalogParams>{ count: 0, ...qFacet };
 
@@ -330,26 +343,23 @@ const fetchProdCountForFilter = async (change?: FacetChange): Promise<boolean> =
 			catalogProductCount(props.data.category.id, facetParams),
 		]);
 
-		// base sets
 		const baseDyn = props.data.category.filters ?? [];
 		const baseBrands = props.data.category.brands ?? [];
 		const baseCountries = props.data.category.countries ?? [];
 		const baseStores = props.data.category.stores ?? [];
 
-		// merge defaults: use fullData for everything
 		let nextDyn = mergeDynFilters(baseDyn, fullData.filters ?? []);
 		let nextBrands = mergeBrandFilters(baseBrands, fullData.brands ?? []);
 		let nextCountries = mergeCountryFilters(baseCountries, fullData.countries ?? []);
 		let nextStores = mergeStoreFilters(baseStores, fullData.stores ?? []);
 
-		// override ONLY the edited group facets with facetData (excluding-self)
-		if (kind === 'brand') {
+		if (kind === "brand") {
 			nextBrands = mergeBrandFilters(baseBrands, facetData.brands ?? []);
-		} else if (kind === 'country') {
+		} else if (kind === "country") {
 			nextCountries = mergeCountryFilters(baseCountries, facetData.countries ?? []);
-		} else if (kind === 'store') {
+		} else if (kind === "store") {
 			nextStores = mergeStoreFilters(baseStores, facetData.stores ?? []);
-		} else if (kind === 'dyn') {
+		} else if (kind === "dyn") {
 			nextDyn = mergeDynFilters(baseDyn, facetData.filters ?? []);
 		}
 
@@ -365,13 +375,12 @@ const fetchProdCountForFilter = async (change?: FacetChange): Promise<boolean> =
 
 		return true;
 	} catch (error) {
-		console.error('Error fetching product count for filter:', error);
+		console.error("Error fetching product count for filter:", error);
 		return false;
 	} finally {
 		prodCountForFilterIsLoading.value = false;
 	}
 };
-
 onMounted(() => {
 	filterRef.value?.initFromQuery(route.query);
 	sorterRef.value?.initFromQuery(route.query);
@@ -396,7 +405,7 @@ onMounted(() => {
 					class="mb-6 hidden! md:block!" 
 				/>
 
-				<div class="flex gap-8">
+				<div class="flex gap-8" id="prod-container">
 
 					<!-- ASIDE -->
 					<aside ref="aside" :class="classAside" >

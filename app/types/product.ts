@@ -20,11 +20,15 @@ export interface ProductCard {
 	char?: ProductChar; //characteristic
 	imgs?: Picture[];
 	dsc?: string;
-	link?: string;
 	quant?: number;
 	quant_descr?: ProductQuantDescr;
 	available: boolean;
 	filters_display: ProductFilter[];
+	categories: {
+		id: number;
+		name: string;
+		name_lat: string;
+	}[]
 }
 
 export interface ProductCatParent {
@@ -89,10 +93,6 @@ export interface ProductDetailStatic {
 	filters: ProductFilter[];
 }
 
-export interface Compare {
-	id: number
-}
-
 export interface ProductChar  {
 	id: number;
 	name: string;
@@ -130,4 +130,9 @@ export interface ProductDetailPage {
 export interface SearchResult {
 	products: ProductCard[];
 	categories: ProductCatPublicList[];
+}
+
+export interface PageAnonUserProducts {
+	id: number;
+	char_id: number;
 }

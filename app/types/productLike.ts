@@ -16,7 +16,7 @@ export interface ProductUpdateLike {
 	char_id?: number;
 }
 
-export interface ProductFavoritePage  {
+export interface ProductLikePage  {
 	products: ProductCard[];
 	categories: {
 		id: number;
@@ -26,7 +26,3 @@ export interface ProductFavoritePage  {
 	}[];
 }
 
-export interface ProductFavoritePageAnonUserProducts {
-	id: number;
-	char_id: number;
-}

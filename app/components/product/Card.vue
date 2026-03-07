@@ -122,8 +122,8 @@ const classMedia = computed(() => ({
 			@handle-click="likeStore.toggle(likeProd)"
 		/>
 
-        <ProductButtonCompare :is-active="compareStore.isInCompare(props.item.id)"
-          @handle-click="compareStore.toggleItem(props.item.id)" />
+        <ProductButtonCompare :is-active="compareStore.isInCompare(props.item)"
+          @handle-click="compareStore.toggleItem(props.item)" />
 
       </div>
       <!-- BUTTONS -->
@@ -190,8 +190,8 @@ const classMedia = computed(() => ({
 				@handle-click="likeStore.toggle(likeProd)"
 			/>
 
-            <ProductButtonCompare @handle-click="compareStore.toggleItem(props.item.id)"
-              :is-active="compareStore.isInCompare(props.item.id)" />
+            <ProductButtonCompare @handle-click="compareStore.toggleItem(props.item)"
+              :is-active="compareStore.isInCompare(props.item)" />
 
           </div>
           <!-- IF ROW -->
