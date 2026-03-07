@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import type { ProductCard } from '~/types/product'
-import { useCartStore } from '@/stores/cart'
+import { useCartsStore } from '@/stores/carts'
 
 interface Props {
   item: ProductCard
@@ -11,27 +11,30 @@ interface Props {
   isCol?: boolean
 }
 
-const date = ref('12.01.2026 в 17.00')
-const props = defineProps<Props>()
-const counter = ref(0)
-const cart = useCartStore().cart
-const compareStore = useCompareStore()
-const toggleCompare = useCompareStore().toggleItems
-const compareIds = ref<string[]>([])
+const props = defineProps<Props>();
+const cartsStore = useCartsStore();
+const compareStore = useCompareStore();
+const likeStore = useLikeStore();
+const { pictureDetail } = useProductPicture();
 
-function addToCart(itemId: string) {
-  const existingItem = cart.find(item => item.id === itemId)
+const productImg = computed(() => {
+  return props.item.imgs?.find(p => p.main) ?? undefined;
+});
 
-  if (existingItem) {
-    existingItem.count = counter.value
-  } else {
-    cart.push({
-      id: itemId,
-      count: counter.value
-    })
-  }
+function addProductToCart() {
+  cartsStore.addToCart(
+    0,
+    {
+      id: props.item.id,
+      name: props.item.name,
+      name_lat: props.item.name_lat,
+      code_1c: props.item.code_1c
+    },
+    { char: props.item.char, price: props.item.price },
+	productImg.value,
+  );
 }
-
+/*
 const compareItems = computed(() => {
   return compareStore.items
 })
@@ -44,6 +47,7 @@ getCompareIds()
 function getCompareIds() {
   compareIds.value = compareItems.value.map((item) => item.id)
 }
+*/
 
 </script>
 
@@ -55,12 +59,12 @@ function getCompareIds() {
   <div class="card grid gap-2 lg:gap-0 cursor-pointer">
 
     <div class="flex justify-between items-start">
-      <img class="max-w-[54px] h-[54px] object-contain" :src="props.item.image" :alt="props.item.title">
+      <img class="max-w-[54px] h-[54px] object-contain" :src="productImg ? pictureDetail(productImg) : undefined" alt="pict">
 
       <div class="card__btns hidden lg:grid gap-1 opacity-0 transition-opacity">
-        <ProductButtonFavorite :date="date" />
-        <ProductButtonCompare @handle-click="toggleCompare(props.item.id)"
-          :is-active="compareIds.includes(props.item.id)" :is-trash="true" />
+        <ProductButtonFavorite :is-active="likeStore.isLiked(props.item)"/>
+        <ProductButtonCompare @handle-click="compareStore.toggleItem(props.item)"
+          :is-active="compareStore.isInCompare(props.item)" :is-trash="true" />
       </div>
 
     </div>
@@ -73,22 +77,22 @@ function getCompareIds() {
           <p class="text-sm leading-5 sm:text-base sm:leading-6 font-bold text-gray-950">
             {{ props.item.price.toLocaleString('ru-RU') }} ₽
           </p>
-          <div v-if="props.item.oldPrice" class="gap-2 hidden lg:flex justify-center items-center">
+          <div v-if="props.item.old_price" class="gap-2 hidden lg:flex justify-center items-center">
             <div class="text-zinc-400 line-through shrink-0">
-              {{ props.item.oldPrice.toLocaleString('ru-RU') }} ₽
+              {{ props.item.old_price.toLocaleString('ru-RU') }} ₽
             </div>
             <div class="bg-[seagreen] leading-[22px] text-center text-white text-xs px-1.5 rounded-md">
-              -{{ props.item.discont }}%
+              -{{ props.item.discount }}%
             </div>
           </div>
         </div>
         <!-- Price -->
          <p class="text-xs leading-[18px] sm:text-sm sm:leading-5 font-medium line-clamp-2">
-          {{ props.item.title }}
+          {{ props.item.price }}
          </p>
       </div>
 
-      <UButton @click="addToCart(props.item.id)" class="card__btn-cart hidden lg:flex w-9 min-h-9 p-0 shrink-0 opacity-0 transition-opacity">
+      <UButton @click="addProductToCart" class="card__btn-cart hidden lg:flex w-9 min-h-9 p-0 shrink-0 opacity-0 transition-opacity">
         <WrapIcon>
           <ProductIconCart />
         </WrapIcon>

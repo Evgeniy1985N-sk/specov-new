@@ -10,6 +10,7 @@ export default defineNuxtConfig({
 	},
 	runtimeConfig: {
 		public: {
+			siteUrl: 'localhost:3001',
 			apiBase: 'http://localhost:59001',
 			yandexAPIKey: '4dceb808-e55c-4c98-9645-5bd4c641065f',
 			imgCDN: 'https://admin.spetsov.ru/public/products',

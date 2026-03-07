@@ -23,7 +23,7 @@ const compareRequestSignature = computed(() => {
 		.join("|");
 });
 
-const { data, error, refresh } = await useAsyncData<ProductComparePage>(
+const { data, error, refresh, pending } = await useAsyncData<ProductComparePage>(
 	"compare",
 	async () => {
 		return await comparePage(compareRequestProducts.value);
@@ -113,6 +113,7 @@ const deleteAllCompare = async (): Promise<void> => {
 	activeIndex.value = 0;
 	await refresh();
 };
+
 </script>
 <template>
 
@@ -139,6 +140,7 @@ const deleteAllCompare = async (): Promise<void> => {
 								Удалить все
 							</span>
 						</button>
+						<!-- temporarily removed  
 						<button
 							class="flex gap-2.5 items-center p-2 sm:p-4 pl-0 hover:text-(--Brand-700) transition-colors cursor-pointer">
 							<WrapIcon>
@@ -148,6 +150,7 @@ const deleteAllCompare = async (): Promise<void> => {
 								Поделиться
 							</span>
 						</button>
+						-->
 					</div>
 
 				</div>
@@ -156,8 +159,8 @@ const deleteAllCompare = async (): Promise<void> => {
 					@click-on-cross="deleteProducts" :items="categoryProducts" class="mb-6" />
 
 				<div class="flex gap-4">
-					<CompareSlider :items="activeProducts" />
-					<CompareSlider class="sm:hidden" :items="activeProducts" />
+					<CompareSlider :items="activeProducts" :pending />
+					<!-- <CompareSlider class="sm:hidden" :items="activeProducts" /> -->
 				</div>
 
 				<CompareSliderScroll v-if="scrollPosition > 800" :items="activeProducts" />

@@ -6,6 +6,7 @@ import { useLikeStore } from "@/stores/likes";
 import { useLikeApi } from "@/composables/api/useLikeApi";
 
 import type { ProductLikePage, } from "@/types/productLike";
+import SkeletonCard from "~/components/product/SkeletonCard.vue";
 
 const isShowPopup = ref(true);
 
@@ -20,7 +21,7 @@ interface Item {
 	counter: number;
 }
 
-const { data, error, refresh } = await useAsyncData<ProductLikePage>(
+const { data, error, refresh, pending } = await useAsyncData<ProductLikePage>(
 	"favorite",
 	async () => {
 		const products = likeToAnonProducts(likeStore.activeList);
@@ -90,20 +91,30 @@ const productsToRender = computed(() => data.value?.products ?? []);
 						<TitleGoods class="mb-6" title="Избранное" />
 
 						<div class="lg:p-4 lg:bg-gray-100 rounded-lg w-full">
-							<FavoriteSliderTabs
-								:items="itemsTabs"
-								@handle-click="(index: number) => (activeTab = index)"
-							/>
+							<template v-if="pending">
+								<FavoriteSkeletonSliderTabs :count="1" />
+							</template>
+							<template v-else>
+								<FavoriteSliderTabs
+									:items="itemsTabs"
+									@handle-click="(index: number) => (activeTab = index)"
+								/>
+							</template>
 						</div>
 					</aside>
 					<!-- ASIDE -->
 
 					<div class="w-full">
-						<!-- Cards -->
-						<div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-8">
-							<ProductCard v-for="item in productsToRender" :key="item.id" :item="item" />
-						</div>
-						<!-- Cards -->
+						<template v-if="pending">
+							<SkeletonCard :is-list="false" :skeleton-count="3" />
+						</template>
+						<template v-else>
+							<!-- Cards -->
+							<div class="grid grid-cols-2 sm:grid-cols-3 gap-3 sm:gap-4 lg:gap-8">
+								<ProductCard v-for="item in productsToRender" :key="item.id" :item="item" />
+							</div>
+							<!-- Cards -->
+						</template>
 					</div>
 				</div>
 			</SectionContainer>

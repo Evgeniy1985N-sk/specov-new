@@ -87,7 +87,8 @@ const addProductToCart = () => {
     {
       id: props.detailPage.product.id,
       name: props.detailPage.product.name,
-      name_lat: props.detailPage.product.name_lat
+      name_lat: props.detailPage.product.name_lat,
+      code_1c: props.detailPage.product.code_1c
     },
     { char: productStock.value?.char, price: productStock.value?.price ?? 0 },
     props.productImg

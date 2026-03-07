@@ -3,6 +3,7 @@ import type { CategoryCatalog, CategoryCatalogParams, CategoryCatalogPrecalc, Ca
 import type { ProductCard } from '~/types/product';
 import { useProductCatApi } from '~/composables/api/useProductCatApi';
 import { useCategory } from '~/composables/useCategory';
+import SkeletonCard from '../product/SkeletonCard.vue';
 
 const props = defineProps<{
 	data: CategoryCatalog;
@@ -62,14 +63,8 @@ const skeletonCount = computed(() => {
 	// When we know next total, show exact number
 	return Math.max(0, Math.min(pendingTotalCount.value, productVisibleCount.value));
 });
-/*
-const skeletonCount = computed(() => {
-	const total = facetState.value.total_count ?? 0;
-	const visible = productVisibleCount.value;
-	return Math.max(0, Math.min(total, visible));
-});
-*/
-const skeletonItems = computed(() => Array.from({ length: skeletonCount.value }));
+
+//const skeletonItems = computed(() => Array.from({ length: skeletonCount.value }));
 
 const { scrollToSection } = useScrollTo();
 const scrollToTop = (): void => {
@@ -497,46 +492,12 @@ onMounted(() => {
 							class="mb-6 md:hidden!" 
 						/>
 
-						<!-- Cards
-						<div
-							:class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6'"
-							class="grid lg:gap-8">
-							<ProductCard :is-row="isList" :is-list="!isList" v-for="item in displayedItems" :item="item"
-								:key="item.id" />
-						</div>
-						-->
-
 						<!-- Cards -->
 						<div v-if="isRefreshing">
-							<div
-								:class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6'"
-								class="grid lg:gap-8"
-							>
-								<div
-									v-for="(_, i) in skeletonItems"
-									:key="`sk-${i}`"
-									:class="isList ? 'flex gap-4' : 'grid gap-3'"
-									class="animate-pulse bg-white rounded-xl border border-gray-200 p-3"
-								>
-									<!-- Image -->
-									<div
-										:class="isList ? 'w-[140px] h-[140px] shrink-0' : 'w-full aspect-square'"
-										class="rounded-lg bg-gray-200"
-									></div>
-
-									<!-- Text blocks -->
-									<div class="flex-1 grid gap-2">
-										<div class="h-4 w-3/4 rounded bg-gray-200"></div>
-										<div class="h-4 w-2/3 rounded bg-gray-200"></div>
-										<div class="h-3 w-1/2 rounded bg-gray-200 mt-1"></div>
-
-										<div class="flex items-center justify-between mt-3">
-											<div class="h-6 w-24 rounded bg-gray-200"></div>
-											<div class="h-10 w-28 rounded-lg bg-gray-200"></div>
-										</div>
-									</div>
-								</div>
-							</div>
+							<SkeletonCard
+								:is-list="isList"
+								:skeleton-count="skeletonCount"
+							/>
 						</div>
 
 						<div v-else>
