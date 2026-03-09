@@ -19,8 +19,10 @@ interface Props {
 	brands: BrandFilter[];
 	countries: CountryFilter[];
 	stores: StoreFilter[];
-	minPrice: number;
-	maxPrice: number;
+	minPrice: number; // current facet bounds
+	maxPrice: number; // current facet bounds
+	absoluteMinPrice: number; // original category bounds
+	absoluteMaxPrice: number; // original category bounds
 	totalCount: number;
 }
 
@@ -200,29 +202,21 @@ const getListOptions = (filter: CategoryFilter): CategoryFilterListOption[] => {
 
 //price bunds
 const getNormalizedPriceSelection = (): { min?: number; max?: number } => {
-	const lo = props.minPrice;
-	const hi = props.maxPrice;
+	const absoluteLo = props.absoluteMinPrice;
+	const absoluteHi = props.absoluteMaxPrice;
 
 	let nextMin = minPrice.value;
 	let nextMax = maxPrice.value;
-
-	if (nextMin != null) {
-		nextMin = Math.max(lo, Math.min(nextMin, hi));
-	}
-
-	if (nextMax != null) {
-		nextMax = Math.max(lo, Math.min(nextMax, hi));
-	}
 
 	if (nextMin != null && nextMax != null && nextMin > nextMax) {
 		[nextMin, nextMax] = [nextMax, nextMin];
 	}
 
-	if (nextMin === lo) {
+	if (nextMin === absoluteLo) {
 		nextMin = undefined;
 	}
 
-	if (nextMax === hi) {
+	if (nextMax === absoluteHi) {
 		nextMax = undefined;
 	}
 
@@ -232,16 +226,32 @@ const getNormalizedPriceSelection = (): { min?: number; max?: number } => {
 	};
 };
 
-const syncPriceSelectionToBounds = (): void => {
-	const next = getNormalizedPriceSelection();
-	minPrice.value = next.min;
-	maxPrice.value = next.max;
+const clampPriceSelectionToCurrentBounds = (): void => {
+	const lo = props.minPrice;
+	const hi = props.maxPrice;
+
+	if (minPrice.value != null) {
+		minPrice.value = Math.max(lo, Math.min(minPrice.value, hi));
+	}
+
+	if (maxPrice.value != null) {
+		maxPrice.value = Math.max(lo, Math.min(maxPrice.value, hi));
+	}
+
+	if (
+		minPrice.value != null &&
+		maxPrice.value != null &&
+		minPrice.value > maxPrice.value
+	) {
+		[minPrice.value, maxPrice.value] = [maxPrice.value, minPrice.value];
+	}
 };
 
 watch(
 	() => [props.minPrice, props.maxPrice],
 	() => {
-		syncPriceSelectionToBounds();
+		//syncPriceSelectionToBounds();
+		clampPriceSelectionToCurrentBounds();
 	},
 	{ immediate: true },
 );
@@ -566,7 +576,7 @@ defineExpose({
 			<div class="flex gap-2">
 
 				<UInput color="neutral" v-model="formattedMinPrice" :disabled="props.minPrice === props.maxPrice"
-					:placeholder="`от ${formatPrice(props.minPrice)}`"
+					:placeholder="`от ${formatPrice(props.absoluteMinPrice)}`"
 					:ui="{ base: 'font-medium text-gray-950 ring-gray-900', trailing: 'pe-1' }"
 					@update:model-value="() => { emitPriceDebounced(); }">
 					<template v-if="formattedMinPrice?.length" #trailing>
@@ -578,7 +588,7 @@ defineExpose({
 				</UInput>
 
 				<UInput color="neutral" v-model="formattedMaxPrice" :disabled="props.minPrice === props.maxPrice"
-					:placeholder="`до ${formatPrice(props.maxPrice)}`"
+					:placeholder="`до ${formatPrice(props.absoluteMaxPrice)}`"
 					:ui="{ base: 'font-medium text-gray-950', trailing: 'pe-1' }"
 					@update:model-value="() => { emitPriceDebounced(); }">
 					<template v-if="formattedMaxPrice?.length" #trailing>
@@ -591,9 +601,14 @@ defineExpose({
 
 			</div>
 
-			<CatalogInputRange :disabled="props.minPrice === props.maxPrice" :min-range="props.minPrice"
-				:max-range="props.maxPrice" v-model:min-value="minPrice" v-model:max-value="maxPrice"
-				@change="() => { emitPriceDebounced(); }" />
+			<CatalogInputRange 
+				:disabled="props.absoluteMinPrice === props.absoluteMaxPrice"
+				:min-range="props.absoluteMinPrice"
+				:max-range="props.absoluteMaxPrice"
+				v-model:min-value="minPrice"
+				v-model:max-value="maxPrice"
+				@change="() => { emitPriceDebounced(); }"
+			/>
 
 		</template>
 

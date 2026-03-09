@@ -267,7 +267,24 @@ const {
 	mergeCountryFilters,
 	mergeStoreFilters,
 } = useCategory();
+
+const initialPriceBounds = ref({
+	min: props.data.min_price,
+	max: props.data.max_price,
+});
+watch(
+	() => props.data.category.id,
+	() => {
+		initialPriceBounds.value = {
+			min: props.data.min_price,
+			max: props.data.max_price,
+		};
+	},
+	{ immediate: true },
+);
+
 const prodCountForFilterIsLoading = ref(false);
+
 const facetState = ref<CategoryCatalogPrecalc>({
 	total_count: props.data.total_count,
 	filters: mergeDynFilters(props.data.category.filters ?? [], props.data.filters ?? []),
@@ -427,13 +444,17 @@ onMounted(() => {
 							<!-- HEADER -->
 
 							<!-- FILTER -->
-							<CatalogFilter ref="filterRef" 
+							<CatalogFilter 
+								ref="filterRef" 
 								class="px-4 sm:px-6 lg:px-0" 
 								:brands="facetState.brands" 
 								:countries="facetState.countries"
 								:filters="facetState.filters" 
 								:stores="facetState.stores"
-								:minPrice="facetState.min_price" :maxPrice="facetState.max_price"
+								:min-price="facetState.min_price"
+								:max-price="facetState.max_price"
+								:absolute-min-price="initialPriceBounds.min"
+								:absolute-max-price="initialPriceBounds.max"
 								:total-count="facetState.total_count"
 								@handle-click="filterClick" 
 							/>

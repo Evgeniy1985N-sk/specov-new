@@ -10,7 +10,7 @@ import { stockDescr, stockDescrLocal } from '~/utils/stockDescr';
 import type { ProductChar, ProductDetailPage } from '~/types/product';
 import type { Picture } from '~/types/picture';
 
-const { addToCart, setQuantityInFirst } = useCartsStore();
+const cartsStore = useCartsStore();
 const { scrollPosition } = useScroll()
 const { scrollToSection } = useScrollTo()
 
@@ -66,23 +66,32 @@ const getStockClass = (storeId: number) => {
   return stockStatus === 'many' ? "text-(--Brand-700)" : "text-red-700";
 };
 
-const counter = ref(0); //quantity
-watch(counter, newCounter => {
-  if (!props.detailPage?.product) {
-    return;
-  }
-  setQuantityInFirst(
-    props.detailPage.product,
-    newCounter,
-    { char: productStock.value?.char, price: productStock.value?.price ?? 0 }
-  );
+const counter = computed<number>({
+	get: () => {
+		return cartsStore.productCartQuantity(product.value.id, productChar.value?.id);
+	},
+	set: (val) => {
+		const quant = Math.max(0, Number(val) || 0);
+
+		void cartsStore.setQuantityInFirst(
+			{
+				id: product.value.id,
+				name: product.value.name,
+				name_lat: product.value.name_lat,
+				code_1c: product.value.code_1c,
+			},
+			quant,
+			{ char: productChar.value, price: productStock.value?.price ?? 0 },
+			props.productImg,
+		);
+	},
 });
 
 const addProductToCart = () => {
   if (!props.detailPage?.product) {
     return;
   }
-  addToCart(
+  cartsStore.addToCart(
     0,
     {
       id: props.detailPage.product.id,
