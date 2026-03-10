@@ -4,6 +4,8 @@ import { useCartsStore } from "~/stores/carts";
 import type { ProductForCart } from "~/types/product";
 import { useCartApi } from "@/composables/api/useCartApi";
 
+import UCartQuantInput from "@/components/product/UCartQuantInput.vue";
+
 const cartsStore = useCartsStore();
 const { link: productDetailLink, declineProductWord } = useProduct();
 const likeStore = useLikeStore();
@@ -72,30 +74,15 @@ const setChecked = (checked: boolean): void => {
 	}
 };
 
-const onSetQuantity = async (p: ProductForCart, nextQuant: number): Promise<void> => {
+// set cart quantity
+const onSetQuantity = async(p: ProductForCart, quant: number): Promise<void> => {
 	await cartsStore.setQuantityInFirst(
-		{
-			id: p.id,
-			name: p.name,
-			name_lat: p.name_lat,
-			code_1c: p.code_1c,
-		},
-		nextQuant,
-		{
-			char: p.char,
-			price: p.price,
-		},
+		p, 
+		quant, 
+		{ char: p.char, price: p.price },
 		p.picture,
 	);
-};
-
-const onIncrement = async (p: ProductForCart): Promise<void> => {
-	await cartsStore.incrementQuantity(cartIndex, p.id, p.char?.id);
-};
-
-const onDecrement = async (p: ProductForCart): Promise<void> => {
-	await cartsStore.decrementQuantity(cartIndex, p.id, p.char?.id);
-};
+}
 
 const onRemove = async (p: ProductForCart): Promise<void> => {
 	await cartsStore.removeProductFromCart(cartIndex, p.id, p.char?.id);
@@ -296,27 +283,25 @@ const removeSelected = async (): Promise<void> => {
 
 												<div class="flex justify-between flex-wrap gap-2 lg:hidden mt-4">
 													<div class="max-w-[92px] sm:max-w-[116px]">
-														<UInputNumber
-															:model-value="product.quant"
-															:min="0"
-															size="md"
-															color="neutral"
-															:ui="{ root: 'h-[28px] sm:h-[36px]', base: 'text-[12px] leading-[18px] sm:text-sm leading-5' }"
-															:increment="{
-																class: 'bg-transparen',
-																color: 'neutral',
-																variant: 'ghost',
-																size: 'md',
-															}"
-															:decrement="{
-																color: 'neutral',
-																variant: 'ghost',
-																size: 'md',
-															}"
-															@update:model-value="(v: number | null) => onSetQuantity(product, v ?? 0)"
-															@increment="() => onIncrement(product)"
-															@decrement="() => onDecrement(product)"
-														/>
+													<UCartQuantInput
+														:model-value="product.quant"
+														:min="0"
+														size="md"
+														color="neutral"
+														:ui="{ root: 'h-[28px] sm:h-[36px]', base: 'text-[12px] leading-[18px] sm:text-sm leading-5' }"
+														:increment="{
+															class: 'bg-transparen',
+															color: 'neutral',
+															variant: 'ghost',
+															size: 'md',
+														}"
+														:decrement="{
+															color: 'neutral',
+															variant: 'ghost',
+															size: 'md',
+														}"
+														@update:model-value="(v: number | null) => onSetQuantity(product, v ?? 0)"
+													/>
 													</div>
 
 													<div class="flex items-center justify-between sm:max-w-[150px] w-full">
@@ -341,7 +326,7 @@ const removeSelected = async (): Promise<void> => {
 										</div>
 
 										<div class="hidden lg:block max-w-[116px]">
-											<UInputNumber
+											<UCartQuantInput
 												:model-value="product.quant"
 												:min="0"
 												size="md"
@@ -358,8 +343,6 @@ const removeSelected = async (): Promise<void> => {
 													size: 'md',
 												}"
 												@update:model-value="(v: number | null) => onSetQuantity(product, v ?? 0)"
-												@increment="() => onIncrement(product)"
-												@decrement="() => onDecrement(product)"
 											/>
 										</div>
 

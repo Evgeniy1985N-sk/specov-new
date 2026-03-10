@@ -8,7 +8,7 @@ const route = useRoute()
 
 const { catalog } = useProductCatApi();
 
-const { data, error } = await useAsyncData(
+const { data, pending, error } = await useAsyncData(
 	() => {
 		// Extract parameters inside the key function
 		const catSlug = parseInt(route.params.slug as string, 10);
@@ -136,5 +136,8 @@ watch(curCategory, (cat) => {
 </script>
 
 <template>
-	<Category v-if="data?.pageData.category" :data="data.pageData" />
+	<Category v-if="data?.pageData.category" 
+		:data="data.pageData" 
+		:loading="pending"
+	/>
 </template>

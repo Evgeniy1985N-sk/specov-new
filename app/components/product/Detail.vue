@@ -10,7 +10,12 @@ import { stockDescr, stockDescrLocal } from '~/utils/stockDescr';
 import type { ProductChar, ProductDetailPage } from '~/types/product';
 import type { Picture } from '~/types/picture';
 
-const { addToCart, setQuantityInFirst } = useCartsStore();
+import UCartButton from "@/components/product/UCartButton.vue";
+
+//custom quant input
+import UCartQuantInput from "@/components/product/UCartQuantInput.vue";
+
+const cartsStore = useCartsStore();
 const { scrollPosition } = useScroll()
 const { scrollToSection } = useScrollTo()
 
@@ -66,23 +71,32 @@ const getStockClass = (storeId: number) => {
   return stockStatus === 'many' ? "text-(--Brand-700)" : "text-red-700";
 };
 
-const counter = ref(0); //quantity
-watch(counter, newCounter => {
-  if (!props.detailPage?.product) {
-    return;
-  }
-  setQuantityInFirst(
-    props.detailPage.product,
-    newCounter,
-    { char: productStock.value?.char, price: productStock.value?.price ?? 0 }
-  );
+const counter = computed<number>({
+	get: () => {
+		return cartsStore.productCartQuantity(product.value.id, productChar.value?.id);
+	},
+	set: (val) => {
+		const quant = Math.max(0, Number(val) || 0);
+
+		void cartsStore.setQuantityInFirst(
+			{
+				id: product.value.id,
+				name: product.value.name,
+				name_lat: product.value.name_lat,
+				code_1c: product.value.code_1c,
+			},
+			quant,
+			{ char: productChar.value, price: productStock.value?.price ?? 0 },
+			props.productImg,
+		);
+	},
 });
 
 const addProductToCart = () => {
   if (!props.detailPage?.product) {
     return;
   }
-  addToCart(
+  cartsStore.addToCart(
     0,
     {
       id: props.detailPage.product.id,
@@ -290,25 +304,26 @@ const productDescription = computed(() => {
                 </div>
 
                 <div class="flex flex-col gap-2">
-                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" :increment="{
-                    color: 'neutral',
-                    variant: 'ghost',
-                    size: 'xl',
-                  }" :decrement="{
-                    color: 'neutral',
-                    variant: 'ghost',
-                    size: 'xl'
-                  }" />
+                  <UCartQuantInput 
+					v-model="counter" 
+					:min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" 
+				    :increment="{
+						color: 'neutral',
+						variant: 'ghost',
+						size: 'xl',
+                    }" :decrement="{
+						color: 'neutral',
+						variant: 'ghost',
+						size: 'xl'
+                    }" 
+					/>
 
 
-                  <UButton @click="addProductToCart" class="gap-1 px-4">
-                    <i class="flex items-center justify-center h-5 w-5">
-                      <ProductIconCart />
-                    </i>
-                    <span>
-                      В корзину
-                    </span>
-                  </UButton>
+                  <UCartButton @click="addProductToCart" 
+					class="gap-1 px-4"
+					:is-in-cart="cartsStore.productCartQuantity(product.id, productChar?.id)>0"
+				  >
+                  </UCartButton>
 
                   <UModal v-model:open="showModal" :close=false
                     :ui="{ content: 'xl:translate-x-[-15%] lg:top-[260px] max-w-[720px]!' }">
@@ -342,7 +357,7 @@ const productDescription = computed(() => {
                               {{ product?.name }}
                             </p>
                           </div>
-                          <UInputNumber v-model="counter" :min="0" size="lg" color="neutral"
+                          <UCartQuantInput v-model="counter" :min="0" size="lg" color="neutral"
                             :ui="{ root: 'max-w-[116px] h-[36px]' }" :increment="{
                               color: 'neutral',
                               size: 'lg',

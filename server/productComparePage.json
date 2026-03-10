@@ -1,0 +1,307 @@
+{
+"products": [
+    {
+      "id": 60042,
+      "name": "Куртка муж. \"Бригада NEW\" утепл.  цв. серый/красный, тк. смесовая 210 гр./м², ВО",
+      "name_lat": "kurtka-muzh-brigada-new-utepl-tsv-seryi-krasnyi-tk-smesovaia-210-gr-m2-vo",
+      "price": 3099,
+      "code_1c": "П-00065453 ",
+      "old_price": 0,
+      "discount": 10,
+      "char": {
+        "id": 1932,
+        "name": "48-50/170-176",
+        "name_lat": "48-50-170-176"
+      },
+      "available": true,
+      "quant": 19,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "12fd0e3b-5df0-47e8-a277-7470a279beb4",
+          "size": 282311,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "dd0e22be-b39c-446f-b3a9-295fab5e90d9",
+          "size": 484203,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "4d8aa24e-7cda-4fc2-8d01-10d04ac3d618",
+          "size": 426382,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "f18e1929-0fa9-4035-9e16-6fcbf287e22a",
+          "size": 348000,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "51884350-917d-4828-b82b-1b098833621e",
+          "size": 851302,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": [
+        {
+          "id": 20,
+          "label": "Вес (нетто), кг",
+          "value": "1.4",
+          "data_type": "t_number"
+        },
+        {
+          "id": 915,
+          "label": "ГОСТ",
+          "value": "12.4.280-2014,12.4.303-2016",
+          "data_type": "t_text"
+        },
+        {
+          "id": 994,
+          "label": "Заключение МинПромТорга ",
+          "value": "да",
+          "data_type": "t_text"
+        },
+        {
+          "id": 920,
+          "label": "Класс защиты / климатический пояс",
+          "value": "2 класс защиты III климатический пояс",
+          "data_type": "t_text"
+        },
+        {
+          "id": 895,
+          "label": "Название основной ткани",
+          "value": "\"Грета\" 65% полиэфир / 35% хлопок, ВО-пропитка",
+          "data_type": "t_text"
+        },
+        {
+          "id": 909,
+          "label": "Название утеплителя",
+          "value": "синтепон",
+          "data_type": "t_text"
+        },
+        {
+          "id": 249,
+          "label": "Плотность ткани",
+          "value": "210 г/м²",
+          "data_type": "t_text"
+        },
+        {
+          "id": 943,
+          "label": "Плотность утеплителя",
+          "value": "480 гр/м2 спинка и полочки, 240 гр/м2 рукава, 120 гр/м2 воротник, капюшон",
+          "data_type": "t_text"
+        },
+        {
+          "id": 242,
+          "label": "Пол",
+          "value": "мужской",
+          "data_type": "t_text"
+        },
+        {
+          "id": 891,
+          "label": "Пропитка",
+          "value": "ВО",
+          "data_type": "t_text"
+        },
+        {
+          "id": 995,
+          "label": "Расширенный размерный ряд",
+          "value": "Да",
+          "data_type": "t_text"
+        },
+        {
+          "id": 248,
+          "label": "Состав ткани",
+          "value": "\"Грета\" 65% полиэфир / 35% хлопок, плотность 210 гр/м2, ВО-пропитка",
+          "data_type": "t_text"
+        },
+        {
+          "id": 890,
+          "label": "Тип застежки",
+          "value": "\tмолния",
+          "data_type": "t_text"
+        },
+        {
+          "id": 37,
+          "label": "Тип изделия",
+          "value": "Куртка",
+          "data_type": "t_text"
+        },
+        {
+          "id": 942,
+          "label": "Ткань подкладки",
+          "value": "100% полиэфир",
+          "data_type": "t_text"
+        },
+        {
+          "id": 914,
+          "label": "ТР ТС/ТУ",
+          "value": "019/2011",
+          "data_type": "t_text"
+        },
+        {
+          "id": 33,
+          "label": "Цвет",
+          "value": "Т.серый/красный",
+          "data_type": "t_text"
+        }
+      ]
+    },
+    {
+      "id": 60049,
+      "name": "Куртка муж. \"Базис\" утепл.  цв. синий, тк. Нортси 120 гр./м²",
+      "name_lat": "kurtka-muzh-bazis-utepl-tsv-sinii-tk-nortsi-120-gr-m2",
+      "price": 12377,
+      "code_1c": "П-00065623 ",
+      "old_price": 0,
+      "discount": 10,
+      "char": {
+        "id": 2003,
+        "name": "48-50/170-176",
+        "name_lat": "48-50-170-176"
+      },
+      "available": true,
+      "quant": 7,
+      "quant_descr": "many",
+      "imgs": [
+        {
+          "ref_1c": "8749418f-d745-41d7-8b9d-7d4524253c5b",
+          "size": 72548,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": true
+        },
+        {
+          "ref_1c": "a4fef763-4db9-4fbe-ab73-e31a754728dc",
+          "size": 60953,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        },
+        {
+          "ref_1c": "66acd329-21e8-4817-9f7b-2f2c68b16123",
+          "size": 73796,
+          "ext": "jpg",
+          "preview_ext": "png",
+          "main": false
+        }
+      ],
+      "filters_display": [
+        {
+          "id": 20,
+          "label": "Вес (нетто), кг",
+          "value": "1.6",
+          "data_type": "t_number"
+        },
+        {
+          "id": 915,
+          "label": "ГОСТ",
+          "value": "ГОСТ 12.4.280-2014 , ГОСТ 12.4.303-2016",
+          "data_type": "t_text"
+        },
+        {
+          "id": 994,
+          "label": "Заключение МинПромТорга ",
+          "value": "да",
+          "data_type": "t_text"
+        },
+        {
+          "id": 920,
+          "label": "Класс защиты / климатический пояс",
+          "value": "3 класс защиты IV и ОСОБЫЙ климатический пояс",
+          "data_type": "t_text"
+        },
+        {
+          "id": 895,
+          "label": "Название основной ткани",
+          "value": "Нортси Лайт Аква (100% полиэфир), гидрофильная полиуретановая мембрана, ВО",
+          "data_type": "t_text"
+        },
+        {
+          "id": 909,
+          "label": "Название утеплителя",
+          "value": "Шелтер Профи СТ (100% полиэфир)",
+          "data_type": "t_text"
+        },
+        {
+          "id": 249,
+          "label": "Плотность ткани",
+          "value": "120 г/м²",
+          "data_type": "t_text"
+        },
+        {
+          "id": 943,
+          "label": "Плотность утеплителя",
+          "value": "450 гр./м²",
+          "data_type": "t_text"
+        },
+        {
+          "id": 242,
+          "label": "Пол",
+          "value": "мужской",
+          "data_type": "t_text"
+        },
+        {
+          "id": 891,
+          "label": "Пропитка",
+          "value": "ВО",
+          "data_type": "t_text"
+        },
+        {
+          "id": 995,
+          "label": "Расширенный размерный ряд",
+          "value": "Нет",
+          "data_type": "t_text"
+        },
+        {
+          "id": 248,
+          "label": "Состав ткани",
+          "value": "Нортси Лайт Аква (100% полиэфир), 120 гр./м², гидрофильная полиуретановая мембрана, ВО. Водоупорность 5000 мм водного столба, паропроницаемость 15000 гр./м² за 24 часа.",
+          "data_type": "t_text"
+        },
+        {
+          "id": 890,
+          "label": "Тип застежки",
+          "value": "\tмолния",
+          "data_type": "t_text"
+        },
+        {
+          "id": 37,
+          "label": "Тип изделия",
+          "value": "Куртка",
+          "data_type": "t_text"
+        },
+        {
+          "id": 894,
+          "label": "Тип основной ткани",
+          "value": "Нортси Лайт Аква (100% полиэфир), 120 гр./м², гидрофильная полиуретановая мембрана, ВО. Водоупорность 5000 мм водного столба, паропроницаемость 15000 гр./м² за 24 часа.",
+          "data_type": "t_text"
+        },
+        {
+          "id": 942,
+          "label": "Ткань подкладки",
+          "value": "100% полиэфир",
+          "data_type": "t_text"
+        },
+        {
+          "id": 33,
+          "label": "Цвет",
+          "value": "синий",
+          "data_type": "t_text"
+        }
+      ]
+    }
+]
+}
+

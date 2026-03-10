@@ -56,9 +56,9 @@ export interface CategoryCatalog {
 	brands: BrandFilter[];
 	countries: CountryFilter[];
 	stores: StoreFilter[];
-	total_count: number;
 	min_price: number;
 	max_price: number;
+	total_count: number;
 	last_viewed: ProductCard[];
 }
 

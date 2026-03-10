@@ -27,5 +27,6 @@ export const useMainCats = () => {
 		mainCats: computed(() => cats.value),
 		mainCatsPending: computed(() => pending.value),
 		ensureMainCats: ensure,
+		pending,
 	};
 };

@@ -1,0 +1,26 @@
+[
+{
+      "id": 60031,
+      "name": "Костюм муж. \"Градус\" утепл. п/к цв. синий/черный, тк. Оксфорд 210 гр./м²",
+      "name_lat": "kostium-muzh-gradus-utepl-p-k-tsv-sinii-chernyi-tk-oksford-210-gr-m2",
+      "code_1c": "П-00055989 ",
+      "char": {
+        "id": 1700,
+        "name": "52-54/158-164",
+        "name_lat": "52-54-158-164"
+      }
+},
+    {
+      "id": 60042,
+      "name": "Куртка муж. \"Бригада NEW\" утепл.  цв. серый/красный, тк. смесовая 210 гр./м², ВО",
+      "name_lat": "kurtka-muzh-brigada-new-utepl-tsv-seryi-krasnyi-tk-smesovaia-210-gr-m2-vo",
+      "code_1c": "П-00065453 ",
+      "char": {
+        "id": 1932,
+        "name": "48-50/170-176",
+        "name_lat": "48-50-170-176"
+      }
+    }
+
+]
+

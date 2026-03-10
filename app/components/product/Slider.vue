@@ -45,7 +45,7 @@ const skeletonItems = computed(() =>
 					v-for="item in skeletonItems"
 					:key="item.id"
 				>
-					<ProductCardSkeleton />
+					<ProductSkeletonCard :skeleton-count="4" :is-list="false"/>
 				</swiper-slide>
 			</template>
 

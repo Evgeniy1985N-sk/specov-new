@@ -5,8 +5,11 @@ import { useProductCatApi } from '~/composables/api/useProductCatApi';
 import { useCategory } from '~/composables/useCategory';
 import SkeletonCard from '../product/SkeletonCard.vue';
 
+import Spinner from "./Spinner.vue";
+
 const props = defineProps<{
 	data: CategoryCatalog;
+	loading?: boolean;
 }>();
 
 //const FILTER_POPOVER_DELAY = 1000; // ms
@@ -63,8 +66,6 @@ const skeletonCount = computed(() => {
 	// When we know next total, show exact number
 	return Math.max(0, Math.min(pendingTotalCount.value, productVisibleCount.value));
 });
-
-//const skeletonItems = computed(() => Array.from({ length: skeletonCount.value }));
 
 const { scrollToSection } = useScrollTo();
 const scrollToTop = (): void => {
@@ -267,7 +268,24 @@ const {
 	mergeCountryFilters,
 	mergeStoreFilters,
 } = useCategory();
+
+const initialPriceBounds = ref({
+	min: props.data.min_price,
+	max: props.data.max_price,
+});
+watch(
+	() => props.data.category.id,
+	() => {
+		initialPriceBounds.value = {
+			min: props.data.min_price,
+			max: props.data.max_price,
+		};
+	},
+	{ immediate: true },
+);
+
 const prodCountForFilterIsLoading = ref(false);
+
 const facetState = ref<CategoryCatalogPrecalc>({
 	total_count: props.data.total_count,
 	filters: mergeDynFilters(props.data.category.filters ?? [], props.data.filters ?? []),
@@ -281,7 +299,6 @@ const facetState = ref<CategoryCatalogPrecalc>({
 watch(
 	() => props.data,
 	(next) => {
-		// keep facetState aligned with server result after navigateTo()
 		facetState.value = {
 			total_count: next.total_count,
 			filters: mergeDynFilters(next.category.filters ?? [], next.filters ?? []),
@@ -376,6 +393,15 @@ const fetchProdCountForFilter = async (change?: FacetChange): Promise<boolean> =
 		prodCountForFilterIsLoading.value = false;
 	}
 };
+
+//show more button
+const canShowMore = computed(() => {
+	return (
+		productVisibleCount.value < maxProductCount &&
+		productVisibleCount.value < props.data.total_count
+	);
+});
+
 onMounted(() => {
 	filterRef.value?.initFromQuery(route.query);
 	sorterRef.value?.initFromQuery(route.query);
@@ -396,6 +422,7 @@ onMounted(() => {
 				<TitleGoods class="mb-6" :goods="data.total_count" :title="data.category.name" />
 
 				<CatalogCardSlider v-if="childCategories"
+					:loading="props.loading"
 					:items="childCategories" 
 					class="mb-6 hidden! md:block!" 
 				/>
@@ -427,13 +454,17 @@ onMounted(() => {
 							<!-- HEADER -->
 
 							<!-- FILTER -->
-							<CatalogFilter ref="filterRef" 
+							<CatalogFilter 
+								ref="filterRef" 
 								class="px-4 sm:px-6 lg:px-0" 
 								:brands="facetState.brands" 
 								:countries="facetState.countries"
 								:filters="facetState.filters" 
 								:stores="facetState.stores"
-								:minPrice="facetState.min_price" :maxPrice="facetState.max_price"
+								:min-price="facetState.min_price"
+								:max-price="facetState.max_price"
+								:absolute-min-price="initialPriceBounds.min"
+								:absolute-max-price="initialPriceBounds.max"
 								:total-count="facetState.total_count"
 								@handle-click="filterClick" 
 							/>
@@ -518,9 +549,12 @@ onMounted(() => {
 						<!-- More Cards  -->
 						<UButton
 							class="w-full min-h-10 mt-6 bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5"
-							v-if="productVisibleCount < maxProductCount && productVisibleCount < facetState.total_count"
-							@click="showMore">
-							Показать еще
+							v-if="canShowMore"
+							@click="showMore"
+							:disabled="isRefreshing || isLoading"
+							>
+							<Spinner v-if="isLoading || isRefreshing"  />
+							<span> Показать еще </span>
 						</UButton>
 						<!-- More Cards -->
 					</div>

@@ -18,9 +18,9 @@ const props = withDefaults(defineProps<RangeSliderProps>(), {
 });
 
 const emit = defineEmits<{
-	"update:minValue": [value: number];
-	"update:maxValue": [value: number];
-	"change": [min: number, max: number];
+	"update:minValue": [value: number | undefined];
+	"update:maxValue": [value: number | undefined];
+	"change": [min: number | undefined, max: number | undefined];
 }>();
 
 const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.max(lo, v));
@@ -28,8 +28,10 @@ const clamp = (v: number, lo: number, hi: number): number => Math.min(hi, Math.m
 const min = ref<number>(props.minValue ?? props.minRange);
 const max = ref<number>(props.maxValue ?? props.maxRange);
 
+// Sync explicit model values from parent.
+// Only overwrite local state when parent really provides a value.
 watch(
-	() => [props.minValue, props.maxValue, props.minRange, props.maxRange],
+	() => [props.minValue, props.maxValue],
 	() => {
 		const lo = props.minRange;
 		const hi = props.maxRange;
@@ -40,11 +42,41 @@ watch(
 			return;
 		}
 
-		const nextMin = props.minValue === undefined ? lo : clamp(props.minValue, lo, hi);
-		const nextMax = props.maxValue === undefined ? hi : clamp(props.maxValue, lo, hi);
+		if (props.minValue != null) {
+			min.value = clamp(props.minValue, lo, hi);
+		}
 
-		min.value = Math.min(nextMin, nextMax);
-		max.value = Math.max(nextMin, nextMax);
+		if (props.maxValue != null) {
+			max.value = clamp(props.maxValue, lo, hi);
+		}
+
+		if (min.value > max.value) {
+			[min.value, max.value] = [max.value, min.value];
+		}
+	},
+	{ immediate: true },
+);
+
+// Clamp existing local state when slider bounds change.
+// Do not reset to lo/hi unless current local values are outside bounds.
+watch(
+	() => [props.minRange, props.maxRange],
+	() => {
+		const lo = props.minRange;
+		const hi = props.maxRange;
+
+		if (hi <= lo) {
+			min.value = lo;
+			max.value = lo;
+			return;
+		}
+
+		min.value = clamp(min.value, lo, hi);
+		max.value = clamp(max.value, lo, hi);
+
+		if (min.value > max.value) {
+			[min.value, max.value] = [max.value, min.value];
+		}
 	},
 	{ immediate: true },
 );
@@ -64,7 +96,6 @@ const lineStyle = computed(() => ({
 	right: `${100 - toPercent(max.value)}%`,
 }));
 
-// Important when thumbs overlap: bring the active one on top.
 const minInputZ = computed(() => (min.value >= max.value - props.step ? 6 : 4));
 const maxInputZ = computed(() => (min.value >= max.value - props.step ? 5 : 6));
 
@@ -73,8 +104,10 @@ const handleMinChange = (e: Event): void => {
 	if (next > max.value) return;
 
 	min.value = next;
-	emit("update:minValue", next);
-	emit("change", min.value, max.value);
+
+	const emittedMin = next === props.minRange ? undefined : next;
+	emit("update:minValue", emittedMin);
+	emit("change", emittedMin, max.value === props.maxRange ? undefined : max.value);
 };
 
 const handleMaxChange = (e: Event): void => {
@@ -82,8 +115,10 @@ const handleMaxChange = (e: Event): void => {
 	if (next < min.value) return;
 
 	max.value = next;
-	emit("update:maxValue", next);
-	emit("change", min.value, max.value);
+
+	const emittedMax = next === props.maxRange ? undefined : next;
+	emit("update:maxValue", emittedMax);
+	emit("change", min.value === props.minRange ? undefined : min.value, emittedMax);
 };
 </script>
 
@@ -120,7 +155,6 @@ const handleMaxChange = (e: Event): void => {
 		/>
 	</div>
 </template>
-
 <style scoped>
 .range-slide {
 	position: relative;

@@ -142,7 +142,7 @@ export const useCartsStore = defineStore("carts", () => {
 			p.quant += 1;
 			p.amount = p.price * p.quant;
 
-			await api.add(toCartItem(cart.name, p));
+			await api.setQuantity(toCartItem(cart.name, p));
 			return;
 		}
 
@@ -159,7 +159,7 @@ export const useCartsStore = defineStore("carts", () => {
 		};
 
 		cart.products.push(prodForCart);
-		await api.add(toCartItem(cart.name, prodForCart));
+		await api.setQuantity(toCartItem(cart.name, prodForCart));
 	};
 
 	const incrementQuantityInFirst = async (productId: number, productCharId?: number): Promise<void> => {
@@ -169,7 +169,7 @@ export const useCartsStore = defineStore("carts", () => {
 		found.product.quant += 1;
 		found.product.amount = found.product.price * found.product.quant;
 
-		await api.add(toCartItem(found.cart.name, found.product));
+		await api.setQuantity(toCartItem(found.cart.name, found.product));
 	};
 
 	const incrementQuantity = async (
@@ -190,7 +190,7 @@ export const useCartsStore = defineStore("carts", () => {
 		product.quant += 1;
 		product.amount = product.price * product.quant;
 
-		await api.add(toCartItem(cart.name, product));
+		await api.setQuantity(toCartItem(cart.name, product));
 	};
 
 	const decrementQuantityInFirst = async (productId: number, productCharId?: number): Promise<void> => {
@@ -215,7 +215,7 @@ export const useCartsStore = defineStore("carts", () => {
 		const removed = found.product;
 		found.cart.products.splice(found.productIndex, 1);
 
-		await api.remove({
+		await api.setQuantity({
 			cart_name: found.cart.name,
 			product_id: removed.id,
 			char_id: removed.char?.id,
@@ -256,7 +256,7 @@ export const useCartsStore = defineStore("carts", () => {
 
 		cart.products.splice(productIndex, 1);
 
-		await api.remove({
+		await api.setQuantity({
 			cart_name: cart.name,
 			product_id: p.id,
 			char_id: p.char?.id,
@@ -283,7 +283,7 @@ export const useCartsStore = defineStore("carts", () => {
 		const removed = cart.products[idx]!;
 		cart.products.splice(idx, 1);
 
-		await api.remove({
+		await api.setQuantity({
 			cart_name: cart.name,
 			product_id: removed.id,
 			char_id: removed.char?.id,
@@ -338,7 +338,7 @@ export const useCartsStore = defineStore("carts", () => {
 			if (quant <= 0) {
 				cart.products.splice(idx, 1);
 
-				await api.remove({
+				await api.setQuantity({
 					cart_name: cart.name,
 					product_id: p.id,
 					char_id: p.char?.id,
@@ -351,20 +351,20 @@ export const useCartsStore = defineStore("carts", () => {
 			if (quant > p.quant) {
 				p.quant = quant;
 				p.amount = p.price * p.quant;
-				await api.add(toCartItem(cart.name, p));
+				await api.setQuantity(toCartItem(cart.name, p));
 				return;
 			}
 
 			if (quant < p.quant) {
-				const delta = p.quant - quant;
+				// const delta = p.quant - quant;
 				p.quant = quant;
 				p.amount = p.price * p.quant;
 
-				await api.remove({
+				await api.setQuantity({
 					cart_name: cart.name,
 					product_id: p.id,
 					char_id: p.char?.id,
-					quantity: delta,
+					quantity: p.quant,
 					price: p.price,
 				});
 				return;
@@ -389,7 +389,7 @@ export const useCartsStore = defineStore("carts", () => {
 		};
 
 		cart.products.push(p);
-		await api.add(toCartItem(cart.name, p));
+		await api.setQuantity(toCartItem(cart.name, p));
 	};
 
 	return {
