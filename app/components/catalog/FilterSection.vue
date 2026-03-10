@@ -39,7 +39,7 @@ const items = computed<AccordionItem[]>(() => [
 		:items="items"
 		type="multiple"
 		:default-value="props.defaultOpen ? ['0'] : []"
-		:ui="{ root: 'lg:grid lg:gap-6', trigger: 'lg:p-0' }"
+		:ui="{ root: 'lg:grid lg:gap-6', trigger: 'p-0' }"
 	>
 		<template #content>
 			<slot />

@@ -582,9 +582,8 @@ defineExpose({
 					@update:model-value="() => { emitPriceDebounced(); }">
 					<template v-if="formattedMinPrice?.length" #trailing>
 						<UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
-							class="text-gray-500 hover:text-gray-600" 
-							@click="() => { formattedMinPrice = ''; emitPriceDebounced(); }"
-							/>
+							class="text-gray-500 hover:text-gray-600"
+							@click="() => { formattedMinPrice = ''; emitPriceDebounced(); }" />
 					</template>
 				</UInput>
 
@@ -594,22 +593,16 @@ defineExpose({
 					@update:model-value="() => { emitPriceDebounced(); }">
 					<template v-if="formattedMaxPrice?.length" #trailing>
 						<UButton color="neutral" variant="link" size="sm" icon="i-lucide-x" aria-label="Clear input"
-							class="text-gray-500 hover:text-gray-600" 
-							@click="() => { formattedMaxPrice = ''; emitPriceDebounced(); }"
-							/>
+							class="text-gray-500 hover:text-gray-600"
+							@click="() => { formattedMaxPrice = ''; emitPriceDebounced(); }" />
 					</template>
 				</UInput>
 
 			</div>
 
-			<CatalogInputRange 
-				:disabled="props.absoluteMinPrice === props.absoluteMaxPrice"
-				:min-range="props.absoluteMinPrice"
-				:max-range="props.absoluteMaxPrice"
-				v-model:min-value="minPrice"
-				v-model:max-value="maxPrice"
-				@change="() => { emitPriceDebounced(); }"
-			/>
+			<CatalogInputRange :disabled="props.absoluteMinPrice === props.absoluteMaxPrice"
+				:min-range="props.absoluteMinPrice" :max-range="props.absoluteMaxPrice" v-model:min-value="minPrice"
+				v-model:max-value="maxPrice" @change="() => { emitPriceDebounced(); }" />
 
 		</template>
 
@@ -767,5 +760,3 @@ defineExpose({
 	background: #0C8F61;
 }
 </style>
-
-

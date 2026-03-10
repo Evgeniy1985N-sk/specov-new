@@ -262,7 +262,7 @@ const buildQueryExcluding = (kind: FacetKind, dynFilterId?: number): Record<stri
 	return q;
 };
 
-const { 
+const {
 	mergeDynFilters,
 	mergeBrandFilters,
 	mergeCountryFilters,
@@ -421,16 +421,13 @@ onMounted(() => {
 			<SectionContainer>
 				<TitleGoods class="mb-6" :goods="data.total_count" :title="data.category.name" />
 
-				<CatalogCardSlider v-if="childCategories"
-					:loading="props.loading"
-					:items="childCategories" 
-					class="mb-6 hidden! md:block!" 
-				/>
+				<CatalogCardSlider v-if="childCategories" :loading="props.loading" :items="childCategories"
+					class="mb-6 hidden! md:block!" />
 
 				<div class="flex gap-8" id="prod-container">
 
 					<!-- ASIDE -->
-					<aside ref="aside" :class="classAside" >
+					<aside ref="aside" :class="classAside">
 						<div class="grid gap-6 pb-36 sm:pb-40 lg:p-4 bg-white lg:bg-gray-100 rounded-xl w-full h-auto">
 
 							<!-- HEADER -->
@@ -454,20 +451,11 @@ onMounted(() => {
 							<!-- HEADER -->
 
 							<!-- FILTER -->
-							<CatalogFilter 
-								ref="filterRef" 
-								class="px-4 sm:px-6 lg:px-0" 
-								:brands="facetState.brands" 
-								:countries="facetState.countries"
-								:filters="facetState.filters" 
-								:stores="facetState.stores"
-								:min-price="facetState.min_price"
-								:max-price="facetState.max_price"
-								:absolute-min-price="initialPriceBounds.min"
-								:absolute-max-price="initialPriceBounds.max"
-								:total-count="facetState.total_count"
-								@handle-click="filterClick" 
-							/>
+							<CatalogFilterNew ref="filterRef" class="px-4 sm:px-6 lg:px-0" :brands="facetState.brands"
+								:countries="facetState.countries" :filters="facetState.filters" :stores="facetState.stores"
+								:min-price="facetState.min_price" :max-price="facetState.max_price"
+								:absolute-min-price="initialPriceBounds.min" :absolute-max-price="initialPriceBounds.max"
+								:total-count="facetState.total_count" @handle-click="filterClick" />
 							<!-- FILTER -->
 
 							<!-- BUTTONS -->
@@ -488,12 +476,8 @@ onMounted(() => {
 
 						<!-- POPOVER -->
 						<Teleport to="body">
-						<CatalogPopover v-if="isShowPopover" :goods="facetState.total_count"
-							@handle-click="applyProductSettings"
-							class="hidden! lg:inline-block!" 
-							:top="popoverPos.top"
-							:left="popoverPos.left"
-						/>
+							<CatalogPopover v-if="isShowPopover" :goods="facetState.total_count" @handle-click="applyProductSettings"
+								class="hidden! lg:inline-block!" :top="popoverPos.top" :left="popoverPos.left" />
 						</Teleport>
 						<!-- POPOVER -->
 
@@ -518,42 +502,27 @@ onMounted(() => {
 						</div>
 						<!-- Top -->
 
-						<CatalogCardSlider v-if="childCategories"
-							:items="childCategories" 
-							class="mb-6 md:hidden!" 
-						/>
+						<CatalogCardSlider v-if="childCategories" :items="childCategories" class="mb-6 md:hidden!" />
 
 						<!-- Cards -->
 						<div v-if="isRefreshing">
-							<SkeletonCard
-								:is-list="isList"
-								:skeleton-count="skeletonCount"
-							/>
+							<SkeletonCard :is-list="isList" :skeleton-count="skeletonCount" />
 						</div>
 
 						<div v-else>
 							<div
 								:class="isList ? 'grid-cols-1 gap-8 pt-6 border-t border-gray-300' : 'grid-cols-2 sm:grid-cols-3 gap-x-4 gap-y-6'"
-								class="grid lg:gap-8"
-							>
-								<ProductCard
-									:is-row="isList"
-									:is-list="!isList"
-									v-for="item in displayedItems"
-									:item="item"
-									:key="item.id"
-								/>
+								class="grid lg:gap-8">
+								<ProductCard :is-row="isList" :is-list="!isList" v-for="item in displayedItems" :item="item"
+									:key="item.id" />
 							</div>
 						</div>
 						<!-- Cards -->
 						<!-- More Cards  -->
 						<UButton
 							class="w-full min-h-10 mt-6 bg-gray-100 text-(--Brand-950) text-sm font-semibold hover:bg-gray-200 active:bg-gray-300 cursor-pointer px-4 py-2.5"
-							v-if="canShowMore"
-							@click="showMore"
-							:disabled="isRefreshing || isLoading"
-							>
-							<Spinner v-if="isLoading || isRefreshing"  />
+							v-if="canShowMore" @click="showMore" :disabled="isRefreshing || isLoading">
+							<Spinner v-if="isLoading || isRefreshing" />
 							<span> Показать еще </span>
 						</UButton>
 						<!-- More Cards -->

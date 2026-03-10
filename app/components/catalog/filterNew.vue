@@ -588,11 +588,12 @@ defineExpose({
 			:hide-plain-label="shouldHidePlainSectionLabel(section)"
 		>
 			<template v-if="section.key === 'availability'">
-				<div class="custom-scrollbar lg:overflow-auto lg:max-h-[244px] flex flex-wrap lg:grid lg:grid-cols-1 gap-4">
+				<div class="custom-scrollbar mt-4 lg:overflow-auto lg:max-h-[244px] flex flex-wrap lg:grid lg:grid-cols-1 gap-4">
 					<label
 						v-for="item in storeItems"
 						:key="item.id"
 						:class="item.disabled ? 'opacity-40 pointer-events-none' : ''"
+						class="flex gap-2 items-center cursor-pointer"
 					>
 						<UCheckbox
 							size="xl"

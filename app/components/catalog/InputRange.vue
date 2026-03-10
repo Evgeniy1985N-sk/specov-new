@@ -130,36 +130,18 @@ const handleMaxChange = (e: Event): void => {
 			<span class="thumb" :style="{ left: thumbMaxPosition }"></span>
 		</div>
 
-		<input
-			id="rangeMin"
-			type="range"
-			:min="minRange"
-			:max="maxRange"
-			:step="step"
-			:value="min"
-			:disabled="disabled"
-			:style="{ zIndex: minInputZ }"
-			@input="handleMinChange"
-		/>
+		<input id="rangeMin" type="range" :min="minRange" :max="maxRange" :step="step" :value="min" :disabled="disabled"
+			:style="{ zIndex: minInputZ }" @input="handleMinChange" />
 
-		<input
-			id="rangeMax"
-			type="range"
-			:min="minRange"
-			:max="maxRange"
-			:step="step"
-			:value="max"
-			:disabled="disabled"
-			:style="{ zIndex: maxInputZ }"
-			@input="handleMaxChange"
-		/>
+		<input id="rangeMax" type="range" :min="minRange" :max="maxRange" :step="step" :value="max" :disabled="disabled"
+			:style="{ zIndex: maxInputZ }" @input="handleMaxChange" />
 	</div>
 </template>
 <style scoped>
 .range-slide {
 	position: relative;
-	margin: 20px 0 0;
-	height: 4px;
+	height: 18px;
+	margin-top: 10px;
 }
 
 /* Your visible track */
@@ -247,5 +229,10 @@ input::-moz-range-thumb {
 	cursor: pointer;
 	width: 18px;
 	height: 18px;
+}
+@media (max-width: 1023px) {
+	.range-slide {
+		margin-top: 20px;
+	}
 }
 </style>

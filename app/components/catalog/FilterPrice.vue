@@ -61,7 +61,7 @@ const clearMax = (): void => {
 </script>
 
 <template>
-	<div class="grid gap-4">
+	<div class="grid gap-4 mt-4">
 		<div class="flex gap-2">
 			<UInput
 				v-model="minProxy"
