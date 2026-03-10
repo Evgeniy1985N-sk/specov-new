@@ -10,6 +10,11 @@ import { stockDescr, stockDescrLocal } from '~/utils/stockDescr';
 import type { ProductChar, ProductDetailPage } from '~/types/product';
 import type { Picture } from '~/types/picture';
 
+import UCartButton from "@/components/product/UCartButton.vue";
+
+//custom quant input
+import UCartQuantInput from "@/components/product/UCartQuantInput.vue";
+
 const cartsStore = useCartsStore();
 const { scrollPosition } = useScroll()
 const { scrollToSection } = useScrollTo()
@@ -299,25 +304,26 @@ const productDescription = computed(() => {
                 </div>
 
                 <div class="flex flex-col gap-2">
-                  <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" :increment="{
-                    color: 'neutral',
-                    variant: 'ghost',
-                    size: 'xl',
-                  }" :decrement="{
-                    color: 'neutral',
-                    variant: 'ghost',
-                    size: 'xl'
-                  }" />
+                  <UCartQuantInput 
+					v-model="counter" 
+					:min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" 
+				    :increment="{
+						color: 'neutral',
+						variant: 'ghost',
+						size: 'xl',
+                    }" :decrement="{
+						color: 'neutral',
+						variant: 'ghost',
+						size: 'xl'
+                    }" 
+					/>
 
 
-                  <UButton @click="addProductToCart" class="gap-1 px-4">
-                    <i class="flex items-center justify-center h-5 w-5">
-                      <ProductIconCart />
-                    </i>
-                    <span>
-                      В корзину
-                    </span>
-                  </UButton>
+                  <UCartButton @click="addProductToCart" 
+					class="gap-1 px-4"
+					:is-in-cart="cartsStore.productCartQuantity(product.id, productChar?.id)>0"
+				  >
+                  </UCartButton>
 
                   <UModal v-model:open="showModal" :close=false
                     :ui="{ content: 'xl:translate-x-[-15%] lg:top-[260px] max-w-[720px]!' }">
@@ -351,7 +357,7 @@ const productDescription = computed(() => {
                               {{ product?.name }}
                             </p>
                           </div>
-                          <UInputNumber v-model="counter" :min="0" size="lg" color="neutral"
+                          <UCartQuantInput v-model="counter" :min="0" size="lg" color="neutral"
                             :ui="{ root: 'max-w-[116px] h-[36px]' }" :increment="{
                               color: 'neutral',
                               size: 'lg',

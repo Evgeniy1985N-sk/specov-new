@@ -6,6 +6,9 @@ import { useCompareStore } from '@/stores/compare';
 import type { Picture } from '~/types/picture';
 import type { ProductForLike } from '~/types/productLike';
 
+import UCartButton from "@/components/product/UCartButton.vue";
+import UCartQuantInput from "@/components/product/UCartQuantInput.vue";
+
 const cartsStore = useCartsStore();
 const { link: productDetailLink } = useProduct();
 
@@ -226,16 +229,12 @@ const classMedia = computed(() => ({
         :class="props.classBtns, isRow ? 'max-w-[130px] sm:max-w-full flex-col-reverse gap-2 lg:gap-4' : 'gap-4 mt-auto'"
         class="w-full font-semibold flex flex-wrap xl:flex-nowrap lg:justify-center pt-5 lg:items-center">
 
-        <UButton @click="addProductToCart" :class="classButtonCart" class="shrink-0 gap-1 px-4 min-h-10">
-          <i class="flex items-center justify-center h-5 w-5">
-            <ProductIconCart />
-          </i>
-          <span class="text-sm leading-5">
-            В корзину
-          </span>
-        </UButton>
+        <UCartButton 
+			:is-in-cart="cartsStore.productCartQuantity(props.item.id, props.item.char?.id)>0"
+			@click="addProductToCart" :class="classButtonCart" class="shrink-0 gap-1 px-4 min-h-10">
+        </UCartButton>
 
-        <UInputNumber v-model="counter" :min="0" size="xl" color="neutral" :class="classCounter"
+        <UCartQuantInput v-model="counter" :min="0" size="xl" color="neutral" :class="classCounter"
           :ui="{ root: 'hidden! lg:flex! min-h-10', base: 'min-h-10' }" :increment="{
             class: 'active:bg-gray-100!',
             color: 'neutral',

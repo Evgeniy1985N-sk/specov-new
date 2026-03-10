@@ -19,15 +19,30 @@ const props = defineProps<Props>()
 const { picturePreview } = useProductPicture();
 const swiperInstance = ref<SwiperClass | null>(null)
 
-const onBulletHover = (index: number) => {
-	if (swiperInstance.value) {
-		swiperInstance.value.slideTo(index)
-	}
-}
+const hoverTimeout = ref<ReturnType<typeof setTimeout> | null>(null);
+const HOVER_DELAY = 150;
 
+const clearHoverTimeout = (): void => {
+	if (hoverTimeout.value) {
+		clearTimeout(hoverTimeout.value);
+		hoverTimeout.value = null;
+	}
+};
+
+const onBulletHover = (index: number): void => {
+	clearHoverTimeout();
+
+	hoverTimeout.value = setTimeout(() => {
+		swiperInstance.value?.slideTo(index);
+	}, HOVER_DELAY);
+};
 const onSwiperInit = (swiper: SwiperClass) => {
 	swiperInstance.value = swiper
 }
+
+onBeforeUnmount(() => {
+	clearHoverTimeout();
+});
 </script>
 
 <template>
@@ -37,7 +52,7 @@ const onSwiperInit = (swiper: SwiperClass) => {
 			dynamicMainBullets: 6,
 			clickable: true,
 		}" :modules="[Pagination]" :navigation="false" @swiper="onSwiperInit">
-			<swiper-slide v-for="(item, i) in props.imgs" :key="i">
+			<swiper-slide v-for="(item, i) in props.imgs.slice(0, 4)" :key="i">
 				<NuxtLink :to="props.link">
 					<img :src="picturePreview(item)"
 						class="max-w-[115px] sm:max-w-full max-h-[135px] md:max-h-48 xl:max-h-[235px]">

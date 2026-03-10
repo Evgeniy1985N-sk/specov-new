@@ -1,0 +1,42 @@
+<script setup lang="ts">
+
+interface Props { 
+	hasProducts: boolean;
+};
+
+const props = withDefaults(defineProps<Props>(), {
+	hasProducts: false,
+});
+
+const emit = defineEmits<{
+	"click": [];
+}>();
+
+	
+const noProductsText = "В корзину";
+const hasProductsText = "В корзину";
+
+const handleClick = async () => {
+	if(props.hasProducts){
+		//redirect
+		await navigateTo('/cart');
+	}else{
+		emit('click');
+	}
+}
+
+</script>
+
+<template>
+	<UButton @click="handleClick" :color="props.hasProducts? 'primary' : 'neutral'"
+		variant="solid"
+	>
+	  <i class="flex items-center justify-center h-5 w-5">
+		<ProductIconCart />
+	  </i>
+	  <span class="text-sm leading-5">
+		  {{ props.hasProducts? hasProductsText : noProductsText }}
+	  </span>
+	</UButton>
+
+</template>

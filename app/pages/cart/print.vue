@@ -45,7 +45,6 @@ onMounted(async () => {
 		try {
 			//await cartsStore.fetch();
 		} catch {
-			// ignore
 		}
 	}
 });

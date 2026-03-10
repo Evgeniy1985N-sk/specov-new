@@ -111,6 +111,12 @@ export function useCartApi() {
 				{ method: "POST", body: item },
 			);
 		},
+		setQuantity(item: CartItem): Promise<void> {
+			return api<void>(
+				cartEndpoints.setQuantity(),
+				{ method: "POST", body: item },
+			);
+		},
 		clear(cartName: string): Promise<void> {
 			return api<void>(
 				cartEndpoints.clear(),
