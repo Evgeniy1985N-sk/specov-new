@@ -552,7 +552,8 @@ defineExpose({
 
 			<div class="custom-scrollbar lg:overflow-auto lg:max-h-[244px] flex flex-wrap lg:grid lg:grid-cols-1 gap-4">
 				<label v-for="st in stores" :key="st.id"
-					:class="shouldDisable(selectedStores.includes(st.id), st.disabled) ? 'opacity-40 pointer-events-none' : ''">
+					:class="shouldDisable(selectedStores.includes(st.id), st.disabled) ? 'opacity-40 pointer-events-none' : ''"
+					class="flex gap-2 items-center cursor-pointer">
 
 					<UCheckbox size="xl" :model-value="selectedStores.includes(st.id)"
 						:disabled="shouldDisable(selectedStores.includes(st.id), st.disabled)" @update:model-value="

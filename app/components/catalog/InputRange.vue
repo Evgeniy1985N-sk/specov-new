@@ -186,7 +186,7 @@ const handleMaxChange = (e: Event): void => {
 	border: 2px solid var(--Brand-600);
 	background-color: #fff;
 	border-radius: 50%;
-	top: -7px;
+	top: -8px;
 	height: 18px;
 	width: 18px;
 	margin-left: -9px;
