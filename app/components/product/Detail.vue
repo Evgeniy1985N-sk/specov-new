@@ -275,9 +275,10 @@ function toggleActive(index: number) {
             </div>
 
             <!--col-2-->
-            <div class="hidden lg:flex flex-col gap-10 items-start max-w-[280px]">
+            <div class="hidden lg:flex flex-col gap-10 items-start max-w-[280px] w-full">
 
               <ProductDimensions :items="dimensions" @handle-click="(i) => toggleActive(i)" />
+              <ProductDropdownDimenstions />
 
               <div class="flex flex-col gap-4">
                 <div class="font-sans font-bold text-base leading-6 text-black">
