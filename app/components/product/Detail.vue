@@ -425,12 +425,13 @@ const productDescription = computed(() => {
                     </p>
                   </div>
                   <div class="grid gap-3">
-                    <div v-for="st in props.detailPage?.stores" :key="st.id" class="text-sm leading-5 font-medium">
+                    <div v-for="st in props.detailPage?.stores" :key="st.id" class="grid gap-1 text-sm leading-5 font-medium">
                       <p>
                         {{ st.address }}
                       </p>
+                      <!-- ORANGE COLOR bg-[#F79009] -->
                       <span :class="[
-                        'font-bold capitalize relative pl-4 before:content-[\'\'] before:absolute before:left-0 before:top-1.5 before:w-2 before:h-2 before:bg-current before:rounded-full',
+                        'relative w-fit font-medium capitalize text-white bg-(--Brand-700) px-1.5 rounded-md',
                         getStockClass(st.id)
                       ]">
                         {{ stockDescrLocal(st.id, productLiveData?.stock_total) }}
