@@ -7,7 +7,7 @@ import { useProductApi } from '~/composables/api/useProductApi';
 import { useProduct } from '~/composables/useProduct';
 import { useProductPicture } from '~/composables/useProductPicture';
 import { stockDescr, stockDescrLocal } from '~/utils/stockDescr';
-import type { ProductChar, ProductDetailPage } from '~/types/product';
+import type { ProductChar, ProductDetailPage, ProductDimension } from '~/types/product';
 import type { Picture } from '~/types/picture';
 
 import UCartButton from "@/components/product/UCartButton.vue";
@@ -72,24 +72,24 @@ const getStockClass = (storeId: number) => {
 };
 
 const counter = computed<number>({
-	get: () => {
-		return cartsStore.productCartQuantity(product.value.id, productChar.value?.id);
-	},
-	set: (val) => {
-		const quant = Math.max(0, Number(val) || 0);
+  get: () => {
+    return cartsStore.productCartQuantity(product.value.id, productChar.value?.id);
+  },
+  set: (val) => {
+    const quant = Math.max(0, Number(val) || 0);
 
-		void cartsStore.setQuantityInFirst(
-			{
-				id: product.value.id,
-				name: product.value.name,
-				name_lat: product.value.name_lat,
-				code_1c: product.value.code_1c,
-			},
-			quant,
-			{ char: productChar.value, price: productStock.value?.price ?? 0 },
-			props.productImg,
-		);
-	},
+    void cartsStore.setQuantityInFirst(
+      {
+        id: product.value.id,
+        name: product.value.name,
+        name_lat: product.value.name_lat,
+        code_1c: product.value.code_1c,
+      },
+      quant,
+      { char: productChar.value, price: productStock.value?.price ?? 0 },
+      props.productImg,
+    );
+  },
 });
 
 const addProductToCart = () => {
@@ -117,7 +117,39 @@ const productDescription = computed(() => {
     ? props.detailPage.product.description
     : props.detailPage.product.name_full;
 });
-
+const dimensions = ref<ProductDimension[]>([
+  {
+    isActive: false,
+    label: '40'
+  },
+  {
+    isActive: false,
+    label: '41'
+  },
+  {
+    isActive: false,
+    label: '42'
+  },
+  {
+    isActive: false,
+    label: '43'
+  },
+  {
+    isActive: true,
+    label: '44'
+  },
+  {
+    isActive: false,
+    label: '45'
+  },
+])
+function toggleActive(index: number) {
+  console.log(index)
+  dimensions.value = dimensions.value.map((item, i) => ({
+    ...item,
+    isActive: index === i
+  }))
+}
 </script>
 
 <template>
@@ -220,16 +252,12 @@ const productDescription = computed(() => {
             </div>
 
             <div class="flex gap-6">
-              <ProductButtonIcon text="Сравнить"
-				@handle-click="compareStore.toggleItem(props.detailPage.product)" 
-			  >
-                <ProductIconCompare :selected="compareStore.isInCompare(props.detailPage.product)"/>
+              <ProductButtonIcon text="Сравнить" @handle-click="compareStore.toggleItem(props.detailPage.product)">
+                <ProductIconCompare :selected="compareStore.isInCompare(props.detailPage.product)" />
               </ProductButtonIcon>
 
-              <ProductButtonIcon text="В избранное"
-				@handle-click="likeStore.toggle(props.detailPage.product)" 
-			  >
-                <ProductIconFavorite :selected="likeStore.isLiked(props.detailPage.product)"/>
+              <ProductButtonIcon text="В избранное" @handle-click="likeStore.toggle(props.detailPage.product)">
+                <ProductIconFavorite :selected="likeStore.isLiked(props.detailPage.product)" />
               </ProductButtonIcon>
             </div>
 
@@ -249,12 +277,15 @@ const productDescription = computed(() => {
             <!--col-2-->
             <div class="hidden lg:flex flex-col gap-10 items-start max-w-[280px]">
 
+              <ProductDimensions :items="dimensions" @handle-click="(i) => toggleActive(i)" />
+
               <div class="flex flex-col gap-4">
                 <div class="font-sans font-bold text-base leading-6 text-black">
                   Характеристики
                 </div>
                 <div class="grid gap-4">
-                  <p v-for="item in product?.filters?.slice(0, 5)" :key="item.id" class="text-sm leading-5 line-clamp-2">
+                  <p v-for="item in product?.filters?.slice(0, 5)" :key="item.id"
+                    class="text-sm leading-5 line-clamp-2">
                     <span class="mr-1 font-medium text-gray-600">
                       {{ item.label }}:
                     </span>
@@ -304,25 +335,20 @@ const productDescription = computed(() => {
                 </div>
 
                 <div class="flex flex-col gap-2">
-                  <UCartQuantInput 
-					v-model="counter" 
-					:min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }" 
-				    :increment="{
-						color: 'neutral',
-						variant: 'ghost',
-						size: 'xl',
+                  <UCartQuantInput v-model="counter" :min="0" size="xl" color="neutral" :ui="{ root: 'h-11' }"
+                    :increment="{
+                      color: 'neutral',
+                      variant: 'ghost',
+                      size: 'xl',
                     }" :decrement="{
-						color: 'neutral',
-						variant: 'ghost',
-						size: 'xl'
-                    }" 
-					/>
+                      color: 'neutral',
+                      variant: 'ghost',
+                      size: 'xl'
+                    }" />
 
 
-                  <UCartButton @click="addProductToCart" 
-					class="gap-1 px-4"
-					:is-in-cart="cartsStore.productCartQuantity(product.id, productChar?.id)>0"
-				  >
+                  <UCartButton @click="addProductToCart" class="gap-1 px-4"
+                    :is-in-cart="cartsStore.productCartQuantity(product.id, productChar?.id) > 0">
                   </UCartButton>
 
                   <UModal v-model:open="showModal" :close=false
@@ -425,7 +451,8 @@ const productDescription = computed(() => {
                     </p>
                   </div>
                   <div class="grid gap-3">
-                    <div v-for="st in props.detailPage?.stores" :key="st.id" class="grid gap-1 text-sm leading-5 font-medium">
+                    <div v-for="st in props.detailPage?.stores" :key="st.id"
+                      class="grid gap-1 text-sm leading-5 font-medium">
                       <p>
                         {{ st.address }}
                       </p>

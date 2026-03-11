@@ -136,3 +136,8 @@ export interface PageAnonUserProducts {
 	id: number;
 	char_id: number;
 }
+
+export interface ProductDimension {
+	label: string
+	isActive: boolean
+}
