@@ -56,10 +56,13 @@ watch(() => isShowSearch, () => {
     <!-- buttons -->
     <NuxtLink v-for="item in buttons" :to="item.src"
 		:key="item.src"
-      class="text-(--Brand-950) hidden lg:flex border-zinc-300 p-[11px] justify-spacse-between h-11 w-11 flex-col bg-white hover:bg-gray-300 transition items-center border border-solid rounded-lg">
-      <span class="h-5 w-5">
+      class="relative text-(--Brand-950) hidden lg:flex border-zinc-300 p-[11px] justify-spacse-between h-11 w-11 flex-col bg-white hover:bg-gray-300 transition items-center border border-solid rounded-lg">
+      
+      <HeaderCircleNumber :number="2" />
+
+      <WrapIcon class="h-5 w-5">
         <component :is="item.icon" :selected="item.selected.value" />
-      </span>
+      </WrapIcon>
     </NuxtLink>
     <!-- buttons -->
 
